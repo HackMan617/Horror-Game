@@ -32,6 +32,9 @@ public static class HorrorGameLightingSetup
             EditorApplication.isPlayingOrWillChangePlaymode)
             return;
 
+        // Only auto-light the game scene — never the menu or other scenes.
+        if (SceneManager.GetActiveScene().name != "SampleScene") return;
+
         var player = GameObject.Find("Player");
         if (player == null)
         {
