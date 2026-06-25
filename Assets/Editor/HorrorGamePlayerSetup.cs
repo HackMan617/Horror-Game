@@ -63,6 +63,10 @@ public static class HorrorGamePlayerSetup
             EditorApplication.isPlayingOrWillChangePlaymode)
             return; // never touch assets/scene mid-reload or in play mode
 
+        // Only auto-build into the game scene — never inject the Player into the
+        // menu or any other scene the user happens to have open.
+        if (SceneManager.GetActiveScene().name != "SampleScene") return;
+
         var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(Png);
         if (tex == null)
         {
