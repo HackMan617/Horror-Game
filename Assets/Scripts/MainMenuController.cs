@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
     [Tooltip("Scene loaded by the Play button.")]
-    public string gameSceneName = "SampleScene";
+    public string gameSceneName = "Lobby";
 
     public void Play()
     {

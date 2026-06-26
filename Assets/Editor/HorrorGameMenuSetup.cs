@@ -15,7 +15,7 @@ public static class HorrorGameMenuSetup
 {
     const string FontReg   = "Assets/Fonts/HerculesPixelFontRegular.otf";
     const string MenuScene = "Assets/Scenes/MainMenu.unity";
-    const string GameScene = "Assets/Scenes/SampleScene.unity";
+    const string GameScene = "Assets/Scenes/Lobby.unity";
 
     [MenuItem("Tools/Horror Game/Build Start Menu")]
     public static void Build()
@@ -76,6 +76,7 @@ public static class HorrorGameMenuSetup
         {
             new EditorBuildSettingsScene(MenuScene, true),
             new EditorBuildSettingsScene(GameScene, true),
+            new EditorBuildSettingsScene("Assets/Scenes/Nightmare.unity", true),
         };
 
         Debug.Log("[HorrorGame] Start menu built at " + MenuScene +
