@@ -25,6 +25,9 @@ public class PlayerController2D : MonoBehaviour
     public Vector2 areaMin = new Vector2(-7.5f, -3.6f);
     public Vector2 areaMax = new Vector2( 7.5f,  3.6f);
 
+    /// <summary>Raw movement intent this frame (x,y in [-1,1]); the camera reads it to resume following.</summary>
+    public Vector2 MoveInput { get; private set; }
+
     static readonly int SpeedHash   = Animator.StringToHash("Speed");
     static readonly int AttackHash  = Animator.StringToHash("Attack");
     static readonly int Attack2Hash = Animator.StringToHash("Attack2");
@@ -64,7 +67,8 @@ public class PlayerController2D : MonoBehaviour
         attack2 = Input.GetKeyDown(KeyCode.K);
 #endif
 
-        Vector2 dir = new Vector2(x, y);
+        MoveInput = new Vector2(x, y);
+        Vector2 dir = MoveInput;
         if (dir.sqrMagnitude > 1f) dir.Normalize();   // diagonals aren't faster
         float speed = running ? runSpeed : walkSpeed;
 
