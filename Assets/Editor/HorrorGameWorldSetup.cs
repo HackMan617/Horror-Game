@@ -7,9 +7,10 @@ using UnityEngine.Rendering.Universal;   // Light2D
 using UnityEngine.UI;
 
 /// <summary>
-/// Builds the two top-down gameplay scenes and wires build settings:
-///   Tools > Horror Game > Build Lobby      -> bird's-eye "paradise" room + blobs + bed
-///   Tools > Horror Game > Build Nightmare  -> horror lighting + survival clock (4-dir)
+/// Builds the two top-down gameplay scenes (camera follows the player) and wires
+/// build settings:
+///   Tools > Horror Game > Build Lobby      -> large bird's-eye "paradise" room
+///   Tools > Horror Game > Build Nightmare  -> horror lighting + survival clock
 /// </summary>
 public static class HorrorGameWorldSetup
 {
@@ -25,40 +26,48 @@ public static class HorrorGameWorldSetup
     const string LobbyScene     = "Assets/Scenes/Lobby.unity";
     const string NightmareScene = "Assets/Scenes/Nightmare.unity";
 
+    // LobbyRoom.png is 712x400 @ 20 PPU -> 35.6 x 20 world units, centred on origin.
+    static readonly Vector2 LobbyHalf = new Vector2(17.8f, 10f);
+    // Background.png tiles 40 x 30 in the nightmare, centred on origin.
+    static readonly Vector2 NightHalf = new Vector2(20f, 15f);
+
     [MenuItem("Tools/Horror Game/Build Lobby")]
     public static void BuildLobby()
     {
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
-        MakeCamera(new Color(0.43f, 0.29f, 0.18f)); // wall colour fills any edge sliver
-        MakeGlobalLight(1.0f);                        // bright, flat (paradise)
+        var cam = MakeCamera(new Color(0.43f, 0.29f, 0.18f));
+        AttachFollow(cam, -LobbyHalf, LobbyHalf);
+        MakeGlobalLight(1.0f);
 
-        MakeSprite("Room", RoomPng, 20f, new Vector3(0f, 0f, 0f), -100);
+        MakeSprite("Room", RoomPng, 20f, Vector3.zero, -100);
 
         var player = MakePlayer();
-        player.transform.position = new Vector3(0f, -1f, 0f);
+        player.transform.position = new Vector3(0f, 0f, 0f);
         var pc = player.GetComponent<PlayerController2D>();
         pc.clampToArea = true;
-        pc.areaMin = new Vector2(-7.6f, -3.7f);
-        pc.areaMax = new Vector2( 7.6f,  3.7f);
+        pc.areaMin = new Vector2(-16.5f, -8.8f);
+        pc.areaMax = new Vector2( 16.5f,  8.8f);
 
-        // blob NPCs (pets / people) clustered on the left, per the sketch
+        // blob NPCs (pets / people) gathered across the left + centre
         var cols = new[]
         {
             new Color(0.82f, 0.58f, 0.35f), new Color(0.47f, 0.66f, 0.90f),
             new Color(0.90f, 0.58f, 0.70f), new Color(0.58f, 0.82f, 0.55f),
             new Color(0.92f, 0.80f, 0.47f), new Color(0.70f, 0.58f, 0.90f),
+            new Color(0.55f, 0.80f, 0.85f),
         };
         var pos = new[]
         {
-            new Vector2(-6.2f, 2.4f), new Vector2(-4.6f, 1.4f), new Vector2(-5.4f, 0.2f),
-            new Vector2(-6.4f, -1.4f), new Vector2(-4.4f, -2.4f), new Vector2(-3.2f, -0.8f),
+            new Vector2(-12f, 4.5f), new Vector2(-9f, 6.5f), new Vector2(-6.5f, 2.5f),
+            new Vector2(-13f, -3.5f), new Vector2(-8f, -5.5f), new Vector2(-4f, -1.5f),
+            new Vector2(-10.5f, 0.5f),
         };
-        var scl = new[] { 1.1f, 0.85f, 1.0f, 0.8f, 1.15f, 0.9f };
+        var scl = new[] { 1.1f, 0.85f, 1.0f, 0.8f, 1.15f, 0.9f, 1.0f };
         for (int i = 0; i < cols.Length; i++) MakeBlob(i, pos[i], scl[i], cols[i]);
 
-        // bed (slightly angled) on the right + sleep interaction
-        var bed = MakeSprite("Bed", BedPng, 20f, new Vector3(6.2f, 1.2f, 0f), 0);
+        // bed on the far right (slightly angled) + sleep interaction
+        var bed = MakeSprite("Bed", BedPng, 20f, new Vector3(14f, 3f, 0f), 0);
         bed.transform.rotation = Quaternion.Euler(0f, 0f, -12f);
         var bi = bed.AddComponent<BedInteraction>();
         bi.interactRange = 2.6f;
@@ -70,7 +79,7 @@ public static class HorrorGameWorldSetup
 
         EditorSceneManager.SaveScene(scene, LobbyScene);
         SetBuildSettings();
-        Debug.Log("[HorrorGame] Top-down Lobby built at " + LobbyScene);
+        Debug.Log("[HorrorGame] Top-down Lobby built (camera-follow) at " + LobbyScene);
     }
 
     [MenuItem("Tools/Horror Game/Build Nightmare")]
@@ -78,14 +87,15 @@ public static class HorrorGameWorldSetup
     {
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
-        MakeCamera(Color.black);
+        var cam = MakeCamera(Color.black);
+        AttachFollow(cam, -NightHalf, NightHalf);
         MakeGlobalLight(0.06f);
 
         var player = MakePlayer();
         var pc = player.GetComponent<PlayerController2D>();
         pc.clampToArea = true;
-        pc.areaMin = new Vector2(-8f, -4f);
-        pc.areaMax = new Vector2( 8f,  4f);
+        pc.areaMin = new Vector2(-18f, -13f);
+        pc.areaMax = new Vector2( 18f,  13f);
 
         var lightGo = new GameObject("PlayerLight");
         lightGo.transform.SetParent(player.transform, false);
@@ -100,7 +110,7 @@ public static class HorrorGameWorldSetup
         pl.pointLightOuterAngle = 360f;
         pl.falloffIntensity = 0.6f;
 
-        MakeTiledSprite("Background", Bg, new Vector2(40f, 30f), new Vector3(0f, 0f, 0f), -100);
+        MakeTiledSprite("Background", Bg, new Vector2(40f, 30f), Vector3.zero, -100);
 
         var font = AssetDatabase.LoadAssetAtPath<Font>(FontPath);
         var canvas = MakeUICanvas();
@@ -114,7 +124,7 @@ public static class HorrorGameWorldSetup
 
         EditorSceneManager.SaveScene(scene, NightmareScene);
         SetBuildSettings();
-        Debug.Log("[HorrorGame] Top-down Nightmare built at " + NightmareScene);
+        Debug.Log("[HorrorGame] Top-down Nightmare built (camera-follow) at " + NightmareScene);
     }
 
     // ---------------------------------------------------------------- helpers
@@ -128,6 +138,14 @@ public static class HorrorGameWorldSetup
         cam.backgroundColor = bg;
         go.transform.position = new Vector3(0f, 0f, -10f);
         return cam;
+    }
+
+    static void AttachFollow(Camera cam, Vector2 worldMin, Vector2 worldMax)
+    {
+        var f = cam.gameObject.AddComponent<CameraFollow2D>();
+        f.clampToBounds = true;
+        f.worldMin = worldMin;
+        f.worldMax = worldMax;
     }
 
     static void MakeGlobalLight(float intensity)
