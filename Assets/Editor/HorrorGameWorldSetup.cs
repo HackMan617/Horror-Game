@@ -7,23 +7,71 @@ using UnityEngine.Rendering.Universal;   // Light2D
 using UnityEngine.UI;
 
 /// <summary>
-/// Builds the two gameplay scenes from scratch and wires build settings:
-///   Tools > Horror Game > Build Lobby      -> bright "paradise" + bed
-///   Tools > Horror Game > Build Nightmare  -> horror lighting + survival clock
-/// Build order set to MainMenu(0), Lobby(1), Nightmare(2).
+/// Builds the two top-down gameplay scenes and wires build settings:
+///   Tools > Horror Game > Build Lobby      -> bird's-eye "paradise" room + blobs + bed
+///   Tools > Horror Game > Build Nightmare  -> horror lighting + survival clock (4-dir)
 /// </summary>
 public static class HorrorGameWorldSetup
 {
     const string PlayerPng  = "Assets/Art/Player/Player.png";
     const string Controller = "Assets/Animation/Player/Player.controller";
     const string Bg         = "Assets/Art/Environment/Background.png";
-    const string Floor      = "Assets/Art/Environment/LobbyFloor.png";
-    const string BedPng     = "Assets/Art/Environment/Bed.png";
+    const string RoomPng    = "Assets/Art/Environment/LobbyRoom.png";
+    const string BedPng     = "Assets/Art/Environment/BedTopDown.png";
+    const string BlobPng    = "Assets/Art/Environment/Blob.png";
     const string FontPath   = "Assets/Fonts/HerculesPixelFontRegular.otf";
 
     const string MenuScene      = "Assets/Scenes/MainMenu.unity";
     const string LobbyScene     = "Assets/Scenes/Lobby.unity";
     const string NightmareScene = "Assets/Scenes/Nightmare.unity";
+
+    [MenuItem("Tools/Horror Game/Build Lobby")]
+    public static void BuildLobby()
+    {
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+
+        MakeCamera(new Color(0.43f, 0.29f, 0.18f)); // wall colour fills any edge sliver
+        MakeGlobalLight(1.0f);                        // bright, flat (paradise)
+
+        MakeSprite("Room", RoomPng, 20f, new Vector3(0f, 0f, 0f), -100);
+
+        var player = MakePlayer();
+        player.transform.position = new Vector3(0f, -1f, 0f);
+        var pc = player.GetComponent<PlayerController2D>();
+        pc.clampToArea = true;
+        pc.areaMin = new Vector2(-7.6f, -3.7f);
+        pc.areaMax = new Vector2( 7.6f,  3.7f);
+
+        // blob NPCs (pets / people) clustered on the left, per the sketch
+        var cols = new[]
+        {
+            new Color(0.82f, 0.58f, 0.35f), new Color(0.47f, 0.66f, 0.90f),
+            new Color(0.90f, 0.58f, 0.70f), new Color(0.58f, 0.82f, 0.55f),
+            new Color(0.92f, 0.80f, 0.47f), new Color(0.70f, 0.58f, 0.90f),
+        };
+        var pos = new[]
+        {
+            new Vector2(-6.2f, 2.4f), new Vector2(-4.6f, 1.4f), new Vector2(-5.4f, 0.2f),
+            new Vector2(-6.4f, -1.4f), new Vector2(-4.4f, -2.4f), new Vector2(-3.2f, -0.8f),
+        };
+        var scl = new[] { 1.1f, 0.85f, 1.0f, 0.8f, 1.15f, 0.9f };
+        for (int i = 0; i < cols.Length; i++) MakeBlob(i, pos[i], scl[i], cols[i]);
+
+        // bed (slightly angled) on the right + sleep interaction
+        var bed = MakeSprite("Bed", BedPng, 20f, new Vector3(6.2f, 1.2f, 0f), 0);
+        bed.transform.rotation = Quaternion.Euler(0f, 0f, -12f);
+        var bi = bed.AddComponent<BedInteraction>();
+        bi.interactRange = 2.6f;
+
+        var font = AssetDatabase.LoadAssetAtPath<Font>(FontPath);
+        var canvas = MakeUICanvas();
+        bi.prompt = MakeUIText(canvas.transform, font, "Press E to sleep", 40,
+            new Vector2(0.5f, 0f), new Vector2(0f, 90f), new Vector2(900f, 80f), Color.white);
+
+        EditorSceneManager.SaveScene(scene, LobbyScene);
+        SetBuildSettings();
+        Debug.Log("[HorrorGame] Top-down Lobby built at " + LobbyScene);
+    }
 
     [MenuItem("Tools/Horror Game/Build Nightmare")]
     public static void BuildNightmare()
@@ -34,6 +82,11 @@ public static class HorrorGameWorldSetup
         MakeGlobalLight(0.06f);
 
         var player = MakePlayer();
+        var pc = player.GetComponent<PlayerController2D>();
+        pc.clampToArea = true;
+        pc.areaMin = new Vector2(-8f, -4f);
+        pc.areaMax = new Vector2( 8f,  4f);
+
         var lightGo = new GameObject("PlayerLight");
         lightGo.transform.SetParent(player.transform, false);
         lightGo.transform.localPosition = new Vector3(0f, 0.9f, 0f);
@@ -47,7 +100,7 @@ public static class HorrorGameWorldSetup
         pl.pointLightOuterAngle = 360f;
         pl.falloffIntensity = 0.6f;
 
-        MakeTiledSprite("Background", Bg, new Vector2(40f, 30f), new Vector3(0f, 2f, 0f), -100);
+        MakeTiledSprite("Background", Bg, new Vector2(40f, 30f), new Vector3(0f, 0f, 0f), -100);
 
         var font = AssetDatabase.LoadAssetAtPath<Font>(FontPath);
         var canvas = MakeUICanvas();
@@ -61,38 +114,7 @@ public static class HorrorGameWorldSetup
 
         EditorSceneManager.SaveScene(scene, NightmareScene);
         SetBuildSettings();
-        Debug.Log("[HorrorGame] Nightmare scene built at " + NightmareScene);
-    }
-
-    [MenuItem("Tools/Horror Game/Build Lobby")]
-    public static void BuildLobby()
-    {
-        var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-
-        MakeCamera(new Color(0.62f, 0.78f, 0.90f)); // soft daylight sky
-        MakeGlobalLight(1.0f);                        // bright paradise
-
-        MakePlayer();                                 // no point light in the lobby
-
-        MakeTiledSprite("Floor", Floor, new Vector2(40f, 30f), new Vector3(0f, 0f, 0f), -100);
-
-        var bedGo = new GameObject("Bed");
-        bedGo.transform.position = new Vector3(4f, 0.5f, 0f);
-        var bedSr = bedGo.AddComponent<SpriteRenderer>();
-        bedSr.sprite = LoadSprite(BedPng);
-        bedSr.sortingOrder = 0;
-        var bed = bedGo.AddComponent<BedInteraction>();
-        bed.interactRange = 2.2f;
-
-        var font = AssetDatabase.LoadAssetAtPath<Font>(FontPath);
-        var canvas = MakeUICanvas();
-        var promptText = MakeUIText(canvas.transform, font, "Press E to sleep", 40,
-            new Vector2(0.5f, 0f), new Vector2(0f, 90f), new Vector2(900f, 80f), Color.white);
-        bed.prompt = promptText;
-
-        EditorSceneManager.SaveScene(scene, LobbyScene);
-        SetBuildSettings();
-        Debug.Log("[HorrorGame] Lobby scene built at " + LobbyScene);
+        Debug.Log("[HorrorGame] Top-down Nightmare built at " + NightmareScene);
     }
 
     // ---------------------------------------------------------------- helpers
@@ -104,7 +126,7 @@ public static class HorrorGameWorldSetup
         cam.orthographicSize = 5f;
         cam.clearFlags = CameraClearFlags.SolidColor;
         cam.backgroundColor = bg;
-        go.transform.position = new Vector3(0f, 1f, -10f);
+        go.transform.position = new Vector3(0f, 0f, -10f);
         return cam;
     }
 
@@ -119,13 +141,50 @@ public static class HorrorGameWorldSetup
     {
         var go = new GameObject("Player");
         go.transform.position = Vector3.zero;
-        var sr = go.AddComponent<SpriteRenderer>();      // defaults to Sprite-Lit-Default in this URP 2D project
+        var sr = go.AddComponent<SpriteRenderer>();
         sr.sprite = LoadSprite(PlayerPng, "player_idle_0");
         sr.sortingOrder = 10;
         var an = go.AddComponent<Animator>();
         an.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<AnimatorController>(Controller);
         go.AddComponent<PlayerController2D>();
         return go;
+    }
+
+    static void MakeBlob(int idx, Vector2 pos, float scale, Color color)
+    {
+        var go = new GameObject("Blob" + idx);
+        go.transform.position = new Vector3(pos.x, pos.y, 0f);
+        go.transform.localScale = Vector3.one * scale;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = ConfigureSprite(BlobPng, 24f);
+        sr.color = color;
+        sr.sortingOrder = 5;
+        go.AddComponent<BlobAnimator>();
+    }
+
+    static GameObject MakeSprite(string name, string path, float ppu, Vector3 pos, int order)
+    {
+        var go = new GameObject(name);
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = ConfigureSprite(path, ppu);
+        sr.sortingOrder = order;
+        return go;
+    }
+
+    static Sprite ConfigureSprite(string path, float ppu)
+    {
+        if (AssetImporter.GetAtPath(path) is TextureImporter imp)
+        {
+            bool changed = false;
+            if (imp.textureType != TextureImporterType.Sprite) { imp.textureType = TextureImporterType.Sprite; changed = true; }
+            if (imp.spriteImportMode != SpriteImportMode.Single) { imp.spriteImportMode = SpriteImportMode.Single; changed = true; }
+            if (imp.filterMode != FilterMode.Point) { imp.filterMode = FilterMode.Point; changed = true; }
+            if (imp.textureCompression != TextureImporterCompression.Uncompressed) { imp.textureCompression = TextureImporterCompression.Uncompressed; changed = true; }
+            if (!Mathf.Approximately(imp.spritePixelsPerUnit, ppu)) { imp.spritePixelsPerUnit = ppu; changed = true; }
+            if (changed) imp.SaveAndReimport();
+        }
+        return LoadSprite(path);
     }
 
     static Sprite LoadSprite(string path, string name = null)

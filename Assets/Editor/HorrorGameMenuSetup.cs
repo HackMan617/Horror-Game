@@ -39,9 +39,8 @@ public static class HorrorGameMenuSetup
         scaler.referenceResolution = new Vector2(1920, 1080);
         scaler.matchWidthOrHeight = 0.5f;
 
-        // EventSystem (new Input System module so buttons are clickable)
-        var es = new GameObject("EventSystem", typeof(EventSystem));
-        es.AddComponent<InputSystemUIInputModule>();
+        // (No EventSystem here — GameManager creates one persistent EventSystem
+        //  at runtime that serves every scene's UI, avoiding duplicates.)
 
         // camera so the scene renders and clears to a calm, "innocent" menu colour
         var camGo = new GameObject("Main Camera", typeof(Camera)) { tag = "MainCamera" };
