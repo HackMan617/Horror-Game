@@ -32,6 +32,8 @@ public class CameraRig : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance != null && GameManager.Instance.IsPaused) return;
+
         float mouseY = 0f;
         bool toggle = false;
 

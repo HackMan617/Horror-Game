@@ -29,6 +29,8 @@ public class PlayerController3D : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance != null && GameManager.Instance.IsPaused) return;
+
         float mouseX = 0f, x = 0f, z = 0f;
         bool run = false;
 

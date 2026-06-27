@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public GameState State { get; private set; } = GameState.Lobby;
     public bool LastNightmareSurvived { get; private set; }
+    public bool IsPaused => _paused;
 
     const string LobbyScene = "Lobby";
     const string NightmareScene = "Nightmare";
@@ -102,17 +103,28 @@ public class GameManager : MonoBehaviour
         _paused = p;
         _pauseRoot.SetActive(p);
         Time.timeScale = p ? 0f : 1f;
+        ApplyCursor(gameplay: !p);   // free the cursor while paused so buttons are clickable
+    }
+
+    // Lock + hide the cursor for mouse-look scenes (a CameraRig is present); otherwise free it.
+    void ApplyCursor(bool gameplay)
+    {
+        bool mouseLook = gameplay && FindAnyObjectByType<CameraRig>() != null;
+        Cursor.lockState = mouseLook ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !mouseLook;
     }
 
     public void Retry()
     {
-        SetPaused(false);
+        _paused = false; _pauseRoot.SetActive(false); Time.timeScale = 1f;
+        ApplyCursor(gameplay: false);   // free now; the reloaded scene's CameraRig re-locks if 3D
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void QuitToMenu()
     {
-        SetPaused(false);
+        _paused = false; _pauseRoot.SetActive(false); Time.timeScale = 1f;
+        ApplyCursor(gameplay: false);   // the menu has no mouse-look
         SceneManager.LoadScene(MenuScene);
     }
 
