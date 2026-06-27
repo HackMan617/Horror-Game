@@ -48,6 +48,7 @@ public class CameraFollow2D : MonoBehaviour
     void LateUpdate()
     {
         if (target == null) return;
+        if (GameManager.Instance != null && GameManager.Instance.IsPaused) return;
 
         // Moving always wins — resume following the player.
         bool moving = _pc != null && _pc.MoveInput.sqrMagnitude > 0.0001f;
