@@ -655,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b2d4d999ff1a7458e1956c2331d0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
-  gameSceneName: Lobby
+  gameSceneName: Sandbox3D
 --- !u!4 &1722023087
 Transform:
   m_ObjectHideFlags: 0
