@@ -31,8 +31,10 @@ public static class HorrorGame3DSetup
     const string FrontSheet = "Assets/Animation/character_sprite_sheet.png";
     const string BedSheet   = "Assets/Animation/bed_sprite_sheet.png";
     const string DogSheet   = "Assets/Animation/dog_apricot.png";
+    const string PartnerBoy = "Assets/Animation/partner_boy.png";
+    const string PartnerGirl = "Assets/Animation/partner_girl.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 6;   // bump to force the auto-run to rebuild the sandbox
+    const int SetupVersion  = 7;   // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
 
@@ -58,11 +60,15 @@ public static class HorrorGame3DSetup
         SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(BedSheet, "bed_", 6, 64, 32, 32f, 0.08f);
         SliceGrid(DogSheet, 32f, 0.06f, 32, 32, 6, new[] { "dog_idle_", "dog_walk_", "dog_run_" });
+        SliceGrid(PartnerBoy, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
+        SliceGrid(PartnerGirl, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
         var backSprites = LoadSheetSprites(BackSheet, "back_");
         var frontSprites = LoadSheetSprites(FrontSheet, "front_");
         var bedSprites = LoadSheetSprites(BedSheet, "bed_");
         var dogIdle = LoadSheetSprites(DogSheet, "dog_idle_");
         var dogWalk = LoadSheetSprites(DogSheet, "dog_walk_");
+        var boyIdle = LoadSheetSprites(PartnerBoy, "idle_");
+        var girlIdle = LoadSheetSprites(PartnerGirl, "idle_");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -129,8 +135,8 @@ public static class HorrorGame3DSetup
         rig.playerSprite = sr;
         charAnim.cameraTransform = camGo.transform;
 
-        // one billboard blob for reference (the other slot is now the dog companion)
-        MakeBlob3D(new Vector3(-4f, 0f, 3f), new Color(0.82f, 0.58f, 0.35f), spriteMat);
+        // the dog + partner companions fill the two former blob slots
+        MakePartner(new Vector3(-4f, 0f, 3f), boyIdle, girlIdle, spriteMat);
 
         // ---- nightmare transition + the bed that triggers it ----
         var nightmare = new GameObject("Nightmare").AddComponent<NightmareController>();
@@ -156,7 +162,8 @@ public static class HorrorGame3DSetup
         AddSceneToBuild(SceneOut);
         Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the character (back " +
                   backSprites.Length + "/front " + frontSprites.Length + "), the bed (" + bedSprites.Length +
-                  "), and the apricot dog (idle " + dogIdle.Length + "/walk " + dogWalk.Length + "). " +
+                  "), the apricot dog (idle " + dogIdle.Length + "/walk " + dogWalk.Length +
+                  "), and the partner (boy idle " + boyIdle.Length + "/girl idle " + girlIdle.Length + "). " +
                   "Walk to the bed + press E to enter the nightmare (the dog hides). " +
                   "Play: WASD + mouse, V = first/third, hold C = look behind.");
     }
@@ -373,6 +380,22 @@ public static class HorrorGame3DSetup
         dog.idleFrames = idle;
         dog.walkFrames = walk;
         dog.fps = 6f;
+    }
+
+    static void MakePartner(Vector3 pos, Sprite[] boyIdle, Sprite[] girlIdle, Material mat)
+    {
+        var go = new GameObject("Partner");
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = boyIdle.Length > 0 ? boyIdle[0] : null;
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+        var anim = go.AddComponent<LoopSpriteAnimator>();
+        anim.frames = boyIdle;                 // overridden at runtime by the chosen partner
+        anim.fps = 6f;
+        var pc = go.AddComponent<PartnerController>();
+        pc.boyIdle = boyIdle;
+        pc.girlIdle = girlIdle;
     }
 
     static Sprite LoadSprite(string path, string name) =>
