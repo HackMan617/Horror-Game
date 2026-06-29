@@ -27,6 +27,8 @@ public class BedPortal : MonoBehaviour
         _inRange = Vector3.Distance(a, b) <= range;
         if (!_inRange) return;
 
+        if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(prompt);
+
         bool pressed;
 #if ENABLE_INPUT_SYSTEM
         var kb = Keyboard.current;
@@ -35,18 +37,5 @@ public class BedPortal : MonoBehaviour
         pressed = Input.GetKeyDown(KeyCode.E);
 #endif
         if (pressed && nightmare != null) nightmare.EnterNightmare();
-    }
-
-    void OnGUI()
-    {
-        if (!_inRange) return;
-        var style = new GUIStyle(GUI.skin.label)
-        {
-            alignment = TextAnchor.MiddleCenter,
-            fontSize = 18,
-            fontStyle = FontStyle.Bold,
-        };
-        style.normal.textColor = Color.white;
-        GUI.Label(new Rect(0f, Screen.height * 0.72f, Screen.width, 30f), prompt, style);
     }
 }
