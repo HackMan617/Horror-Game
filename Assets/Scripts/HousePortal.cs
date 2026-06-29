@@ -6,16 +6,22 @@ using UnityEngine.InputSystem;
 #endif
 
 /// <summary>
-/// The house the player enters from the exterior. When the player is near it shows a prompt;
-/// pressing E plays the door-opening frames once, fades to black, then loads the interior scene.
+/// The house the player enters. As the player walks around it, it shows directional views
+/// (front / back / east / west); a Billboard keeps the chosen view facing the camera. From the
+/// front a "Press E to enter" prompt appears; pressing E plays the door-opening frames, fades to
+/// black, and loads the interior scene.
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public class HousePortal : MonoBehaviour
 {
     public Transform player;
-    public Sprite[] doorFrames;             // 0 = closed ... last = fully open
+    public Transform cameraTransform;       // used to pick the directional view
+    public Sprite[] doorFrames;             // front: 0 = closed ... last = open
+    public Sprite backSprite;
+    public Sprite sideSprite;               // viewed from the east (+X)
+    public Sprite sideMirrorSprite;         // viewed from the west (-X)
     public string interiorScene = "Sandbox3D";
-    public float range = 3.5f;
+    public float range = 4f;
     public float openFps = 8f;
     public float fadeDuration = 0.7f;
 
@@ -40,17 +46,41 @@ public class HousePortal : MonoBehaviour
 
         Vector3 a = player.position; a.y = 0f;
         Vector3 b = transform.position; b.y = 0f;
-        if (Vector3.Distance(a, b) > range) return;
+        bool inFront = Vector3.Distance(a, b) <= range && player.position.z < transform.position.z;
+        if (!inFront) return;
 
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt("Press E to enter");
         if (EnterPressed()) StartCoroutine(Enter());
     }
 
+    void LateUpdate()
+    {
+        // pick the directional view by where the camera is around the house (the Billboard
+        // component handles facing it toward the camera)
+        if (_entering || cameraTransform == null || _sr == null) return;
+        Vector3 toCam = cameraTransform.position - transform.position;
+        toCam.y = 0f;
+        if (toCam.sqrMagnitude < 0.0001f) return;
+        _sr.sprite = PickView(toCam.normalized);
+    }
+
+    Sprite PickView(Vector3 d)
+    {
+        float south = -d.z;     // +1 = camera in front (the door side)
+        float east  =  d.x;     // +1 = camera to the east
+        if (Mathf.Abs(south) >= Mathf.Abs(east))
+            return south >= 0f ? Front() : Or(backSprite);
+        return east >= 0f ? Or(sideSprite) : Or(sideMirrorSprite);
+    }
+
+    Sprite Front() => (doorFrames != null && doorFrames.Length > 0) ? doorFrames[0] : null;
+    Sprite Or(Sprite s) => s != null ? s : Front();
+
     IEnumerator Enter()
     {
         _entering = true;
+        _sr.sprite = Front();
 
-        // play the door-opening frames once
         if (doorFrames != null && doorFrames.Length > 0)
         {
             float t = 0f;
@@ -67,7 +97,6 @@ public class HousePortal : MonoBehaviour
         }
         yield return new WaitForSeconds(0.25f);
 
-        // fade to black, then load the interior
         float ft = 0f;
         while (ft < fadeDuration)
         {

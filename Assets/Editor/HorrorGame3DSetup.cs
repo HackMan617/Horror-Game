@@ -34,11 +34,16 @@ public static class HorrorGame3DSetup
     const string PartnerBoy = "Assets/Animation/partner_boy.png";
     const string PartnerGirl = "Assets/Animation/partner_girl.png";
     const string HouseSheet = "Assets/Animation/house.png";
+    const string HouseBack  = "Assets/Animation/house_back.png";
+    const string HouseSide  = "Assets/Animation/house_side.png";
+    const string HouseSideMirror = "Assets/Animation/house_side_mirror.png";
+    const string TreeSheet  = "Assets/Animation/tree_spruce.png";
+    const string GrassSheet = "Assets/Animation/grass_tufts.png";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 11;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 12;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -200,8 +205,18 @@ public static class HorrorGame3DSetup
     public static void BuildExterior()
     {
         EnsureRenderer3D();
-        SliceStrip(HouseSheet, "house_", 5, 128, 152, 16f, 0f);   // door-opening frames
+        SliceStrip(HouseSheet, "house_", 5, 128, 152, 16f, 0f);          // front door frames
+        SliceStrip(HouseBack, "houseback_", 1, 128, 152, 16f, 0f);
+        SliceStrip(HouseSide, "houseside_", 1, 168, 152, 16f, 0f);
+        SliceStrip(HouseSideMirror, "housesidem_", 1, 168, 152, 16f, 0f);
+        SliceGrid(TreeSheet, 20f, 0.05f, 80, 152, 6, new[] { "tree_", "treeb_" });
+        SliceGrid(GrassSheet, 32f, 0f, 32, 32, 6, new[] { "grassa_", "grassb_", "grassc_" });
         var doorFrames = LoadSheetSprites(HouseSheet, "house_");
+        var houseBack = LoadSheetSprites(HouseBack, "houseback_");
+        var houseSide = LoadSheetSprites(HouseSide, "houseside_");
+        var houseSideM = LoadSheetSprites(HouseSideMirror, "housesidem_");
+        var trees = LoadSheetSprites(TreeSheet, "tree");
+        var grass = LoadSheetSprites(GrassSheet, "grass");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -221,25 +236,50 @@ public static class HorrorGame3DSetup
 
         var spriteMat = SpriteMaterial();
 
-        // the house faces the player's approach (not billboarded)
+        // the house: billboard + directional views so the player can walk around it
         var house = new GameObject("House");
-        house.transform.position = new Vector3(0f, 0f, 8f);
+        house.transform.position = new Vector3(0f, 0f, 10f);
         var hsr = house.AddComponent<SpriteRenderer>();
         hsr.sprite = doorFrames.Length > 0 ? doorFrames[0] : null;
         hsr.sharedMaterial = spriteMat;
+        house.AddComponent<Billboard>();
         var hp = house.AddComponent<HousePortal>();
         hp.doorFrames = doorFrames;
+        hp.backSprite = houseBack.Length > 0 ? houseBack[0] : null;
+        hp.sideSprite = houseSide.Length > 0 ? houseSide[0] : null;
+        hp.sideMirrorSprite = houseSideM.Length > 0 ? houseSideM[0] : null;
         hp.interiorScene = "Sandbox3D";
 
         var player = BuildPlayerRig(new Vector3(0f, 0.1f, 0f), spriteMat);   // spawns facing the house
         hp.player = player.transform;
+        var pcam = player.GetComponentInChildren<Camera>();
+        if (pcam != null) hp.cameraTransform = pcam.transform;
 
         new GameObject("DialogUI").AddComponent<DialogUI>();
 
+        // ---- yard decoration: spruce trees + grass tufts (billboards) ----
+        Vector3[] treePos = {
+            new Vector3(-10f, 0f, 6f), new Vector3(10f, 0f, 6f), new Vector3(-13f, 0f, 15f),
+            new Vector3(13f, 0f, 14f), new Vector3(-8f, 0f, -5f), new Vector3(8f, 0f, -5f),
+            new Vector3(-15f, 0f, 1f),
+        };
+        for (int i = 0; i < treePos.Length && trees.Length > 0; i++)
+            MakeProp("Tree", treePos[i], trees[(i * 2) % trees.Length], spriteMat);
+
+        Vector3[] grassPos = {
+            new Vector3(-3f, 0f, 3f), new Vector3(3f, 0f, 5f), new Vector3(-5f, 0f, -2f),
+            new Vector3(5f, 0f, 1f), new Vector3(-2f, 0f, 6f), new Vector3(4f, 0f, 7f),
+            new Vector3(-6f, 0f, 4f), new Vector3(6f, 0f, -3f), new Vector3(2f, 0f, -4f),
+            new Vector3(-4f, 0f, 9f),
+        };
+        for (int i = 0; i < grassPos.Length && grass.Length > 0; i++)
+            MakeProp("Grass", grassPos[i], grass[(i * 3) % grass.Length], spriteMat);
+
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
-        Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the house (" +
-                  doorFrames.Length + " door frames). Walk up to the house + press E to enter.");
+        Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the house (front " +
+                  doorFrames.Length + " door frames + back + 2 sides), " + treePos.Length + " trees, " +
+                  grassPos.Length + " grass tufts. Walk around the house; from the front press E to enter.");
     }
 
     // -------------------------------------------------------------- renderer
@@ -455,6 +495,17 @@ public static class HorrorGame3DSetup
         sr.color = color;
         go.AddComponent<Billboard>();
         go.AddComponent<BlobAnimator>();
+    }
+
+    static void MakeProp(string name, Vector3 pos, Sprite sprite, Material mat)
+    {
+        if (sprite == null) return;
+        var go = new GameObject(name);
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = sprite;
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
     }
 
     static void MakeDog(Vector3 pos, Transform player, NightmareController nightmare,
