@@ -34,7 +34,7 @@ public static class HorrorGame3DSetup
     const string PartnerBoy = "Assets/Animation/partner_boy.png";
     const string PartnerGirl = "Assets/Animation/partner_girl.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 9;   // bump to force the auto-run to rebuild the sandbox
+    const int SetupVersion  = 10;  // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
 
@@ -72,6 +72,8 @@ public static class HorrorGame3DSetup
         var girlIdle = LoadSheetSprites(PartnerGirl, "idle_");
         var boySmile = LoadSheetSprites(PartnerBoy, "smile_");
         var girlSmile = LoadSheetSprites(PartnerGirl, "smile_");
+        var boySpeak = LoadSheetSprites(PartnerBoy, "speak_");
+        var girlSpeak = LoadSheetSprites(PartnerGirl, "speak_");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -139,11 +141,13 @@ public static class HorrorGame3DSetup
         charAnim.cameraTransform = camGo.transform;
 
         // the dog + partner companions fill the two former blob slots
-        MakePartner(new Vector3(-4f, 0f, 3f), boyIdle, girlIdle, boySmile, girlSmile, spriteMat);
+        MakePartner(new Vector3(-4f, 0f, 3f), player.transform, boyIdle, girlIdle, boySmile, girlSmile, boySpeak, girlSpeak, spriteMat);
 
         // ---- nightmare transition + the bed that triggers it ----
         var nightmare = new GameObject("Nightmare").AddComponent<NightmareController>();
         nightmare.sun = sun;
+
+        new GameObject("DialogUI").AddComponent<DialogUI>();   // shared interaction prompt + dialog
 
         var bed = new GameObject("Bed");
         bed.transform.position = new Vector3(5f, 0f, 8.2f);    // across the room, by the north wall
@@ -386,8 +390,8 @@ public static class HorrorGame3DSetup
         dog.fps = 6f;
     }
 
-    static void MakePartner(Vector3 pos, Sprite[] boyIdle, Sprite[] girlIdle,
-                            Sprite[] boySmile, Sprite[] girlSmile, Material mat)
+    static void MakePartner(Vector3 pos, Transform player, Sprite[] boyIdle, Sprite[] girlIdle,
+                            Sprite[] boySmile, Sprite[] girlSmile, Sprite[] boySpeak, Sprite[] girlSpeak, Material mat)
     {
         var go = new GameObject("Partner");
         go.transform.position = pos;
@@ -399,10 +403,13 @@ public static class HorrorGame3DSetup
         anim.frames = boyIdle;                 // overridden at runtime by the chosen partner
         anim.fps = 6f;
         var pc = go.AddComponent<PartnerController>();
+        pc.player = player;
         pc.boyIdle = boyIdle;
         pc.girlIdle = girlIdle;
         pc.boySmile = boySmile;
         pc.girlSmile = girlSmile;
+        pc.boySpeak = boySpeak;
+        pc.girlSpeak = girlSpeak;
     }
 
     static Sprite LoadSprite(string path, string name) =>
