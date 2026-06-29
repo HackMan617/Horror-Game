@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -10,8 +12,10 @@ using UnityEngine.Rendering.Universal;
 /// Stage 1 of the 2.5D pivot: ensures a 3D Universal Renderer exists (added to the
 /// URP asset as a second renderer so the existing 2D scenes keep working), then
 /// builds an isolated 3D sandbox scene with a floor, walls, lighting, and the
-/// billboard player rig (mouse-look + V toggles first/third person).
-/// Menu: Tools > Horror Game > Build 3D Sandbox
+/// billboard player rig (mouse-look + V toggles first/third person). The player
+/// uses the new character: the back sheet when viewed from behind, the front sheet
+/// when viewed from the front (hold C to look behind), both animated from movement.
+/// Menu: Tools > Horror Game > Build 3D Sandbox. Also auto-runs once (version-gated).
 /// </summary>
 public static class HorrorGame3DSetup
 {
@@ -21,14 +25,35 @@ public static class HorrorGame3DSetup
     const string PlayerPng  = "Assets/Art/Player/Player.png";
     const string FloorTex   = "Assets/Art/Environment/LobbyFloor.png";
     const string BlobPng    = "Assets/Art/Environment/Blob.png";
+    const string BackSheet  = "Assets/Animation/character_sprite_sheet_back.png";
+    const string FrontSheet = "Assets/Animation/character_sprite_sheet.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
+    const int SetupVersion  = 3;   // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
+
+    [InitializeOnLoadMethod]
+    static void AutoRun()
+    {
+        EditorApplication.delayCall += () =>
+        {
+            if (EditorApplication.isCompiling || EditorApplication.isUpdating ||
+                EditorApplication.isPlayingOrWillChangePlaymode) return;
+            if (EditorPrefs.GetInt("HG3D_SetupVersion", 0) >= SetupVersion) return;
+            EditorPrefs.SetInt("HG3D_SetupVersion", SetupVersion);
+            try { BuildSandbox3D(); }
+            catch (System.Exception e) { Debug.LogError("[HorrorGame] 3D auto-build failed: " + e); }
+        };
+    }
 
     [MenuItem("Tools/Horror Game/Build 3D Sandbox")]
     public static void BuildSandbox3D()
     {
         EnsureRenderer3D();
+        SliceSheet(BackSheet, "back_");
+        SliceSheet(FrontSheet, "front_");
+        var backSprites = LoadSheetSprites(BackSheet, "back_");
+        var frontSprites = LoadSheetSprites(FrontSheet, "front_");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -66,9 +91,14 @@ public static class HorrorGame3DSetup
         spriteGo.transform.SetParent(player.transform, false);
         spriteGo.transform.localPosition = Vector3.zero;              // feet pivot at the player's feet
         var sr = spriteGo.AddComponent<SpriteRenderer>();
-        sr.sprite = LoadSprite(PlayerPng, "player_idle_0");
+        sr.sprite = backSprites.Length > 0 ? backSprites[0] : LoadSprite(PlayerPng, "player_idle_0");
         sr.sharedMaterial = spriteMat;
         spriteGo.AddComponent<Billboard>();
+        var charAnim = spriteGo.AddComponent<CharacterBillboardAnimator>();
+        charAnim.backFrames = backSprites;
+        charAnim.frontFrames = frontSprites;
+        charAnim.player = player.GetComponent<PlayerController3D>();
+        charAnim.fps = 8f;
 
         var pivot = new GameObject("CameraPivot");
         pivot.transform.SetParent(player.transform, false);
@@ -82,6 +112,7 @@ public static class HorrorGame3DSetup
         cam.GetUniversalAdditionalCameraData().SetRenderer(_renderer3DIndex);
         rig.cam = cam;
         rig.playerSprite = sr;
+        charAnim.cameraTransform = camGo.transform;
 
         // a couple of billboard blobs for reference
         MakeBlob3D(new Vector3(-4f, 0f, 3f), new Color(0.82f, 0.58f, 0.35f), spriteMat);
@@ -89,8 +120,9 @@ public static class HorrorGame3DSetup
 
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
-        Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut +
-                  " (renderer index " + _renderer3DIndex + "). Play, then WASD + mouse to look, V = first/third person.");
+        Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the new character (back " +
+                  backSprites.Length + " / front " + frontSprites.Length + " frames). " +
+                  "Play: WASD + mouse, V = first/third person, hold C = look behind (shows the front).");
     }
 
     // -------------------------------------------------------------- renderer
@@ -123,6 +155,51 @@ public static class HorrorGame3DSetup
         }
         _renderer3DIndex = found;
     }
+
+    // -------------------------------------------------------------- character sheets
+    // Slices a 160x32 walk strip into 5 full 32px cells with a feet pivot, so the
+    // front and back sheets stay pixel-consistent (same quad size + ground point).
+    static void SliceSheet(string path, string prefix)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = 16f;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        var rects = new List<SpriteRect>();
+        for (int i = 0; i < 5; i++)
+            rects.Add(new SpriteRect
+            {
+                name = prefix + i,
+                spriteID = GUID.Generate(),
+                rect = new Rect(i * 32, 0, 32, 32),
+                pivot = new Vector2(0.5f, 0.09f),     // feet, bottom-centre
+                alignment = SpriteAlignment.Custom,
+                border = Vector4.zero,
+            });
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
+
+    static Sprite[] LoadSheetSprites(string path, string prefix) =>
+        AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>()
+            .Where(s => s.name.StartsWith(prefix)).OrderBy(s => s.name).ToArray();
 
     // -------------------------------------------------------------- helpers
     static Material LitMaterial(string name, Color color, string texPath, Vector2 tiling, bool repeat)
