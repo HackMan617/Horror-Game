@@ -34,7 +34,7 @@ public static class HorrorGame3DSetup
     const string PartnerBoy = "Assets/Animation/partner_boy.png";
     const string PartnerGirl = "Assets/Animation/partner_girl.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 7;   // bump to force the auto-run to rebuild the sandbox
+    const int SetupVersion  = 9;   // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
 
@@ -59,7 +59,7 @@ public static class HorrorGame3DSetup
         SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(BedSheet, "bed_", 6, 64, 32, 32f, 0.08f);
-        SliceGrid(DogSheet, 32f, 0.06f, 32, 32, 6, new[] { "dog_idle_", "dog_walk_", "dog_run_" });
+        SliceGrid(DogSheet, 32f, 0.06f, 32, 32, 6, new[] { "dog_idle_", "dog_walk_", "dog_run_", "dog_heart_" });
         SliceGrid(PartnerBoy, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
         SliceGrid(PartnerGirl, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
         var backSprites = LoadSheetSprites(BackSheet, "back_");
@@ -67,8 +67,11 @@ public static class HorrorGame3DSetup
         var bedSprites = LoadSheetSprites(BedSheet, "bed_");
         var dogIdle = LoadSheetSprites(DogSheet, "dog_idle_");
         var dogWalk = LoadSheetSprites(DogSheet, "dog_walk_");
+        var dogHeart = LoadSheetSprites(DogSheet, "dog_heart_");
         var boyIdle = LoadSheetSprites(PartnerBoy, "idle_");
         var girlIdle = LoadSheetSprites(PartnerGirl, "idle_");
+        var boySmile = LoadSheetSprites(PartnerBoy, "smile_");
+        var girlSmile = LoadSheetSprites(PartnerGirl, "smile_");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -136,7 +139,7 @@ public static class HorrorGame3DSetup
         charAnim.cameraTransform = camGo.transform;
 
         // the dog + partner companions fill the two former blob slots
-        MakePartner(new Vector3(-4f, 0f, 3f), boyIdle, girlIdle, spriteMat);
+        MakePartner(new Vector3(-4f, 0f, 3f), boyIdle, girlIdle, boySmile, girlSmile, spriteMat);
 
         // ---- nightmare transition + the bed that triggers it ----
         var nightmare = new GameObject("Nightmare").AddComponent<NightmareController>();
@@ -156,7 +159,7 @@ public static class HorrorGame3DSetup
         portal.nightmare = nightmare;
 
         // ---- apricot dog companion (overworld only; hides during the nightmare) ----
-        MakeDog(new Vector3(3f, 0f, 5f), player.transform, nightmare, dogIdle, dogWalk, spriteMat);
+        MakeDog(new Vector3(3f, 0f, 5f), player.transform, nightmare, dogIdle, dogWalk, dogHeart, spriteMat);
 
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
@@ -366,7 +369,7 @@ public static class HorrorGame3DSetup
     }
 
     static void MakeDog(Vector3 pos, Transform player, NightmareController nightmare,
-                        Sprite[] idle, Sprite[] walk, Material mat)
+                        Sprite[] idle, Sprite[] walk, Sprite[] heart, Material mat)
     {
         var go = new GameObject("Dog");
         go.transform.position = pos;
@@ -379,10 +382,12 @@ public static class HorrorGame3DSetup
         dog.nightmare = nightmare;
         dog.idleFrames = idle;
         dog.walkFrames = walk;
+        dog.heartFrames = heart;
         dog.fps = 6f;
     }
 
-    static void MakePartner(Vector3 pos, Sprite[] boyIdle, Sprite[] girlIdle, Material mat)
+    static void MakePartner(Vector3 pos, Sprite[] boyIdle, Sprite[] girlIdle,
+                            Sprite[] boySmile, Sprite[] girlSmile, Material mat)
     {
         var go = new GameObject("Partner");
         go.transform.position = pos;
@@ -396,6 +401,8 @@ public static class HorrorGame3DSetup
         var pc = go.AddComponent<PartnerController>();
         pc.boyIdle = boyIdle;
         pc.girlIdle = girlIdle;
+        pc.boySmile = boySmile;
+        pc.girlSmile = girlSmile;
     }
 
     static Sprite LoadSprite(string path, string name) =>
