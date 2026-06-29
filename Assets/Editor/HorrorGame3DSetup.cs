@@ -27,8 +27,9 @@ public static class HorrorGame3DSetup
     const string BlobPng    = "Assets/Art/Environment/Blob.png";
     const string BackSheet  = "Assets/Animation/character_sprite_sheet_back.png";
     const string FrontSheet = "Assets/Animation/character_sprite_sheet.png";
+    const string BedSheet   = "Assets/Animation/bed_sprite_sheet.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 3;   // bump to force the auto-run to rebuild the sandbox
+    const int SetupVersion  = 4;   // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
 
@@ -50,10 +51,12 @@ public static class HorrorGame3DSetup
     public static void BuildSandbox3D()
     {
         EnsureRenderer3D();
-        SliceSheet(BackSheet, "back_");
-        SliceSheet(FrontSheet, "front_");
+        SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
+        SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
+        SliceStrip(BedSheet, "bed_", 6, 64, 32, 32f, 0.08f);
         var backSprites = LoadSheetSprites(BackSheet, "back_");
         var frontSprites = LoadSheetSprites(FrontSheet, "front_");
+        var bedSprites = LoadSheetSprites(BedSheet, "bed_");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -118,11 +121,29 @@ public static class HorrorGame3DSetup
         MakeBlob3D(new Vector3(-4f, 0f, 3f), new Color(0.82f, 0.58f, 0.35f), spriteMat);
         MakeBlob3D(new Vector3(3f, 0f, 5f),  new Color(0.47f, 0.66f, 0.90f), spriteMat);
 
+        // ---- nightmare transition + the bed that triggers it ----
+        var nightmare = new GameObject("Nightmare").AddComponent<NightmareController>();
+        nightmare.sun = sun;
+
+        var bed = new GameObject("Bed");
+        bed.transform.position = new Vector3(5f, 0f, 8.2f);    // across the room, by the north wall
+        var bedSr = bed.AddComponent<SpriteRenderer>();
+        bedSr.sprite = bedSprites.Length > 0 ? bedSprites[0] : null;
+        bedSr.sharedMaterial = spriteMat;
+        bed.AddComponent<Billboard>();
+        var bedAnim = bed.AddComponent<LoopSpriteAnimator>();
+        bedAnim.frames = bedSprites;
+        bedAnim.fps = 6f;
+        var portal = bed.AddComponent<BedPortal>();
+        portal.player = player.transform;
+        portal.nightmare = nightmare;
+
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
         Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the new character (back " +
-                  backSprites.Length + " / front " + frontSprites.Length + " frames). " +
-                  "Play: WASD + mouse, V = first/third person, hold C = look behind (shows the front).");
+                  backSprites.Length + " / front " + frontSprites.Length + " frames) and the bed (" +
+                  bedSprites.Length + " frames). Walk to the bed + press E to enter the nightmare. " +
+                  "Play: WASD + mouse, V = first/third, hold C = look behind.");
     }
 
     // -------------------------------------------------------------- renderer
@@ -156,17 +177,18 @@ public static class HorrorGame3DSetup
         _renderer3DIndex = found;
     }
 
-    // -------------------------------------------------------------- character sheets
-    // Slices a 160x32 walk strip into 5 full 32px cells with a feet pivot, so the
-    // front and back sheets stay pixel-consistent (same quad size + ground point).
-    static void SliceSheet(string path, string prefix)
+    // -------------------------------------------------------------- sprite sheets
+    // Slices a horizontal strip into `count` cells (cellW x cellH) with a bottom-centre
+    // pivot, so billboards share a consistent quad size and ground point. PPU sets the
+    // world size: characters use 16 (32px -> 2 units tall), the bed uses 32.
+    static void SliceStrip(string path, string prefix, int count, int cellW, int cellH, float ppu, float pivotY)
     {
         if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
         imp.textureType = TextureImporterType.Sprite;
         imp.spriteImportMode = SpriteImportMode.Multiple;
         imp.filterMode = FilterMode.Point;
         imp.textureCompression = TextureImporterCompression.Uncompressed;
-        imp.spritePixelsPerUnit = 16f;
+        imp.spritePixelsPerUnit = ppu;
         imp.mipmapEnabled = false;
         imp.wrapMode = TextureWrapMode.Clamp;
 
@@ -176,13 +198,13 @@ public static class HorrorGame3DSetup
         dp.InitSpriteEditorDataProvider();
 
         var rects = new List<SpriteRect>();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < count; i++)
             rects.Add(new SpriteRect
             {
                 name = prefix + i,
                 spriteID = GUID.Generate(),
-                rect = new Rect(i * 32, 0, 32, 32),
-                pivot = new Vector2(0.5f, 0.09f),     // feet, bottom-centre
+                rect = new Rect(i * cellW, 0, cellW, cellH),
+                pivot = new Vector2(0.5f, pivotY),    // bottom-centre (feet / base)
                 alignment = SpriteAlignment.Custom,
                 border = Vector4.zero,
             });
