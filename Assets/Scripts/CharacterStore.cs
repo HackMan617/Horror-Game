@@ -35,6 +35,18 @@ public static class CharacterStore
         };
     }
 
+    // ---- partner companion (boy / girl), also chosen on the select screen ----
+    public static readonly string[] PartnerNames = { "Boy", "Girl" };
+
+    public static void SavePartner(int partner)
+    {
+        PlayerPrefs.SetInt(Key + "partner", Mathf.Clamp(partner, 0, PartnerNames.Length - 1));
+        PlayerPrefs.Save();
+    }
+
+    public static int LoadPartner() =>
+        Mathf.Clamp(PlayerPrefs.GetInt(Key + "partner", 0), 0, PartnerNames.Length - 1);
+
     public struct Preset
     {
         public string name;
