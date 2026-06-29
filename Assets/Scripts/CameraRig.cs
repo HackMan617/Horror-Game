@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 /// Sits on a pivot at the player's head (child of the player, so it inherits yaw).
 /// Mouse Y pitches it; V toggles first/third person. The child camera sits at the
 /// pivot (first person) or behind it (third person), so pitch orbits in 3rd person.
+/// Hold C to look behind: the camera arm swings 180 so it views the player's front
+/// (and what's behind them) — this is what surfaces the front-facing sprite.
 /// Hides the player billboard in first person. Locks the cursor for mouse-look.
 /// </summary>
 public class CameraRig : MonoBehaviour
@@ -36,21 +38,27 @@ public class CameraRig : MonoBehaviour
 
         float mouseY = 0f;
         bool toggle = false;
+        bool lookBack = false;
 
 #if ENABLE_INPUT_SYSTEM
         var mouse = Mouse.current;
         var kb = Keyboard.current;
         if (mouse != null) mouseY = mouse.delta.ReadValue().y * mouseSensitivity;
-        if (kb != null) toggle = kb.vKey.wasPressedThisFrame;
+        if (kb != null) { toggle = kb.vKey.wasPressedThisFrame; lookBack = kb.cKey.isPressed; }
 #else
         mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * 10f;
         toggle = Input.GetKeyDown(KeyCode.V);
+        lookBack = Input.GetKey(KeyCode.C);
 #endif
 
         if (toggle) { _firstPerson = !_firstPerson; Apply(); }
 
         _pitch = Mathf.Clamp(_pitch - mouseY, minPitch, maxPitch);
-        transform.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
+        // Hold C to look behind: swing the camera arm 180 so it views the player's
+        // front (and the area behind them). The billboard animator then shows the
+        // front frames, since the camera is now in front of the player.
+        float lookYaw = lookBack ? 180f : 0f;
+        transform.localRotation = Quaternion.Euler(_pitch, lookYaw, 0f);
     }
 
     void Apply()
