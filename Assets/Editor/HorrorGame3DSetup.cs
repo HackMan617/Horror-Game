@@ -33,8 +33,12 @@ public static class HorrorGame3DSetup
     const string DogSheet   = "Assets/Animation/dog_apricot.png";
     const string PartnerBoy = "Assets/Animation/partner_boy.png";
     const string PartnerGirl = "Assets/Animation/partner_girl.png";
+    const string HouseSheet = "Assets/Animation/house.png";
+    const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
+    const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 10;  // bump to force the auto-run to rebuild the sandbox
+    const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
+    const int SetupVersion  = 11;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -47,7 +51,7 @@ public static class HorrorGame3DSetup
                 EditorApplication.isPlayingOrWillChangePlaymode) return;
             if (EditorPrefs.GetInt("HG3D_SetupVersion", 0) >= SetupVersion) return;
             EditorPrefs.SetInt("HG3D_SetupVersion", SetupVersion);
-            try { BuildSandbox3D(); }
+            try { BuildSandbox3D(); BuildExterior(); }
             catch (System.Exception e) { Debug.LogError("[HorrorGame] 3D auto-build failed: " + e); }
         };
     }
@@ -85,14 +89,16 @@ public static class HorrorGame3DSetup
         sun.color = new Color(1f, 0.97f, 0.9f);
         sun.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
 
-        // floor (tiled pixel texture) + walls
+        // floor + walls (interior tiles)
+        EnsurePixelTexture(InteriorFloorTex);
+        EnsurePixelTexture(InteriorWallTex);
         var floor = GameObject.CreatePrimitive(PrimitiveType.Plane);
         floor.name = "Floor";
         floor.transform.localScale = new Vector3(2f, 1f, 2f);          // 10x10 plane -> 20x20
         floor.GetComponent<Renderer>().sharedMaterial =
-            LitMaterial("FloorMat3D", Color.white, FloorTex, new Vector2(8f, 8f), repeat: true);
+            LitMaterial("FloorMat3D", Color.white, InteriorFloorTex, new Vector2(10f, 10f), repeat: true);
 
-        var wallMat = LitMaterial("WallMat3D", new Color(0.42f, 0.30f, 0.20f), null, Vector2.one, false);
+        var wallMat = LitMaterial("WallMat3D", Color.white, InteriorWallTex, new Vector2(8f, 1.5f), repeat: true);
         MakeWall("Wall_N", new Vector3(0f, 1.5f, 10f),  new Vector3(20f, 3f, 0.5f), wallMat);
         MakeWall("Wall_S", new Vector3(0f, 1.5f, -10f), new Vector3(20f, 3f, 0.5f), wallMat);
         MakeWall("Wall_E", new Vector3(10f, 1.5f, 0f),  new Vector3(0.5f, 3f, 20f), wallMat);
@@ -100,45 +106,8 @@ public static class HorrorGame3DSetup
 
         var spriteMat = SpriteMaterial();
 
-        // ---- player rig ----
-        var player = new GameObject("Player");
-        player.transform.position = new Vector3(0f, 0.1f, -5f);
-        var cc = player.AddComponent<CharacterController>();
-        cc.height = 2f; cc.radius = 0.3f; cc.center = new Vector3(0f, 1f, 0f);
-        player.AddComponent<PlayerController3D>();
-
-        var spriteGo = new GameObject("Sprite");
-        spriteGo.transform.SetParent(player.transform, false);
-        spriteGo.transform.localPosition = Vector3.zero;              // feet pivot at the player's feet
-        var sr = spriteGo.AddComponent<SpriteRenderer>();
-        sr.sprite = backSprites.Length > 0 ? backSprites[0] : LoadSprite(PlayerPng, "player_idle_0");
-        sr.sharedMaterial = spriteMat;
-        spriteGo.AddComponent<Billboard>();
-        var charAnim = spriteGo.AddComponent<CharacterBillboardAnimator>();
-        charAnim.backFrames = backSprites;
-        charAnim.frontFrames = frontSprites;
-        charAnim.player = player.GetComponent<PlayerController3D>();
-        charAnim.fps = 8f;
-
-        // recolor the billboard to the look chosen on the character-select screen
-        var applier = spriteGo.AddComponent<CharacterLookApplier>();
-        applier.masterFront = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterFront);
-        applier.masterBack = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterBack);
-        applier.animator = charAnim;
-
-        var pivot = new GameObject("CameraPivot");
-        pivot.transform.SetParent(player.transform, false);
-        pivot.transform.localPosition = new Vector3(0f, 1.6f, 0f);    // head height
-        var rig = pivot.AddComponent<CameraRig>();
-
-        var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
-        camGo.transform.SetParent(pivot.transform, false);
-        var cam = camGo.AddComponent<Camera>();
-        cam.nearClipPlane = 0.05f;
-        cam.GetUniversalAdditionalCameraData().SetRenderer(_renderer3DIndex);
-        rig.cam = cam;
-        rig.playerSprite = sr;
-        charAnim.cameraTransform = camGo.transform;
+        // ---- player rig (recolored to the chosen look) ----
+        var player = BuildPlayerRig(new Vector3(0f, 0.1f, -5f), spriteMat);
 
         // the dog + partner companions fill the two former blob slots
         MakePartner(new Vector3(-4f, 0f, 3f), player.transform, boyIdle, girlIdle, boySmile, girlSmile, boySpeak, girlSpeak, spriteMat);
@@ -173,6 +142,104 @@ public static class HorrorGame3DSetup
                   "), and the partner (boy idle " + boyIdle.Length + "/girl idle " + girlIdle.Length + "). " +
                   "Walk to the bed + press E to enter the nightmare (the dog hides). " +
                   "Play: WASD + mouse, V = first/third, hold C = look behind.");
+    }
+
+    // -------------------------------------------------------------- player rig
+    // The billboard player + camera rig, recolored to the saved look. Shared by the
+    // interior and the exterior so the chosen character appears in both.
+    static GameObject BuildPlayerRig(Vector3 spawnPos, Material spriteMat)
+    {
+        SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
+        SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
+        var back = LoadSheetSprites(BackSheet, "back_");
+        var front = LoadSheetSprites(FrontSheet, "front_");
+
+        var player = new GameObject("Player");
+        player.transform.position = spawnPos;
+        var cc = player.AddComponent<CharacterController>();
+        cc.height = 2f; cc.radius = 0.3f; cc.center = new Vector3(0f, 1f, 0f);
+        player.AddComponent<PlayerController3D>();
+
+        var spriteGo = new GameObject("Sprite");
+        spriteGo.transform.SetParent(player.transform, false);
+        spriteGo.transform.localPosition = Vector3.zero;
+        var sr = spriteGo.AddComponent<SpriteRenderer>();
+        sr.sprite = back.Length > 0 ? back[0] : LoadSprite(PlayerPng, "player_idle_0");
+        sr.sharedMaterial = spriteMat;
+        spriteGo.AddComponent<Billboard>();
+        var charAnim = spriteGo.AddComponent<CharacterBillboardAnimator>();
+        charAnim.backFrames = back;
+        charAnim.frontFrames = front;
+        charAnim.player = player.GetComponent<PlayerController3D>();
+        charAnim.fps = 8f;
+
+        var applier = spriteGo.AddComponent<CharacterLookApplier>();
+        applier.masterFront = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterFront);
+        applier.masterBack = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterBack);
+        applier.animator = charAnim;
+
+        var pivot = new GameObject("CameraPivot");
+        pivot.transform.SetParent(player.transform, false);
+        pivot.transform.localPosition = new Vector3(0f, 1.6f, 0f);
+        var rig = pivot.AddComponent<CameraRig>();
+
+        var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
+        camGo.transform.SetParent(pivot.transform, false);
+        var cam = camGo.AddComponent<Camera>();
+        cam.nearClipPlane = 0.05f;
+        cam.GetUniversalAdditionalCameraData().SetRenderer(_renderer3DIndex);
+        rig.cam = cam;
+        rig.playerSprite = sr;
+        charAnim.cameraTransform = camGo.transform;
+
+        return player;
+    }
+
+    // -------------------------------------------------------------- exterior (house)
+    [MenuItem("Tools/Horror Game/Build Exterior")]
+    public static void BuildExterior()
+    {
+        EnsureRenderer3D();
+        SliceStrip(HouseSheet, "house_", 5, 128, 152, 16f, 0f);   // door-opening frames
+        var doorFrames = LoadSheetSprites(HouseSheet, "house_");
+
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        RenderSettings.ambientMode = AmbientMode.Flat;
+        RenderSettings.ambientLight = new Color(0.5f, 0.52f, 0.55f);
+
+        var sun = new GameObject("Directional Light").AddComponent<Light>();
+        sun.type = LightType.Directional;
+        sun.intensity = 1.15f;
+        sun.color = new Color(1f, 0.97f, 0.88f);
+        sun.transform.rotation = Quaternion.Euler(55f, -25f, 0f);
+
+        var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        ground.name = "Ground";
+        ground.transform.localScale = new Vector3(6f, 1f, 6f);        // 60x60 yard
+        ground.GetComponent<Renderer>().sharedMaterial =
+            LitMaterial("YardMat3D", new Color(0.36f, 0.5f, 0.28f), null, Vector2.one, false);
+
+        var spriteMat = SpriteMaterial();
+
+        // the house faces the player's approach (not billboarded)
+        var house = new GameObject("House");
+        house.transform.position = new Vector3(0f, 0f, 8f);
+        var hsr = house.AddComponent<SpriteRenderer>();
+        hsr.sprite = doorFrames.Length > 0 ? doorFrames[0] : null;
+        hsr.sharedMaterial = spriteMat;
+        var hp = house.AddComponent<HousePortal>();
+        hp.doorFrames = doorFrames;
+        hp.interiorScene = "Sandbox3D";
+
+        var player = BuildPlayerRig(new Vector3(0f, 0.1f, 0f), spriteMat);   // spawns facing the house
+        hp.player = player.transform;
+
+        new GameObject("DialogUI").AddComponent<DialogUI>();
+
+        EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
+        AddSceneToBuild(ExteriorSceneOut);
+        Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the house (" +
+                  doorFrames.Length + " door frames). Walk up to the house + press E to enter.");
     }
 
     // -------------------------------------------------------------- renderer
@@ -349,6 +416,24 @@ public static class HorrorGame3DSetup
             AssetDatabase.CreateAsset(mat, path);
         }
         return mat;
+    }
+
+    // Import a small pixel-art texture for crisp tiling (point filter, repeat wrap, no compression).
+    static void EnsurePixelTexture(string path)
+    {
+        if (AssetImporter.GetAtPath(path) is TextureImporter imp)
+        {
+            bool dirty = imp.filterMode != FilterMode.Point || imp.wrapMode != TextureWrapMode.Repeat ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed || imp.mipmapEnabled;
+            if (dirty)
+            {
+                imp.filterMode = FilterMode.Point;
+                imp.wrapMode = TextureWrapMode.Repeat;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.SaveAndReimport();
+            }
+        }
     }
 
     static void MakeWall(string name, Vector3 pos, Vector3 scale, Material mat)

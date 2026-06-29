@@ -15,7 +15,7 @@ public static class CharacterSelectSetup
     public const string MasterFront = "Assets/Animation/2.5D Retro Character Sprite Sheet/unity/character_master.png";
     public const string MasterBack  = "Assets/Animation/2.5D Retro Character Sprite Sheet/unity/character_master_back.png";
     const string SceneOut = "Assets/Scenes/CharacterSelect.unity";
-    const int SetupVersion = 1;
+    const int SetupVersion = 2;
 
     [InitializeOnLoadMethod]
     static void AutoRun()
@@ -60,7 +60,7 @@ public static class CharacterSelectSetup
         // UI controller
         var ctrl = new GameObject("CharacterSelect").AddComponent<CharacterSelectController>();
         ctrl.preview = anim;
-        ctrl.gameScene = "Sandbox3D";
+        ctrl.gameScene = "Exterior";
 
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
