@@ -32,7 +32,7 @@ public static class HorrorGame3DSetup
     const string BedSheet   = "Assets/Animation/bed_sprite_sheet.png";
     const string DogSheet   = "Assets/Animation/dog_apricot.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 5;   // bump to force the auto-run to rebuild the sandbox
+    const int SetupVersion  = 6;   // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
 
@@ -108,6 +108,12 @@ public static class HorrorGame3DSetup
         charAnim.frontFrames = frontSprites;
         charAnim.player = player.GetComponent<PlayerController3D>();
         charAnim.fps = 8f;
+
+        // recolor the billboard to the look chosen on the character-select screen
+        var applier = spriteGo.AddComponent<CharacterLookApplier>();
+        applier.masterFront = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterFront);
+        applier.masterBack = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterBack);
+        applier.animator = charAnim;
 
         var pivot = new GameObject("CameraPivot");
         pivot.transform.SetParent(player.transform, false);
