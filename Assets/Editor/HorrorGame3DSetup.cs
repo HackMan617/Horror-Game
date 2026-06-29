@@ -15,6 +15,8 @@ using UnityEngine.Rendering.Universal;
 /// billboard player rig (mouse-look + V toggles first/third person). The player
 /// uses the new character: the back sheet when viewed from behind, the front sheet
 /// when viewed from the front (hold C to look behind), both animated from movement.
+/// The scene also holds the animated bed (press E to enter the nightmare) and an
+/// apricot dog companion that follows the player in the overworld.
 /// Menu: Tools > Horror Game > Build 3D Sandbox. Also auto-runs once (version-gated).
 /// </summary>
 public static class HorrorGame3DSetup
@@ -28,8 +30,9 @@ public static class HorrorGame3DSetup
     const string BackSheet  = "Assets/Animation/character_sprite_sheet_back.png";
     const string FrontSheet = "Assets/Animation/character_sprite_sheet.png";
     const string BedSheet   = "Assets/Animation/bed_sprite_sheet.png";
+    const string DogSheet   = "Assets/Animation/dog_apricot.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
-    const int SetupVersion  = 4;   // bump to force the auto-run to rebuild the sandbox
+    const int SetupVersion  = 5;   // bump to force the auto-run to rebuild the sandbox
 
     static int _renderer3DIndex = 1;
 
@@ -54,9 +57,12 @@ public static class HorrorGame3DSetup
         SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(BedSheet, "bed_", 6, 64, 32, 32f, 0.08f);
+        SliceGrid(DogSheet, 32f, 0.06f, 32, 32, 6, new[] { "dog_idle_", "dog_walk_", "dog_run_" });
         var backSprites = LoadSheetSprites(BackSheet, "back_");
         var frontSprites = LoadSheetSprites(FrontSheet, "front_");
         var bedSprites = LoadSheetSprites(BedSheet, "bed_");
+        var dogIdle = LoadSheetSprites(DogSheet, "dog_idle_");
+        var dogWalk = LoadSheetSprites(DogSheet, "dog_walk_");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -117,9 +123,8 @@ public static class HorrorGame3DSetup
         rig.playerSprite = sr;
         charAnim.cameraTransform = camGo.transform;
 
-        // a couple of billboard blobs for reference
+        // one billboard blob for reference (the other slot is now the dog companion)
         MakeBlob3D(new Vector3(-4f, 0f, 3f), new Color(0.82f, 0.58f, 0.35f), spriteMat);
-        MakeBlob3D(new Vector3(3f, 0f, 5f),  new Color(0.47f, 0.66f, 0.90f), spriteMat);
 
         // ---- nightmare transition + the bed that triggers it ----
         var nightmare = new GameObject("Nightmare").AddComponent<NightmareController>();
@@ -138,11 +143,15 @@ public static class HorrorGame3DSetup
         portal.player = player.transform;
         portal.nightmare = nightmare;
 
+        // ---- apricot dog companion (overworld only; hides during the nightmare) ----
+        MakeDog(new Vector3(3f, 0f, 5f), player.transform, nightmare, dogIdle, dogWalk, spriteMat);
+
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
-        Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the new character (back " +
-                  backSprites.Length + " / front " + frontSprites.Length + " frames) and the bed (" +
-                  bedSprites.Length + " frames). Walk to the bed + press E to enter the nightmare. " +
+        Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the character (back " +
+                  backSprites.Length + "/front " + frontSprites.Length + "), the bed (" + bedSprites.Length +
+                  "), and the apricot dog (idle " + dogIdle.Length + "/walk " + dogWalk.Length + "). " +
+                  "Walk to the bed + press E to enter the nightmare (the dog hides). " +
                   "Play: WASD + mouse, V = first/third, hold C = look behind.");
     }
 
@@ -202,7 +211,7 @@ public static class HorrorGame3DSetup
             rects.Add(new SpriteRect
             {
                 name = prefix + i,
-                spriteID = GUID.Generate(),
+                spriteID = StableGuid(path + "#" + prefix + i),
                 rect = new Rect(i * cellW, 0, cellW, cellH),
                 pivot = new Vector2(0.5f, pivotY),    // bottom-centre (feet / base)
                 alignment = SpriteAlignment.Custom,
@@ -222,6 +231,64 @@ public static class HorrorGame3DSetup
     static Sprite[] LoadSheetSprites(string path, string prefix) =>
         AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>()
             .Where(s => s.name.StartsWith(prefix)).OrderBy(s => s.name).ToArray();
+
+    // Slices a grid sheet, giving each visual row (top -> bottom) its own name prefix,
+    // e.g. {"dog_idle_","dog_walk_","dog_run_"} for the 3-row dog sheet.
+    static void SliceGrid(string path, float ppu, float pivotY, int cellW, int cellH, int cols, string[] rowPrefixes)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = ppu;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        int rows = rowPrefixes.Length;
+        var rects = new List<SpriteRect>();
+        for (int r = 0; r < rows; r++)
+        {
+            int yUnity = (rows - 1 - r) * cellH;   // visual row r (0 = top) -> Unity y (origin bottom-left)
+            for (int c = 0; c < cols; c++)
+                rects.Add(new SpriteRect
+                {
+                    name = rowPrefixes[r] + c,
+                    spriteID = StableGuid(path + "#" + rowPrefixes[r] + c),
+                    rect = new Rect(c * cellW, yUnity, cellW, cellH),
+                    pivot = new Vector2(0.5f, pivotY),
+                    alignment = SpriteAlignment.Custom,
+                    border = Vector4.zero,
+                });
+        }
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
+
+    // Deterministic sprite id from the sheet path + frame name, so re-slicing yields the
+    // same ids each build (no meta churn, scene sprite references stay valid).
+    static GUID StableGuid(string key)
+    {
+        using (var md5 = System.Security.Cryptography.MD5.Create())
+        {
+            var hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+            var sb = new System.Text.StringBuilder(32);
+            foreach (var b in hash) sb.Append(b.ToString("x2"));
+            return new GUID(sb.ToString());
+        }
+    }
 
     // -------------------------------------------------------------- helpers
     static Material LitMaterial(string name, Color color, string texPath, Vector2 tiling, bool repeat)
@@ -283,6 +350,23 @@ public static class HorrorGame3DSetup
         sr.color = color;
         go.AddComponent<Billboard>();
         go.AddComponent<BlobAnimator>();
+    }
+
+    static void MakeDog(Vector3 pos, Transform player, NightmareController nightmare,
+                        Sprite[] idle, Sprite[] walk, Material mat)
+    {
+        var go = new GameObject("Dog");
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = idle.Length > 0 ? idle[0] : null;
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+        var dog = go.AddComponent<DogCompanion>();
+        dog.player = player;
+        dog.nightmare = nightmare;
+        dog.idleFrames = idle;
+        dog.walkFrames = walk;
+        dog.fps = 6f;
     }
 
     static Sprite LoadSprite(string path, string name) =>
