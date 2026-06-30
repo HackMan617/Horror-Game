@@ -14,8 +14,10 @@ public static class CharacterSelectSetup
 {
     public const string MasterFront = "Assets/Animation/2.5D Retro Character Sprite Sheet/unity/character_master.png";
     public const string MasterBack  = "Assets/Animation/2.5D Retro Character Sprite Sheet/unity/character_master_back.png";
+    public const string MasterFrontLong = "Assets/Animation/Female Player/unity/character_master_long.png";
+    public const string MasterBackLong  = "Assets/Animation/Female Player/unity/character_master_back_long.png";
     const string SceneOut = "Assets/Scenes/CharacterSelect.unity";
-    const int SetupVersion = 2;
+    const int SetupVersion = 3;
 
     [InitializeOnLoadMethod]
     static void AutoRun()
@@ -36,6 +38,8 @@ public static class CharacterSelectSetup
     {
         var front = ConfigureMaster(MasterFront);
         var back  = ConfigureMaster(MasterBack);
+        var frontLong = ConfigureMaster(MasterFrontLong);
+        var backLong  = ConfigureMaster(MasterBackLong);
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -54,6 +58,8 @@ public static class CharacterSelectSetup
         var anim = go.AddComponent<CharacterAnimator>();
         anim.masterFront = front;
         anim.masterBack = back;
+        anim.masterFrontLong = frontLong;
+        anim.masterBackLong = backLong;
         anim.pixelsPerUnit = 12f;                       // ~2.7 units tall in the preview
         anim.pivot = new Vector2(0.5f, 0f);
 
@@ -65,7 +71,7 @@ public static class CharacterSelectSetup
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
         Debug.Log("[HorrorGame] Character Select scene built at " + SceneOut +
-                  ". Flow: MainMenu > Play > CharacterSelect > Enter > Sandbox3D.");
+                  " (with Male/Female body option). Flow: MainMenu > Play > CharacterSelect > Enter > Exterior.");
     }
 
     /// <summary>Ensure a master sheet is import-configured for the runtime palette swap.</summary>

@@ -15,8 +15,11 @@ namespace Game.Characters
     {
         [Header("Master sheets")]
         [Tooltip("Import settings: Read/Write Enabled = ON, Filter = Point, Compression = None.")]
-        public Texture2D masterFront;          // character_master.png
-        public Texture2D masterBack;           // character_master_back.png
+        public Texture2D masterFront;          // character_master.png       (Male)
+        public Texture2D masterBack;           // character_master_back.png  (Male)
+        [Tooltip("Long-hair (Female) variants. Same baked colors — leave empty to fall back to the Male sheets.")]
+        public Texture2D masterFrontLong;      // character_master_long.png       (Female)
+        public Texture2D masterBackLong;       // character_master_back_long.png  (Female)
 
         [Header("Look — the 5 saved choices per player")]
         public CharacterLook look = CharacterLook.Default;
@@ -49,14 +52,19 @@ namespace Game.Characters
         /// <summary>Recolor + reslice. Call again whenever `look` changes (e.g. from the creation menu).</summary>
         public void Rebuild()
         {
-            Texture2D fTex = CharacterPalette.Recolor(masterFront, look);
+            bool female = look.body == BodyType.Female;
+            Texture2D srcFront = (female && masterFrontLong != null) ? masterFrontLong : masterFront;
+            Texture2D srcBack  = (female && masterBackLong  != null) ? masterBackLong  : masterBack;
+
+            Texture2D fTex = CharacterPalette.Recolor(srcFront, look);
             front = CharacterPalette.Slice(fTex, frameWidth, frameHeight, pixelsPerUnit, pivot);
 
-            if (masterBack != null)
+            if (srcBack != null)
             {
-                Texture2D bTex = CharacterPalette.Recolor(masterBack, look);
+                Texture2D bTex = CharacterPalette.Recolor(srcBack, look);
                 back = CharacterPalette.Slice(bTex, frameWidth, frameHeight, pixelsPerUnit, pivot);
             }
+            else { back = null; }
 
             frame = 0;
             timer = 0f;

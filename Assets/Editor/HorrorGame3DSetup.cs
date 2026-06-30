@@ -44,7 +44,7 @@ public static class HorrorGame3DSetup
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 13;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 14;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -182,6 +182,8 @@ public static class HorrorGame3DSetup
         var applier = spriteGo.AddComponent<CharacterLookApplier>();
         applier.masterFront = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterFront);
         applier.masterBack = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterBack);
+        applier.masterFrontLong = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterFrontLong);
+        applier.masterBackLong = CharacterSelectSetup.ConfigureMaster(CharacterSelectSetup.MasterBackLong);
         applier.animator = charAnim;
 
         var pivot = new GameObject("CameraPivot");

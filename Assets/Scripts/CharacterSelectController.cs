@@ -7,22 +7,23 @@ using Game.Characters;
 
 /// <summary>
 /// Character-select screen. Builds the UI at runtime: a live recolored preview
-/// (the pack's CharacterAnimator), left/right cyclers for hair/skin/eyes/shirt/pants
-/// plus a Partner (Boy/Girl) choice, preset buttons, and an Enter button that saves
-/// the chosen look + partner and loads the game.
+/// (the pack's CharacterAnimator), left/right cyclers for hair/skin/eyes/shirt/pants, a
+/// Gender (Male/Female long-hair) choice, and a Partner (Boy/Girl) choice, preset buttons,
+/// and an Enter button that saves the chosen look + partner and loads the game.
 /// </summary>
 public class CharacterSelectController : MonoBehaviour
 {
     public CharacterAnimator preview;          // recolored preview character (assigned by the builder)
-    public string gameScene = "Sandbox3D";
+    public string gameScene = "Exterior";
 
-    // attribute index: 0-4 = the CharacterLook fields, 5 = partner (boy/girl)
-    static readonly string[] AttrNames = { "Hair", "Skin", "Eyes", "Shirt", "Pants", "Partner" };
+    // attribute index: 0-4 = CharacterLook colors, 5 = body/gender, 6 = partner (boy/girl)
+    static readonly string[] AttrNames = { "Hair", "Skin", "Eyes", "Shirt", "Pants", "Gender", "Partner" };
+    static readonly string[] BodyNames = { "Male", "Female" };
 
     CharacterLook _look = CharacterLook.Default;
     int _partner;                              // 0 = Boy, 1 = Girl
     Font _font;
-    readonly Text[] _values = new Text[6];
+    readonly Text[] _values = new Text[7];
 
     void Start()
     {
@@ -54,6 +55,7 @@ public class CharacterSelectController : MonoBehaviour
             case 2: return CharacterPalette.Eyes.Length;
             case 3: return CharacterPalette.Shirt.Length;
             case 4: return CharacterPalette.Pants.Length;
+            case 5: return BodyNames.Length;
             default: return CharacterStore.PartnerNames.Length;
         }
     }
@@ -66,6 +68,7 @@ public class CharacterSelectController : MonoBehaviour
             case 2: return _look.eyes;
             case 3: return _look.shirt;
             case 4: return _look.pants;
+            case 5: return (int)_look.body;
             default: return _partner;
         }
     }
@@ -78,6 +81,7 @@ public class CharacterSelectController : MonoBehaviour
             case 2: _look.eyes = v; break;
             case 3: _look.shirt = v; break;
             case 4: _look.pants = v; break;
+            case 5: _look.body = (BodyType)v; break;
             default: _partner = v; break;
         }
     }
@@ -90,6 +94,7 @@ public class CharacterSelectController : MonoBehaviour
             case 2: return CharacterPalette.Eyes[i].name;
             case 3: return CharacterPalette.Shirt[i].name;
             case 4: return CharacterPalette.Pants[i].name;
+            case 5: return BodyNames[i];
             default: return CharacterStore.PartnerNames[i];
         }
     }
@@ -100,12 +105,14 @@ public class CharacterSelectController : MonoBehaviour
         int v = (GetIndex(a) + dir + n) % n;
         SetIndex(a, v);
         _values[a].text = OptionName(a, v);
-        if (a < 5) ApplyToPreview();          // partner doesn't change the character preview
+        if (a < 6) ApplyToPreview();          // colors + gender change the preview; partner does not
     }
 
-    void ApplyPreset(CharacterLook look)
+    void ApplyPreset(CharacterLook preset)
     {
-        _look = look;
+        var body = _look.body;                // a preset is a colour combo; keep the chosen gender
+        _look = preset;
+        _look.body = body;
         for (int a = 0; a < 5; a++) _values[a].text = OptionName(a, GetIndex(a));
         ApplyToPreview();
     }
@@ -137,34 +144,31 @@ public class CharacterSelectController : MonoBehaviour
         sc.matchWidthOrHeight = 0.5f;
         var root = canvasGo.transform;
 
-        MakeText(root, "CHOOSE YOUR CHARACTER", new Vector2(0f, 470f), new Vector2(1500f, 110f), 70, TextAnchor.MiddleCenter);
+        MakeText(root, "CHOOSE YOUR CHARACTER", new Vector2(0f, 470f), new Vector2(1500f, 100f), 66, TextAnchor.MiddleCenter);
 
-        // attribute + partner cyclers (right side, leaving the left for the preview)
-        const float x = 470f, top = 290f, dy = 86f;
-        for (int a = 0; a < 6; a++)
+        const float x = 470f, top = 300f, dy = 72f;
+        for (int a = 0; a < 7; a++)
         {
             int attr = a;
             float y = top - a * dy;
-            MakeText(root, AttrNames[a], new Vector2(x - 340f, y), new Vector2(200f, 64f), 35, TextAnchor.MiddleRight);
-            MakeButton(root, "<", new Vector2(x - 130f, y), new Vector2(70f, 70f), 42, () => Cycle(attr, -1));
-            _values[a] = MakeText(root, "", new Vector2(x + 95f, y), new Vector2(330f, 64f), 34, TextAnchor.MiddleCenter);
-            MakeButton(root, ">", new Vector2(x + 320f, y), new Vector2(70f, 70f), 42, () => Cycle(attr, +1));
+            MakeText(root, AttrNames[a], new Vector2(x - 340f, y), new Vector2(200f, 60f), 33, TextAnchor.MiddleRight);
+            MakeButton(root, "<", new Vector2(x - 130f, y), new Vector2(64f, 64f), 40, () => Cycle(attr, -1));
+            _values[a] = MakeText(root, "", new Vector2(x + 95f, y), new Vector2(330f, 60f), 32, TextAnchor.MiddleCenter);
+            MakeButton(root, ">", new Vector2(x + 320f, y), new Vector2(64f, 64f), 40, () => Cycle(attr, +1));
         }
 
-        // preset looks
-        MakeText(root, "- or pick a preset look -", new Vector2(x, top - 6 * dy - 12f), new Vector2(620f, 56f), 30, TextAnchor.MiddleCenter);
+        MakeText(root, "- or pick a preset look -", new Vector2(x, top - 7 * dy - 8f), new Vector2(620f, 52f), 28, TextAnchor.MiddleCenter);
         var presets = CharacterStore.Presets;
         for (int p = 0; p < presets.Length; p++)
         {
             var preset = presets[p];
-            MakeButton(root, preset.name, new Vector2(x - 250f + p * 250f, top - 6 * dy - 82f), new Vector2(230f, 64f), 25,
+            MakeButton(root, preset.name, new Vector2(x - 250f + p * 250f, top - 7 * dy - 72f), new Vector2(230f, 60f), 24,
                        () => ApplyPreset(preset.look));
         }
 
-        // enter
-        MakeButton(root, "ENTER", new Vector2(x, -430f), new Vector2(360f, 92f), 42, Confirm);
+        MakeButton(root, "ENTER", new Vector2(x, -415f), new Vector2(360f, 88f), 40, Confirm);
 
-        for (int a = 0; a < 6; a++) _values[a].text = OptionName(a, GetIndex(a));
+        for (int a = 0; a < 7; a++) _values[a].text = OptionName(a, GetIndex(a));
     }
 
     Text MakeText(Transform parent, string txt, Vector2 pos, Vector2 size, int fontSize, TextAnchor anchor)

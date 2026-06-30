@@ -11,7 +11,10 @@ using UnityEngine;
 
 namespace Game.Characters
 {
-    /// <summary>The five customization choices stored per player.</summary>
+    /// <summary>Body presentation. Selects which master sheet pair is used.</summary>
+    public enum BodyType { Male = 0, Female = 1 }
+
+    /// <summary>The customization choices stored per player.</summary>
     [System.Serializable]
     public struct CharacterLook
     {
@@ -20,8 +23,9 @@ namespace Game.Characters
         public int eyes;
         public int shirt;
         public int pants;
+        public BodyType body;   // Male = short hair sheets, Female = long hair sheets
 
-        public static CharacterLook Default => new CharacterLook { hair = 0, skin = 1, eyes = 0, shirt = 0, pants = 0 };
+        public static CharacterLook Default => new CharacterLook { hair = 0, skin = 1, eyes = 0, shirt = 0, pants = 0, body = BodyType.Male };
     }
 
     public static class CharacterPalette
