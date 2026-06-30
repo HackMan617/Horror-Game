@@ -17,6 +17,7 @@ public static class CharacterStore
         PlayerPrefs.SetInt(Key + "eyes",  look.eyes);
         PlayerPrefs.SetInt(Key + "shirt", look.shirt);
         PlayerPrefs.SetInt(Key + "pants", look.pants);
+        PlayerPrefs.SetInt(Key + "body",  (int)look.body);
         PlayerPrefs.SetInt(Key + "set",   1);
         PlayerPrefs.Save();
     }
@@ -32,6 +33,7 @@ public static class CharacterStore
             eyes  = PlayerPrefs.GetInt(Key + "eyes",  d.eyes),
             shirt = PlayerPrefs.GetInt(Key + "shirt", d.shirt),
             pants = PlayerPrefs.GetInt(Key + "pants", d.pants),
+            body  = (BodyType)PlayerPrefs.GetInt(Key + "body", (int)d.body),
         };
     }
 
