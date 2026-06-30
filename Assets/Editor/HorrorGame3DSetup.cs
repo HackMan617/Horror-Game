@@ -37,13 +37,14 @@ public static class HorrorGame3DSetup
     const string HouseBack  = "Assets/Animation/house_back.png";
     const string HouseSide  = "Assets/Animation/house_side.png";
     const string HouseSideMirror = "Assets/Animation/house_side_mirror.png";
-    const string TreeSheet  = "Assets/Animation/tree_spruce.png";
+    const string GreenTree  = "Assets/Animation/tree_spruce.png";
+    const string WinterTree = "Assets/Animation/tree_spruce_winter.png";
     const string GrassSheet = "Assets/Animation/grass_tufts.png";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 12;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 13;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -209,13 +210,15 @@ public static class HorrorGame3DSetup
         SliceStrip(HouseBack, "houseback_", 1, 128, 152, 16f, 0f);
         SliceStrip(HouseSide, "houseside_", 1, 168, 152, 16f, 0f);
         SliceStrip(HouseSideMirror, "housesidem_", 1, 168, 152, 16f, 0f);
-        SliceGrid(TreeSheet, 20f, 0.05f, 80, 152, 6, new[] { "tree_", "treeb_" });
+        SliceGrid(GreenTree, 18f, 0.05f, 80, 152, 6, new[] { "green0_", "green1_" });   // 12-frame sway
+        SliceGrid(WinterTree, 18f, 0.05f, 80, 152, 6, new[] { "winter0_", "winter1_" });
         SliceGrid(GrassSheet, 32f, 0f, 32, 32, 6, new[] { "grassa_", "grassb_", "grassc_" });
         var doorFrames = LoadSheetSprites(HouseSheet, "house_");
         var houseBack = LoadSheetSprites(HouseBack, "houseback_");
         var houseSide = LoadSheetSprites(HouseSide, "houseside_");
         var houseSideM = LoadSheetSprites(HouseSideMirror, "housesidem_");
-        var trees = LoadSheetSprites(TreeSheet, "tree");
+        var greenFrames = LoadSheetSprites(GreenTree, "green");
+        var winterFrames = LoadSheetSprites(WinterTree, "winter");
         var grass = LoadSheetSprites(GrassSheet, "grass");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -230,7 +233,7 @@ public static class HorrorGame3DSetup
 
         var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
         ground.name = "Ground";
-        ground.transform.localScale = new Vector3(6f, 1f, 6f);        // 60x60 yard
+        ground.transform.localScale = new Vector3(8f, 1f, 8f);        // 80x80 yard
         ground.GetComponent<Renderer>().sharedMaterial =
             LitMaterial("YardMat3D", new Color(0.36f, 0.5f, 0.28f), null, Vector2.one, false);
 
@@ -257,14 +260,13 @@ public static class HorrorGame3DSetup
 
         new GameObject("DialogUI").AddComponent<DialogUI>();
 
-        // ---- yard decoration: spruce trees + grass tufts (billboards) ----
-        Vector3[] treePos = {
-            new Vector3(-10f, 0f, 6f), new Vector3(10f, 0f, 6f), new Vector3(-13f, 0f, 15f),
-            new Vector3(13f, 0f, 14f), new Vector3(-8f, 0f, -5f), new Vector3(8f, 0f, -5f),
-            new Vector3(-15f, 0f, 1f),
-        };
-        for (int i = 0; i < treePos.Length && trees.Length > 0; i++)
-            MakeProp("Tree", treePos[i], trees[(i * 2) % trees.Length], spriteMat);
+        // ---- dense forest ring: green spruces near the house, snowy winter farther out ----
+        Vector3 forest = new Vector3(0f, 0f, 6f);
+        int treeCount = 0;
+        treeCount += PlaceTreeRing(forest, 15f,   11, greenFrames,  spriteMat, 1);
+        treeCount += PlaceTreeRing(forest, 19f,   14, greenFrames,  spriteMat, 2);
+        treeCount += PlaceTreeRing(forest, 23.5f, 17, winterFrames, spriteMat, 3);
+        treeCount += PlaceTreeRing(forest, 28f,   21, winterFrames, spriteMat, 4);
 
         Vector3[] grassPos = {
             new Vector3(-3f, 0f, 3f), new Vector3(3f, 0f, 5f), new Vector3(-5f, 0f, -2f),
@@ -278,7 +280,7 @@ public static class HorrorGame3DSetup
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
         Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the house (front " +
-                  doorFrames.Length + " door frames + back + 2 sides), " + treePos.Length + " trees, " +
+                  doorFrames.Length + " door frames + back + 2 sides), " + treeCount + " animated trees (green + winter), " +
                   grassPos.Length + " grass tufts. Walk around the house; from the front press E to enter.");
     }
 
@@ -506,6 +508,39 @@ public static class HorrorGame3DSetup
         sr.sprite = sprite;
         sr.sharedMaterial = mat;
         go.AddComponent<Billboard>();
+    }
+
+    static void MakeTree(Vector3 pos, Sprite[] frames, Material mat)
+    {
+        if (frames == null || frames.Length == 0) return;
+        var go = new GameObject("Tree");
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = frames[0];
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+        var anim = go.AddComponent<LoopSpriteAnimator>();
+        anim.frames = frames;
+        anim.fps = 5f;                  // gentle sway
+        anim.randomStartPhase = true;   // out of sync between trees
+    }
+
+    // Rings of trees around a centre with deterministic jitter (so rebuilds don't churn the scene).
+    static int PlaceTreeRing(Vector3 center, float radius, int count, Sprite[] frames, Material mat, int seed)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            float a = (i + 0.5f) / count * Mathf.PI * 2f + (Hash01(seed * 131 + i) - 0.5f) * 0.4f;
+            float r = radius + (Hash01(seed * 197 + i) - 0.5f) * 4f;
+            MakeTree(center + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r), frames, mat);
+        }
+        return count;
+    }
+
+    static float Hash01(int n)
+    {
+        float s = Mathf.Sin(n * 12.9898f) * 43758.5453f;
+        return s - Mathf.Floor(s);
     }
 
     static void MakeDog(Vector3 pos, Transform player, NightmareController nightmare,

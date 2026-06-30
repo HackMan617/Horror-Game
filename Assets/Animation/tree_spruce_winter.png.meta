@@ -1,13 +1,43 @@
 fileFormatVersion: 2
-guid: 63f62c977a25c8a468241d0d8b58caa7
+guid: 04f8c26a122e270469f371d9982bfd0c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8467952684668343390
-    second: tree_spruce_0
+      213: -5026368235998527276
+    second: tree_spruce_winter_0
   - first:
-      213: -4240143826061586490
-    second: tree_spruce_1
+      213: -1102153185547347397
+    second: tree_spruce_winter_1
+  - first:
+      213: -3252884435115975806
+    second: tree_spruce_winter_2
+  - first:
+      213: 8976644042439243152
+    second: tree_spruce_winter_3
+  - first:
+      213: 4453748856652411049
+    second: tree_spruce_winter_4
+  - first:
+      213: 3264318589117123421
+    second: tree_spruce_winter_5
+  - first:
+      213: 7223297265586014687
+    second: tree_spruce_winter_6
+  - first:
+      213: 3324944821437142832
+    second: tree_spruce_winter_7
+  - first:
+      213: -2478032993667211057
+    second: tree_spruce_winter_8
+  - first:
+      213: 1802490662587408991
+    second: tree_spruce_winter_9
+  - first:
+      213: 869948305484991742
+    second: tree_spruce_winter_10
+  - first:
+      213: -9145631764293365037
+    second: tree_spruce_winter_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: green0_0
+      name: winter0_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +148,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22ba1200b2b2d66049704968248a600d
-      internalID: -675570569
+      spriteID: 1e7269dadaa8cebb88cac50cd0953092
+      internalID: -710541531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_1
+      name: winter0_1
       rect:
         serializedVersion: 2
         x: 80
@@ -140,14 +170,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 710258cc65feea14e8b5d806e2ae6d50
-      internalID: 1578437189
+      spriteID: 2e3031fcb4eba8a9666b46a51f7e4687
+      internalID: -2099749970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_2
+      name: winter0_2
       rect:
         serializedVersion: 2
         x: 160
@@ -162,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b4947fb717388e302d41c9352081d20
-      internalID: 988631679
+      spriteID: bec03fe6bc85bea2bd6795ffcca28aab
+      internalID: 1562828559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_3
+      name: winter0_3
       rect:
         serializedVersion: 2
         x: 240
@@ -184,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e695fbc4d71e586b25218190457157bc
-      internalID: 1879382477
+      spriteID: 3d8ca4ab7b7b9cdee2759c7ce0c68326
+      internalID: -28307752
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_4
+      name: winter0_4
       rect:
         serializedVersion: 2
         x: 320
@@ -206,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d69f1627c428e045c89dbbd05d6ba52
-      internalID: 1369435553
+      spriteID: e7bafe695150faa39804d1c27aa40341
+      internalID: -1237779487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_5
+      name: winter0_5
       rect:
         serializedVersion: 2
         x: 400
@@ -228,14 +258,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 377d22dd4ebb93d941226a976776a4fa
-      internalID: 45424465
+      spriteID: 680f339a5dd1c0851b3d9ea67fbefd52
+      internalID: 744599905
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_0
+      name: winter1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -250,14 +280,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d76f85efea3ffde364a864290512f13b
-      internalID: -630889799
+      spriteID: a52f9b3cdf3f4bd38f30a1038f1e2cb2
+      internalID: 577861991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_1
+      name: winter1_1
       rect:
         serializedVersion: 2
         x: 80
@@ -272,14 +302,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ad007ad0e1b4d0d6ae304c6fa8d4b8
-      internalID: -1147058613
+      spriteID: c9158ca51f5415b799b69a579d2d9b1d
+      internalID: -1184745927
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_2
+      name: winter1_2
       rect:
         serializedVersion: 2
         x: 160
@@ -294,14 +324,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dd2895a55dc7ee30a969870393bec25
-      internalID: -1525339653
+      spriteID: 35e2eeb133504463b352cdfa3a56d068
+      internalID: -279597472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_3
+      name: winter1_3
       rect:
         serializedVersion: 2
         x: 240
@@ -316,14 +346,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d78020793eaa663cfe65dce4506229dd
-      internalID: 2022649084
+      spriteID: a498a3ece1dc58e4a9edc90530f2e48e
+      internalID: -671743939
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_4
+      name: winter1_4
       rect:
         serializedVersion: 2
         x: 320
@@ -338,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99a85344939800398dc0961ec18be895
-      internalID: -1449007208
+      spriteID: 26cd3e901ac7eef7c68022b71aef698f
+      internalID: -812636938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_5
+      name: winter1_5
       rect:
         serializedVersion: 2
         x: 400
@@ -360,8 +390,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba24c922870ea65851d9cab10a65e746
-      internalID: -2025214138
+      spriteID: 46441a37ba6e6931729b2257f6717314
+      internalID: -1573518229
       vertices: []
       indices: 
       edges: []
@@ -370,7 +400,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2984bee40176a1e458acf6b15fb9b24e
+    spriteID: 823d69c68d09acc46a5e655fd96d2d9d
     internalID: 0
     vertices: []
     indices: 
@@ -380,18 +410,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      green0_0: -675570569
-      green0_1: 1578437189
-      green0_2: 988631679
-      green0_3: 1879382477
-      green0_4: 1369435553
-      green0_5: 45424465
-      green1_0: -630889799
-      green1_1: -1147058613
-      green1_2: -1525339653
-      green1_3: 2022649084
-      green1_4: -1449007208
-      green1_5: -2025214138
+      winter0_0: -710541531
+      winter0_1: -2099749970
+      winter0_2: 1562828559
+      winter0_3: -28307752
+      winter0_4: -1237779487
+      winter0_5: 744599905
+      winter1_0: 577861991
+      winter1_1: -1184745927
+      winter1_2: -279597472
+      winter1_3: -671743939
+      winter1_4: -812636938
+      winter1_5: -1573518229
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
