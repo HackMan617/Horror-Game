@@ -44,7 +44,7 @@ public static class HorrorGame3DSetup
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 14;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 17;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -208,17 +208,9 @@ public static class HorrorGame3DSetup
     public static void BuildExterior()
     {
         EnsureRenderer3D();
-        SliceStrip(HouseSheet, "house_", 5, 128, 152, 16f, 0f);          // front door frames
-        SliceStrip(HouseBack, "houseback_", 1, 128, 152, 16f, 0f);
-        SliceStrip(HouseSide, "houseside_", 1, 168, 152, 16f, 0f);
-        SliceStrip(HouseSideMirror, "housesidem_", 1, 168, 152, 16f, 0f);
         SliceGrid(GreenTree, 18f, 0.05f, 80, 152, 6, new[] { "green0_", "green1_" });   // 12-frame sway
         SliceGrid(WinterTree, 18f, 0.05f, 80, 152, 6, new[] { "winter0_", "winter1_" });
         SliceGrid(GrassSheet, 32f, 0f, 32, 32, 6, new[] { "grassa_", "grassb_", "grassc_" });
-        var doorFrames = LoadSheetSprites(HouseSheet, "house_");
-        var houseBack = LoadSheetSprites(HouseBack, "houseback_");
-        var houseSide = LoadSheetSprites(HouseSide, "houseside_");
-        var houseSideM = LoadSheetSprites(HouseSideMirror, "housesidem_");
         var greenFrames = LoadSheetSprites(GreenTree, "green");
         var winterFrames = LoadSheetSprites(WinterTree, "winter");
         var grass = LoadSheetSprites(GrassSheet, "grass");
@@ -241,24 +233,12 @@ public static class HorrorGame3DSetup
 
         var spriteMat = SpriteMaterial();
 
-        // the house: billboard + directional views so the player can walk around it
-        var house = new GameObject("House");
-        house.transform.position = new Vector3(0f, 0f, 10f);
-        var hsr = house.AddComponent<SpriteRenderer>();
-        hsr.sprite = doorFrames.Length > 0 ? doorFrames[0] : null;
-        hsr.sharedMaterial = spriteMat;
-        house.AddComponent<Billboard>();
-        var hp = house.AddComponent<HousePortal>();
-        hp.doorFrames = doorFrames;
-        hp.backSprite = houseBack.Length > 0 ? houseBack[0] : null;
-        hp.sideSprite = houseSide.Length > 0 ? houseSide[0] : null;
-        hp.sideMirrorSprite = houseSideM.Length > 0 ? houseSideM[0] : null;
-        hp.interiorScene = "Sandbox3D";
+        // The house: a real 3D log cabin built from house_tiles.png — tiled-siding walls, interlocking
+        // corner logs and a closed gable roof (CabinShellBuilder), all anchored on the ground.
+        var housePortal = BuildCabin(new Vector3(0f, 0f, 10f));
 
-        var player = BuildPlayerRig(new Vector3(0f, 0.1f, 0f), spriteMat);   // spawns facing the house
-        hp.player = player.transform;
-        var pcam = player.GetComponentInChildren<Camera>();
-        if (pcam != null) hp.cameraTransform = pcam.transform;
+        var player = BuildPlayerRig(new Vector3(0f, 0.1f, 0f), spriteMat);   // spawns facing the cabin
+        housePortal.player = player.transform;
 
         new GameObject("DialogUI").AddComponent<DialogUI>();
 
@@ -281,9 +261,9 @@ public static class HorrorGame3DSetup
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
-        Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the house (front " +
-                  doorFrames.Length + " door frames + back + 2 sides), " + treeCount + " animated trees (green + winter), " +
-                  grassPos.Length + " grass tufts. Walk around the house; from the front press E to enter.");
+        Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the log cabin (tiled walls + " +
+                  "corner logs + gable roof), " + treeCount + " animated trees (green + winter), " +
+                  grassPos.Length + " grass tufts. Walk up to the cabin; from the front press E to enter.");
     }
 
     // -------------------------------------------------------------- renderer
@@ -510,6 +490,165 @@ public static class HorrorGame3DSetup
         sr.sprite = sprite;
         sr.sharedMaterial = mat;
         go.AddComponent<Billboard>();
+    }
+
+    // ---------------------------------------------------------------- cabin (tile house)
+    // Builds a 3D log cabin from house_tiles.png at `origin`: tiled-siding walls, a door, and (via
+    // CabinShellBuilder) interlocking corner logs + a closed gable roof. Returns its HousePortal.
+    static HousePortal BuildCabin(Vector3 origin)
+    {
+        const float W = 6f, D = 7f, Hh = 3.5f, tile = 0.5f;
+        float hd = D * 0.5f;
+        var atlasMat = CabinAtlasMaterial();
+
+        var house = new GameObject("House");
+        house.transform.position = origin;
+
+        // tiled-siding wall box, base at local y = 0 (planted on the ground)
+        var walls = new GameObject("CabinWalls");
+        walls.transform.SetParent(house.transform, false);
+        walls.AddComponent<MeshFilter>().sharedMesh = BuildCabinWallMesh(W, Hh, D, tile);
+        walls.AddComponent<MeshRenderer>().sharedMaterial = atlasMat;
+
+        // door on the front gable end (faces -Z, toward the approaching player)
+        var door = MakeTileQuad("CabinDoor", house.transform, new Vector3(0f, 1.2f, -hd - 0.03f),
+                                Quaternion.identity, 1.5f, 2.4f, 6, 0, atlasMat);
+
+        // interlocking corner logs + closed gable roof (real geometry, sized from the wall bounds)
+        var shell = walls.AddComponent<CabinShellBuilder>();
+        shell.atlasMaterial = atlasMat;
+        shell.ridgeAlongZ = true;          // front/back are the gable ends (the door side)
+        shell.worldUnitsPerTile = tile;
+        shell.cornerPostSize = 0.4f;
+        shell.cornerOverhang = 0.08f;
+        shell.ridgeHeight = 1.8f;
+        shell.eaveOverhang = 0.4f;
+        shell.gableOverhang = 0.35f;
+        shell.buildEaveFascia = true;
+        shell.Build();
+
+        // solid footprint so the player circles it and enters from the front
+        var col = house.AddComponent<BoxCollider>();
+        col.center = new Vector3(0f, Hh * 0.5f, 0f);
+        col.size = new Vector3(W, Hh, D);
+
+        var hp = door.AddComponent<HousePortal>();
+        hp.interiorScene = "Sandbox3D";
+        return hp;
+    }
+
+    // URP/Unlit material sampling house_tiles.png (point, alpha-clipped, double-sided).
+    static Material CabinAtlasMaterial()
+    {
+        const string atlasPath = "Assets/Animation/house_tiles.png";
+        if (AssetImporter.GetAtPath(atlasPath) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Default || imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || !imp.isReadable;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Default;
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.isReadable = true;
+                imp.SaveAndReimport();
+            }
+        }
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(atlasPath);
+        EnsureFolder(MatDir);
+        string matPath = MatDir + "/HouseTiles3D.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        var sh = Shader.Find("Universal Render Pipeline/Unlit");
+        if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
+        else mat.shader = sh;
+        mat.mainTexture = tex;
+        if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
+        if (mat.HasProperty("_AlphaClip")) mat.SetFloat("_AlphaClip", 1f);
+        if (mat.HasProperty("_Cutoff")) mat.SetFloat("_Cutoff", 0.5f);
+        if (mat.HasProperty("_Cull")) mat.SetFloat("_Cull", 0f);
+        mat.EnableKeyword("_ALPHATEST_ON");
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    // 8x6 atlas of 24px tiles; UV rect for tile (col,row) with a half-texel inset.
+    static Rect CabinTileUV(int col, int row)
+    {
+        const float aw = 192f, ah = 144f, tp = 24f;
+        float u0 = col * tp / aw, u1 = (col + 1) * tp / aw;
+        float v1 = 1f - row * tp / ah, v0 = 1f - (row + 1) * tp / ah;
+        float eu = 0.5f / aw, ev = 0.5f / ah;
+        return Rect.MinMaxRect(u0 + eu, v0 + ev, u1 - eu, v1 - ev);
+    }
+
+    // Four siding walls (tile 0,0) tiled at `tile` world units, base at y = 0.
+    static Mesh BuildCabinWallMesh(float W, float Hh, float D, float tile)
+    {
+        var v = new List<Vector3>();
+        var uv = new List<Vector2>();
+        var tri = new List<int>();
+        Rect s = CabinTileUV(0, 0);
+        float hw = W * 0.5f, hd = D * 0.5f;
+        int nW = Mathf.Max(1, Mathf.RoundToInt(W / tile));
+        int nD = Mathf.Max(1, Mathf.RoundToInt(D / tile));
+        int nH = Mathf.Max(1, Mathf.RoundToInt(Hh / tile));
+        AddTiledWall(v, uv, tri, new Vector3(-hw, 0f, -hd), new Vector3(hw, 0f, -hd), new Vector3(-hw, Hh, -hd), s, nW, nH); // front
+        AddTiledWall(v, uv, tri, new Vector3(-hw, 0f,  hd), new Vector3(hw, 0f,  hd), new Vector3(-hw, Hh,  hd), s, nW, nH); // back
+        AddTiledWall(v, uv, tri, new Vector3(-hw, 0f, -hd), new Vector3(-hw, 0f, hd), new Vector3(-hw, Hh, -hd), s, nD, nH); // left
+        AddTiledWall(v, uv, tri, new Vector3( hw, 0f, -hd), new Vector3( hw, 0f, hd), new Vector3( hw, Hh, -hd), s, nD, nH); // right
+        var m = new Mesh { name = "CabinWalls" };
+        m.SetVertices(v); m.SetUVs(0, uv); m.SetTriangles(tri, 0);
+        m.RecalculateNormals(); m.RecalculateBounds();
+        return m;
+    }
+
+    // Fills the parallelogram a->b (u) and a->d (v) with nu x nv copies of tile rect r.
+    static void AddTiledWall(List<Vector3> v, List<Vector2> uv, List<int> tri,
+                             Vector3 a, Vector3 b, Vector3 d, Rect r, int nu, int nv)
+    {
+        Vector3 c = b + (d - a);
+        for (int i = 0; i < nu; i++)
+        for (int j = 0; j < nv; j++)
+        {
+            float u0 = i / (float)nu, u1 = (i + 1) / (float)nu, w0 = j / (float)nv, w1 = (j + 1) / (float)nv;
+            Vector3 p00 = CabinBilerp(a, b, d, c, u0, w0);
+            Vector3 p10 = CabinBilerp(a, b, d, c, u1, w0);
+            Vector3 p11 = CabinBilerp(a, b, d, c, u1, w1);
+            Vector3 p01 = CabinBilerp(a, b, d, c, u0, w1);
+            int sIdx = v.Count;
+            v.Add(p00); v.Add(p10); v.Add(p11); v.Add(p01);
+            uv.Add(new Vector2(r.xMin, r.yMin)); uv.Add(new Vector2(r.xMax, r.yMin));
+            uv.Add(new Vector2(r.xMax, r.yMax)); uv.Add(new Vector2(r.xMin, r.yMax));
+            tri.Add(sIdx); tri.Add(sIdx + 1); tri.Add(sIdx + 2);
+            tri.Add(sIdx); tri.Add(sIdx + 2); tri.Add(sIdx + 3);
+        }
+    }
+
+    static Vector3 CabinBilerp(Vector3 a, Vector3 b, Vector3 d, Vector3 c, float u, float w)
+        => a * (1 - u) * (1 - w) + b * u * (1 - w) + d * (1 - u) * w + c * u * w;
+
+    // A single flat quad showing atlas tile (col,row), centred on its local origin.
+    static GameObject MakeTileQuad(string name, Transform parent, Vector3 localPos, Quaternion localRot,
+                                   float w, float h, int col, int row, Material mat)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.localPosition = localPos;
+        go.transform.localRotation = localRot;
+        Rect r = CabinTileUV(col, row);
+        float hw = w * 0.5f, hh = h * 0.5f;
+        var m = new Mesh { name = name };
+        m.SetVertices(new List<Vector3> {
+            new Vector3(-hw, -hh, 0f), new Vector3(hw, -hh, 0f), new Vector3(hw, hh, 0f), new Vector3(-hw, hh, 0f) });
+        m.SetUVs(0, new List<Vector2> {
+            new Vector2(r.xMin, r.yMin), new Vector2(r.xMax, r.yMin), new Vector2(r.xMax, r.yMax), new Vector2(r.xMin, r.yMax) });
+        m.SetTriangles(new int[] { 0, 1, 2, 0, 2, 3 }, 0);
+        m.RecalculateNormals(); m.RecalculateBounds();
+        go.AddComponent<MeshFilter>().sharedMesh = m;
+        go.AddComponent<MeshRenderer>().sharedMaterial = mat;
+        return go;
     }
 
     static void MakeTree(Vector3 pos, Sprite[] frames, Material mat)
