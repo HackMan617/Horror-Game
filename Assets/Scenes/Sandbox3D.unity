@@ -1433,6 +1433,7 @@ MonoBehaviour:
   minPitch: -60
   maxPitch: 70
   startFirstPerson: 0
+  grassFillEnabled: 0
 --- !u!1 &1766922941
 GameObject:
   m_ObjectHideFlags: 0

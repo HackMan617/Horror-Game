@@ -113,7 +113,7 @@ public static class HorrorGame3DSetup
         var spriteMat = SpriteMaterial();
 
         // ---- player rig (recolored to the chosen look) ----
-        var player = BuildPlayerRig(new Vector3(0f, 0.1f, -5f), spriteMat);
+        var player = BuildPlayerRig(new Vector3(0f, 0.1f, -5f), spriteMat, grassFill: false);   // interior: no grass fill
 
         // the dog + partner companions fill the two former blob slots
         MakePartner(new Vector3(-4f, 0f, 3f), player.transform, boyIdle, girlIdle, boySmile, girlSmile, boySpeak, girlSpeak, spriteMat);
@@ -153,7 +153,7 @@ public static class HorrorGame3DSetup
     // -------------------------------------------------------------- player rig
     // The billboard player + camera rig, recolored to the saved look. Shared by the
     // interior and the exterior so the chosen character appears in both.
-    static GameObject BuildPlayerRig(Vector3 spawnPos, Material spriteMat)
+    static GameObject BuildPlayerRig(Vector3 spawnPos, Material spriteMat, bool grassFill = true)
     {
         SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
@@ -198,6 +198,7 @@ public static class HorrorGame3DSetup
         cam.GetUniversalAdditionalCameraData().SetRenderer(_renderer3DIndex);
         rig.cam = cam;
         rig.playerSprite = sr;
+        rig.grassFillEnabled = grassFill;   // interiors pass false — no open sky to green when looking up
         charAnim.cameraTransform = camGo.transform;
 
         return player;
