@@ -45,11 +45,13 @@ public static class HorrorGame3DSetup
     const string WinterTree = "Assets/Animation/tree_spruce_winter.png";
     const string GrassSheet = "Assets/Animation/grass_tufts.png";
     const string SmokePuffPng = "Assets/Animation/smoke_puff.png";
+    const string PropsAutumn = "Assets/Animation/props_autumn.png";
+    const string PathCobble  = "Assets/Animation/path_cobble.png";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 19;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 22;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -256,6 +258,9 @@ public static class HorrorGame3DSetup
 
         new GameObject("DialogUI").AddComponent<DialogUI>();
 
+        // Cobble road first, so the forest can open up a corridor for it (trees skip the road cells).
+        BuildPathway();                  // double-wide route to the door, branching out to neighbouring plots
+
         // ---- dense forest ring: green spruces near the house, snowy winter farther out ----
         Vector3 forest = new Vector3(0f, 0f, 6f);
         int treeCount = 0;
@@ -271,13 +276,16 @@ public static class HorrorGame3DSetup
             new Vector3(-4f, 0f, 9f),
         };
         for (int i = 0; i < grassPos.Length && grass.Length > 0; i++)
-            MakeProp("Grass", grassPos[i], grass[(i * 3) % grass.Length], spriteMat);
+            if (!NearPath(grassPos[i], 1.2f))
+                MakeProp("Grass", grassPos[i], grass[(i * 3) % grass.Length], spriteMat);
+
+        ScatterAutumnProps(spriteMat);   // autumn dressing: bare/hollow trees, bench, mushrooms, crow, leaves...
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
         Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the log cabin (tiled walls + " +
                   "corner logs + gable roof), " + treeCount + " animated trees (green + winter), " +
-                  grassPos.Length + " grass tufts. Walk up to the cabin; from the front press E to enter.");
+                  grassPos.Length + " grass tufts + autumn props. Walk up to the cabin; from the front press E to enter.");
     }
 
     // -------------------------------------------------------------- renderer
@@ -356,6 +364,73 @@ public static class HorrorGame3DSetup
     static Sprite[] LoadSheetSprites(string path, string prefix) =>
         AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>()
             .Where(s => s.name.StartsWith(prefix)).OrderBy(s => s.name).ToArray();
+
+    // props_autumn.png atlas (128x96, top-left origin). [x, topY, w, h] of frame 0; extra frames
+    // run horizontally. See Assets/Animation/README.md.
+    struct PropCell
+    {
+        public string name; public int x, y, w, h, frames;
+        public PropCell(string n, int x, int y, int w, int h, int f) { name = n; this.x = x; this.y = y; this.w = w; this.h = h; frames = f; }
+    }
+    const int PropsAtlasH = 96;
+    static readonly PropCell[] PropAtlas =
+    {
+        new PropCell("bareTree",     0,  0, 32, 48, 3),   // animated sway
+        new PropCell("hollowTree",  96,  0, 32, 48, 1),
+        new PropCell("fallenLog",    0, 48, 32, 16, 1),
+        new PropCell("woodpile",    32, 48, 32, 16, 1),
+        new PropCell("bench",       64, 48, 32, 16, 1),
+        new PropCell("fence",       96, 48, 16, 16, 1),
+        new PropCell("gate",       112, 48, 16, 16, 1),
+        new PropCell("mushHomey",    0, 64, 16, 16, 1),
+        new PropCell("mushSickly",  16, 64, 16, 16, 1),
+        new PropCell("planks",      32, 64, 16, 16, 1),
+        new PropCell("acorns",      48, 64, 16, 16, 1),
+        new PropCell("crow",        64, 64, 16, 16, 2),   // animated blink
+        new PropCell("rock",        96, 64, 16, 16, 1),
+        new PropCell("leaves",       0, 80, 16, 16, 4),   // animated skitter
+    };
+
+    // Slices props_autumn.png into named per-frame sprites (bareTree_0.., crow_0.., etc.) from the
+    // mixed-size PropAtlas rects; top-left atlas coords are flipped to Unity's bottom-left origin.
+    static void SlicePropsAtlas(string path, float ppu, float pivotY)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = ppu;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        var rects = new List<SpriteRect>();
+        foreach (var p in PropAtlas)
+            for (int f = 0; f < p.frames; f++)
+                rects.Add(new SpriteRect
+                {
+                    name = p.name + "_" + f,
+                    spriteID = StableGuid(path + "#" + p.name + f),
+                    rect = new Rect(p.x + f * p.w, PropsAtlasH - (p.y + p.h), p.w, p.h),
+                    pivot = new Vector2(0.5f, pivotY),
+                    alignment = SpriteAlignment.Custom,
+                    border = Vector4.zero,
+                });
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
 
     // Slices a grid sheet, giving each visual row (top -> bottom) its own name prefix,
     // e.g. {"dog_idle_","dog_walk_","dog_run_"} for the 3-row dog sheet.
@@ -504,6 +579,280 @@ public static class HorrorGame3DSetup
         sr.sprite = sprite;
         sr.sharedMaterial = mat;
         go.AddComponent<Billboard>();
+    }
+
+    // Scatter autumn props (props_autumn.png) around the clearing: animated bare trees + a static
+    // hollow tree with a perched blinking crow, bench/woodpile/log, mushrooms, acorns, rocks and
+    // planks, plus leaves skittering flat on the grass. 16 px = 1 world unit, bottom-pivoted.
+    static void ScatterAutumnProps(Material mat)
+    {
+        SlicePropsAtlas(PropsAutumn, 16f, 0f);
+        var sprites = LoadSheetSprites(PropsAutumn, "");
+        Sprite[] Fr(string n) => sprites.Where(s => s.name.StartsWith(n + "_")).OrderBy(s => s.name).ToArray();
+        Sprite One(string n) { var a = Fr(n); return a.Length > 0 ? a[0] : null; }
+
+        _placed.Clear();   // fresh scatter each rebuild (positions are still deterministic per seed)
+
+        // Built, man-made props (bench + fence + gate) read as staged, not wild, so they get a
+        // deliberate "garden edge" well south of the cabin rather than being flung around the yard.
+        // Reserved first so the scattered natural props keep clear of it.
+        BuildGardenEdge(One("fence"), One("gate"), One("bench"), mat);
+
+        // Big animated bare trees next so their large footprint is reserved before the small
+        // props fill the gaps. 240 ms sway loop, out-of-phase per instance (README props table).
+        var bare = Fr("bareTree");
+        for (int i = 0; i < 4; i++)
+            MakeAnimProp("BareTree", ScatterPoint(100 + i, 5.5f), bare, 1000f / 240f, mat);
+
+        // Hollow trees, with the blinking crow perched on the first one (README: perch on a
+        // branch/rail, never floating) rather than sitting in empty air.
+        var crow = Fr("crow");
+        Vector3 hollow = ScatterPoint(200, 5.5f);
+        MakeProp("HollowTree", hollow, One("hollowTree"), mat);
+        MakeProp("HollowTree", ScatterPoint(201, 5.5f), One("hollowTree"), mat);
+        MakeCrow(hollow + new Vector3(0f, 2.6f, 0f), crow.Length > 0 ? crow[0] : null, crow.Length > 1 ? crow[1] : null, mat);
+
+        // Rustic yard clutter scattered across the clearing (logs + woodpiles stay wild-looking).
+        MakeProp("Woodpile",  ScatterPoint(310, 3.5f), One("woodpile"), mat);
+        MakeProp("Woodpile",  ScatterPoint(311, 3.5f), One("woodpile"), mat);
+        MakeProp("FallenLog", ScatterPoint(320, 3.5f), One("fallenLog"), mat);
+        MakeProp("FallenLog", ScatterPoint(321, 3.5f), One("fallenLog"), mat);
+
+        // Small dressing dotted sporadically over the yard.
+        MakeProp("Mushrooms", ScatterPoint(500, 2.5f), One("mushSickly"), mat);
+        MakeProp("Mushrooms", ScatterPoint(501, 2.5f), One("mushSickly"), mat);
+        MakeProp("Mushrooms", ScatterPoint(502, 2.5f), One("mushHomey"), mat);
+        MakeProp("Mushrooms", ScatterPoint(503, 2.5f), One("mushHomey"), mat);
+        MakeProp("Acorns",    ScatterPoint(510, 2.5f), One("acorns"), mat);
+        MakeProp("Acorns",    ScatterPoint(511, 2.5f), One("acorns"), mat);
+        MakeProp("Acorns",    ScatterPoint(512, 2.5f), One("acorns"), mat);
+        MakeProp("Rock",      ScatterPoint(520, 2.5f), One("rock"), mat);
+        MakeProp("Rock",      ScatterPoint(521, 2.5f), One("rock"), mat);
+        MakeProp("Rock",      ScatterPoint(522, 2.5f), One("rock"), mat);
+        MakeProp("Rock",      ScatterPoint(523, 2.5f), One("rock"), mat);
+        MakeProp("Planks",    ScatterPoint(530, 2.5f), One("planks"), mat);
+        MakeProp("Planks",    ScatterPoint(531, 2.5f), One("planks"), mat);
+
+        // Leaves skitter flat on the grass (4-frame, 190 ms loop — README), also spread out.
+        var leaves = Fr("leaves");
+        for (int i = 0; i < 4; i++)
+            MakeGroundAnim("Leaves", ScatterPoint(600 + i, 3f) + new Vector3(0f, 0.06f, 0f), leaves, 1000f / 190f, mat);
+    }
+
+    // -------------------------------------------------------------- cobblestone pathway
+    // Footprint of the laid path (world XZ), so scattered props keep off the cobbles (see InKeepClear).
+    static readonly List<Vector3> _pathCells = new List<Vector3>();
+
+    // Lays path_cobble.png (PathTiler) as a flat DOUBLE-WIDE cobble road over the grass:
+    //   * a 2-wide trunk from the yard (spawn, z=0) up to the cabin door (thresholds meet the
+    //     house at z=6.5); the door is at x=0, so the road is shifted -0.5 to straddle it.
+    //   * a 2-wide east/west avenue at z=3-4 that runs far out THROUGH the tree rings, then
+    //   * narrows to a single-wide spur that climbs to a neighbouring house nestled in the trees.
+    // Puddle/water tiles sit out on the far spurs (well away from the main house). Authored as
+    // 1-unit grid cells (16 px world grid); PathTiler auto-selects each routing tile.
+    static void BuildPathway()
+    {
+        _pathCells.Clear();
+        var cells = new HashSet<Vector2Int>();
+        var houses = new List<Vector2Int>();    // cells that meet a building -> threshold tile
+        var puddles = new List<Vector2Int>();   // single-wide vertical straights drawn as animated puddles
+
+        void Strip(int x0, int z0, int x1, int z1)
+        {
+            for (int x = Mathf.Min(x0, x1); x <= Mathf.Max(x0, x1); x++)
+            for (int z = Mathf.Min(z0, z1); z <= Mathf.Max(z0, z1); z++)
+                cells.Add(new Vector2Int(x, z));
+        }
+
+        Strip(0, 0, 1, 6);                       // 2-wide trunk: spawn -> door
+        houses.Add(new Vector2Int(0, 6));        // doorstep (two thresholds side by side)
+        houses.Add(new Vector2Int(1, 6));
+
+        Strip(2, 3, 23, 4);                      // east avenue (out through the trees)
+        Strip(-23, 3, -1, 4);                    // west avenue
+
+        // Single-wide spurs climbing north to houses tucked in the winter-tree ring (~radius 24).
+        for (int z = 5; z <= 9; z++) { cells.Add(new Vector2Int(23, z)); cells.Add(new Vector2Int(-23, z)); }
+        houses.Add(new Vector2Int(23, 9));       // east neighbour's doorstep
+        houses.Add(new Vector2Int(-23, 9));      // west neighbour's doorstep
+        puddles.Add(new Vector2Int(23, 7));      // water far out on the east spur
+        puddles.Add(new Vector2Int(-23, 7));     // water far out on the west spur
+
+        const float shiftX = -0.5f;              // centre the 2-wide trunk on the door (x = 0)
+        var go = new GameObject("Pathway", typeof(MeshFilter), typeof(MeshRenderer));
+        go.transform.position = new Vector3(shiftX, 0f, 0f);
+        var pt = go.AddComponent<PathTiler>();
+        pt.material = PathAtlasMaterial();
+        pt.tileWorldSize = 1f;
+        pt.pathY = 0.04f;
+        pt.cells = new List<Vector2Int>(cells);
+        pt.houseCells = houses;
+        pt.puddleCells = puddles;
+        pt.Build();
+
+        foreach (var c in cells) _pathCells.Add(new Vector3(c.x + shiftX, 0f, c.y));   // world footprint
+    }
+
+    // Transparent unlit material for the cobble atlas: the tiles have real alpha (they overlay the
+    // grass), so it blends rather than writing depth. Import is forced to crisp pixel settings.
+    static Material PathAtlasMaterial()
+    {
+        if (AssetImporter.GetAtPath(PathCobble) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Default || imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || imp.wrapMode != TextureWrapMode.Clamp || !imp.alphaIsTransparency;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Default;
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.wrapMode = TextureWrapMode.Clamp;
+                imp.alphaSource = TextureImporterAlphaSource.FromInput;
+                imp.alphaIsTransparency = true;
+                imp.SaveAndReimport();
+            }
+        }
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(PathCobble);
+        EnsureFolder(MatDir);
+        string matPath = MatDir + "/PathCobble3D.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        var sh = Shader.Find("Universal Render Pipeline/Unlit");
+        if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
+        else mat.shader = sh;
+
+        mat.SetFloat("_Surface", 1f);        // transparent
+        mat.SetFloat("_Blend", 0f);          // alpha blend
+        mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetFloat("_ZWrite", 0f);
+        mat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+        mat.mainTexture = tex;
+        if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    // -------------------------------------------------------------- prop scatter
+    // The walkable exterior is the clearing inside the innermost tree ring (PlaceTreeRing at
+    // r=15 around forest centre 0,0,6). Props scatter across this whole disc rather than
+    // clustering by the cabin door, so the yard reads as sporadically dressed.
+    static readonly Vector3 ClearingCentre = new Vector3(0f, 0f, 6f);
+    const float ClearingRadius = 12f;
+    static readonly List<Vector3> _placed = new List<Vector3>();
+
+    // True inside a zone that must stay clear: the cabin footprint (centre 0,0,10, 6x7, with a
+    // margin), the spawn->front-door approach corridor, and breathing room around the spawn.
+    static bool InKeepClear(Vector3 p)
+    {
+        if (p.x > -4f && p.x < 4f && p.z > 5.5f && p.z < 14f) return true;     // cabin
+        if (p.x > -2.5f && p.x < 2.5f && p.z > -1.5f && p.z < 6.5f) return true; // door approach
+        if (p.x * p.x + p.z * p.z < 4f) return true;                           // player spawn
+        if (NearPath(p, 1.4f)) return true;                                    // keep props off the cobbles
+        return false;
+    }
+
+    // Deterministic natural scatter: hashed polar samples over the clearing disc (sqrt radius =
+    // uniform area), rejecting keep-clear zones and anything closer than `spacing` to an already
+    // placed prop. Falls back to the most-isolated valid candidate if none clears the spacing.
+    static Vector3 ScatterPoint(int seed, float spacing)
+    {
+        Vector3 best = ClearingCentre; float bestGap = -1f;
+        for (int t = 0; t < 24; t++)
+        {
+            float a = Hash01(seed * 73 + t * 19 + 7) * Mathf.PI * 2f;
+            float r = Mathf.Sqrt(Hash01(seed * 131 + t * 29 + 3)) * ClearingRadius;
+            var p = ClearingCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+            if (InKeepClear(p)) continue;
+            float gap = float.MaxValue;
+            foreach (var q in _placed) gap = Mathf.Min(gap, (q - p).sqrMagnitude);
+            if (gap > spacing * spacing) { _placed.Add(p); return p; }
+            if (gap > bestGap) { bestGap = gap; best = p; }
+        }
+        _placed.Add(best);
+        return best;
+    }
+
+    // A deliberate "garden edge" set far south of the cabin (house is at z=10): a fence line
+    // capped by a gate, with the bench sitting just inside it facing the yard. Grouping the built
+    // props here keeps them from looking out of place scattered across the wild clearing.
+    static void BuildGardenEdge(Sprite fence, Sprite gate, Sprite bench, Material mat)
+    {
+        Vector3 anchor = new Vector3(-6.5f, 0f, -2.5f);   // south-west corner of the clearing
+        MakeFenceRun(anchor, 6, fence, gate, mat);        // fence run east, gate caps the far end
+        if (bench != null)
+        {
+            var b = anchor + new Vector3(2.5f, 0f, 1.4f); // just inside the fence line
+            MakeProp("Bench", b, bench, mat);
+            _placed.Add(b);
+        }
+    }
+
+    // A short fence run: fence tiles repeat horizontally (16 px = 1 unit), capped by a gate.
+    static void MakeFenceRun(Vector3 start, int tiles, Sprite fence, Sprite gate, Material mat)
+    {
+        if (fence == null) return;
+        for (int i = 0; i < tiles; i++)
+        {
+            var p = start + new Vector3(i, 0f, 0f);
+            MakeProp("Fence", p, fence, mat);
+            _placed.Add(p);
+        }
+        if (gate != null)
+        {
+            var g = start + new Vector3(tiles, 0f, 0f);
+            MakeProp("Gate", g, gate, mat);
+            _placed.Add(g);
+        }
+    }
+
+    // Billboard sprite that loops a set of frames (bare-tree sway, etc.).
+    static void MakeAnimProp(string name, Vector3 pos, Sprite[] frames, float fps, Material mat)
+    {
+        if (frames == null || frames.Length == 0) return;
+        var go = new GameObject(name);
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = frames[0];
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+        var anim = go.AddComponent<LoopSpriteAnimator>();
+        anim.frames = frames;
+        anim.fps = fps;
+        anim.randomStartPhase = true;
+    }
+
+    // Billboard crow that holds still and blinks on a slow cycle (CrowBlink).
+    static void MakeCrow(Vector3 pos, Sprite open, Sprite blink, Material mat)
+    {
+        if (open == null) return;
+        var go = new GameObject("Crow");
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = open;
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+        var cb = go.AddComponent<CrowBlink>();
+        cb.openFrame = open;
+        cb.blinkFrame = blink;
+    }
+
+    // Animated sprite laid FLAT on the ground (leaves skittering) instead of billboarded upright.
+    static void MakeGroundAnim(string name, Vector3 pos, Sprite[] frames, float fps, Material mat)
+    {
+        if (frames == null || frames.Length == 0) return;
+        var go = new GameObject(name);
+        go.transform.position = pos;
+        go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);   // lie flat on the grass
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = frames[0];
+        sr.sharedMaterial = mat;
+        var anim = go.AddComponent<LoopSpriteAnimator>();
+        anim.frames = frames;
+        anim.fps = fps;
+        anim.randomStartPhase = true;
     }
 
     // ---------------------------------------------------------------- cabin (tile house)
@@ -804,15 +1153,29 @@ public static class HorrorGame3DSetup
     }
 
     // Rings of trees around a centre with deterministic jitter (so rebuilds don't churn the scene).
+    // Trees that land on the cobble road are skipped so the path stays walkable through the woods.
     static int PlaceTreeRing(Vector3 center, float radius, int count, Sprite[] frames, Material mat, int seed)
     {
+        int placed = 0;
         for (int i = 0; i < count; i++)
         {
             float a = (i + 0.5f) / count * Mathf.PI * 2f + (Hash01(seed * 131 + i) - 0.5f) * 0.4f;
             float r = radius + (Hash01(seed * 197 + i) - 0.5f) * 4f;
-            MakeTree(center + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r), frames, mat);
+            var pos = center + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+            if (NearPath(pos, 1.6f)) continue;
+            MakeTree(pos, frames, mat);
+            placed++;
         }
-        return count;
+        return placed;
+    }
+
+    // True if a world point sits within `radius` of any cobble-road cell (see _pathCells).
+    static bool NearPath(Vector3 p, float radius)
+    {
+        float r2 = radius * radius;
+        foreach (var pc in _pathCells)
+            if ((p.x - pc.x) * (p.x - pc.x) + (p.z - pc.z) * (p.z - pc.z) < r2) return true;
+        return false;
     }
 
     static float Hash01(int n)
