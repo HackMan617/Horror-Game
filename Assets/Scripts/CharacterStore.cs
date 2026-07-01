@@ -49,6 +49,18 @@ public static class CharacterStore
     public static int LoadPartner() =>
         Mathf.Clamp(PlayerPrefs.GetInt(Key + "partner", 0), 0, PartnerNames.Length - 1);
 
+    // ---- dog companion breed (apricot / chocolate / cream), randomised at character creation ----
+    public static readonly string[] DogNames = { "Apricot", "Chocolate", "Cream" };
+
+    public static void SaveDog(int dog)
+    {
+        PlayerPrefs.SetInt(Key + "dog", Mathf.Clamp(dog, 0, DogNames.Length - 1));
+        PlayerPrefs.Save();
+    }
+
+    public static int LoadDog() =>
+        Mathf.Clamp(PlayerPrefs.GetInt(Key + "dog", 0), 0, DogNames.Length - 1);
+
     public struct Preset
     {
         public string name;

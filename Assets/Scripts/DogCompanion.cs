@@ -18,6 +18,10 @@ public class DogCompanion : MonoBehaviour
     public Sprite[] idleFrames;
     public Sprite[] walkFrames;
     public Sprite[] heartFrames;            // bottom row: happy "being petted" hearts
+
+    [Header("Breed sets (index matches CharacterStore.DogNames); randomised at character creation")]
+    public BreedFrames[] breeds;
+
     public float fps = 6f;
     public float followDistance = 2.5f;     // stop this far from the player (stays visible)
     public float speed = 4.5f;              // a little faster than the walk so it can keep up
@@ -31,7 +35,24 @@ public class DogCompanion : MonoBehaviour
     PartnerController _partner;
     bool _partnerSearched;
 
-    void Awake() { _sr = GetComponent<SpriteRenderer>(); }
+    void Awake()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+        ApplyChosenBreed();
+    }
+
+    // Swap in the breed picked at character creation (CharacterStore.LoadDog). The baked
+    // apricot frames stay as a fallback if breeds isn't populated (e.g. an un-rebuilt scene).
+    void ApplyChosenBreed()
+    {
+        if (breeds == null || breeds.Length == 0) return;
+        var b = breeds[Mathf.Clamp(CharacterStore.LoadDog(), 0, breeds.Length - 1)];
+        if (b == null) return;
+        if (b.idle  != null && b.idle.Length  > 0) idleFrames  = b.idle;
+        if (b.walk  != null && b.walk.Length  > 0) walkFrames  = b.walk;
+        if (b.heart != null && b.heart.Length > 0) heartFrames = b.heart;
+        if (idleFrames != null && idleFrames.Length > 0) _sr.sprite = idleFrames[0];
+    }
 
     void Update()
     {
@@ -89,5 +110,16 @@ public class DogCompanion : MonoBehaviour
         _petTimer = petDuration;
         if (!_partnerSearched) { _partner = FindAnyObjectByType<PartnerController>(); _partnerSearched = true; }
         if (_partner != null) _partner.Smile();
+    }
+
+    // One dog breed's animation frames (idle / walk / hearts). Wrapped in a class so Unity can
+    // serialize an array of them (it won't serialize a bare Sprite[][]).
+    [System.Serializable]
+    public class BreedFrames
+    {
+        public string name;          // Apricot / Chocolate / Cream (label only)
+        public Sprite[] idle;
+        public Sprite[] walk;
+        public Sprite[] heart;
     }
 }
