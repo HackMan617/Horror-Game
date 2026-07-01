@@ -261,11 +261,14 @@ public static class HorrorGameWorldSetup
 
     static void SetBuildSettings()
     {
-        EditorBuildSettings.scenes = new[]
-        {
-            new EditorBuildSettingsScene(MenuScene, true),
-            new EditorBuildSettingsScene(LobbyScene, true),
-            new EditorBuildSettingsScene(NightmareScene, true),
-        };
+        // Ensure these scenes are present WITHOUT dropping any others — e.g. the 3D Exterior /
+        // Sandbox3D scenes registered by HorrorGame3DSetup, which the menu -> character select ->
+        // exterior -> house flow needs. (Previously this overwrote the whole list and wiped them.)
+        var wanted = new[] { MenuScene, LobbyScene, NightmareScene };
+        var scenes = EditorBuildSettings.scenes.ToList();
+        foreach (var path in wanted)
+            if (!scenes.Any(s => s.path == path))
+                scenes.Add(new EditorBuildSettingsScene(path, true));
+        EditorBuildSettings.scenes = scenes.ToArray();
     }
 }
