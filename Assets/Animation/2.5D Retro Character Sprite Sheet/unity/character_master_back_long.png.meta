@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 50a7944759efc8e41a9f9661714b62c9
+guid: 18af5546c8d14c74cb4cf62554b1ebe9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1923994175756728024
-    second: house_0
+      213: -3992348909677704288
+    second: character_master_back_long_0
   - first:
-      213: -3211844383458338046
-    second: house_1
+      213: -3083213666364355199
+    second: character_master_back_long_1
   - first:
-      213: 575601758146719918
-    second: house_2
+      213: -4457394112680635950
+    second: character_master_back_long_2
   - first:
-      213: 8131065375128214768
-    second: house_3
+      213: -8678863611525464227
+    second: character_master_back_long_3
   - first:
-      213: 7377706198654792900
-    second: house_4
+      213: -6073812404754563621
+    second: character_master_back_long_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +49,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -63,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -87,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -112,111 +112,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: house_0
+      name: character_master_back_long_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 7
         y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 71add5127acffc59718589d6cc9f5b7e
-      internalID: -1923994175756728024
+      spriteID: 0ab0e3ba1d35898c0800000000000000
+      internalID: -3992348909677704288
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: house_1
+      name: character_master_back_long_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 39
         y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        width: 18
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 61cc5dab454cba7ae4c75be5465af782
-      internalID: -3211844383458338046
+      spriteID: 18d09b981893635d0800000000000000
+      internalID: -3083213666364355199
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: house_2
+      name: character_master_back_long_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 71
         y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5383e012b254f7cd8c4554854bb8a5e1
-      internalID: 575601758146719918
+      spriteID: 2d1d0c9bba72422c0800000000000000
+      internalID: -4457394112680635950
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: house_3
+      name: character_master_back_long_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 103
         y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 76edfe4b4d7298964f982b8e86d910f9
-      internalID: 8131065375128214768
+      spriteID: d5ff5f4278b7e8780800000000000000
+      internalID: -8678863611525464227
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: house_4
+      name: character_master_back_long_4
       rect:
         serializedVersion: 2
-        x: 512
+        x: 135
         y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 1e2bc8297574e81b7197bd4bbd421cbc
-      internalID: 7377706198654792900
+      spriteID: bdd3e3e5ccb75bba0800000000000000
+      internalID: -6073812404754563621
       vertices: []
       indices: 
       edges: []
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8be2f1d4ad177084d9d06f04fd5d3387
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +235,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      house_0: -1923994175756728024
-      house_1: -3211844383458338046
-      house_2: 575601758146719918
-      house_3: 8131065375128214768
-      house_4: 7377706198654792900
+      character_master_back_long_0: -3992348909677704288
+      character_master_back_long_1: -3083213666364355199
+      character_master_back_long_2: -4457394112680635950
+      character_master_back_long_3: -8678863611525464227
+      character_master_back_long_4: -6073812404754563621
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

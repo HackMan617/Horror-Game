@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 4b07a5a4f24d095488e16ae354abf435
+guid: 9159fec87b5979549b04b55677eaabd2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8894201062996693461
-    second: house_side_0
+      213: 6484401727712951374
+    second: partner_girl_nightmare_0
+  - first:
+      213: 5579886619956452498
+    second: partner_girl_nightmare_1
+  - first:
+      213: 861306773704309008
+    second: partner_girl_nightmare_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +106,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: houseside_0
+      name: partner_girl_nightmare_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 0
-        width: 168
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.032894738}
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ada23f94d592b79fd8c012fa61f6c3bd
-      internalID: -1653921888
+      spriteID: e4c7249f3093df950800000000000000
+      internalID: 6484401727712951374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_girl_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29c957d315dbf6d40800000000000000
+      internalID: 5579886619956452498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_girl_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 0
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 019784182f9f3fb00800000000000000
+      internalID: 861306773704309008
       vertices: []
       indices: 
       edges: []
@@ -125,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dfbdddfa5c774d144b3f70b15af63675
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      houseside_0: -1653921888
+      partner_girl_nightmare_0: 6484401727712951374
+      partner_girl_nightmare_1: 5579886619956452498
+      partner_girl_nightmare_2: 861306773704309008
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

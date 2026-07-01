@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#10130f;}
+  .pix{image-rendering:pixelated;image-rendering:crisp-edges;}
+</style>
+<script src="./treegen.js"></script>
+</helmet>
+<div style="min-height:100vh;background:#10130f;color:#e7ece2;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:40px 44px 56px;box-sizing:border-box;">
+
+  <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 ref="{{ titleRef }}" style="font-family:'Press Start 2P',monospace;font-size:19px;line-height:1.5;margin:0;color:#8cc079;letter-spacing:0.5px;">SPRUCE_01</h1>
+    <span style="font-size:13px;color:#69715f;">12-frame sway loop &middot; 80&times;152 cells &middot; tiers flutter &middot; needles shed &middot; transparent</span>
+    <div style="display:flex;gap:0;margin-left:auto;border:1px solid #2c3328;border-radius:4px;overflow:hidden;">
+      <button onClick="{{ showGreen }}" style="{{ greenBtnStyle }}">SUMMER</button>
+      <button onClick="{{ showWinter }}" style="{{ winterBtnStyle }}">WINTER</button>
+    </div>
+  </div>
+  <div ref="{{ ruleRef }}" style="height:2px;background:linear-gradient(90deg,#8cc079,#387140,transparent);margin:14px 0 34px;max-width:620px;"></div>
+
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- dense-forest stage -->
+    <div style="text-align:center;">
+      <div ref="{{ stageRef }}" style="padding:0;border:1px solid #28301f;border-radius:6px;overflow:hidden;line-height:0;">
+        <canvas ref="{{ groveRef }}" width="540" height="280" class="pix" style="width:540px;height:280px;display:block;"></canvas>
+      </div>
+      <div ref="{{ captionRef }}" style="margin-top:12px;font-size:13px;color:#8a907f;line-height:1.6;text-align:left;max-width:540px;">a stand of the same loop, each tree offset in phase &middot; <span style="color:#5a6150;">this is the wall of forest the house sits inside</span></div>
+    </div>
+
+    <!-- single showcase + spec -->
+    <div style="display:flex;gap:28px;align-items:flex-start;">
+      <div style="text-align:center;">
+        <div style="padding:14px 18px 6px;background:#171b13;border:1px solid #262d1d;border-radius:6px;background-image:radial-gradient(120% 80% at 50% 18%,#1d2218 0%,#12150e 72%);">
+          <canvas ref="{{ heroRef }}" width="80" height="152" class="pix" style="width:160px;height:304px;display:block;"></canvas>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:#69715f;">single loop &middot; <span ref="{{ fpsLabelRef }}" style="color:#8cc079;">8 fps</span></div>
+      </div>
+
+      <div style="min-width:230px;font-size:13px;line-height:2;color:#aeb4a4;">
+        <div style="color:#69715f;font-size:11px;letter-spacing:1px;margin-bottom:8px;">SHEET SPEC</div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Cell size</span><span style="color:#8cc079;">80 &times; 152 px</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Grid</span><span style="color:#8cc079;">6 &times; 2 &middot; 12 frames</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Sheet size</span><span style="color:#8cc079;">480 &times; 304 px</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Read order</span><span style="color:#e7ece2;">left&rarr;right, top&rarr;bottom</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Loop</span><span style="color:#e7ece2;">seamless</span></div>
+
+        <div style="margin-top:18px;color:#69715f;font-size:11px;letter-spacing:1px;margin-bottom:8px;">WHAT MOVES</div>
+        <div style="max-width:300px;">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>branch tiers <span style="color:#5a6150;">out of phase</span></span><span style="color:#8cc079;">6&times;</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>needle edge <span style="color:#5a6150;">shimmer</span></span><span style="color:#8cc079;">per-f</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>shed needle <span style="color:#5a6150;">drifts, fades</span></span><span style="color:#8cc079;">1&ndash;2</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>trunk &amp; shadow</span><span style="color:#e7ece2;">planted</span></div>
+        </div>
+        <div style="margin-top:16px;color:#8a907f;max-width:300px;line-height:1.7;font-size:12px;">Gentle, mostly still. The motion is small on purpose &mdash; a forest that's quiet but not <i>quite</i> dead, pressing in around where the player lives.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- raw sheets -->
+  <div style="margin-top:44px;display:flex;gap:40px;flex-wrap:wrap;">
+    <div>
+      <div style="color:#69715f;font-size:11px;letter-spacing:1px;margin-bottom:12px;">SHEET <span style="color:#3a4030;">(tree_spruce.png &mdash; import this)</span></div>
+      <div style="display:inline-block;padding:14px;background:#1b2014;border:1px solid #2c3320;border-radius:4px;background-image:linear-gradient(45deg,#171c11 25%,transparent 25%),linear-gradient(-45deg,#171c11 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#171c11 75%),linear-gradient(-45deg,transparent 75%,#171c11 75%);background-size:16px 16px;">
+        <img ref="{{ sheetImgRef }}" src="tree_spruce.png" class="pix" style="height:228px;display:block;" alt="spruce sprite sheet">
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:760},&quot;fps&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:8,&quot;min&quot;:2,&quot;max&quot;:16,&quot;step&quot;:1,&quot;unit&quot;:&quot;fps&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Playback&quot;}}">
+class Component extends DCLogic {
+  state = { season: 'green' };
+  renderVals(){
+    const s = this.state.season;
+    const onG = { background:'#8cc079', color:'#0e1409' };
+    const onW = { background:'#cddae2', color:'#0a0e12' };
+    const off = { background:'#1b2014', color:'#8a907f' };
+    const base = "font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px;border:none;padding:7px 14px;cursor:pointer;";
+    const btn = (o)=> base + `background:${o.background};color:${o.color};`;
+    const fps = this.props.fps ?? 8;
+    return {
+      showGreen:  ()=> this.setState({ season:'green' }),
+      showWinter: ()=> this.setState({ season:'winter' }),
+      greenBtnStyle:  btn(s==='green'  ? onG : off),
+      winterBtnStyle: btn(s==='winter' ? onW : off),
+      titleRef:   (el)=>{ this.titleEl = el; },
+      ruleRef:    (el)=>{ this.ruleEl = el; },
+      stageRef:   (el)=>{ this.stageEl = el; },
+      captionRef: (el)=>{ this.captionEl = el; },
+      fpsLabelRef:(el)=>{ if(el) el.textContent = fps + ' fps'; },
+      groveRef:   (el)=>{ this.grove = el; this._start(); },
+      heroRef:    (el)=>{ this.hero = el; this._start(); },
+      sheetImgRef:(el)=>{ this.sheetImg = el; this._applyMode(); },
+    };
+  }
+  componentDidMount(){
+    this.tmp = document.createElement('canvas'); this.tmp.width = 80; this.tmp.height = 152;
+    // back row (hazy depth) then front row (full)
+    this.trees = [
+      {x:8,   y:228, s:0.78, ph:3,  a:0.40},
+      {x:96,  y:233, s:0.86, ph:7,  a:0.44},
+      {x:188, y:226, s:0.74, ph:1,  a:0.38},
+      {x:286, y:234, s:0.82, ph:9,  a:0.44},
+      {x:378, y:229, s:0.80, ph:5,  a:0.40},
+      {x:470, y:233, s:0.88, ph:11, a:0.46},
+      {x:-18, y:288, s:1.22, ph:0,  a:1},
+      {x:128, y:294, s:1.34, ph:6,  a:1},
+      {x:286, y:288, s:1.18, ph:2,  a:1},
+      {x:418, y:296, s:1.30, ph:8,  a:1},
+    ];
+    this._applyMode();
+    this._start();
+  }
+  componentDidUpdate(){ this._applyMode(); }
+  _applyMode(){
+    const winter = this.state.season === 'winter';
+    if(this.sheetImg){ const s = winter?'tree_spruce_winter.png':'tree_spruce.png'; if(!this.sheetImg.src.endsWith(s)) this.sheetImg.src = s; }
+    if(this.titleEl) this.titleEl.style.color = winter ? '#cddae2' : '#8cc079';
+    if(this.ruleEl) this.ruleEl.style.background = winter
+      ? 'linear-gradient(90deg,#cddae2,#5d8462,transparent)'
+      : 'linear-gradient(90deg,#8cc079,#387140,transparent)';
+    if(this.captionEl) this.captionEl.firstChild && (this.captionEl.childNodes[0].nodeValue = winter
+      ? 'snow-loaded, colder, slower drift \u00b7 ' : 'a stand of the same loop, each tree offset in phase \u00b7 ');
+  }
+  _start(){
+    if(this._raf || !window.TreeGen) return;
+    const T = window.TreeGen;
+    const draw = (t)=>{
+      const winter = this.state.season === 'winter';
+      const fps = this.props.fps ?? 8;
+      const fr = Math.floor(t/(1000/fps));
+      const tctx = this.tmp.getContext('2d');
+      // grove
+      if(this.grove){
+        const g = this.grove.getContext('2d'); g.imageSmoothingEnabled = false;
+        const W = this.grove.width, H = this.grove.height;
+        const sky = g.createLinearGradient(0,0,0,H);
+        if(winter){ sky.addColorStop(0,'#1a212a'); sky.addColorStop(0.6,'#141a20'); sky.addColorStop(1,'#0d1116'); }
+        else { sky.addColorStop(0,'#121912'); sky.addColorStop(0.6,'#0f140e'); sky.addColorStop(1,'#0a0d09'); }
+        g.fillStyle = sky; g.fillRect(0,0,W,H);
+        // floor band
+        g.fillStyle = winter ? 'rgba(190,205,216,0.10)' : 'rgba(40,55,34,0.22)';
+        g.fillRect(0, H-46, W, 46);
+        for(const tr of this.trees){
+          tctx.clearRect(0,0,80,152);
+          T.drawTree(tctx, 0, 0, (fr + tr.ph) % 12, winter);
+          const w = 80*tr.s, h = 152*tr.s;
+          g.globalAlpha = tr.a;
+          g.drawImage(this.tmp, Math.round(tr.x), Math.round(tr.y - h), Math.round(w), Math.round(h));
+          // depth haze veil over the back row
+          if(tr.a < 1){ g.globalAlpha = (1-tr.a)*0.55; g.fillStyle = winter ? '#141a20' : '#0f140e'; g.fillRect(Math.round(tr.x), Math.round(tr.y-h), Math.round(w), Math.round(h)); }
+        }
+        g.globalAlpha = 1;
+      }
+      // hero
+      if(this.hero){
+        const h = this.hero.getContext('2d'); h.imageSmoothingEnabled = false;
+        h.clearRect(0,0,80,152);
+        T.drawTree(h, 0, 0, fr % 12, winter);
+      }
+      this._raf = requestAnimationFrame(draw);
+    };
+    this._raf = requestAnimationFrame(draw);
+  }
+  componentWillUnmount(){ if(this._raf) cancelAnimationFrame(this._raf); }
+}
+</script>
+</body>
+</html>

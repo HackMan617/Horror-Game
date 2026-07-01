@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 4b07a5a4f24d095488e16ae354abf435
+guid: 3602bae51938262499ae0cbd25f5721e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8894201062996693461
-    second: house_side_0
+      213: 4258185516614094220
+    second: house_tiles_nightmare_0
+  - first:
+      213: -6113754804961503168
+    second: house_tiles_nightmare_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +103,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: houseside_0
+      name: house_tiles_nightmare_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 168
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.032894738}
+        y: 28
+        width: 192
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ada23f94d592b79fd8c012fa61f6c3bd
-      internalID: -1653921888
+      spriteID: c8d0f71aa2d181b30800000000000000
+      internalID: 4258185516614094220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: house_tiles_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 192
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0489e6e9564972ba0800000000000000
+      internalID: -6113754804961503168
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dfbdddfa5c774d144b3f70b15af63675
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      houseside_0: -1653921888
+      house_tiles_nightmare_0: 4258185516614094220
+      house_tiles_nightmare_1: -6113754804961503168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

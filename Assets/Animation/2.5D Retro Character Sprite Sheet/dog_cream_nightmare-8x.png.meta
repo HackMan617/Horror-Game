@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 850350b8fcfb7f64da8efacecbee13aa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2084566478432742780
+    second: dog_cream_nightmare-8x_0
+  - first:
+      213: -1355230536513427643
+    second: dog_cream_nightmare-8x_1
+  - first:
+      213: -5202882778658683578
+    second: dog_cream_nightmare-8x_2
+  - first:
+      213: 8852386154574870541
+    second: dog_cream_nightmare-8x_3
+  - first:
+      213: 6533388263218190021
+    second: dog_cream_nightmare-8x_4
+  - first:
+      213: -1933005808492969953
+    second: dog_cream_nightmare-8x_5
+  - first:
+      213: 5814005181689395809
+    second: dog_cream_nightmare-8x_6
+  - first:
+      213: -2055404655421070096
+    second: dog_cream_nightmare-8x_7
+  - first:
+      213: -2396541364855531186
+    second: dog_cream_nightmare-8x_8
+  - first:
+      213: -1825310902937777052
+    second: dog_cream_nightmare-8x_9
+  - first:
+      213: 795761219942777169
+    second: dog_cream_nightmare-8x_10
+  - first:
+      213: 2033336892909253211
+    second: dog_cream_nightmare-8x_11
+  - first:
+      213: -698798919963921949
+    second: dog_cream_nightmare-8x_12
+  - first:
+      213: 5320306164783530200
+    second: dog_cream_nightmare-8x_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 775
+        width: 178
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 482545615d12213e0800000000000000
+      internalID: -2084566478432742780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_1
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 775
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 547ea52e101413de0800000000000000
+      internalID: -1355230536513427643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_2
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 767
+        width: 194
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6454d0acda5abc7b0800000000000000
+      internalID: -5202882778658683578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_3
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 767
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d08750e3e4ef9da70800000000000000
+      internalID: 8852386154574870541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_4
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 775
+        width: 178
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c693d092024baa50800000000000000
+      internalID: 6533388263218190021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_5
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 775
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f10820c65759c25e0800000000000000
+      internalID: -1933005808492969953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 519
+        width: 1536
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16a70e8a8ee7fa050800000000000000
+      internalID: 5814005181689395809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 279
+        width: 1536
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f461fb1b5cb973e0800000000000000
+      internalID: -2055404655421070096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_8
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 7
+        width: 202
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e49914a7356cdbed0800000000000000
+      internalID: -2396541364855531186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_9
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 0
+        width: 194
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c0fb997613ba6e0800000000000000
+      internalID: -1825310902937777052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_10
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 7
+        width: 178
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15188b80d9c1b0b00800000000000000
+      internalID: 795761219942777169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_11
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 0
+        width: 178
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b527d8a812dd73c10800000000000000
+      internalID: 2033336892909253211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_12
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 7
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e1bf1ea51e5d46f0800000000000000
+      internalID: -698798919963921949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_cream_nightmare-8x_13
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 0
+        width: 194
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d04e38c44685d940800000000000000
+      internalID: 5320306164783530200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      dog_cream_nightmare-8x_0: -2084566478432742780
+      dog_cream_nightmare-8x_1: -1355230536513427643
+      dog_cream_nightmare-8x_10: 795761219942777169
+      dog_cream_nightmare-8x_11: 2033336892909253211
+      dog_cream_nightmare-8x_12: -698798919963921949
+      dog_cream_nightmare-8x_13: 5320306164783530200
+      dog_cream_nightmare-8x_2: -5202882778658683578
+      dog_cream_nightmare-8x_3: 8852386154574870541
+      dog_cream_nightmare-8x_4: 6533388263218190021
+      dog_cream_nightmare-8x_5: -1933005808492969953
+      dog_cream_nightmare-8x_6: 5814005181689395809
+      dog_cream_nightmare-8x_7: -2055404655421070096
+      dog_cream_nightmare-8x_8: -2396541364855531186
+      dog_cream_nightmare-8x_9: -1825310902937777052
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

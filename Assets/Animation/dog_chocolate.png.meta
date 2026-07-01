@@ -1,22 +1,31 @@
 fileFormatVersion: 2
-guid: 50a7944759efc8e41a9f9661714b62c9
+guid: dad1f1d3345d5c84591e868058c495cf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1923994175756728024
-    second: house_0
+      213: 2059295857420791124
+    second: dog_chocolate_0
   - first:
-      213: -3211844383458338046
-    second: house_1
+      213: 3896938339720306206
+    second: dog_chocolate_1
   - first:
-      213: 575601758146719918
-    second: house_2
+      213: 7719488697481792748
+    second: dog_chocolate_2
   - first:
-      213: 8131065375128214768
-    second: house_3
+      213: 1975404064009180294
+    second: dog_chocolate_3
   - first:
-      213: 7377706198654792900
-    second: house_4
+      213: 6071492640603723860
+    second: dog_chocolate_4
+  - first:
+      213: -8124445897293644941
+    second: dog_chocolate_5
+  - first:
+      213: -5252253969855293983
+    second: dog_chocolate_6
+  - first:
+      213: 4198569710536736267
+    second: dog_chocolate_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -63,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -87,7 +96,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -112,111 +121,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: house_0
+      name: dog_chocolate_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 66
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45deff4fba6149c10800000000000000
+      internalID: 2059295857420791124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_chocolate_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 66
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1e11aae5c4b41630800000000000000
+      internalID: 3896938339720306206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_chocolate_2
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 65
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec8b0d1212212b60800000000000000
+      internalID: 7719488697481792748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_chocolate_3
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 65
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6845123b78b0a6b10800000000000000
+      internalID: 1975404064009180294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_chocolate_4
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 66
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45855937366424450800000000000000
+      internalID: 6071492640603723860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_chocolate_5
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 66
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37bbee6608b204f80800000000000000
+      internalID: -8124445897293644941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_chocolate_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        y: 34
+        width: 192
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 71add5127acffc59718589d6cc9f5b7e
-      internalID: -1923994175756728024
+      spriteID: 1e5d3a097de3c17b0800000000000000
+      internalID: -5252253969855293983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: house_1
+      name: dog_chocolate_7
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
+        x: 0
+        y: 2
+        width: 192
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 61cc5dab454cba7ae4c75be5465af782
-      internalID: -3211844383458338046
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: house_2
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5383e012b254f7cd8c4554854bb8a5e1
-      internalID: 575601758146719918
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: house_3
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 76edfe4b4d7298964f982b8e86d910f9
-      internalID: 8131065375128214768
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: house_4
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 152
-      alignment: 9
-      pivot: {x: 0.5, y: 0.065789476}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1e2bc8297574e81b7197bd4bbd421cbc
-      internalID: 7377706198654792900
+      spriteID: b0eb14128e0544a30800000000000000
+      internalID: 4198569710536736267
       vertices: []
       indices: 
       edges: []
@@ -225,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8be2f1d4ad177084d9d06f04fd5d3387
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      house_0: -1923994175756728024
-      house_1: -3211844383458338046
-      house_2: 575601758146719918
-      house_3: 8131065375128214768
-      house_4: 7377706198654792900
+      dog_chocolate_0: 2059295857420791124
+      dog_chocolate_1: 3896938339720306206
+      dog_chocolate_2: 7719488697481792748
+      dog_chocolate_3: 1975404064009180294
+      dog_chocolate_4: 6071492640603723860
+      dog_chocolate_5: -8124445897293644941
+      dog_chocolate_6: -5252253969855293983
+      dog_chocolate_7: 4198569710536736267
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

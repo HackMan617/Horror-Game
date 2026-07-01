@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#16161c;}
+  .pix{image-rendering:pixelated;image-rendering:crisp-edges;}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#16161c;color:#e8e6df;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:40px 44px 56px;box-sizing:border-box;">
+
+  <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 ref="{{ titleRef }}" style="font-family:'Press Start 2P',monospace;font-size:19px;line-height:1.5;margin:0;color:#f3c062;letter-spacing:0.5px;">HOUSE_01</h1>
+    <span style="font-size:13px;color:#6f6f7c;">rustic 2-story &mdash; 24&times;24 modular tiles &middot; home / nightmare portal</span>
+    <div style="display:flex;gap:0;margin-left:auto;border:1px solid #313140;border-radius:4px;overflow:hidden;">
+      <button onClick="{{ showNormal }}" style="{{ normalBtnStyle }}">HOME</button>
+      <button onClick="{{ showNight }}" style="{{ nightBtnStyle }}">NIGHTMARE</button>
+    </div>
+  </div>
+  <div ref="{{ ruleRef }}" style="height:2px;background:linear-gradient(90deg,#f3c062,#d4882e,transparent);margin:14px 0 34px;max-width:620px;"></div>
+
+  <div style="display:flex;gap:52px;flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- assembled animated house -->
+    <div style="text-align:center;">
+      <div ref="{{ stageRef }}" style="padding:30px 40px 18px;background:#1d1d24;border:1px solid #2c2c36;border-radius:6px;background-image:radial-gradient(120% 80% at 50% 18%,#23232e 0%,#191920 70%);">
+        <canvas ref="{{ houseRef }}" width="144" height="240" class="pix" style="width:288px;height:480px;display:block;"></canvas>
+      </div>
+      <div ref="{{ captionRef }}" style="margin-top:12px;font-size:13px;color:#9a9aa6;">assembled demo &middot; <span style="color:#5e5e68;">tiles only are exported</span></div>
+    </div>
+
+    <!-- spec -->
+    <div style="min-width:250px;font-size:13px;line-height:2;color:#b9b9c2;">
+      <div style="color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">SHEET SPEC</div>
+      <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #262630;"><span>Tile size</span><span style="color:#f3c062;">24 &times; 24 px</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #262630;"><span>Sheet size</span><span style="color:#f3c062;">192 &times; 144 px (8&times;6)</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #262630;"><span>Sheets</span><span style="color:#e8e6df;">home + nightmare</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #262630;"><span>Background</span><span style="color:#e8e6df;">transparent</span></div>
+
+      <div style="margin-top:20px;color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">STATIC TILES <span style="color:#41414c;">(row 0&ndash;1)</span></div>
+      <div style="color:#8f8f9a;max-width:320px;line-height:1.8;">wallA &middot; wallB(knot) &middot; postV &middot; beamH &middot; foundation &middot; doorTop &middot; doorBottom &middot; window &middot; roofFill &middot; roofSlopeL/R &middot; roofEave &middot; chimney &middot; chimneyTop</div>
+
+      <div style="margin-top:18px;color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">ANIMATED STRIPS <span style="color:#41414c;">(row 2&ndash;5)</span></div>
+      <div style="max-width:330px;">
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #262630;"><span>winSil <span style="color:#5e5e68;">passerby / intruder</span></span><span style="color:#f3c062;">6f</span></div>
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #262630;"><span>winCandle <span style="color:#5e5e68;">lamp / flashlight</span></span><span style="color:#f3c062;">4f</span></div>
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #262630;"><span>smoke <span style="color:#5e5e68;">chimney / dead, faint</span></span><span style="color:#f3c062;">6f</span></div>
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #262630;"><span>loosePlank <span style="color:#5e5e68;">creak / wall shadow</span></span><span style="color:#f3c062;">4f</span></div>
+      </div>
+      <div style="margin-top:16px;color:#8f8f9a;max-width:330px;line-height:1.7;font-size:12px;">Nightmare keeps the same grid &mdash; it's just the house at dead of night: the front door stands ajar, one room is lit with someone standing inside, a flashlight sweeps a black window, and a shadow crosses the wall. Nothing supernatural &mdash; that's the point.</div>
+    </div>
+  </div>
+
+  <!-- raw tile sheet -->
+  <div style="margin-top:44px;">
+    <div ref="{{ sheetLabelRef }}" style="color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:12px;">TILE SHEET <span style="color:#41414c;">(house_tiles.png &mdash; 192&times;144, this is what to import)</span></div>
+    <div style="display:inline-block;padding:16px;background:#21212a;border:1px solid #313140;border-radius:4px;background-image:linear-gradient(45deg,#1d1d25 25%,transparent 25%),linear-gradient(-45deg,#1d1d25 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1d1d25 75%),linear-gradient(-45deg,transparent 75%,#1d1d25 75%);background-size:16px 16px;">
+      <img ref="{{ sheetImgRef }}" src="house_tiles.png" class="pix" style="height:288px;display:block;" alt="house tile sheet">
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { mode: 'normal' };
+  renderVals(){
+    const m = this.state.mode;
+    const on  = { background:'#f3c062', color:'#1a1206' };
+    const onN = { background:'#8fa6b0', color:'#0a0e12' };
+    const off = { background:'#21212a', color:'#9a9aa6' };
+    const base = "font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px;border:none;padding:7px 14px;cursor:pointer;";
+    const s = (o)=> base + `background:${o.background};color:${o.color};`;
+    return {
+      showNormal: ()=> this.setState({ mode:'normal' }),
+      showNight:  ()=> this.setState({ mode:'nightmare' }),
+      normalBtnStyle: s(m==='normal'? on : off),
+      nightBtnStyle:  s(m==='nightmare'? onN : off),
+      titleRef: (el)=>{ this.titleEl = el; },
+      ruleRef: (el)=>{ this.ruleEl = el; },
+      stageRef: (el)=>{ this.stageEl = el; },
+      captionRef: (el)=>{ this.captionEl = el; },
+      houseRef: (el)=>{ this.house = el; this._start(); },
+      sheetImgRef: (el)=>{ this.sheetImg = el; this._applyMode(); },
+      sheetLabelRef: (el)=>{ this.sheetLabel = el; this._applyMode(); },
+    };
+  }
+  componentDidMount(){
+    this.imgs = {};
+    [['normal','house_tiles.png'],['nightmare','house_tiles_nightmare.png']].forEach(([k,src])=>{
+      const im = new Image();
+      im.onload = ()=>{ this.imgs[k]=im; this._start(); };
+      im.src = src; this.imgs[k]=im;
+    });
+    // placements: [col,row,type] — type is sheet key or anim name
+    const W = (c)=>['wallA','wallB'][c%2];
+    this.place = [];
+    const add=(c,r,t)=>this.place.push([c,r,t]);
+    // roof (triangle, 6 wide / 3 tall)
+    add(2,0,'roofL'); add(3,0,'roofR');
+    add(1,1,'roofL'); add(2,1,'roofF'); add(3,1,'roofF'); add(4,1,'roofR');
+    add(0,2,'roofL'); add(1,2,'roofF'); add(2,2,'roofF'); add(3,2,'roofF'); add(4,2,'roofF'); add(5,2,'roofR');
+    // eave overhang
+    for(let c=0;c<6;c++) add(c,3,'eave');
+    // story 2
+    add(0,4,'postV'); add(1,4,'wallA'); add(2,4,'wallB'); add(3,4,'wallA'); add(4,4,'wallA'); add(5,4,'postV');
+    add(0,5,'postV'); add(1,5,'winSil'); add(2,5,'wallA'); add(3,5,'winCandle'); add(4,5,'wallB'); add(5,5,'postV');
+    // belt
+    for(let c=0;c<6;c++) add(c,6,'beamH');
+    // story 1
+    add(0,7,'postV'); add(1,7,'winCandle'); add(2,7,'wallA'); add(3,7,'doorT'); add(4,7,'win'); add(5,7,'postV');
+    add(0,8,'postV'); add(1,8,'loosePlank'); add(2,8,'wallB'); add(3,8,'doorB'); add(4,8,'wallA'); add(5,8,'postV');
+    // foundation
+    for(let c=0;c<6;c++) add(c,9,'found');
+    // chimney + smoke overlay (drawn last)
+    this.overlay = [[4,1,'chimT'],[4,0,'smoke']];
+    // sheet cell coords (col,row) per static key
+    this.S = { wallA:[0,0], wallB:[1,0], postV:[2,0], beamH:[3,0], found:[4,0], doorT:[5,0], doorB:[6,0], win:[7,0],
+               roofF:[0,1], roofL:[1,1], roofR:[2,1], eave:[3,1], chim:[4,1], chimT:[5,1] };
+    this.anims = { winSil:{row:2,n:6,ms:230}, winCandle:{row:3,n:4,ms:190}, smoke:{row:4,n:6,ms:150}, loosePlank:{row:5,n:4,ms:240} };
+    this._applyMode();
+  }
+  componentDidUpdate(){ this._applyMode(); }
+  _applyMode(){
+    const night = this.state.mode==='nightmare';
+    if(this.sheetImg){ const s = night?'house_tiles_nightmare.png':'house_tiles.png'; if(!this.sheetImg.src.endsWith(s)) this.sheetImg.src = s; }
+    if(this.sheetLabel){ const f = night?'house_tiles_nightmare.png':'house_tiles.png'; this.sheetLabel.innerHTML = 'TILE SHEET <span style="color:#41414c;">('+f+' &mdash; 192&times;144, this is what to import)</span>'; }
+    if(this.titleEl) this.titleEl.style.color = night ? '#9fb4be' : '#f3c062';
+    if(this.ruleEl) this.ruleEl.style.background = night
+      ? 'linear-gradient(90deg,#5a626e,#262d38,transparent)'
+      : 'linear-gradient(90deg,#f3c062,#d4882e,transparent)';
+    if(this.stageEl) this.stageEl.style.backgroundImage = night
+      ? 'radial-gradient(130% 90% at 50% 12%,#10131a 0%,#070a0e 72%)'
+      : 'radial-gradient(120% 80% at 50% 18%,#23232e 0%,#191920 70%)';
+    if(this.captionEl) this.captionEl.firstChild && (this.captionEl.childNodes[0].nodeValue = night ? 'the same house — someone is inside · ' : 'assembled demo · ');
+  }
+  _start(){
+    if(this._running || !this.house || !this.imgs || !this.imgs.normal.complete || !this.imgs.nightmare.complete) return;
+    this._running = true;
+    const T=24, ctx=this.house.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    const draw=(t)=>{
+      const img = this.imgs[this.state.mode];
+      ctx.clearRect(0,0,this.house.width,this.house.height);
+      // soft ground shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.28)';
+      ctx.beginPath(); ctx.ellipse(72, 238, 60, 7, 0, 0, Math.PI*2); ctx.fill();
+      const cell=(key)=>this.S[key];
+      const blit=(sx,sy,dx,dy)=> ctx.drawImage(img, sx*T, sy*T, T, T, dx, dy, T, T);
+      const frameOf=(name)=>{ const a=this.anims[name]; return Math.floor(t/a.ms)%a.n; };
+      const drawTile=(c,r,type)=>{
+        const dx=c*T, dy=r*T;
+        if(this.anims[type]){ const a=this.anims[type]; blit(frameOf(type), a.row, dx, dy); }
+        else { const [sx,sy]=cell(type); blit(sx,sy,dx,dy); }
+      };
+      for(const [c,r,type] of this.place) drawTile(c,r,type);
+      for(const [c,r,type] of this.overlay) drawTile(c,r,type);
+      this._raf=requestAnimationFrame(draw);
+    };
+    this._raf=requestAnimationFrame(draw);
+  }
+  componentWillUnmount(){ if(this._raf) cancelAnimationFrame(this._raf); }
+}
+</script>
+</body>
+</html>

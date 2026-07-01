@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: e2ab0b1ac3f423644adca353aef0dcfd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1945449649125727985
+    second: dog_apricot_nightmare-8x_0
+  - first:
+      213: 5062837172458321048
+    second: dog_apricot_nightmare-8x_1
+  - first:
+      213: 5120189850532476043
+    second: dog_apricot_nightmare-8x_2
+  - first:
+      213: -7135165833128001762
+    second: dog_apricot_nightmare-8x_3
+  - first:
+      213: 1425875184754236191
+    second: dog_apricot_nightmare-8x_4
+  - first:
+      213: 8811795901488007055
+    second: dog_apricot_nightmare-8x_5
+  - first:
+      213: 5035223298212156312
+    second: dog_apricot_nightmare-8x_6
+  - first:
+      213: 7207878295895204509
+    second: dog_apricot_nightmare-8x_7
+  - first:
+      213: 6673059705663896522
+    second: dog_apricot_nightmare-8x_8
+  - first:
+      213: 9182463063367288667
+    second: dog_apricot_nightmare-8x_9
+  - first:
+      213: -5466145956642394677
+    second: dog_apricot_nightmare-8x_10
+  - first:
+      213: -7385703022794352314
+    second: dog_apricot_nightmare-8x_11
+  - first:
+      213: -64422746659168801
+    second: dog_apricot_nightmare-8x_12
+  - first:
+      213: -2672079217641867370
+    second: dog_apricot_nightmare-8x_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 775
+        width: 178
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fe1c800620affa10800000000000000
+      internalID: 1945449649125727985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_1
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 775
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8947504959fc24640800000000000000
+      internalID: 5062837172458321048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_2
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 767
+        width: 194
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b847c878a819e0740800000000000000
+      internalID: 5120189850532476043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_3
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 767
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1fb6ee7a7ccafc90800000000000000
+      internalID: -7135165833128001762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_4
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 775
+        width: 178
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1b12590de9b9c310800000000000000
+      internalID: 1425875184754236191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_5
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 775
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f878f6d7fa9c94a70800000000000000
+      internalID: 8811795901488007055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 519
+        width: 1536
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 893d4b679e4b0e540800000000000000
+      internalID: 5035223298212156312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 279
+        width: 1536
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d92e4130f17870460800000000000000
+      internalID: 7207878295895204509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_8
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 7
+        width: 202
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acbb11962787b9c50800000000000000
+      internalID: 6673059705663896522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_9
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 0
+        width: 194
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b57072f5189ae6f70800000000000000
+      internalID: 9182463063367288667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_10
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 7
+        width: 178
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcd64eb96395424b0800000000000000
+      internalID: -5466145956642394677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_11
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 0
+        width: 178
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64950dd5b36b08990800000000000000
+      internalID: -7385703022794352314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_12
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 7
+        width: 186
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdddced6adf1b1ff0800000000000000
+      internalID: -64422746659168801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dog_apricot_nightmare-8x_13
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 0
+        width: 194
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 697b0ccdb1edaead0800000000000000
+      internalID: -2672079217641867370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      dog_apricot_nightmare-8x_0: 1945449649125727985
+      dog_apricot_nightmare-8x_1: 5062837172458321048
+      dog_apricot_nightmare-8x_10: -5466145956642394677
+      dog_apricot_nightmare-8x_11: -7385703022794352314
+      dog_apricot_nightmare-8x_12: -64422746659168801
+      dog_apricot_nightmare-8x_13: -2672079217641867370
+      dog_apricot_nightmare-8x_2: 5120189850532476043
+      dog_apricot_nightmare-8x_3: -7135165833128001762
+      dog_apricot_nightmare-8x_4: 1425875184754236191
+      dog_apricot_nightmare-8x_5: 8811795901488007055
+      dog_apricot_nightmare-8x_6: 5035223298212156312
+      dog_apricot_nightmare-8x_7: 7207878295895204509
+      dog_apricot_nightmare-8x_8: 6673059705663896522
+      dog_apricot_nightmare-8x_9: 9182463063367288667
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

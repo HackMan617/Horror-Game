@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#0c0c12;}
+  *{box-sizing:border-box;}
+  @keyframes flickerVig{0%,100%{opacity:.55}50%{opacity:.42}}
+  .cc-scroll::-webkit-scrollbar{width:10px}
+  .cc-scroll::-webkit-scrollbar-track{background:#15151f}
+  .cc-scroll::-webkit-scrollbar-thumb{background:#34344a;border:2px solid #15151f}
+</style>
+</helmet>
+<div data-screen-label="Character Creator" style="min-height:100vh;width:100%;background:radial-gradient(120% 90% at 50% 0%,#1a1a26 0%,#0c0c12 70%);font-family:system-ui,-apple-system,sans-serif;color:#e6e6f0;display:flex;flex-direction:column;align-items:center;padding:28px 20px 48px;">
+
+  <div style="width:100%;max-width:1060px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;">
+    <div>
+      <div style="font-family:'Press Start 2P',monospace;font-size:19px;letter-spacing:1px;color:#f0e6d2;text-shadow:0 0 10px rgba(216,48,48,.35),2px 2px 0 #000;">CHARACTER CREATION</div>
+      <div style="font-size:12.5px;color:#7c7c92;margin-top:9px;letter-spacing:.3px;">Customize your survivor. The same body, your colors.</div>
+    </div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:#3f3f52;line-height:1.7;text-align:right;">REALM&nbsp;01<br>WAKING&nbsp;HOUSE</div>
+  </div>
+
+  <div style="width:100%;max-width:1060px;display:flex;gap:22px;flex-wrap:wrap;align-items:stretch;">
+
+    <!-- PREVIEW STAGE -->
+    <div style="flex:0 0 330px;display:flex;flex-direction:column;gap:14px;">
+      <div style="position:relative;height:330px;border-radius:4px;border:2px solid #2a2a3c;background:radial-gradient(80% 70% at 50% 38%,#23233a 0%,#101019 80%);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;">
+        <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.025) 26px 27px),repeating-linear-gradient(90deg,transparent 0 26px,rgba(255,255,255,.025) 26px 27px);"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 50%,transparent 40%,rgba(0,0,0,.55) 100%);animation:flickerVig 5s ease-in-out infinite;"></div>
+        <div style="position:absolute;bottom:62px;width:130px;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);"></div>
+        <canvas ref="{{ setMain }}" width="224" height="224" style="position:relative;width:224px;height:224px;image-rendering:pixelated;"></canvas>
+      </div>
+
+      <!-- gender / hairstyle -->
+      <div style="display:flex;background:#15151f;border:2px solid #2a2a3c;border-radius:3px;overflow:hidden;">
+        <button onClick="{{ setMale }}" style="{{ btnMale }}">MALE</button>
+        <button onClick="{{ setFemale }}" style="{{ btnFemale }}">FEMALE</button>
+      </div>
+
+      <!-- facing + motion toggles -->
+      <div style="display:flex;gap:10px;">
+        <div style="flex:1;display:flex;background:#15151f;border:2px solid #2a2a3c;border-radius:3px;overflow:hidden;">
+          <button onClick="{{ faceFront }}" style="{{ btnFront }}">FRONT</button>
+          <button onClick="{{ faceBack }}" style="{{ btnBack }}">BACK</button>
+        </div>
+        <div style="flex:1;display:flex;background:#15151f;border:2px solid #2a2a3c;border-radius:3px;overflow:hidden;">
+          <button onClick="{{ setIdle }}" style="{{ btnIdle }}">IDLE</button>
+          <button onClick="{{ setWalk }}" style="{{ btnWalk }}">WALK</button>
+        </div>
+      </div>
+
+      <!-- filmstrip -->
+      <div style="background:#15151f;border:2px solid #2a2a3c;border-radius:3px;padding:9px;">
+        <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#5a5a72;margin-bottom:8px;letter-spacing:.5px;">SHEET PREVIEW</div>
+        <canvas ref="{{ setStrip }}" width="480" height="96" style="width:100%;height:auto;image-rendering:pixelated;display:block;"></canvas>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div style="flex:1;min-width:320px;display:flex;flex-direction:column;">
+      <div class="cc-scroll" style="flex:1;background:#15151f;border:2px solid #2a2a3c;border-radius:4px;padding:20px 22px;display:flex;flex-direction:column;gap:22px;max-height:560px;overflow-y:auto;">
+        <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="5">
+          <div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px;">
+              <span style="font-family:'Press Start 2P',monospace;font-size:10px;color:#cfcfe0;letter-spacing:.5px;">{{ cat.label }}</span>
+              <span style="font-size:11.5px;color:#8888a0;">{{ cat.selectedName }}</span>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <sc-for list="{{ cat.options }}" as="opt" hint-placeholder-count="6">
+                <button onClick="{{ opt.onClick }}" title="{{ opt.name }}" style="{{ opt.chipStyle }}"></button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- actions -->
+      <div style="display:flex;gap:11px;margin-top:16px;flex-wrap:wrap;">
+        <button onClick="{{ randomize }}" style="flex:1;min-width:120px;padding:13px 10px;background:#23233a;color:#d6d6e6;border:2px solid #3a3a52;border-radius:3px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:.5px;cursor:pointer;" style-hover="background:#2c2c46;border-color:#52527a;">RANDOMIZE</button>
+        <button onClick="{{ exportFront }}" style="flex:1;min-width:120px;padding:13px 10px;background:#1f3a8a;color:#eef2ff;border:2px solid #3a5bd0;border-radius:3px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:.5px;cursor:pointer;" style-hover="background:#27459e;">EXPORT FRONT</button>
+        <button onClick="{{ exportBack }}" style="flex:1;min-width:120px;padding:13px 10px;background:#7a2018;color:#ffeceb;border:2px solid #d83030;border-radius:3px;font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:.5px;cursor:pointer;" style-hover="background:#92271d;">EXPORT BACK</button>
+      </div>
+      <div style="font-size:11px;color:#5a5a72;margin-top:11px;line-height:1.6;">Exports recolor the single master sheet — the game stores just your 5 color choices per player, not a new image.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  PAL = {
+    hair: [
+      {name:'Brunette', base:'#9c5a26', sh:'#5e3410'},
+      {name:'Blonde',   base:'#e6bd63', sh:'#b0863a'},
+      {name:'Black',    base:'#2c2c33', sh:'#161619'},
+      {name:'Auburn',   base:'#a8442a', sh:'#6e2818'},
+      {name:'Chestnut', base:'#6b4423', sh:'#3f2614'},
+      {name:'Ash Grey', base:'#b9b9c4', sh:'#83838f'},
+      {name:'Crimson',  base:'#c0303a', sh:'#7e1c24'},
+      {name:'Mint',     base:'#7fd0a8', sh:'#4f9e78'},
+    ],
+    skin: [
+      {name:'Porcelain', base:'#f6cda8', sh:'#d49a6e'},
+      {name:'Light',     base:'#f0b890', sh:'#c07a4c'},
+      {name:'Tan',       base:'#d99a5c', sh:'#a86a34'},
+      {name:'Brown',     base:'#a86a40', sh:'#714525'},
+      {name:'Deep',      base:'#7a4a2c', sh:'#4f2e18'},
+      {name:'Rich',      base:'#553018', sh:'#371d0e'},
+    ],
+    eyes: [
+      {name:'Brown', base:'#4a2e1a'},
+      {name:'Black', base:'#1a1410'},
+      {name:'Blue',  base:'#2f5bd0'},
+      {name:'Green', base:'#2f7d4f'},
+      {name:'Hazel', base:'#8a6a2a'},
+      {name:'Amber', base:'#c07a1a'},
+      {name:'Grey',  base:'#6a7480'},
+    ],
+    shirt: [
+      {name:'Red',      base:'#d83030', sh:'#982018'},
+      {name:'Blue',     base:'#2a5bd0', sh:'#1c3c8c'},
+      {name:'Green',    base:'#2f9d52', sh:'#1d6a36'},
+      {name:'Purple',   base:'#7a3fb0', sh:'#512876'},
+      {name:'Teal',     base:'#2aa0a0', sh:'#1c6e6e'},
+      {name:'Charcoal', base:'#34343c', sh:'#1c1c22'},
+      {name:'Gold',     base:'#e0b020', sh:'#a87e14'},
+      {name:'Cream',    base:'#e8e0c8', sh:'#b8ac8c'},
+    ],
+    pants: [
+      {name:'Blue',   base:'#3a5bd0', sh:'#26398c'},
+      {name:'Slate',  base:'#5a5a64', sh:'#3a3a42'},
+      {name:'Khaki',  base:'#a8895a', sh:'#6e5832'},
+      {name:'Black',  base:'#2c2c33', sh:'#161619'},
+      {name:'Forest', base:'#3f6a3f', sh:'#284628'},
+      {name:'Maroon', base:'#8a2f3a', sh:'#5a1c24'},
+    ],
+  };
+  SRC = {
+    skin:  {base:'240,184,144', sh:'192,122,76'},
+    hair:  {base:'156,90,38',   sh:'94,52,16'},
+    shirt: {base:'216,48,48',   sh:'152,32,24'},
+    pants: {base:'58,91,208',   sh:'38,57,140'},
+  };
+
+  constructor(props){
+    super(props);
+    this.srcData = {}; this.eyeMask = {}; this.recolored = {};
+    this.frame = 0; this.frameCount = 5; this.acc = 0; this.lastTs = 0;
+    let sel = {hair:0, skin:1, eyes:0, shirt:0, pants:0};
+    try { const sv = JSON.parse(localStorage.getItem('charCreatorSel')); if(sv) sel = {...sel, ...sv}; } catch(e){}
+    let body = 'male';
+    try { const b = localStorage.getItem('charCreatorBody'); if(b==='male'||b==='female') body = b; } catch(e){}
+    this.state = { sel, facing:'front', walking:true, body };
+    this.loop = this.loop.bind(this);
+    this.setMain = (el)=>{ if(el){ this.main = el; } };
+    this.setStrip = (el)=>{ if(el){ this.strip = el; } };
+  }
+
+  componentDidMount(){
+    Promise.all([
+      this.loadSheet('character_sprite_sheet.png','front'),
+      this.loadSheet('character_sprite_sheet_back.png','back'),
+      this.loadSheet('character_sprite_sheet_long.png','frontLong'),
+      this.loadSheet('character_sprite_sheet_back_long.png','backLong'),
+    ]).then(()=>{
+      this.applyColors(); this.drawMain(); this.drawStrip();
+      this.raf = requestAnimationFrame(this.loop);
+    });
+  }
+  componentWillUnmount(){ if(this.raf) cancelAnimationFrame(this.raf); }
+
+  loadSheet(src, key){
+    return new Promise((res)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const c = document.createElement('canvas');
+        c.width = img.width; c.height = img.height;
+        const x = c.getContext('2d'); x.drawImage(img,0,0);
+        this.W = img.width; this.H = img.height;
+        this.frameCount = Math.floor(img.width/32);
+        this.srcData[key] = x.getImageData(0,0,img.width,img.height);
+        this.eyeMask[key] = this.detectEyes(this.srcData[key]);
+        res();
+      };
+      img.onerror = ()=>res();
+      img.src = src;
+    });
+  }
+
+  detectEyes(imgData){
+    const {data,width:w,height:h} = imgData;
+    const SK = new Set(['240,184,144','192,122,76']);
+    const key = (i)=> data[i]+','+data[i+1]+','+data[i+2];
+    const out = [];
+    for(let y=0;y<h;y++) for(let x=1;x<w-1;x++){
+      const i=(y*w+x)*4;
+      if(data[i+3]<200 || key(i)!=='0,0,0') continue;
+      const l=(y*w+x-1)*4, r=(y*w+x+1)*4;
+      if(data[l+3]>200 && SK.has(key(l)) && data[r+3]>200 && SK.has(key(r))) out.push([x,y]);
+    }
+    return out;
+  }
+
+  hx(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+
+  sheetKey(facing){ facing = facing || this.state.facing; return this.state.body==='female' ? facing+'Long' : facing; }
+
+  applyColors(){
+    const s = this.state.sel;
+    const skin=this.PAL.skin[s.skin], hair=this.PAL.hair[s.hair],
+          shirt=this.PAL.shirt[s.shirt], pants=this.PAL.pants[s.pants], eye=this.PAL.eyes[s.eyes];
+    const map = {};
+    map[this.SRC.skin.base]=this.hx(skin.base);  map[this.SRC.skin.sh]=this.hx(skin.sh);
+    map[this.SRC.hair.base]=this.hx(hair.base);  map[this.SRC.hair.sh]=this.hx(hair.sh);
+    map[this.SRC.shirt.base]=this.hx(shirt.base);map[this.SRC.shirt.sh]=this.hx(shirt.sh);
+    map[this.SRC.pants.base]=this.hx(pants.base);map[this.SRC.pants.sh]=this.hx(pants.sh);
+    const eyeRGB = this.hx(eye.base);
+
+    for(const facing of Object.keys(this.srcData)){
+      const src = this.srcData[facing]; if(!src) continue;
+      const w=src.width, h=src.height;
+      let off = this.recolored[facing];
+      if(!off){ off=document.createElement('canvas'); off.width=w; off.height=h; this.recolored[facing]=off; }
+      const ctx = off.getContext('2d');
+      const out = ctx.createImageData(w,h);
+      out.data.set(src.data);
+      const d = out.data;
+      for(let i=0;i<d.length;i+=4){
+        if(d[i+3]<200) continue;
+        const k = d[i]+','+d[i+1]+','+d[i+2];
+        const rep = map[k];
+        if(rep){ d[i]=rep[0]; d[i+1]=rep[1]; d[i+2]=rep[2]; }
+      }
+      for(const [ex,ey] of (this.eyeMask[facing]||[])){
+        const i=(ey*w+ex)*4; d[i]=eyeRGB[0]; d[i+1]=eyeRGB[1]; d[i+2]=eyeRGB[2];
+      }
+      ctx.putImageData(out,0,0);
+    }
+  }
+
+  drawMain(){
+    const off = this.recolored[this.sheetKey()];
+    if(!off || !this.main) return;
+    const ctx = this.main.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0,0,this.main.width,this.main.height);
+    const S = this.main.width/32;
+    ctx.drawImage(off, this.frame*32,0,32,32, 0,0,32*S,32*S);
+  }
+
+  drawStrip(){
+    const off = this.recolored[this.sheetKey()];
+    if(!off || !this.strip) return;
+    const ctx = this.strip.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0,0,this.strip.width,this.strip.height);
+    const S = 3;
+    for(let f=0; f<this.frameCount; f++){
+      ctx.drawImage(off, f*32,0,32,32, f*32*S,0,32*S,32*S);
+    }
+    ctx.strokeStyle = '#e8b53e';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(this.frame*32*S+1, 1, 32*S-2, 32*S-2);
+  }
+
+  loop(ts){
+    if(!this.lastTs) this.lastTs = ts;
+    const dt = ts - this.lastTs; this.lastTs = ts;
+    if(this.state.walking){
+      this.acc += dt;
+      if(this.acc > 130){
+        this.acc = 0;
+        this.frame = (this.frame+1) % this.frameCount;
+        this.drawMain(); this.drawStrip();
+      }
+    } else if(this.frame !== 0){
+      this.frame = 0; this.drawMain(); this.drawStrip();
+    }
+    this.raf = requestAnimationFrame(this.loop);
+  }
+
+  pick(cat, idx){
+    this.setState(st=>({ sel:{...st.sel, [cat]:idx} }), ()=>{
+      this.applyColors(); this.drawMain(); this.drawStrip();
+      try{ localStorage.setItem('charCreatorSel', JSON.stringify(this.state.sel)); }catch(e){}
+    });
+  }
+  randomize(){
+    const r = (k)=> Math.floor(Math.random()*this.PAL[k].length);
+    this.setState({ sel:{hair:r('hair'),skin:r('skin'),eyes:r('eyes'),shirt:r('shirt'),pants:r('pants')} }, ()=>{
+      this.applyColors(); this.drawMain(); this.drawStrip();
+      try{ localStorage.setItem('charCreatorSel', JSON.stringify(this.state.sel)); }catch(e){}
+    });
+  }
+  setFacing(f){ this.setState({facing:f}, ()=>{ this.drawMain(); this.drawStrip(); }); }
+  setWalking(w){ this.setState({walking:w}, ()=>{ this.drawMain(); this.drawStrip(); }); }
+  setBody(b){ this.setState({body:b}, ()=>{ this.drawMain(); this.drawStrip(); try{ localStorage.setItem('charCreatorBody', b); }catch(e){} }); }
+
+  exportSheet(facing){
+    const off = this.recolored[this.sheetKey(facing)]; if(!off) return;
+    const tag = this.state.body==='female' ? '_female' : '';
+    const a = document.createElement('a');
+    a.download = (facing==='front' ? 'my_character_front' : 'my_character_back') + tag + '.png';
+    a.href = off.toDataURL('image/png');
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  segBtn(active, accent){
+    return `flex:1;padding:11px 6px;border:none;background:${active?accent:'transparent'};color:${active?'#fff':'#7c7c92'};font-family:'Press Start 2P',monospace;font-size:8.5px;letter-spacing:.5px;cursor:pointer;`;
+  }
+
+  renderVals(){
+    const sel = this.state.sel;
+    const categories = [['hair','Hair'],['skin','Skin'],['eyes','Eyes'],['shirt','Shirt'],['pants','Pants']].map(([key,label])=>({
+      key, label,
+      selectedName: this.PAL[key][sel[key]].name,
+      options: this.PAL[key].map((o,i)=>{
+        const sh = o.sh || o.base;
+        const selected = i===sel[key];
+        const ring = selected ? 'box-shadow:0 0 0 2px #15151f,0 0 0 4px #e8b53e;' : 'box-shadow:0 0 0 1px rgba(0,0,0,.5);';
+        const chipStyle = `width:30px;height:30px;border-radius:3px;cursor:pointer;border:1px solid rgba(0,0,0,.4);padding:0;background:linear-gradient(135deg,${o.base} 0%,${o.base} 56%,${sh} 56%,${sh} 100%);${ring}`;
+        return { name:o.name, chipStyle, onClick:()=>this.pick(key,i) };
+      }),
+    }));
+    return {
+      categories,
+      setMain: this.setMain,
+      setStrip: this.setStrip,
+      faceFront: ()=>this.setFacing('front'),
+      faceBack:  ()=>this.setFacing('back'),
+      setIdle:   ()=>this.setWalking(false),
+      setWalk:   ()=>this.setWalking(true),
+      setMale:   ()=>this.setBody('male'),
+      setFemale: ()=>this.setBody('female'),
+      randomize: ()=>this.randomize(),
+      exportFront: ()=>this.exportSheet('front'),
+      exportBack:  ()=>this.exportSheet('back'),
+      btnFront: this.segBtn(this.state.facing==='front', '#3a5bd0'),
+      btnBack:  this.segBtn(this.state.facing==='back',  '#3a5bd0'),
+      btnIdle:  this.segBtn(!this.state.walking, '#7a2018'),
+      btnWalk:  this.segBtn(this.state.walking,  '#7a2018'),
+      btnMale:   this.segBtn(this.state.body==='male',   '#2f7d52'),
+      btnFemale: this.segBtn(this.state.body==='female', '#a8447a'),
+    };
+  }
+}
+</script>
+</body>
+</html>

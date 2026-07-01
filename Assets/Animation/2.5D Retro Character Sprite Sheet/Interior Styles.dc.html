@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>html,body{margin:0;padding:0;background:#0a0a0e;}*{box-sizing:border-box;}</style>
+</helmet>
+<div data-screen-label="Interior Styles" style="min-height:100vh;width:100%;background:radial-gradient(120% 90% at 50% 0%,#16161f 0%,#0a0a0e 70%);font-family:system-ui,-apple-system,sans-serif;color:#e6e6f0;padding:28px 20px 48px;display:flex;flex-direction:column;align-items:center;">
+  <div style="width:100%;max-width:1000px;margin-bottom:22px;">
+    <div style="font-family:'Press Start 2P',monospace;font-size:17px;letter-spacing:1px;color:#f0e6d2;text-shadow:0 0 10px rgba(255,170,70,.3),2px 2px 0 #000;">INTERIOR — STYLE DIRECTIONS</div>
+    <div style="font-size:12.5px;color:#7c7c92;margin-top:9px;">2.5D oblique lounge · distressed plank floor · hero fireplace. Pick a direction to build the full set.</div>
+  </div>
+  <div style="width:100%;max-width:1000px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;">
+    <sc-for list="{{ cards }}" as="card" hint-placeholder-count="3">
+      <div id="{{ card.id }}" style="flex:1;min-width:288px;max-width:320px;background:#13131c;border:2px solid #24243200;border-radius:5px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.4);">
+        <div style="position:relative;background:#000;">
+          <span style="position:absolute;top:8px;left:8px;z-index:2;font-family:'Press Start 2P',monospace;font-size:9px;color:#f0e6d2;background:rgba(0,0,0,.5);padding:5px 7px;border-radius:3px;">{{ card.badge }}</span>
+          <canvas ref="{{ card.setRef }}" width="288" height="224" style="display:block;width:100%;height:auto;image-rendering:pixelated;"></canvas>
+        </div>
+        <div style="padding:14px 16px 18px;">
+          <div style="font-family:'Press Start 2P',monospace;font-size:11px;color:{{ card.titleColor }};letter-spacing:.5px;">{{ card.title }}</div>
+          <div style="font-size:12px;color:#9090a6;margin-top:10px;line-height:1.6;">{{ card.desc }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="width:100%;max-width:1000px;margin-top:18px;font-size:11.5px;color:#6a6a82;line-height:1.7;">Tell me which to pursue (or mix — e.g. "A's warmth with C's cool window light"). The fire glow is soft here for mood; I can make it chunkier/dithered to stay strictly 8-bit if you prefer.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.refs2 = {};
+    this.t = 0;
+    this.imgs = {};
+    this.loop = this.loop.bind(this);
+  }
+  componentDidMount(){
+    const files = { A:'interior_styleA.png', B:'interior_styleB.png', C:'interior_styleC.png' };
+    Promise.all(Object.entries(files).map(([k,src])=>new Promise(res=>{
+      const im=new Image(); im.onload=()=>{this.imgs[k]=im;res();}; im.onerror=()=>res(); im.src=src;
+    }))).then(()=>{ this.raf=requestAnimationFrame(this.loop); });
+  }
+  componentWillUnmount(){ if(this.raf) cancelAnimationFrame(this.raf); }
+  loop(){
+    this.t += 0.05;
+    for(const k of ['A','B','C']){
+      const cv=this.refs2[k], im=this.imgs[k];
+      if(!cv||!im) continue;
+      const ctx=cv.getContext('2d'); ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(im,0,0);
+      // flicker glow overlay near the firebox (approx center top)
+      const fl = 0.18 + 0.12*Math.sin(this.t*3.1) + 0.06*Math.sin(this.t*7.7);
+      const cx=144, cy=70;
+      const gr=ctx.createRadialGradient(cx,cy,6,cx,cy,90);
+      gr.addColorStop(0,'rgba(255,180,80,'+(0.22*fl+0.08)+')');
+      gr.addColorStop(1,'rgba(255,180,80,0)');
+      ctx.fillStyle=gr; ctx.fillRect(40,0,210,170);
+    }
+    this.raf=requestAnimationFrame(this.loop);
+  }
+  renderVals(){
+    const meta = {
+      A:{id:'1a',badge:'1A',title:'WARM HEARTH',titleColor:'#e8a04a',desc:'Golden and genuinely cozy. Maximum wholesome — the strongest false sense of security.'},
+      B:{id:'1b',badge:'1B',title:'FADED LAVENDER',titleColor:'#b48ac8',desc:'Muted purples & dusty rose — the Lavender Town lean. Homey but already a little lonely.'},
+      C:{id:'1c',badge:'1C',title:'COLD DUSK',titleColor:'#7ab0a0',desc:'Desaturated teal-grey. Lived-in but isolating — the most quietly uneasy of the three.'},
+    };
+    return {
+      cards: ['A','B','C'].map(k=>({
+        ...meta[k],
+        setRef: (el)=>{ if(el) this.refs2[k]=el; },
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>
