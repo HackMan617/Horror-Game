@@ -30,7 +30,11 @@ public static class HorrorGame3DSetup
     const string BackSheet  = "Assets/Animation/character_sprite_sheet_back.png";
     const string FrontSheet = "Assets/Animation/character_sprite_sheet.png";
     const string BedSheet   = "Assets/Animation/bed_sprite_sheet.png";
-    const string DogSheet   = "Assets/Animation/dog_apricot.png";
+    static readonly string[] DogSheets = {
+        "Assets/Animation/dog_apricot.png",
+        "Assets/Animation/dog_chocolate.png",
+        "Assets/Animation/dog_cream.png",
+    };
     const string PartnerBoy = "Assets/Animation/partner_boy.png";
     const string PartnerGirl = "Assets/Animation/partner_girl.png";
     const string HouseSheet = "Assets/Animation/house.png";
@@ -45,7 +49,7 @@ public static class HorrorGame3DSetup
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 18;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 19;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -70,15 +74,12 @@ public static class HorrorGame3DSetup
         SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(BedSheet, "bed_", 6, 64, 32, 32f, 0.08f);
-        SliceGrid(DogSheet, 32f, 0.06f, 32, 32, 6, new[] { "dog_idle_", "dog_walk_", "dog_run_", "dog_heart_" });
         SliceGrid(PartnerBoy, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
         SliceGrid(PartnerGirl, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
         var backSprites = LoadSheetSprites(BackSheet, "back_");
         var frontSprites = LoadSheetSprites(FrontSheet, "front_");
         var bedSprites = LoadSheetSprites(BedSheet, "bed_");
-        var dogIdle = LoadSheetSprites(DogSheet, "dog_idle_");
-        var dogWalk = LoadSheetSprites(DogSheet, "dog_walk_");
-        var dogHeart = LoadSheetSprites(DogSheet, "dog_heart_");
+        var dogBreeds = BuildDogBreeds();      // apricot / chocolate / cream, one chosen at runtime
         var boyIdle = LoadSheetSprites(PartnerBoy, "idle_");
         var girlIdle = LoadSheetSprites(PartnerGirl, "idle_");
         var boySmile = LoadSheetSprites(PartnerBoy, "smile_");
@@ -138,14 +139,14 @@ public static class HorrorGame3DSetup
         portal.player = player.transform;
         portal.nightmare = nightmare;
 
-        // ---- apricot dog companion (overworld only; hides during the nightmare) ----
-        MakeDog(new Vector3(3f, 0f, 5f), player.transform, nightmare, dogIdle, dogWalk, dogHeart, spriteMat);
+        // ---- dog companion (breed randomised at character select; overworld only, hides in the nightmare) ----
+        MakeDog(new Vector3(3f, 0f, 5f), player.transform, nightmare, dogBreeds, spriteMat);
 
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
         Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the character (back " +
                   backSprites.Length + "/front " + frontSprites.Length + "), the bed (" + bedSprites.Length +
-                  "), the apricot dog (idle " + dogIdle.Length + "/walk " + dogWalk.Length +
+                  "), the dog (" + dogBreeds.Length + " breeds, randomised on character select" +
                   "), and the partner (boy idle " + boyIdle.Length + "/girl idle " + girlIdle.Length + "). " +
                   "Walk to the bed + press E to enter the nightmare (the dog hides). " +
                   "Play: WASD + mouse, V = first/third, hold C = look behind.");
@@ -820,21 +821,41 @@ public static class HorrorGame3DSetup
         return s - Mathf.Floor(s);
     }
 
-    static void MakeDog(Vector3 pos, Transform player, NightmareController nightmare,
-                        Sprite[] idle, Sprite[] walk, Sprite[] heart, Material mat)
+    // Slice all three dog sheets (identical 6x4 grids of 32px cells) and bundle each breed's
+    // idle/walk/heart frames; DogCompanion picks one at runtime from CharacterStore.LoadDog().
+    static DogCompanion.BreedFrames[] BuildDogBreeds()
     {
+        var breeds = new DogCompanion.BreedFrames[DogSheets.Length];
+        for (int i = 0; i < DogSheets.Length; i++)
+        {
+            string sheet = DogSheets[i];
+            SliceGrid(sheet, 32f, 0.06f, 32, 32, 6, new[] { "dog_idle_", "dog_walk_", "dog_run_", "dog_heart_" });
+            breeds[i] = new DogCompanion.BreedFrames
+            {
+                name  = CharacterStore.DogNames[i],
+                idle  = LoadSheetSprites(sheet, "dog_idle_"),
+                walk  = LoadSheetSprites(sheet, "dog_walk_"),
+                heart = LoadSheetSprites(sheet, "dog_heart_"),
+            };
+        }
+        return breeds;
+    }
+
+    static void MakeDog(Vector3 pos, Transform player, NightmareController nightmare,
+                        DogCompanion.BreedFrames[] breeds, Material mat)
+    {
+        var first = (breeds != null && breeds.Length > 0) ? breeds[0] : null;   // apricot = editor-time default
         var go = new GameObject("Dog");
         go.transform.position = pos;
         var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = idle.Length > 0 ? idle[0] : null;
+        sr.sprite = (first != null && first.idle != null && first.idle.Length > 0) ? first.idle[0] : null;
         sr.sharedMaterial = mat;
         go.AddComponent<Billboard>();
         var dog = go.AddComponent<DogCompanion>();
         dog.player = player;
         dog.nightmare = nightmare;
-        dog.idleFrames = idle;
-        dog.walkFrames = walk;
-        dog.heartFrames = heart;
+        dog.breeds = breeds;
+        if (first != null) { dog.idleFrames = first.idle; dog.walkFrames = first.walk; dog.heartFrames = first.heart; }
         dog.fps = 6f;
     }
 
