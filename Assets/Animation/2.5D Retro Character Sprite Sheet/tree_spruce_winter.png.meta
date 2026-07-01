@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 3f3a293f4cbc44e4b856e36cb51624a8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5026368235998527276
+    second: tree_spruce_winter_0
+  - first:
+      213: -1102153185547347397
+    second: tree_spruce_winter_1
+  - first:
+      213: -3252884435115975806
+    second: tree_spruce_winter_2
+  - first:
+      213: 8976644042439243152
+    second: tree_spruce_winter_3
+  - first:
+      213: 4453748856652411049
+    second: tree_spruce_winter_4
+  - first:
+      213: 3264318589117123421
+    second: tree_spruce_winter_5
+  - first:
+      213: 7223297265586014687
+    second: tree_spruce_winter_6
+  - first:
+      213: 3324944821437142832
+    second: tree_spruce_winter_7
+  - first:
+      213: -2478032993667211057
+    second: tree_spruce_winter_8
+  - first:
+      213: 1802490662587408991
+    second: tree_spruce_winter_9
+  - first:
+      213: 869948305484991742
+    second: tree_spruce_winter_10
+  - first:
+      213: -9145631764293365037
+    second: tree_spruce_winter_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tree_spruce_winter_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 151
+        width: 76
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d0400f58b0ce3ab0800000000000000
+      internalID: -5026368235998527276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 151
+        width: 76
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3a9267648d54b0f0800000000000000
+      internalID: -1102153185547347397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_2
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 151
+        width: 76
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28bd38d37de6bd2d0800000000000000
+      internalID: -3252884435115975806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_3
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 151
+        width: 76
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 095b7b04232739c70800000000000000
+      internalID: 8976644042439243152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_4
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 151
+        width: 76
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a0b197fcf4eecd30800000000000000
+      internalID: 4453748856652411049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_5
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 151
+        width: 76
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5bc70236703d4d20800000000000000
+      internalID: 3264318589117123421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_6
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 76
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd90e46a79e4e3460800000000000000
+      internalID: 7223297265586014687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_7
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 0
+        width: 76
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0371983e2b3942e20800000000000000
+      internalID: 3324944821437142832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_8
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 0
+        width: 76
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0a4c61f124c9dd0800000000000000
+      internalID: -2478032993667211057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_9
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 76
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f522b7625bbb30910800000000000000
+      internalID: 1802490662587408991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_10
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 0
+        width: 76
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efcc269ef5da21c00800000000000000
+      internalID: 869948305484991742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_spruce_winter_11
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 0
+        width: 76
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d2d3c2bd50341180800000000000000
+      internalID: -9145631764293365037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      tree_spruce_winter_0: -5026368235998527276
+      tree_spruce_winter_1: -1102153185547347397
+      tree_spruce_winter_10: 869948305484991742
+      tree_spruce_winter_11: -9145631764293365037
+      tree_spruce_winter_2: -3252884435115975806
+      tree_spruce_winter_3: 8976644042439243152
+      tree_spruce_winter_4: 4453748856652411049
+      tree_spruce_winter_5: 3264318589117123421
+      tree_spruce_winter_6: 7223297265586014687
+      tree_spruce_winter_7: 3324944821437142832
+      tree_spruce_winter_8: -2478032993667211057
+      tree_spruce_winter_9: 1802490662587408991
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#0b0809;}
+  @keyframes nmflick{0%,100%{opacity:.5}48%{opacity:.36}52%{opacity:.62}}
+  @keyframes nmpulse{0%,100%{opacity:.22}50%{opacity:.40}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:radial-gradient(120% 90% at 50% -10%,#19100f 0%,#0b0809 72%);color:#e7dcd9;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:34px 40px 52px;box-sizing:border-box;">
+
+  <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 style="font-family:'Press Start 2P',monospace;font-size:18px;line-height:1.5;margin:0;color:#d8362a;letter-spacing:.5px;text-shadow:0 0 14px rgba(200,40,40,.35);">GOOD&nbsp;BOY?</h1>
+    <span style="font-size:12.5px;color:#7a6a68;">nightmare companion &middot; it still loves you &middot; <span style="color:#9c4a44;">the movement is wrong</span></span>
+  </div>
+  <div style="height:2px;background:linear-gradient(90deg,#d8362a,#5a1414,transparent);margin:12px 0 26px;max-width:560px;"></div>
+
+  <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- STAGE -->
+    <div>
+      <div style="position:relative;width:300px;height:300px;border:1px solid #2a1a18;border-radius:6px;overflow:hidden;background:radial-gradient(70% 60% at 50% 42%,#1c1413 0%,#0a0707 82%);">
+        <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px),repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px);"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 50%,transparent 38%,rgba(0,0,0,.62) 100%);animation:nmflick 4s ease-in-out infinite;pointer-events:none;"></div>
+        <div style="position:absolute;left:50%;bottom:54px;width:120px;height:20px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(90,10,12,.55),transparent);animation:nmpulse 3.2s ease-in-out infinite;"></div>
+        <canvas ref="{{ heroRef }}" width="260" height="260" style="position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:260px;height:260px;image-rendering:pixelated;"></canvas>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#7a6a68;text-align:center;width:300px;">it watches the door it came from</div>
+    </div>
+
+    <!-- CONTROLS + READOUT -->
+    <div style="flex:1;min-width:300px;max-width:430px;display:flex;flex-direction:column;gap:18px;">
+
+      <div>
+        <div style="font-size:10px;letter-spacing:1px;color:#6a5856;margin-bottom:8px;">COAT</div>
+        <div style="display:flex;gap:0;border:1px solid #2a1a18;border-radius:4px;overflow:hidden;width:fit-content;">
+          <button onClick="{{ pickCream }}" style="{{ btnCream }}">ASH</button>
+          <button onClick="{{ pickChoc }}"  style="{{ btnChoc }}">MUD</button>
+          <button onClick="{{ pickApri }}"  style="{{ btnApri }}">SALLOW</button>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;letter-spacing:1px;color:#6a5856;margin-bottom:8px;">BEHAVIOUR</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button onClick="{{ doPant }}" style="{{ btnPant }}">STUTTER&nbsp;PANT</button>
+          <button onClick="{{ doWalk }}" style="{{ btnWalk }}">TOO-FAST&nbsp;WAG</button>
+          <button onClick="{{ doGreet }}" style="{{ btnGreet }}">EAGER&nbsp;GREET</button>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;letter-spacing:1px;color:#6a5856;margin-bottom:8px;">REALM</div>
+        <div style="display:flex;gap:0;border:1px solid #2a1a18;border-radius:4px;overflow:hidden;width:fit-content;">
+          <button onClick="{{ setNight }}" style="{{ btnNight }}">NIGHTMARE</button>
+          <button onClick="{{ setWaking }}" style="{{ btnWaking }}">WAKING</button>
+        </div>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:10px;font-size:12px;color:#b9a8a5;cursor:pointer;user-select:none;">
+        <input type="checkbox" ref="{{ lurchRef }}" onChange="{{ toggleLurch }}" style="width:15px;height:15px;accent-color:#c8302a;">
+        sudden lurch toward you
+      </label>
+
+      <div style="border-top:1px solid #221615;padding-top:16px;font-size:12px;line-height:1.85;color:#9a8987;">
+        <div style="color:#6a5856;font-size:10px;letter-spacing:1px;margin-bottom:8px;">WHY IT FEELS OFF</div>
+        <div style="max-width:400px;">The frames are the same loving dog. The <span style="color:#d8362a;">timing</span> is corrupted: the pant skips and judders, the tail wags faster than a body should, an idle tremble never fully settles, and every so often it <span style="color:#d8362a;">jolts a step toward you</span> &mdash; happy to see you, wrong about how.</div>
+      </div>
+    </div>
+
+    <!-- SHEET -->
+    <div>
+      <div style="font-size:10px;letter-spacing:1px;color:#6a5856;margin-bottom:10px;">SHEET <span style="color:#3a2826;">&middot; 6&times;4 &middot; 32px</span></div>
+      <div style="display:inline-block;padding:10px;background:#140f0e;border:1px solid #2a1a18;border-radius:4px;">
+        <canvas ref="{{ sheetRef }}" width="384" height="256" style="width:288px;height:auto;image-rendering:pixelated;display:block;"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:560}}">
+class Component extends DCLogic {
+  state = { variant:'cream', mode:'nightmare', row:0, lurch:true };
+
+  ROWS = { pant:0, walk:1, greet:3 };
+
+  renderVals(){
+    const seg=(active,accent)=>`font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.5px;border:none;padding:9px 11px;cursor:pointer;background:${active?accent:'#140f0e'};color:${active?'#0a0707':'#8a7a78'};`;
+    const chip=(active)=>`font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.5px;border:1px solid ${active?'#c8302a':'#2a1a18'};border-radius:4px;padding:10px 12px;cursor:pointer;background:${active?'#3a100e':'#140f0e'};color:${active?'#f0c4c0':'#8a7a78'};`;
+    const v=this.state.variant, r=this.state.row, m=this.state.mode;
+    return {
+      heroRef:(el)=>{ if(el){ this.hero=el; this._start(); } },
+      sheetRef:(el)=>{ if(el){ this.sheet=el; this._start(); } },
+      lurchRef:(el)=>{ if(el) el.checked=this.state.lurch; },
+      pickCream:()=>this._set({variant:'cream'}), pickChoc:()=>this._set({variant:'chocolate'}), pickApri:()=>this._set({variant:'apricot'}),
+      doPant:()=>this._set({row:0}), doWalk:()=>this._set({row:1}), doGreet:()=>this._set({row:3}),
+      setNight:()=>this._set({mode:'nightmare'}), setWaking:()=>this._set({mode:'normal'}),
+      toggleLurch:(e)=>this._set({lurch:!!(e&&e.target?e.target.checked:!this.state.lurch)}),
+      btnCream:seg(v==='cream','#9a988f'), btnChoc:seg(v==='chocolate','#5a5048'), btnApri:seg(v==='apricot','#8c8064'),
+      btnPant:chip(r===0), btnWalk:chip(r===1), btnGreet:chip(r===3),
+      btnNight:seg(m==='nightmare','#c8302a'), btnWaking:seg(m==='normal','#5a6a78'),
+    };
+  }
+
+  _set(patch){ this.setState(patch, ()=>{ if('row' in patch){ this.frame=0; this.next=0; } this._draw(performance.now()); }); }
+
+  _start(){
+    if(this._started) return;
+    this._started = true;
+    this.imgCache = {}; this.frame = 0; this.next = 0; this.nextLurch = 1800; this.lurch = null;
+    this.timer = setInterval(()=>this._loop(performance.now()), 33);
+    this._loop(performance.now());
+  }
+  componentWillUnmount(){ if(this.timer) clearInterval(this.timer); this.timer=null; }
+
+  _file(){ return `dog_${this.state.variant}${this.state.mode==='nightmare'?'_nightmare':''}.png`; }
+  _img(file){
+    if(this.imgCache[file]) return this.imgCache[file];
+    const im=new Image(); im.src=file; this.imgCache[file]=im;
+    im.onload=()=>{ this._draw(performance.now()); };
+    return im;
+  }
+
+  _advance(now){
+    const row=this.state.row; const R=()=>Math.random();
+    if(row===0){               // stutter pant
+      const r=R();
+      if(r<0.20){ this.next=now+340+R()*120; }                 // long stare / hold
+      else if(r>0.90){ this.frame=(this.frame+2)%6; this.next=now+50; } // skip-judder
+      else { this.frame=(this.frame+1)%6; this.next=now+70+R()*120; }
+    } else if(row===1){        // too-fast wag with bursts
+      this.frame=(this.frame+1)%6;
+      this.next=now+(R()<0.28 ? 40 : 96+R()*44);
+    } else {                   // eager greet — repeats + skips
+      const r=R();
+      if(r<0.30){ this.next=now+58; }                          // judder (repeat frame)
+      else if(r>0.86){ this.frame=(this.frame+2)%6; this.next=now+54; }
+      else { this.frame=(this.frame+1)%6; this.next=now+80+R()*70; }
+    }
+  }
+
+  _loop(now){
+    if(!this.next) this.next=now+120;
+    if(now>=this.next) this._advance(now);
+    // lurch scheduling
+    if(this.state.lurch){
+      if(!this.lurch && now>=this.nextLurch){ this.lurch={t0:now,dur:430}; }
+      if(this.lurch && now-this.lurch.t0>this.lurch.dur){ this.lurch=null; this.nextLurch=now+3200+Math.random()*3600; }
+    } else { this.lurch=null; }
+    this._draw(now);
+  }
+
+  _draw(now){
+    const img=this._img(this._file());
+    // hero
+    if(this.hero && img.complete && img.naturalWidth){
+      const ctx=this.hero.getContext('2d'); ctx.imageSmoothingEnabled=false;
+      const W=this.hero.width,H=this.hero.height; ctx.clearRect(0,0,W,H);
+      let scale=7, dy=0, tremble=0.7;
+      if(this.lurch){ const p=(now-this.lurch.t0)/this.lurch.dur; const k=Math.sin(Math.min(1,p)*Math.PI); scale=7+k*2.4; dy=k*14; tremble=0.7+k*2.6; }
+      const tx=(Math.random()*2-1)*tremble, ty=(Math.random()*2-1)*tremble;
+      const dw=32*scale, dh=32*scale;
+      const col=this.frame%6, rw=this.state.row;
+      ctx.drawImage(img, col*32, rw*32, 32,32, (W-dw)/2+tx, (H-dh)/2+dy+ty, dw,dh);
+    }
+    // sheet with frame highlight
+    if(this.sheet && img.complete && img.naturalWidth){
+      const ctx=this.sheet.getContext('2d'); ctx.imageSmoothingEnabled=false;
+      const S=2; ctx.clearRect(0,0,this.sheet.width,this.sheet.height);
+      ctx.globalAlpha=0.5; ctx.drawImage(img,0,0,img.width*S,img.height*S); ctx.globalAlpha=1;
+      const col=this.frame%6, rw=this.state.row;
+      ctx.drawImage(img, col*32,rw*32,32,32, col*32*S,rw*32*S,32*S,32*S);
+      ctx.strokeStyle='#d8362a'; ctx.lineWidth=2;
+      ctx.strokeRect(col*32*S+1, rw*32*S+1, 32*S-2, 32*S-2);
+    }
+  }
+}
+</script>
+</body>
+</html>

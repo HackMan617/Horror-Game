@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#0c0c12;}
+  *{box-sizing:border-box;}
+  @keyframes vig{0%,100%{opacity:.5}50%{opacity:.34}}
+</style>
+</helmet>
+<div data-screen-label="Partner Viewer" style="min-height:100vh;width:100%;background:radial-gradient(120% 90% at 50% 0%,#1a1a26 0%,#0c0c12 70%);font-family:system-ui,-apple-system,sans-serif;color:#e6e6f0;display:flex;flex-direction:column;align-items:center;padding:28px 20px 48px;">
+
+  <div style="width:100%;max-width:760px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;">
+    <div>
+      <div style="font-family:'Press Start 2P',monospace;font-size:17px;letter-spacing:1px;color:#f0e6d2;text-shadow:0 0 10px rgba(110,20,20,.4),2px 2px 0 #000;">PARTNER SPRITES</div>
+      <div style="font-size:12.5px;color:#7c7c92;margin-top:9px;">Side characters for the waking house — and what they become.</div>
+    </div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:#3f3f52;line-height:1.7;text-align:right;">{{ realmLabel }}</div>
+  </div>
+
+  <!-- STAGE -->
+  <div style="position:relative;width:100%;max-width:760px;height:340px;border-radius:4px;border:2px solid #2a2a3c;overflow:hidden;background:{{ stageBg }};box-shadow:inset 0 0 70px rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;gap:60px;">
+    <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.022) 26px 27px),repeating-linear-gradient(90deg,transparent 0 26px,rgba(255,255,255,.022) 26px 27px);"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 50%,transparent 38%,rgba(0,0,0,.6) 100%);animation:vig 5s ease-in-out infinite;"></div>
+
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;">
+      <canvas ref="{{ setGirl }}" width="200" height="200" style="image-rendering:pixelated;width:200px;height:200px;"></canvas>
+      <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:{{ girlLabelColor }};letter-spacing:.5px;">{{ girlLabel }}</div>
+    </div>
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;">
+      <canvas ref="{{ setBoy }}" width="200" height="200" style="image-rendering:pixelated;width:200px;height:200px;"></canvas>
+      <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:{{ boyLabelColor }};letter-spacing:.5px;">{{ boyLabel }}</div>
+    </div>
+  </div>
+
+  <!-- REALM TOGGLE -->
+  <div style="width:100%;max-width:760px;margin-top:18px;display:flex;background:#15151f;border:2px solid #2a2a3c;border-radius:3px;overflow:hidden;">
+    <button onClick="{{ setWaking }}" style="{{ btnWaking }}">WAKING HOUSE</button>
+    <button onClick="{{ setNightmare }}" style="{{ btnNightmare }}">NIGHTMARE</button>
+  </div>
+
+  <!-- ANIMATION PICKER (waking only) -->
+  <sc-if value="{{ showAnims }}" hint-placeholder-val="{{ true }}">
+    <div style="width:100%;max-width:760px;margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+      <sc-for list="{{ animOptions }}" as="opt" hint-placeholder-count="3">
+        <button onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <!-- caption -->
+  <div style="width:100%;max-width:760px;margin-top:16px;font-size:11.5px;color:#6a6a82;line-height:1.7;background:#13131c;border:1px solid #24243200;border-radius:3px;">
+    {{ caption }}
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.sheets = {};
+    this.state = { realm:'waking', anim:'idle' };
+    this.frame = 0; this.lastTs = 0; this.acc = 0;
+    this.loop = this.loop.bind(this);
+    this.setGirl = (el)=>{ if(el) this.girlCv = el; };
+    this.setBoy  = (el)=>{ if(el) this.boyCv  = el; };
+    // anim row map + frame counts in the normal sheet
+    this.ROWS = { idle:0, speak:1, wave:2, talk:3, smile:4 };
+    this.NORMAL_FRAMES = 6;
+    this.NIGHT_FRAMES = 3;
+    // per-anim playback speed (ms/frame)
+    this.SPEED = { idle:170, speak:120, wave:130, talk:140, smile:200, nightmare:420 };
+  }
+
+  componentDidMount(){
+    const files = {
+      girl:'partner_girl.png', boy:'partner_boy.png',
+      girlN:'partner_girl_nightmare.png', boyN:'partner_boy_nightmare.png',
+    };
+    const loads = Object.entries(files).map(([k,src])=>new Promise(res=>{
+      const img=new Image(); img.onload=()=>{ this.sheets[k]=img; res(); }; img.onerror=()=>res(); img.src=src;
+    }));
+    Promise.all(loads).then(()=>{ this.draw(); this.raf=requestAnimationFrame(this.loop); });
+  }
+  componentWillUnmount(){ if(this.raf) cancelAnimationFrame(this.raf); }
+
+  draw(){
+    const night = this.state.realm==='nightmare';
+    this.paint(this.girlCv, night ? this.sheets.girlN : this.sheets.girl, night);
+    this.paint(this.boyCv,  night ? this.sheets.boyN  : this.sheets.boy,  night);
+  }
+  paint(cv, img, night){
+    if(!cv || !img) return;
+    const ctx=cv.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,cv.width,cv.height);
+    const S=cv.width/32;
+    const row = night ? 0 : this.ROWS[this.state.anim];
+    const count = night ? this.NIGHT_FRAMES : this.NORMAL_FRAMES;
+    const f = this.frame % count;
+    ctx.drawImage(img, f*32, row*32, 32,32, 0,0, 32*S,32*S);
+  }
+
+  loop(ts){
+    if(!this.lastTs) this.lastTs=ts;
+    const dt=ts-this.lastTs; this.lastTs=ts;
+    const key = this.state.realm==='nightmare' ? 'nightmare' : this.state.anim;
+    this.acc += dt;
+    if(this.acc > this.SPEED[key]){
+      this.acc = 0;
+      this.frame++;
+      this.draw();
+    }
+    this.raf=requestAnimationFrame(this.loop);
+  }
+
+  setRealm(r){ this.setState({realm:r}, ()=>{ this.frame=0; this.draw(); }); }
+  setAnim(a){ this.setState({anim:a}, ()=>{ this.frame=0; this.draw(); }); }
+
+  segBtn(active, accent){
+    return `flex:1;padding:12px 6px;border:none;background:${active?accent:'transparent'};color:${active?'#fff':'#7c7c92'};font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:.5px;cursor:pointer;`;
+  }
+  pillBtn(active){
+    return `padding:10px 16px;border:2px solid ${active?'#52527a':'#2a2a3c'};background:${active?'#2c2c46':'#15151f'};color:${active?'#e6e6f0':'#8888a0'};border-radius:3px;font-family:'Press Start 2P',monospace;font-size:8.5px;letter-spacing:.5px;cursor:pointer;`;
+  }
+
+  renderVals(){
+    const night = this.state.realm==='nightmare';
+    const captions = {
+      idle:'Idle — gentle breathing bob with an occasional blink. The resting state in the room.',
+      speak:'Speaking — mouth animates with a slight head bob for dialogue moments.',
+      wave:'Waving — greets the player when approached. Arm raises and the hand flutters.',
+      talk:'Talking — an engaged "speaking to you" loop with a hand gesture and varied mouth shapes. Built to sit under a speech bubble / dialogue box later.',
+      smile:'Smiling — a warm, disarming loop with a sweet closed-eye beat. Meant to build a false sense of security right before the nightmare turn.',
+    };
+    return {
+      setGirl:this.setGirl, setBoy:this.setBoy,
+      realmLabel: night ? 'REALM 02 · NIGHTMARE' : 'REALM 01 · WAKING HOUSE',
+      stageBg: night
+        ? 'radial-gradient(80% 70% at 50% 40%,#16201a 0%,#080c08 82%)'
+        : 'radial-gradient(80% 70% at 50% 38%,#23233a 0%,#101019 80%)',
+      girlLabel: night ? 'SHE — FOUND' : 'PARTNER · SHE',
+      boyLabel:  night ? 'HE — FOUND'  : 'PARTNER · HE',
+      girlLabelColor: night ? '#8a6a3a' : '#c84a52',
+      boyLabelColor:  night ? '#6a8a4a' : '#6e8a4a',
+      setWaking:()=>this.setRealm('waking'),
+      setNightmare:()=>this.setRealm('nightmare'),
+      btnWaking:this.segBtn(!night,'#3a5bd0'),
+      btnNightmare:this.segBtn(night,'#5a1414'),
+      showAnims: !night,
+      animOptions: ['idle','speak','wave','talk','smile'].map(a=>({
+        label:a.toUpperCase(),
+        style:this.pillBtn(this.state.anim===a),
+        onClick:()=>this.setAnim(a),
+      })),
+      caption: night
+        ? 'Nightmare — a body-horror prop the player finds, not a character to play with. Barely-alive twitch and flicker only (3 frames). Sickly rot-green, restrained blood. Recognizable as your partner by the hoodie.'
+        : (captions[this.state.anim]||''),
+    };
+  }
+}
+</script>
+</body>
+</html>

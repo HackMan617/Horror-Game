@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#16161c;}
+  .pix{image-rendering:pixelated;image-rendering:crisp-edges;}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#16161c;color:#e8e6df;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:40px 44px 56px;box-sizing:border-box;">
+
+  <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 style="font-family:'Press Start 2P',monospace;font-size:19px;line-height:1.5;margin:0;color:#f0b890;letter-spacing:0.5px;">EVERYMAN_01</h1>
+    <span style="font-size:13px;color:#6f6f7c;">2.5D horror &mdash; NES palette</span>
+    <div style="display:flex;gap:0;margin-left:auto;border:1px solid #313140;border-radius:4px;overflow:hidden;">
+      <button onClick="{{ showFront }}" style="{{ frontBtnStyle }}">FORWARD</button>
+      <button onClick="{{ showBack }}" style="{{ backBtnStyle }}">BACK</button>
+    </div>
+  </div>
+  <div style="height:2px;background:linear-gradient(90deg,#d83030,#3a5bd0,transparent);margin:14px 0 34px;max-width:560px;"></div>
+
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- live loops -->
+    <div style="display:flex;gap:40px;">
+      <div style="text-align:center;">
+        <div style="width:192px;height:192px;background:#21212a;border:1px solid #313140;border-radius:4px;display:flex;align-items:center;justify-content:center;background-image:linear-gradient(45deg,#1d1d25 25%,transparent 25%),linear-gradient(-45deg,#1d1d25 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1d1d25 75%),linear-gradient(-45deg,transparent 75%,#1d1d25 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0;">
+          <canvas ref="{{ idleRef }}" width="32" height="32" class="pix" style="width:160px;height:160px;"></canvas>
+        </div>
+        <div style="margin-top:12px;font-size:13px;color:#9a9aa6;">IDLE <span style="color:#5e5e68;">&middot; {{ idleNote }}</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:192px;height:192px;background:#21212a;border:1px solid #313140;border-radius:4px;display:flex;align-items:center;justify-content:center;background-image:linear-gradient(45deg,#1d1d25 25%,transparent 25%),linear-gradient(-45deg,#1d1d25 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1d1d25 75%),linear-gradient(-45deg,transparent 75%,#1d1d25 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0;">
+          <canvas ref="{{ walkRef }}" width="32" height="32" class="pix" style="width:160px;height:160px;"></canvas>
+        </div>
+        <div style="margin-top:12px;font-size:13px;color:#9a9aa6;">WALK <span style="color:#5e5e68;">&middot; 3f</span></div>
+      </div>
+    </div>
+
+    <!-- specs -->
+    <div style="min-width:240px;font-size:13px;line-height:2;color:#b9b9c2;">
+      <div style="color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">SHEET SPEC</div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Cell size</span><span style="color:#f0b890;">32 &times; 32 px</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Sheet size</span><span style="color:#f0b890;">160 &times; 32 px</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Frames</span><span style="color:#f0b890;">5 (1 row)</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Idle</span><span style="color:#e8e6df;">cols 0&ndash;1</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Walk</span><span style="color:#e8e6df;">cols 2&ndash;4</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Background</span><span style="color:#e8e6df;">transparent</span></div>
+      <div style="margin-top:18px;color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">UNITY SLICE</div>
+      <div style="color:#8f8f9a;max-width:300px;line-height:1.7;">Sprite Mode: <span style="color:#b9b9c2;">Multiple</span> &middot; Filter: <span style="color:#b9b9c2;">Point (no filter)</span> &middot; Compression: <span style="color:#b9b9c2;">None</span>. Slice by <span style="color:#b9b9c2;">Grid By Cell Size, 32&times;32</span>.</div>
+    </div>
+  </div>
+
+  <!-- full sheet -->
+  <div style="margin-top:42px;">
+    <div style="color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:12px;">FULL SHEET <span style="color:#41414c;">({{ fileName }} &mdash; 160&times;32, this is what to import)</span></div>
+    <div style="display:inline-block;padding:18px 22px;background:#21212a;border:1px solid #313140;border-radius:4px;background-image:linear-gradient(45deg,#1d1d25 25%,transparent 25%),linear-gradient(-45deg,#1d1d25 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1d1d25 75%),linear-gradient(-45deg,transparent 75%,#1d1d25 75%);background-size:16px 16px;">
+      <img ref="{{ sheetImgRef }}" src="character_sprite_sheet.png" class="pix" style="height:128px;display:block;" alt="sprite sheet">
+    </div>
+  </div>
+
+  <!-- ============ PROP: BED ============ -->
+  <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:56px 0 6px;">
+    <h1 style="font-family:'Press Start 2P',monospace;font-size:19px;line-height:1.5;margin:0;color:#6f8ee8;letter-spacing:0.5px;">BED_01</h1>
+    <span style="font-size:13px;color:#6f6f7c;">sleep &mdash; nightmare portal &middot; living idle</span>
+  </div>
+  <div style="height:2px;background:linear-gradient(90deg,#3a5bd0,#6f8ee8,transparent);margin:14px 0 34px;max-width:560px;"></div>
+
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start;">
+    <div style="text-align:center;">
+      <div style="width:380px;height:200px;background:#21212a;border:1px solid #313140;border-radius:4px;display:flex;align-items:center;justify-content:center;background-image:linear-gradient(45deg,#1d1d25 25%,transparent 25%),linear-gradient(-45deg,#1d1d25 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1d1d25 75%),linear-gradient(-45deg,transparent 75%,#1d1d25 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0;">
+        <canvas ref="{{ bedRef }}" width="64" height="32" class="pix" style="width:336px;height:168px;"></canvas>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:#9a9aa6;">IDLE <span style="color:#5e5e68;">&middot; 6f &middot; breathe + sheen</span></div>
+    </div>
+
+    <div style="min-width:240px;font-size:13px;line-height:2;color:#b9b9c2;">
+      <div style="color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">SHEET SPEC</div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Cell size</span><span style="color:#6f8ee8;">64 &times; 32 px</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Sheet size</span><span style="color:#6f8ee8;">384 &times; 32 px</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Frames</span><span style="color:#6f8ee8;">6 (1 row)</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Loop</span><span style="color:#e8e6df;">ping-free, seamless</span></div>
+      <div style="display:flex;justify-content:space-between;max-width:280px;border-bottom:1px solid #262630;"><span>Background</span><span style="color:#e8e6df;">transparent</span></div>
+      <div style="margin-top:18px;color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:8px;">UNITY SLICE</div>
+      <div style="color:#8f8f9a;max-width:300px;line-height:1.7;">Same import settings &mdash; slice by <span style="color:#b9b9c2;">Grid By Cell Size, 64&times;32</span>. Play the 6 frames at ~8&nbsp;fps for the breathing loop.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:42px;">
+    <div style="color:#6f6f7c;font-size:11px;letter-spacing:1px;margin-bottom:12px;">FULL SHEET <span style="color:#41414c;">(bed_sprite_sheet.png &mdash; 384&times;32, this is what to import)</span></div>
+    <div style="display:inline-block;padding:18px 22px;background:#21212a;border:1px solid #313140;border-radius:4px;background-image:linear-gradient(45deg,#1d1d25 25%,transparent 25%),linear-gradient(-45deg,#1d1d25 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1d1d25 75%),linear-gradient(-45deg,transparent 75%,#1d1d25 75%);background-size:16px 16px;">
+      <img src="bed_sprite_sheet.png" class="pix" style="height:96px;display:block;" alt="bed sprite sheet">
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { dir: 'front' };
+  renderVals(){
+    const dir = this.state.dir;
+    const on = { background:'#d83030', color:'#fff' };
+    const off = { background:'#21212a', color:'#9a9aa6' };
+    const base = "font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px;border:none;padding:7px 14px;cursor:pointer;";
+    const styleStr = (o)=> base + `background:${o.background};color:${o.color};`;
+    return {
+      idleRef: (el)=>{ this.idle = el; this._tryStart(); },
+      walkRef: (el)=>{ this.walk = el; this._tryStart(); },
+      showFront: ()=> this.setState({ dir:'front' }),
+      showBack: ()=> this.setState({ dir:'back' }),
+      frontBtnStyle: styleStr(dir==='front'?on:off),
+      backBtnStyle: styleStr(dir==='back'?on:off),
+      idleNote: dir==='front' ? '2f · blink' : '2f · breathe',
+      fileName: dir==='front' ? 'character_sprite_sheet.png' : 'character_sprite_sheet_back.png',
+      sheetImgRef: (el)=>{ this.sheetImg = el; if(el) el.src = dir==='front' ? 'character_sprite_sheet.png' : 'character_sprite_sheet_back.png'; },
+      bedRef: (el)=>{ this.bed = el; this._startBed(); },
+    };
+  }
+  componentDidMount(){
+    this.imgs = {};
+    ['front','back'].forEach(d=>{
+      const im = new Image();
+      const src = d==='front' ? 'character_sprite_sheet.png' : 'character_sprite_sheet_back.png';
+      im.onload = ()=>{ this.imgs[d]=im; if(d===this.state.dir){ this.ready=true; this._tryStart(); } };
+      im.src = src; this.imgs[d]=im;
+    });
+  }
+  componentDidUpdate(){ if(this.sheetImg){ const s = this.state.dir==='front'?'character_sprite_sheet.png':'character_sprite_sheet_back.png'; if(!this.sheetImg.src.endsWith(s)) this.sheetImg.src = s; } }
+  _tryStart(){
+    if(this._running || !this.idle || !this.walk || !this.imgs || !this.imgs.front.complete) return;
+    this._running = true;
+    const N = 32;
+    const ictx = this.idle.getContext('2d');
+    const wctx = this.walk.getContext('2d');
+    ictx.imageSmoothingEnabled = false; wctx.imageSmoothingEnabled = false;
+    const idleFrames=[0,1], walkFrames=[2,3,4];
+    let last=0,iIdx=0,wIdx=0,iAcc=0,wAcc=0;
+    const IDLE_MS=520, WALK_MS=150;
+    const img=()=> this.imgs[this.state.dir];
+    const draw=(ctx,f)=>{ const im=img(); if(!im||!im.complete)return; ctx.clearRect(0,0,N,N); ctx.drawImage(im,f*N,0,N,N,0,0,N,N); };
+    draw(ictx,idleFrames[iIdx]); draw(wctx,walkFrames[wIdx]);
+    const loop=(t)=>{ if(!last)last=t; const dt=t-last; last=t; iAcc+=dt; wAcc+=dt;
+      if(iAcc>=IDLE_MS){iAcc=0;iIdx=(iIdx+1)%idleFrames.length;draw(ictx,idleFrames[iIdx]);}
+      if(wAcc>=WALK_MS){wAcc=0;wIdx=(wIdx+1)%walkFrames.length;draw(wctx,walkFrames[wIdx]);}
+      // keep first frame fresh on direction switch
+      this._raf=requestAnimationFrame(loop);
+    };
+    this._raf=requestAnimationFrame(loop);
+  }
+  _startBed(){
+    if(this._bedRunning || !this.bed) return;
+    this._bedRunning = true;
+    const FW=64, FH=32, FRAMES=6, MS=130;
+    const ctx = this.bed.getContext('2d'); ctx.imageSmoothingEnabled = false;
+    const im = new Image();
+    let f=0, last=0, acc=0;
+    const draw=()=>{ if(!im.complete) return; ctx.clearRect(0,0,FW,FH); ctx.drawImage(im, f*FW, 0, FW, FH, 0, 0, FW, FH); };
+    im.onload = ()=>{ draw(); };
+    im.src = 'bed_sprite_sheet.png';
+    const loop=(t)=>{ if(!last)last=t; acc+=t-last; last=t;
+      if(acc>=MS){ acc=0; f=(f+1)%FRAMES; draw(); }
+      this._bedRaf=requestAnimationFrame(loop);
+    };
+    this._bedRaf=requestAnimationFrame(loop);
+  }
+  componentWillUnmount(){ if(this._raf) cancelAnimationFrame(this._raf); if(this._bedRaf) cancelAnimationFrame(this._bedRaf); }
+}
+</script>
+</body>
+</html>
