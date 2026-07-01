@@ -6,37 +6,61 @@ using UnityEngine.InputSystem;
 #endif
 
 /// <summary>
-/// The house the player enters. As the player walks around it, it shows directional views
-/// (front / back / east / west); a Billboard keeps the chosen view facing the camera. From the
-/// front a "Press E to enter" prompt appears; pressing E plays the door-opening frames, fades to
-/// black, and loads the interior scene.
+/// Walk up to the front of the cabin and press E to enter: shows a prompt, plays the
+/// door-opening frames from house_tiles.png on the CabinDoor quad, fades to black, then
+/// loads the interior scene. Placed on the cabin's front door.
+///
+/// The door is a single flat mesh whose four UVs map to one 24x24 cell of the 192x144
+/// atlas. We animate it by rewriting those UVs through a sequence of atlas cells
+/// (closed -> open). Cells are (column,row) coordinates in the same layout
+/// HorrorGame3DSetup uses to build the cabin, so the door stays consistent with the walls.
 /// </summary>
-[RequireComponent(typeof(SpriteRenderer))]
 public class HousePortal : MonoBehaviour
 {
     public Transform player;
-    public Transform cameraTransform;       // used to pick the directional view
-    public Sprite[] doorFrames;             // front: 0 = closed ... last = open
-    public Sprite backSprite;
-    public Sprite sideSprite;               // viewed from the east (+X)
-    public Sprite sideMirrorSprite;         // viewed from the west (-X)
     public string interiorScene = "Sandbox3D";
-    public float range = 4f;
-    public float openFps = 8f;
+    public float range = 3.5f;
     public float fadeDuration = 0.7f;
 
-    SpriteRenderer _sr;
+    [Header("Door open animation (house_tiles.png cells: column,row)")]
+    // Windowed double door opening: closed (4,3) -> fully open (7,3).
+    // For the single plank door instead, set these to (4,5),(5,5),(6,5),(7,5).
+    public Vector2Int[] doorFrames =
+    {
+        new Vector2Int(4, 3), new Vector2Int(5, 3), new Vector2Int(6, 3), new Vector2Int(7, 3),
+    };
+    public float openDuration = 0.9f;    // total time to flip through the open frames (slower = creakier)
+    public float pauseAfterOpen = 0.25f; // beat on the fully-open frame before the fade
+
+    [Header("Atlas layout (must match house_tiles.png)")]
+    public int atlasWidth = 192;
+    public int atlasHeight = 144;
+    public int tileSize = 24;
+
     bool _entering;
     float _fade;
     Texture2D _black;
+    Mesh _doorMesh;
+    Vector2[] _uv;
 
     void Awake()
     {
-        _sr = GetComponent<SpriteRenderer>();
-        if (doorFrames != null && doorFrames.Length > 0) _sr.sprite = doorFrames[0];
         _black = new Texture2D(1, 1);
         _black.SetPixel(0, 0, Color.white);
         _black.Apply();
+    }
+
+    void Start()
+    {
+        var mf = GetComponent<MeshFilter>();
+        var mesh = mf != null ? mf.mesh : null;   // per-instance copy; safe to rewrite at runtime
+        if (mesh != null && mesh.vertexCount == 4)
+        {
+            _doorMesh = mesh;
+            _uv = new Vector2[4];
+            if (doorFrames != null && doorFrames.Length > 0)
+                SetDoorFrame(doorFrames[0]);       // rest on the closed frame
+        }
     }
 
     void Update()
@@ -53,49 +77,12 @@ public class HousePortal : MonoBehaviour
         if (EnterPressed()) StartCoroutine(Enter());
     }
 
-    void LateUpdate()
-    {
-        // pick the directional view by where the camera is around the house (the Billboard
-        // component handles facing it toward the camera)
-        if (_entering || cameraTransform == null || _sr == null) return;
-        Vector3 toCam = cameraTransform.position - transform.position;
-        toCam.y = 0f;
-        if (toCam.sqrMagnitude < 0.0001f) return;
-        _sr.sprite = PickView(toCam.normalized);
-    }
-
-    Sprite PickView(Vector3 d)
-    {
-        float south = -d.z;     // +1 = camera in front (the door side)
-        float east  =  d.x;     // +1 = camera to the east
-        if (Mathf.Abs(south) >= Mathf.Abs(east))
-            return south >= 0f ? Front() : Or(backSprite);
-        return east >= 0f ? Or(sideSprite) : Or(sideMirrorSprite);
-    }
-
-    Sprite Front() => (doorFrames != null && doorFrames.Length > 0) ? doorFrames[0] : null;
-    Sprite Or(Sprite s) => s != null ? s : Front();
-
     IEnumerator Enter()
     {
         _entering = true;
-        _sr.sprite = Front();
 
-        if (doorFrames != null && doorFrames.Length > 0)
-        {
-            float t = 0f;
-            int n = doorFrames.Length;
-            int f = 0;
-            while (f < n)
-            {
-                f = Mathf.FloorToInt(t * openFps);
-                _sr.sprite = doorFrames[Mathf.Clamp(f, 0, n - 1)];
-                t += Time.deltaTime;
-                yield return null;
-            }
-            _sr.sprite = doorFrames[n - 1];
-        }
-        yield return new WaitForSeconds(0.25f);
+        yield return OpenDoor();
+        if (pauseAfterOpen > 0f) yield return new WaitForSeconds(pauseAfterOpen);
 
         float ft = 0f;
         while (ft < fadeDuration)
@@ -106,6 +93,35 @@ public class HousePortal : MonoBehaviour
         }
         _fade = 1f;
         SceneManager.LoadScene(interiorScene);
+    }
+
+    // Flip through the door cells (closed -> open) on the door quad's UVs.
+    IEnumerator OpenDoor()
+    {
+        if (_doorMesh == null || doorFrames == null || doorFrames.Length == 0) yield break;
+        float per = openDuration / doorFrames.Length;
+        for (int i = 0; i < doorFrames.Length; i++)
+        {
+            SetDoorFrame(doorFrames[i]);
+            if (per > 0f) yield return new WaitForSeconds(per);
+        }
+    }
+
+    // Point the door quad's four UVs at atlas cell (col,row), with the same half-texel
+    // inset the cabin mesh uses so the tile doesn't bleed into its neighbours.
+    void SetDoorFrame(Vector2Int cell)
+    {
+        if (_doorMesh == null || _uv == null) return;
+        float aw = atlasWidth, ah = atlasHeight, tp = tileSize;
+        float u0 = cell.x * tp / aw, u1 = (cell.x + 1) * tp / aw;
+        float v1 = 1f - cell.y * tp / ah, v0 = 1f - (cell.y + 1) * tp / ah;
+        float eu = 0.5f / aw, ev = 0.5f / ah;
+        float xMin = u0 + eu, xMax = u1 - eu, yMin = v0 + ev, yMax = v1 - ev;
+        _uv[0] = new Vector2(xMin, yMin);   // bottom-left
+        _uv[1] = new Vector2(xMax, yMin);   // bottom-right
+        _uv[2] = new Vector2(xMax, yMax);   // top-right
+        _uv[3] = new Vector2(xMin, yMax);   // top-left
+        _doorMesh.uv = _uv;
     }
 
     void OnGUI()
