@@ -47,11 +47,12 @@ public static class HorrorGame3DSetup
     const string SmokePuffPng = "Assets/Animation/smoke_puff.png";
     const string PropsAutumn = "Assets/Animation/props_autumn.png";
     const string PathCobble  = "Assets/Animation/path_cobble.png";
+    const string RangeBackdrop = "Assets/Animation/range_backdrop.png";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 22;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 24;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -280,6 +281,7 @@ public static class HorrorGame3DSetup
                 MakeProp("Grass", grassPos[i], grass[(i * 3) % grass.Length], spriteMat);
 
         ScatterAutumnProps(spriteMat);   // autumn dressing: bare/hollow trees, bench, mushrooms, crow, leaves...
+        BuildMountainBackdrop();         // far dusk mountain range surrounding the yard (static layers + sky)
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
@@ -733,6 +735,87 @@ public static class HorrorGame3DSetup
         if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
         EditorUtility.SetDirty(mat);
         return mat;
+    }
+
+    // -------------------------------------------------------------- mountain backdrop
+    // Builds the surrounding "far range": range_backdrop.png is a pre-sliced atlas (range_backdrop_0..5
+    // are the ridge strips far->near, _6 the hero peak). MountainBackdrop wraps each strip into a ring
+    // around the yard so it reads in every direction. Radii/heights grow with distance; the far snow
+    // peaks loom highest and farthest. Face/wanderer/fog from the README are deferred.
+    static void BuildMountainBackdrop()
+    {
+        EnsureRangeImport();
+        var byName = new Dictionary<string, Sprite>();
+        foreach (var s in AssetDatabase.LoadAllAssetsAtPath(RangeBackdrop).OfType<Sprite>()) byName[s.name] = s;
+        Sprite S(int i) => byName.TryGetValue("range_backdrop_" + i, out var sp) ? sp : null;
+
+        var root = new GameObject("MountainBackdrop");
+        var mb = root.AddComponent<MountainBackdrop>();
+        mb.material = BackdropMaterial();
+        mb.center = Vector3.zero;
+        // radius grows with distance; height scaled by the strip's pixel height; `copies` chosen so each
+        // strip copy keeps the source aspect (≈ circumference / (height·pixelAspect)) — too many copies
+        // squish the silhouette horizontally (that's what crushed the spruce line before).
+        mb.layers = new[]
+        {
+            new MountainBackdrop.Layer { name = "snowFar",   sprite = S(0), radius = 108f, height = 42f, copies = 4, segmentsPerCopy = 8 },
+            new MountainBackdrop.Layer { name = "snowRock",  sprite = S(1), radius = 96f,  height = 36f, copies = 3, segmentsPerCopy = 8 },
+            new MountainBackdrop.Layer { name = "purple",    sprite = S(2), radius = 84f,  height = 29f, copies = 3, segmentsPerCopy = 8 },
+            new MountainBackdrop.Layer { name = "dirtRidge", sprite = S(3), radius = 74f,  height = 22f, copies = 3, segmentsPerCopy = 8 },
+            new MountainBackdrop.Layer { name = "nearDirt",  sprite = S(4), radius = 66f,  height = 12f, copies = 2, segmentsPerCopy = 10 },
+            new MountainBackdrop.Layer { name = "trees",     sprite = S(5), radius = 60f,  height = 15f, copies = 2, segmentsPerCopy = 10 },
+        };
+        mb.heroSprite = S(6);
+        mb.heroAzimuthDeg = 90f;    // +Z, north — behind the cabin
+        mb.heroRadius = 102f;       // between snowRock and snowFar
+        mb.heroWidth = 53f;         // ~1.16 aspect of the 122x105 hero sprite
+        mb.heroHeight = 46f;
+        mb.buildSky = true;
+        mb.Build();
+    }
+
+    // Alpha-clipped unlit material for the range atlas: silhouettes are cut out (not blended) so the
+    // rings depth-sort correctly by radius, and it's double-sided since we view the rings from inside.
+    static Material BackdropMaterial()
+    {
+        EnsureRangeImport();
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(RangeBackdrop);
+        EnsureFolder(MatDir);
+        string matPath = MatDir + "/RangeBackdrop3D.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        var sh = Shader.Find("Universal Render Pipeline/Unlit");
+        if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
+        else mat.shader = sh;
+
+        mat.SetFloat("_Surface", 0f);        // opaque surface...
+        mat.SetFloat("_AlphaClip", 1f);      // ...with alpha clipping (cutout silhouettes)
+        mat.EnableKeyword("_ALPHATEST_ON");
+        mat.SetFloat("_Cutoff", 0.5f);
+        mat.SetFloat("_Cull", 0f);           // double-sided
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
+        mat.mainTexture = tex;
+        if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    // Crisp pixel import for the range atlas (keeps the existing multi-sprite slicing intact).
+    static void EnsureRangeImport()
+    {
+        if (AssetImporter.GetAtPath(RangeBackdrop) is TextureImporter imp)
+        {
+            bool dirty = imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || !imp.alphaIsTransparency;
+            if (dirty)
+            {
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.alphaIsTransparency = true;
+                imp.SaveAndReimport();
+            }
+        }
     }
 
     // -------------------------------------------------------------- prop scatter
