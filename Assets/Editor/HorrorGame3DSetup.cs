@@ -40,11 +40,12 @@ public static class HorrorGame3DSetup
     const string GreenTree  = "Assets/Animation/tree_spruce.png";
     const string WinterTree = "Assets/Animation/tree_spruce_winter.png";
     const string GrassSheet = "Assets/Animation/grass_tufts.png";
+    const string SmokePuffPng = "Assets/Animation/smoke_puff.png";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 17;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 18;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -526,6 +527,27 @@ public static class HorrorGame3DSetup
         var door = MakeTileQuad("CabinDoor", house.transform, new Vector3(0f, 1.2f, -hd - 0.03f),
                                 Quaternion.identity, 1.5f, 2.4f, 6, 0, atlasMat);
 
+        // lit windows: a shadow figure crosses the pane on one side of the door, candles gutter
+        // in the rest. Front windows flank the door; one sits on each side wall so the cabin looks
+        // occupied from any approach.
+        var figureFrames = new[] {
+            new Vector2Int(0, 2), new Vector2Int(1, 2), new Vector2Int(2, 2),
+            new Vector2Int(3, 2), new Vector2Int(4, 2), new Vector2Int(5, 2),
+        };
+        var candleFrames = new[] {
+            new Vector2Int(0, 3), new Vector2Int(1, 3), new Vector2Int(2, 3), new Vector2Int(3, 3),
+        };
+        const float winSize = 1.1f, winY = 2.15f;
+        float front = -hd - 0.03f, sideX = W * 0.5f + 0.03f;
+        MakeWindow(house.transform, new Vector3(-1.9f, winY, front), Quaternion.identity,
+                   winSize, figureFrames, 4.5f, flicker: false, phase: 0f, mat: atlasMat);   // passing shadow
+        MakeWindow(house.transform, new Vector3(1.9f, winY, front), Quaternion.identity,
+                   winSize, candleFrames, 7f, flicker: true, phase: 0.3f, mat: atlasMat);     // flickering candle
+        MakeWindow(house.transform, new Vector3(-sideX, winY, 1.4f), Quaternion.Euler(0f, 90f, 0f),
+                   winSize, candleFrames, 7f, flicker: true, phase: 0.6f, mat: atlasMat);
+        MakeWindow(house.transform, new Vector3(sideX, winY, -1.4f), Quaternion.Euler(0f, -90f, 0f),
+                   winSize, candleFrames, 7f, flicker: true, phase: 0.9f, mat: atlasMat);
+
         // interlocking corner logs + closed gable roof (real geometry, sized from the wall bounds)
         var shell = walls.AddComponent<CabinShellBuilder>();
         shell.atlasMaterial = atlasMat;
@@ -538,6 +560,18 @@ public static class HorrorGame3DSetup
         shell.gableOverhang = 0.35f;
         shell.buildEaveFascia = true;
         shell.Build();
+
+        // brick chimney poking through the back slope of the roof, smoke curling from the top.
+        // It billboards like the trees so it always reads; the smoke rises in world space.
+        var chimney = MakeTileQuad("Chimney", house.transform, new Vector3(1.1f, 5.05f, 1.4f),
+                                   Quaternion.identity, 1.0f, 1.4f, 5, 1, atlasMat);
+        chimney.AddComponent<Billboard>();
+        var smokeGo = new GameObject("ChimneySmoke");
+        smokeGo.transform.SetParent(chimney.transform, false);
+        smokeGo.transform.localPosition = new Vector3(0f, 0.72f, 0f);   // the chimney mouth
+        var smoke = smokeGo.AddComponent<ChimneySmoke>();
+        smoke.puffSprite = SmokePuffSprite();
+        smoke.material = SpriteMaterial();
 
         // solid footprint so the player circles it and enters from the front
         var col = house.AddComponent<BoxCollider>();
@@ -693,6 +727,64 @@ public static class HorrorGame3DSetup
         go.AddComponent<MeshFilter>().sharedMesh = m;
         go.AddComponent<MeshRenderer>().sharedMaterial = mat;
         return go;
+    }
+
+    // A lit window quad on a wall face that cycles atlas cells via TileSheetAnimator
+    // (a crossing shadow, or a flickering candle).
+    static void MakeWindow(Transform parent, Vector3 localPos, Quaternion localRot, float size,
+                           Vector2Int[] frames, float fps, bool flicker, float phase, Material mat)
+    {
+        var win = MakeTileQuad("Window", parent, localPos, localRot, size, size, frames[0].x, frames[0].y, mat);
+        var anim = win.AddComponent<TileSheetAnimator>();
+        anim.frames = frames;
+        anim.fps = fps;
+        anim.flicker = flicker;
+        anim.startPhase = phase;
+    }
+
+    // Soft round smoke puff, generated once into Assets/Animation and imported as a Sprite. The
+    // sheet's own puff tiles read as snow and sit off-centre in their cells, so a clean radial
+    // puff gives the chimney a believable rising column that can fade per-instance.
+    static Sprite SmokePuffSprite()
+    {
+        if (!File.Exists(SmokePuffPng))
+        {
+            const int S = 64;
+            var tex = new Texture2D(S, S, TextureFormat.RGBA32, false);
+            var px = new Color32[S * S];
+            float cx = (S - 1) * 0.5f, cy = (S - 1) * 0.5f, radius = 0.48f * S;
+            for (int y = 0; y < S; y++)
+            for (int x = 0; x < S; x++)
+            {
+                float d = Mathf.Sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy)) / radius;
+                float a = Mathf.Pow(Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(1f - d)), 1.3f);   // soft cloudy edge
+                px[y * S + x] = new Color32(255, 255, 255, (byte)Mathf.RoundToInt(a * 255f));
+            }
+            tex.SetPixels32(px);
+            tex.Apply();
+            File.WriteAllBytes(SmokePuffPng, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
+            AssetDatabase.ImportAsset(SmokePuffPng);
+        }
+        if (AssetImporter.GetAtPath(SmokePuffPng) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Sprite ||
+                         imp.spriteImportMode != SpriteImportMode.Single ||
+                         imp.filterMode != FilterMode.Bilinear ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || !imp.alphaIsTransparency;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Sprite;
+                imp.spriteImportMode = SpriteImportMode.Single;
+                imp.filterMode = FilterMode.Bilinear;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.alphaIsTransparency = true;
+                imp.SaveAndReimport();
+            }
+        }
+        return AssetDatabase.LoadAssetAtPath<Sprite>(SmokePuffPng);
     }
 
     static void MakeTree(Vector3 pos, Sprite[] frames, Material mat)
