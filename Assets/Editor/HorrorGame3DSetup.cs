@@ -232,6 +232,17 @@ public static class HorrorGame3DSetup
         ground.GetComponent<Renderer>().sharedMaterial =
             LitMaterial("YardMat3D", new Color(0.36f, 0.5f, 0.28f), null, Vector2.one, false);
 
+        // Sporadic grass/dirt tiles laid just above the base ground. GroundTiler builds a
+        // patchwork mesh (weighted-random tile per cell) at runtime, so tuning the mix only
+        // needs a re-Play; Build() here also bakes it so it shows in the Scene view.
+        var grassTiles = new GameObject("GrassTiles", typeof(MeshFilter), typeof(MeshRenderer));
+        grassTiles.transform.position = new Vector3(0f, 0.02f, 0f);
+        var tiler = grassTiles.AddComponent<GroundTiler>();
+        tiler.material = GrassAtlasMaterial();
+        tiler.worldSize = 80f;
+        tiler.tileWorldSize = 2f;
+        tiler.Build();
+
         var spriteMat = SpriteMaterial();
 
         // The house: a real 3D log cabin built from house_tiles.png — tiled-siding walls, interlocking
@@ -570,6 +581,38 @@ public static class HorrorGame3DSetup
         if (mat.HasProperty("_Cutoff")) mat.SetFloat("_Cutoff", 0.5f);
         if (mat.HasProperty("_Cull")) mat.SetFloat("_Cull", 0f);
         mat.EnableKeyword("_ALPHATEST_ON");
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    // URP/Unlit material sampling grass_tiles.png (point-filtered, opaque) for the tiled ground.
+    static Material GrassAtlasMaterial()
+    {
+        const string atlasPath = "Assets/Animation/grass_tiles.png";
+        if (AssetImporter.GetAtPath(atlasPath) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Default || imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || imp.wrapMode != TextureWrapMode.Clamp;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Default;
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.wrapMode = TextureWrapMode.Clamp;
+                imp.SaveAndReimport();
+            }
+        }
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(atlasPath);
+        EnsureFolder(MatDir);
+        string matPath = MatDir + "/GrassTiles3D.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        var sh = Shader.Find("Universal Render Pipeline/Unlit");
+        if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
+        else mat.shader = sh;
+        mat.mainTexture = tex;
+        if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
         EditorUtility.SetDirty(mat);
         return mat;
     }
