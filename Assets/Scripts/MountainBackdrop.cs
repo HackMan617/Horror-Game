@@ -47,6 +47,14 @@ public class MountainBackdrop : MonoBehaviour
     public float extraPeakHeight = 56f;
     public float extraPeakBaseY = 0f;
 
+    [Header("Tall lifted peaks (rocky body exposed, not just the summit)")]
+    [Tooltip("Peaks at these azimuths are built much taller so their rocky slopes rise above the front ridges, instead of only the snowy caps peeking over.")]
+    public float[] tallPeakAzimuthsDeg;
+    public float tallPeakRadius = 98f;
+    public float tallPeakWidth = 104f;
+    public float tallPeakHeight = 104f;
+    public float tallPeakBaseY = 0f;
+
     [Header("Dusk sky")]
     public bool buildSky = true;
     public float skyRadius = 150f;
@@ -71,6 +79,10 @@ public class MountainBackdrop : MonoBehaviour
             foreach (float az in extraPeakAzimuthsDeg)
                 BuildPeak(heroSprite, az, extraPeakRadius, extraPeakWidth, extraPeakHeight, extraPeakBaseY,
                           "Peak_" + Mathf.RoundToInt(az));
+        if (heroSprite != null && material != null && tallPeakAzimuthsDeg != null)
+            foreach (float az in tallPeakAzimuthsDeg)
+                BuildPeak(heroSprite, az, tallPeakRadius, tallPeakWidth, tallPeakHeight, tallPeakBaseY,
+                          "TallPeak_" + Mathf.RoundToInt(az));
     }
 
     // One ridge strip wrapped `copies` times around a ring of `radius`, each copy subdivided for curve.
