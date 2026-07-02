@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: 8d819e64510702546939d9b0bf24b15b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5068431966780942612
+    second: neighbor_A_tiles_0
+  - first:
+      213: 6854308785863355327
+    second: neighbor_A_tiles_1
+  - first:
+      213: -4821938854669353001
+    second: neighbor_A_tiles_2
+  - first:
+      213: -5527746110102034948
+    second: neighbor_A_tiles_3
+  - first:
+      213: -2582311276182866282
+    second: neighbor_A_tiles_4
+  - first:
+      213: 7725651113157025688
+    second: neighbor_A_tiles_5
+  - first:
+      213: -8882735287986019420
+    second: neighbor_A_tiles_6
+  - first:
+      213: 9221671881097222109
+    second: neighbor_A_tiles_7
+  - first:
+      213: -1659312183591338996
+    second: neighbor_A_tiles_8
+  - first:
+      213: 9029123451253301860
+    second: neighbor_A_tiles_9
+  - first:
+      213: -3036900018573273794
+    second: neighbor_A_tiles_10
+  - first:
+      213: 4433111065199033965
+    second: neighbor_A_tiles_11
+  - first:
+      213: -1230440039086674702
+    second: neighbor_A_tiles_12
+  - first:
+      213: -1992978096944876692
+    second: neighbor_A_tiles_13
+  - first:
+      213: -5145104711243240212
+    second: neighbor_A_tiles_14
+  - first:
+      213: 8480611239844513591
+    second: neighbor_A_tiles_15
+  - first:
+      213: 8837941202535376309
+    second: neighbor_A_tiles_16
+  - first:
+      213: -992183797647190837
+    second: neighbor_A_tiles_17
+  - first:
+      213: 5023760796826208205
+    second: neighbor_A_tiles_18
+  - first:
+      213: -6413369449566518633
+    second: neighbor_A_tiles_19
+  - first:
+      213: -8633502377848596174
+    second: neighbor_A_tiles_20
+  - first:
+      213: 8148870726619398879
+    second: neighbor_A_tiles_21
+  - first:
+      213: -4567244696316548711
+    second: neighbor_A_tiles_22
+  - first:
+      213: -7069716062962807013
+    second: neighbor_A_tiles_23
+  - first:
+      213: 144700078324676219
+    second: neighbor_A_tiles_24
+  - first:
+      213: -3592183187503387860
+    second: neighbor_A_tiles_25
+  - first:
+      213: 4960749973423245369
+    second: neighbor_A_tiles_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: neighbor_A_tiles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 95
+        width: 169
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41966342500b65640800000000000000
+      internalID: 5068431966780942612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_1
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 121
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbb693a66856f1f50800000000000000
+      internalID: 6854308785863355327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7df77cec828051db0800000000000000
+      internalID: -4821938854669353001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf522da33308943b0800000000000000
+      internalID: -5527746110102034948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_4
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69672a37399c92cd0800000000000000
+      internalID: -2582311276182866282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_5
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89f535251c6073b60800000000000000
+      internalID: 7725651113157025688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a324cd715f2ab480800000000000000
+      internalID: -8882735287986019420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_7
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 35
+        width: 20
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd71204a7b5f9ff70800000000000000
+      internalID: 9221671881097222109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_8
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c7f854c50f8f8e0800000000000000
+      internalID: -1659312183591338996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_9
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4622a19c0f3ed4d70800000000000000
+      internalID: 9029123451253301860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_10
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e351096f583cad5d0800000000000000
+      internalID: -3036900018573273794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_11
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6eba03b603958d30800000000000000
+      internalID: 4433111065199033965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fc22d8bd499ceee0800000000000000
+      internalID: -1230440039086674702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_13
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c637776eaf48754e0800000000000000
+      internalID: -1992978096944876692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_14
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 26
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec682a668ae898b0800000000000000
+      internalID: -5145104711243240212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_15
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7370e1d8dfe21b570800000000000000
+      internalID: 8480611239844513591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_16
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5e8e2c2bca6aa70800000000000000
+      internalID: 8837941202535376309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_17
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 39
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc45755c71e0b32f0800000000000000
+      internalID: -992183797647190837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_18
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 34
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc70c53e3dbf7b540800000000000000
+      internalID: 5023760796826208205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_19
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 29
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 792ce3117722ff6a0800000000000000
+      internalID: -6413369449566518633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_20
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 32
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23918d06453af2880800000000000000
+      internalID: -8633502377848596174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_21
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 38
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd28ab450ca961170800000000000000
+      internalID: 8148870726619398879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 97
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 999e3c1a523ed90c0800000000000000
+      internalID: -4567244696316548711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_23
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1f8a3c92b253ed90800000000000000
+      internalID: -7069716062962807013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_24
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b76738f54f3120200800000000000000
+      internalID: 144700078324676219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_25
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2beab45c60062ec0800000000000000
+      internalID: -3592183187503387860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_26
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 938cb6151df18d440800000000000000
+      internalID: 4960749973423245369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      neighbor_A_tiles_0: 5068431966780942612
+      neighbor_A_tiles_1: 6854308785863355327
+      neighbor_A_tiles_10: -3036900018573273794
+      neighbor_A_tiles_11: 4433111065199033965
+      neighbor_A_tiles_12: -1230440039086674702
+      neighbor_A_tiles_13: -1992978096944876692
+      neighbor_A_tiles_14: -5145104711243240212
+      neighbor_A_tiles_15: 8480611239844513591
+      neighbor_A_tiles_16: 8837941202535376309
+      neighbor_A_tiles_17: -992183797647190837
+      neighbor_A_tiles_18: 5023760796826208205
+      neighbor_A_tiles_19: -6413369449566518633
+      neighbor_A_tiles_2: -4821938854669353001
+      neighbor_A_tiles_20: -8633502377848596174
+      neighbor_A_tiles_21: 8148870726619398879
+      neighbor_A_tiles_22: -4567244696316548711
+      neighbor_A_tiles_23: -7069716062962807013
+      neighbor_A_tiles_24: 144700078324676219
+      neighbor_A_tiles_25: -3592183187503387860
+      neighbor_A_tiles_26: 4960749973423245369
+      neighbor_A_tiles_3: -5527746110102034948
+      neighbor_A_tiles_4: -2582311276182866282
+      neighbor_A_tiles_5: 7725651113157025688
+      neighbor_A_tiles_6: -8882735287986019420
+      neighbor_A_tiles_7: 9221671881097222109
+      neighbor_A_tiles_8: -1659312183591338996
+      neighbor_A_tiles_9: 9029123451253301860
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

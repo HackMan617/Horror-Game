@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: 624ecd92f4349ff44a3cce1bd09ca9c9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4433756101852223390
+    second: neighbor_C_tiles_0
+  - first:
+      213: -2533898787300649635
+    second: neighbor_C_tiles_1
+  - first:
+      213: -4372522366506097562
+    second: neighbor_C_tiles_2
+  - first:
+      213: 3722777024103974711
+    second: neighbor_C_tiles_3
+  - first:
+      213: -367448988940776020
+    second: neighbor_C_tiles_4
+  - first:
+      213: 5406886787578757287
+    second: neighbor_C_tiles_5
+  - first:
+      213: -6056971373914827562
+    second: neighbor_C_tiles_6
+  - first:
+      213: -6841770935104202300
+    second: neighbor_C_tiles_7
+  - first:
+      213: 6847113431805459832
+    second: neighbor_C_tiles_8
+  - first:
+      213: 3860285436579244792
+    second: neighbor_C_tiles_9
+  - first:
+      213: -4864890078838978404
+    second: neighbor_C_tiles_10
+  - first:
+      213: -399188282832128751
+    second: neighbor_C_tiles_11
+  - first:
+      213: -6969735677838416711
+    second: neighbor_C_tiles_12
+  - first:
+      213: 1938798236609126413
+    second: neighbor_C_tiles_13
+  - first:
+      213: 4989041550395386295
+    second: neighbor_C_tiles_14
+  - first:
+      213: 4291386347818853783
+    second: neighbor_C_tiles_15
+  - first:
+      213: 3671806549284005148
+    second: neighbor_C_tiles_16
+  - first:
+      213: 4160616107728349991
+    second: neighbor_C_tiles_17
+  - first:
+      213: 7484919171298358386
+    second: neighbor_C_tiles_18
+  - first:
+      213: -6039322504098970791
+    second: neighbor_C_tiles_19
+  - first:
+      213: -1787702926552746964
+    second: neighbor_C_tiles_20
+  - first:
+      213: 4578344697890042122
+    second: neighbor_C_tiles_21
+  - first:
+      213: -6797011122503270369
+    second: neighbor_C_tiles_22
+  - first:
+      213: 1133824888127879677
+    second: neighbor_C_tiles_23
+  - first:
+      213: 8740086113005806958
+    second: neighbor_C_tiles_24
+  - first:
+      213: -6137595422947964708
+    second: neighbor_C_tiles_25
+  - first:
+      213: -8759145380008168157
+    second: neighbor_C_tiles_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: neighbor_C_tiles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 95
+        width: 169
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e975f9ffeadd78d30800000000000000
+      internalID: 4433756101852223390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_1
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 121
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d55d6266a78c5dcd0800000000000000
+      internalID: -2533898787300649635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66424f3031ea153c0800000000000000
+      internalID: -4372522366506097562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73704b3baf5f9a330800000000000000
+      internalID: 3722777024103974711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_4
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cadcb15671f86eaf0800000000000000
+      internalID: -367448988940776020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_5
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a0826ae2ee190b40800000000000000
+      internalID: 5406886787578757287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d4d81b60a051fba0800000000000000
+      internalID: -6056971373914827562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_7
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 35
+        width: 20
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c9958275952d01a0800000000000000
+      internalID: -6841770935104202300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_8
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87df19f7365d50f50800000000000000
+      internalID: 6847113431805459832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_9
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fa6be2e62d729530800000000000000
+      internalID: 3860285436579244792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_10
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c980b73af307c7cb0800000000000000
+      internalID: -4864890078838978404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_11
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 115fa4b2f5cc57af0800000000000000
+      internalID: -399188282832128751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b423180456864f90800000000000000
+      internalID: -6969735677838416711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_13
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00ad3859bef7ea10800000000000000
+      internalID: 1938798236609126413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_14
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 26
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b92bf46bd2ac3540800000000000000
+      internalID: 4989041550395386295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_15
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79524b785211e8b30800000000000000
+      internalID: 4291386347818853783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_16
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c15a60e3a90e4f230800000000000000
+      internalID: 3671806549284005148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_17
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 39
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72baaeb5e4a7db930800000000000000
+      internalID: 4160616107728349991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_18
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 34
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 274ffb95456cfd760800000000000000
+      internalID: 7484919171298358386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_19
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 29
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95388232e24003ca0800000000000000
+      internalID: -6039322504098970791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_20
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 32
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c24b5e2f8adc037e0800000000000000
+      internalID: -1787702926552746964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_21
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 38
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a017701ee3c898f30800000000000000
+      internalID: 4578344697890042122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 97
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1040dc656a2ca1a0800000000000000
+      internalID: -6797011122503270369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_23
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df9fb5e7ab72cbf00800000000000000
+      internalID: 1133824888127879677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_24
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e65290843060b4970800000000000000
+      internalID: 8740086113005806958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_25
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd88f103b71e2daa0800000000000000
+      internalID: -6137595422947964708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_C_tiles_26
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 325fb905fa3417680800000000000000
+      internalID: -8759145380008168157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      neighbor_C_tiles_0: 4433756101852223390
+      neighbor_C_tiles_1: -2533898787300649635
+      neighbor_C_tiles_10: -4864890078838978404
+      neighbor_C_tiles_11: -399188282832128751
+      neighbor_C_tiles_12: -6969735677838416711
+      neighbor_C_tiles_13: 1938798236609126413
+      neighbor_C_tiles_14: 4989041550395386295
+      neighbor_C_tiles_15: 4291386347818853783
+      neighbor_C_tiles_16: 3671806549284005148
+      neighbor_C_tiles_17: 4160616107728349991
+      neighbor_C_tiles_18: 7484919171298358386
+      neighbor_C_tiles_19: -6039322504098970791
+      neighbor_C_tiles_2: -4372522366506097562
+      neighbor_C_tiles_20: -1787702926552746964
+      neighbor_C_tiles_21: 4578344697890042122
+      neighbor_C_tiles_22: -6797011122503270369
+      neighbor_C_tiles_23: 1133824888127879677
+      neighbor_C_tiles_24: 8740086113005806958
+      neighbor_C_tiles_25: -6137595422947964708
+      neighbor_C_tiles_26: -8759145380008168157
+      neighbor_C_tiles_3: 3722777024103974711
+      neighbor_C_tiles_4: -367448988940776020
+      neighbor_C_tiles_5: 5406886787578757287
+      neighbor_C_tiles_6: -6056971373914827562
+      neighbor_C_tiles_7: -6841770935104202300
+      neighbor_C_tiles_8: 6847113431805459832
+      neighbor_C_tiles_9: 3860285436579244792
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
