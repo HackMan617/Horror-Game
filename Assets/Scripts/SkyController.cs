@@ -18,10 +18,21 @@ public class SkyController : MonoBehaviour
     [Header("Time of day")]
     [Range(0f, 1f)] public float timeOfDay = 0f;   // 0 = dawn/morning, 1 = darkest night
     public bool autoPlay = true;
-    [Tooltip("Real seconds for a full 0→1 pass.")]
+    [Tooltip("Real seconds for a full 0→1 pass (used when splitDayNight is off).")]
     public float dayLengthSeconds = 120f;
     [Tooltip("Loop back to dawn at night (living sky) vs. hold at darkest.")]
     public bool loop = true;
+
+    [Header("Asymmetric day / night pacing")]
+    [Tooltip("Pace day and night with independent real-time durations instead of one linear pass, so " +
+             "night can last longer than day. When on, dayLengthSeconds is ignored.")]
+    public bool splitDayNight = false;
+    [Tooltip("timeOfDay where night begins (sun fully set ≈ 0.80). Below it counts as 'day'.")]
+    [Range(0f, 1f)] public float nightStartT = 0.80f;
+    [Tooltip("Real seconds for the day span (timeOfDay 0 → nightStartT).")]
+    public float dayDurationSeconds = 60f;
+    [Tooltip("Real seconds for the night span (timeOfDay nightStartT → 1, then it loops to dawn).")]
+    public float nightDurationSeconds = 120f;
 
     [Header("Sky rect — where the sun / moon / stars live")]
     [Tooltip("Compass yaw the sky faces (90° = +Z, north, over the cabin).")]
@@ -98,7 +109,20 @@ public class SkyController : MonoBehaviour
     {
         if (autoPlay && Application.isPlaying)
         {
-            timeOfDay += Time.deltaTime / Mathf.Max(1f, dayLengthSeconds);
+            if (splitDayNight)
+            {
+                // Advance faster through the day span and slower through the night span, so each
+                // consumes its own real-time budget (night can be much longer than day).
+                float ns = Mathf.Clamp01(nightStartT);
+                float rate = (timeOfDay < ns)
+                    ? ns / Mathf.Max(1f, dayDurationSeconds)
+                    : (1f - ns) / Mathf.Max(1f, nightDurationSeconds);
+                timeOfDay += Time.deltaTime * rate;
+            }
+            else
+            {
+                timeOfDay += Time.deltaTime / Mathf.Max(1f, dayLengthSeconds);
+            }
             if (timeOfDay > 1f) timeOfDay = loop ? timeOfDay - 1f : 1f;
         }
         Apply(timeOfDay);
