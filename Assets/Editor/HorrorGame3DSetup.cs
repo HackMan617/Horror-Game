@@ -48,11 +48,13 @@ public static class HorrorGame3DSetup
     const string PropsAutumn = "Assets/Animation/props_autumn.png";
     const string PathCobble  = "Assets/Animation/path_cobble.png";
     const string RangeBackdrop = "Assets/Animation/range_backdrop.png";
+    const string SunPng     = "Assets/Animation/sun.png";
+    const string MoonPng    = "Assets/Animation/moon.png";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 24;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 29;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -173,7 +175,7 @@ public static class HorrorGame3DSetup
 
         var spriteGo = new GameObject("Sprite");
         spriteGo.transform.SetParent(player.transform, false);
-        spriteGo.transform.localPosition = Vector3.zero;
+        spriteGo.transform.localPosition = new Vector3(0f, 0.14f, 0f);   // lift the feet above the ground-detail planes (grass 0.02 / path 0.04 / leaves 0.06) so the upright billboard isn't sheared off at the ankles by them
         var sr = spriteGo.AddComponent<SpriteRenderer>();
         sr.sprite = back.Length > 0 ? back[0] : LoadSprite(PlayerPng, "player_idle_0");
         sr.sharedMaterial = spriteMat;
@@ -254,8 +256,12 @@ public static class HorrorGame3DSetup
         // corner logs and a closed gable roof (CabinShellBuilder), all anchored on the ground.
         var housePortal = BuildCabin(new Vector3(0f, 0f, 10f));
 
-        var player = BuildPlayerRig(new Vector3(0f, 0.1f, 0f), spriteMat);   // spawns facing the cabin
+        var player = BuildPlayerRig(new Vector3(0f, 0.1f, 0f), spriteMat, grassFill: false);   // spawns facing the cabin; no green fill — looking up reveals the sky
         housePortal.player = player.transform;
+
+        // Let the player crane right up at the sky (the old grass "curtain" is gone now that there's a real sky).
+        var exteriorRig = player.GetComponentInChildren<CameraRig>();
+        if (exteriorRig != null) exteriorRig.minPitch = -88f;   // ~straight up (negative pitch = looking up)
 
         new GameObject("DialogUI").AddComponent<DialogUI>();
 
@@ -281,7 +287,7 @@ public static class HorrorGame3DSetup
                 MakeProp("Grass", grassPos[i], grass[(i * 3) % grass.Length], spriteMat);
 
         ScatterAutumnProps(spriteMat);   // autumn dressing: bare/hollow trees, bench, mushrooms, crow, leaves...
-        BuildMountainBackdrop();         // far dusk mountain range surrounding the yard (static layers + sky)
+        BuildMountainBackdrop(sun);      // far mountain range surrounding the yard + the day→night sky system
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
@@ -695,8 +701,10 @@ public static class HorrorGame3DSetup
         foreach (var c in cells) _pathCells.Add(new Vector3(c.x + shiftX, 0f, c.y));   // world footprint
     }
 
-    // Transparent unlit material for the cobble atlas: the tiles have real alpha (they overlay the
-    // grass), so it blends rather than writing depth. Import is forced to crisp pixel settings.
+    // Alpha-clipped (cutout) unlit material for the cobble atlas: the tiles have real alpha (they
+    // overlay the grass), cut out at a 0.5 threshold so the road silhouette still shows grass around
+    // it while WRITING DEPTH — so upright billboards (the player) sort correctly over the road instead
+    // of being painted through by it. Import is forced to crisp pixel settings.
     static Material PathAtlasMaterial()
     {
         if (AssetImporter.GetAtPath(PathCobble) is TextureImporter imp)
@@ -724,13 +732,21 @@ public static class HorrorGame3DSetup
         if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
         else mat.shader = sh;
 
-        mat.SetFloat("_Surface", 1f);        // transparent
-        mat.SetFloat("_Blend", 0f);          // alpha blend
-        mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        mat.SetFloat("_ZWrite", 0f);
-        mat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+        // Alpha-CLIP (cutout) rather than alpha-blend, so the road WRITES DEPTH. As a transparent
+        // ZWrite-off mesh it shared the Transparent queue with the player billboard (also ZWrite-off),
+        // and with neither writing depth the two only sorted by draw order — so the road painted over
+        // the player's legs from certain positions/facings (the "sunk into the cobbles" clip). Writing
+        // depth lets the character sort correctly per-pixel against the ground. The cobble tiles are
+        // hard-edged pixel art, so a 0.5 cutout keeps the grass showing through the road silhouette.
+        mat.SetFloat("_Surface", 0f);        // opaque surface...
+        mat.SetFloat("_AlphaClip", 1f);      // ...with alpha clipping (cutout road silhouette over grass)
+        mat.SetFloat("_Cutoff", 0.5f);
+        mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.One);
+        mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.Zero);
+        mat.SetFloat("_ZWrite", 1f);
+        mat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+        mat.EnableKeyword("_ALPHATEST_ON");
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;   // 2450, writes depth
         mat.mainTexture = tex;
         if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
         EditorUtility.SetDirty(mat);
@@ -742,7 +758,7 @@ public static class HorrorGame3DSetup
     // are the ridge strips far->near, _6 the hero peak). MountainBackdrop wraps each strip into a ring
     // around the yard so it reads in every direction. Radii/heights grow with distance; the far snow
     // peaks loom highest and farthest. Face/wanderer/fog from the README are deferred.
-    static void BuildMountainBackdrop()
+    static void BuildMountainBackdrop(Light sun)
     {
         EnsureRangeImport();
         var byName = new Dictionary<string, Sprite>();
@@ -770,8 +786,58 @@ public static class HorrorGame3DSetup
         mb.heroRadius = 102f;       // between snowRock and snowFar
         mb.heroWidth = 53f;         // ~1.16 aspect of the 122x105 hero sprite
         mb.heroHeight = 46f;
-        mb.buildSky = true;
+        mb.buildSky = false;   // SkyController owns the sky now (animated gradient + sun/moon/stars)
         mb.Build();
+
+        BuildSkySystem(sun);
+    }
+
+    // The day→night sky (SKY_README): a gradient dome behind the mountains, a sun that arcs and sets,
+    // a moon that rises, and a twinkling star field — all driven by SkyController.timeOfDay. Also lets
+    // the sky dim the scene's directional light + ambient so the world darkens with it.
+    static void BuildSkySystem(Light sun)
+    {
+        var sunSprite = EnsureSkySprite(SunPng);
+        var moonSprite = EnsureSkySprite(MoonPng);
+
+        var skyGo = new GameObject("Sky");
+        var sky = skyGo.AddComponent<SkyController>();
+        sky.sunSprite = sunSprite;
+        sky.moonSprite = moonSprite;
+        sky.sunLight = sun;
+        sky.glow = false;             // no halo / second sun+moon sprite
+        // Sky faces +Z (north): with that basis the tangent runs +X(east)→-X(west), so the sun rises in
+        // the EAST and sets in the WEST, and the moon rises in the WEST (nx = 0.70).
+        sky.skyYawDeg = 90f;
+        sky.dayLengthSeconds = 120f;  // a full dawn→dark cycle every 2 minutes
+        sky.loop = true;
+        sky.timeOfDay = 0f;           // start at dawn so a fresh scene opens on the sunrise
+        sky.Build();
+    }
+
+    // Import sun.png / moon.png per SKY_README: single sprite, PPU 24, point filter, no compression.
+    static Sprite EnsureSkySprite(string path)
+    {
+        if (AssetImporter.GetAtPath(path) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Sprite ||
+                         imp.spriteImportMode != SpriteImportMode.Single ||
+                         imp.filterMode != FilterMode.Point ||
+                         imp.spritePixelsPerUnit != 24f ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Sprite;
+                imp.spriteImportMode = SpriteImportMode.Single;
+                imp.filterMode = FilterMode.Point;
+                imp.spritePixelsPerUnit = 24f;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.SaveAndReimport();
+            }
+        }
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
     // Alpha-clipped unlit material for the range atlas: silhouettes are cut out (not blended) so the
@@ -1233,6 +1299,14 @@ public static class HorrorGame3DSetup
         anim.frames = frames;
         anim.fps = 5f;                  // gentle sway
         anim.randomStartPhase = true;   // out of sync between trees
+
+        // Thin trunk collider: gives the third-person camera something to pull in front of (so the
+        // arm no longer clips through the forest) and stops the player walking through trunks. Kept
+        // slim so it doesn't snag movement; ring trees are already skipped near the road.
+        var col = go.AddComponent<CapsuleCollider>();
+        col.radius = 0.35f;
+        col.height = 5f;
+        col.center = new Vector3(0f, 2.5f, 0f);
     }
 
     // Rings of trees around a centre with deterministic jitter (so rebuilds don't churn the scene).

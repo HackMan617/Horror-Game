@@ -23,6 +23,16 @@ public class CameraRig : MonoBehaviour
     public float maxPitch = 70f;
     public bool startFirstPerson = false;
 
+    [Header("Third-person camera collision & avatar hiding")]
+    [Tooltip("Layers the camera pulls in front of so its arm never pokes through solid geometry (cabin walls, tree trunks, ...).")]
+    public LayerMask obstructionMask = ~0;
+    [Tooltip("Radius of the camera's collision probe (keeps the lens off surfaces, not just its centre point).")]
+    public float cameraCollisionRadius = 0.25f;
+    [Tooltip("The camera arm never shortens below this, so a fully-blocked camera doesn't jam onto the pivot.")]
+    public float minDistance = 0.8f;
+    [Tooltip("Hide the player billboard once the camera ends up nearer than this to it, so a pulled-in camera never slices/fills the view with the avatar.")]
+    public float hideSpriteWithinDistance = 1.75f;
+
     [Header("Grass fill (greens the view as you look up)")]
     public bool grassFillEnabled = true;
     public Color grassFillColor = new Color(0.40f, 0.53f, 0.30f);   // grassy green
@@ -40,10 +50,12 @@ public class CameraRig : MonoBehaviour
     bool _firstPerson;
     float _pitch;
     Texture2D _white;
+    Transform _playerRoot;
 
     void Start()
     {
         _firstPerson = startFirstPerson;
+        _playerRoot = transform.root;   // to ignore our own colliders when probing for obstruction
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -85,11 +97,45 @@ public class CameraRig : MonoBehaviour
 
     void Apply()
     {
-        if (playerSprite != null) playerSprite.enabled = !_firstPerson;
-        if (cam != null)
+        if (cam == null) return;
+        if (_firstPerson)
         {
-            cam.transform.localPosition = _firstPerson ? Vector3.zero : new Vector3(0f, 0f, -thirdPersonDistance);
+            cam.transform.localPosition = Vector3.zero;
             cam.transform.localRotation = Quaternion.identity;
+            if (playerSprite != null) playerSprite.enabled = false;   // never see your own billboard in first person
+        }
+        // Third-person placement (arm length, obstruction pull-in, avatar hiding) is driven
+        // every frame in LateUpdate so it reacts to geometry and pitch, not just mode toggles.
+    }
+
+    // Position the third-person camera after movement/look have been applied: shorten the arm
+    // when solid geometry is in the way (so the camera never clips through walls or trees), and
+    // hide the player billboard once the camera is close enough that it would slice/fill the view.
+    void LateUpdate()
+    {
+        if (cam == null || _firstPerson) return;
+        if (GameManager.Instance != null && GameManager.Instance.IsPaused) return;
+
+        Vector3 pivotPos = transform.position;
+        Vector3 dir = transform.rotation * Vector3.back;   // world direction of the -Z camera arm (respects pitch + look-behind)
+
+        float dist = thirdPersonDistance;
+        var hits = Physics.SphereCastAll(pivotPos, cameraCollisionRadius, dir, thirdPersonDistance,
+                                         obstructionMask, QueryTriggerInteraction.Ignore);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (_playerRoot != null && hits[i].transform.root == _playerRoot) continue;   // ignore ourselves
+            if (hits[i].distance < dist) dist = hits[i].distance;
+        }
+        dist = Mathf.Max(minDistance, dist);
+
+        cam.transform.localPosition = new Vector3(0f, 0f, -dist);
+        cam.transform.localRotation = Quaternion.identity;
+
+        if (playerSprite != null)
+        {
+            float toSprite = Vector3.Distance(cam.transform.position, playerSprite.transform.position);
+            playerSprite.enabled = toSprite > hideSpriteWithinDistance;
         }
     }
 
