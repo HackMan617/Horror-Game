@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -109,89 +109,265 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: birds_flock_0
+      name: birdFar_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 12
-        width: 17
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 18
+        width: 8
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 84febccf878388920800000000000000
-      internalID: 2992704044676149064
+      spriteID: ddd3b50c20de60170bb9b0c34c5e98cf
+      internalID: 707428167
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: birds_flock_1
+      name: birdFar_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 18
+        width: 8
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fd413de1206e011658d8bbd9154cddd
+      internalID: 1210125810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdFar_2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 18
+        width: 8
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1684e94f5c148676ee6a3e32faaef010
+      internalID: 34197889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdFar_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 18
+        width: 8
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34ee88efb2f0ffa4ee70c56dee0e6dfc
+      internalID: -1684520476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdMid_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbc6fc1020773cc9776985adef6f9b89
+      internalID: 356181416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdMid_1
       rect:
         serializedVersion: 2
         x: 12
-        y: 9
-        width: 37
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 10
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0540ab07b163459b0800000000000000
-      internalID: -5092385787165932464
+      spriteID: 20a724a3ea5c8c30f14cf801b89ab59a
+      internalID: 658320372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: birds_flock_2
+      name: birdMid_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 10
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5fc3ed996fb7fe8df6a59d5fe9d789a
+      internalID: -818844088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdMid_3
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 10
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86016c7414af2d0b6d919cbc87f29734
+      internalID: 1411536959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdNear_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 3
-        width: 17
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 16
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ae8b534ff363cb390800000000000000
-      internalID: -7801300806204540694
+      spriteID: aa420cbe37cafd3753b99f257a2aa356
+      internalID: 1095835823
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: birds_flock_3
+      name: birdNear_1
       rect:
         serializedVersion: 2
         x: 16
         y: 0
-        width: 48
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: eed1d77cdb9894990800000000000000
-      internalID: -7401233064418009618
+      spriteID: d7707bfce6896369c3c39c16d0f7435a
+      internalID: 1841146118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdNear_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ddefc4a462ac68fc24e308d1b45c649
+      internalID: 631197512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birdNear_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 231f7ee1bae01909bfe8ea9ac007c1a0
+      internalID: -556871470
       vertices: []
       indices: 
       edges: []
@@ -200,7 +376,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b9fe726002a6a9147abba22efec5000d
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +386,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      birds_flock_0: 2992704044676149064
-      birds_flock_1: -5092385787165932464
-      birds_flock_2: -7801300806204540694
-      birds_flock_3: -7401233064418009618
+      birdFar_0: 707428167
+      birdFar_1: 1210125810
+      birdFar_2: 34197889
+      birdFar_3: -1684520476
+      birdMid_0: 356181416
+      birdMid_1: 658320372
+      birdMid_2: -818844088
+      birdMid_3: 1411536959
+      birdNear_0: 1095835823
+      birdNear_1: 1841146118
+      birdNear_2: 631197512
+      birdNear_3: -556871470
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

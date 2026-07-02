@@ -47,6 +47,8 @@ public static class HorrorGame3DSetup
     const string GrassSheet = "Assets/Animation/grass_tufts.png";
     const string SmokePuffPng = "Assets/Animation/smoke_puff.png";
     const string PropsAutumn = "Assets/Animation/props_autumn.png";
+    const string BirdsPng    = "Assets/Animation/birds_flock.png";
+    const string NoteSignPng = "Assets/Animation/note_sign.png";
     const string PathCobble  = "Assets/Animation/path_cobble.png";
     const string RangeBackdrop = "Assets/Animation/range_backdrop.png";
     const string SunPng     = "Assets/Animation/sun.png";
@@ -508,6 +510,9 @@ public static class HorrorGame3DSetup
         ScatterAutumnProps(spriteMat);   // autumn dressing: bare/hollow trees, bench, mushrooms, crow, leaves...
         BuildMountainBackdrop(sun);      // far mountain range surrounding the yard + the day→night sky system
 
+        // Distant ambient flock crossing the daytime sky (roosts / fades out at night).
+        BuildBirds(spriteMat, GameObject.Find("Sky")?.GetComponent<SkyController>());
+
         // Daytime birdsong: a looping ambient bed that fades out at night, driven by the sky's Darkness.
         var birds = AssetDatabase.LoadAssetAtPath<AudioClip>(BirdsWav);
         if (birds != null)
@@ -897,6 +902,179 @@ public static class HorrorGame3DSetup
             MakeGroundAnim("Leaves", ScatterPoint(600 + i, 3f) + new Vector3(0f, 0.06f, 0f), leaves, 1000f / 190f, mat);
     }
 
+    // -------------------------------------------------------------- birds (ambient flock)
+    // birds_flock.png atlas (64x24, top-left origin): three sizes, 4 flap frames each. See BIRDS.md.
+    const int BirdsAtlasH = 24;
+    static readonly PropCell[] BirdAtlas =
+    {
+        new PropCell("birdFar",  0,  0,  8,  6, 4),
+        new PropCell("birdMid",  0,  6, 12,  8, 4),
+        new PropCell("birdNear", 0, 14, 16, 10, 4),
+    };
+
+    // Slices birds_flock.png into centre-pivoted per-frame sprites (birdFar_0.., etc.).
+    static void SliceBirdsAtlas(string path, float ppu)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = ppu;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        var rects = new List<SpriteRect>();
+        foreach (var p in BirdAtlas)
+            for (int f = 0; f < p.frames; f++)
+                rects.Add(new SpriteRect
+                {
+                    name = p.name + "_" + f,
+                    spriteID = StableGuid(path + "#" + p.name + f),
+                    rect = new Rect(p.x + f * p.w, BirdsAtlasH - (p.y + p.h), p.w, p.h),
+                    pivot = new Vector2(0.5f, 0.5f),
+                    alignment = SpriteAlignment.Custom,
+                    border = Vector4.zero,
+                });
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
+
+    // Builds the ambient bird flock (spawns/animates at runtime via BirdFlock), wired to the sky so it
+    // fades out at night. Uses the shared unlit sprite material — the silhouettes read over any sky.
+    public static GameObject BuildBirds(Material spriteMat, SkyController sky)
+    {
+        SliceBirdsAtlas(BirdsPng, 16f);
+        var far = LoadSheetSprites(BirdsPng, "birdFar_");
+        var mid = LoadSheetSprites(BirdsPng, "birdMid_");
+        var near = LoadSheetSprites(BirdsPng, "birdNear_");
+        if (far.Length + mid.Length + near.Length == 0)
+        {
+            Debug.LogWarning("[HorrorGame] birds atlas missing / failed to slice: " + BirdsPng);
+            return null;
+        }
+
+        var go = new GameObject("Birds");
+        var flock = go.AddComponent<BirdFlock>();
+        flock.farFrames = far;
+        flock.midFrames = mid;
+        flock.nearFrames = near;
+        flock.material = spriteMat;
+        flock.sky = sky;
+        return go;
+    }
+
+    // Applies the two exterior tweaks to the CURRENTLY-OPEN Exterior scene (so we don't have to rebuild
+    // the whole scene and lose hand edits): the longer-night pacing on its SkyController, and the bird
+    // flock. Call, then save the scene. Idempotent — skips the flock if one already exists.
+    public static void SetupExteriorBirdsAndNightPacing()
+    {
+        var sky = Object.FindObjectOfType<SkyController>();
+        if (sky != null)
+        {
+            sky.splitDayNight = true;
+            sky.nightStartT = 0.80f;
+            sky.dayDurationSeconds = 60f;
+            sky.nightDurationSeconds = 120f;
+            EditorUtility.SetDirty(sky);
+        }
+        if (GameObject.Find("Birds") == null)
+            BuildBirds(SpriteMaterial(), sky);
+    }
+
+    // note_sign.png (176x80, top-left origin): the small illegible "far" note that pins to the door,
+    // and the readable "near" close-up shown on interact. Each holds 2 slow droop frames. See NOTE.md.
+    const int NoteAtlasH = 80;
+    static readonly PropCell[] NoteAtlas =
+    {
+        new PropCell("noteFar",  0,  0, 16, 22, 2),   // pinned on the door — writing illegible
+        new PropCell("noteNear", 0, 22, 88, 58, 2),   // the read view — the actual text
+    };
+
+    static void SliceNoteAtlas(string path, float ppu)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = ppu;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        var rects = new List<SpriteRect>();
+        foreach (var p in NoteAtlas)
+            for (int f = 0; f < p.frames; f++)
+                rects.Add(new SpriteRect
+                {
+                    name = p.name + "_" + f,
+                    spriteID = StableGuid(path + "#" + p.name + f),
+                    rect = new Rect(p.x + f * p.w, NoteAtlasH - (p.y + p.h), p.w, p.h),
+                    pivot = new Vector2(0.5f, 0.5f),
+                    alignment = SpriteAlignment.Custom,
+                    border = Vector4.zero,
+                });
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
+
+    // Pins the "on vacation" note to House B's front door in the currently-open Exterior scene (House B
+    // is a hand-placed scene object). The small illegible FAR note mounts on the door, fixed-facing the
+    // approaching player (no billboard, so it can't flip to a backwards view); press E near it to read
+    // the NEAR close-up with the actual text (NoteSign). Re-running replaces any existing note.
+    public static GameObject AddHouseBNote()
+    {
+        SliceNoteAtlas(NoteSignPng, 32f);
+        var far = LoadSheetSprites(NoteSignPng, "noteFar_");
+        var near = LoadSheetSprites(NoteSignPng, "noteNear_");
+        if (far.Length == 0 || near.Length == 0) { Debug.LogWarning("[HorrorGame] note_sign slice failed: " + NoteSignPng); return null; }
+
+        var existing = GameObject.Find("HouseB_Note");
+        if (existing != null) Object.DestroyImmediate(existing);
+
+        var door = GameObject.Find("NeighborHouse_B/DoorTop");
+        Vector3 pos = door != null
+            ? new Vector3(door.transform.position.x, door.transform.position.y, door.transform.position.z - 0.22f)
+            : new Vector3(30f, 1.65f, 23.5f);
+
+        var player = GameObject.Find("Player");
+        var go = new GameObject("HouseB_Note");
+        go.transform.position = pos;
+        go.transform.rotation = Quaternion.Euler(0f, 180f, 0f);   // face south / outward, toward the approaching player
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = far[0];
+        sr.sharedMaterial = SpriteMaterial();
+        var ns = go.AddComponent<NoteSign>();
+        ns.player = player != null ? player.transform : null;
+        ns.farFrames = far;
+        ns.nearFrames = near;
+        return go;
+    }
+
     // -------------------------------------------------------------- cobblestone pathway
     // Footprint of the laid path (world XZ), so scattered props keep off the cobbles (see InKeepClear).
     static readonly List<Vector3> _pathCells = new List<Vector3>();
@@ -1065,7 +1243,12 @@ public static class HorrorGame3DSetup
         // Sky faces +Z (north): with that basis the tangent runs +X(east)→-X(west), so the sun rises in
         // the EAST and sets in the WEST, and the moon rises in the WEST (nx = 0.70).
         sky.skyYawDeg = 90f;
-        sky.dayLengthSeconds = 120f;  // a full dawn→dark cycle every 2 minutes
+        sky.dayLengthSeconds = 120f;  // fallback (unused while splitDayNight is on)
+        // Night lasts significantly longer than day: ~1 min of day, ~2 min of night.
+        sky.splitDayNight = true;
+        sky.nightStartT = 0.80f;
+        sky.dayDurationSeconds = 60f;
+        sky.nightDurationSeconds = 120f;
         sky.loop = true;
         sky.timeOfDay = 0f;           // start at dawn so a fresh scene opens on the sunrise
         sky.Build();
