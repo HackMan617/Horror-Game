@@ -50,11 +50,13 @@ public static class HorrorGame3DSetup
     const string RangeBackdrop = "Assets/Animation/range_backdrop.png";
     const string SunPng     = "Assets/Animation/sun.png";
     const string MoonPng    = "Assets/Animation/moon.png";
+    const string FootstepDir = "Assets/Sound Effects/Footsteps";
+    const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 29;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 31;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -171,7 +173,17 @@ public static class HorrorGame3DSetup
         player.transform.position = spawnPos;
         var cc = player.AddComponent<CharacterController>();
         cc.height = 2f; cc.radius = 0.3f; cc.center = new Vector3(0f, 1f, 0f);
-        player.AddComponent<PlayerController3D>();
+        var pc3d = player.AddComponent<PlayerController3D>();
+
+        // Footsteps: a sliced step clip per footfall (dirt on the grass, gravel on the cobble road).
+        var footSrc = player.AddComponent<AudioSource>();
+        footSrc.playOnAwake = false;
+        footSrc.spatialBlend = 0f;
+        var footsteps = player.AddComponent<FootstepAudio>();
+        footsteps.player = pc3d;
+        footsteps.controller = cc;
+        footsteps.dirtSteps = LoadFootstepClips("dirt_");
+        footsteps.gravelSteps = LoadFootstepClips("gravel_");
 
         var spriteGo = new GameObject("Sprite");
         spriteGo.transform.SetParent(player.transform, false);
@@ -203,6 +215,7 @@ public static class HorrorGame3DSetup
         var cam = camGo.AddComponent<Camera>();
         cam.nearClipPlane = 0.05f;
         cam.GetUniversalAdditionalCameraData().SetRenderer(_renderer3DIndex);
+        camGo.AddComponent<AudioListener>();   // scene is built from EmptyScene; without this nothing is audible
         rig.cam = cam;
         rig.playerSprite = sr;
         rig.grassFillEnabled = grassFill;   // interiors pass false — no open sky to green when looking up
@@ -288,6 +301,19 @@ public static class HorrorGame3DSetup
 
         ScatterAutumnProps(spriteMat);   // autumn dressing: bare/hollow trees, bench, mushrooms, crow, leaves...
         BuildMountainBackdrop(sun);      // far mountain range surrounding the yard + the day→night sky system
+
+        // Daytime birdsong: a looping ambient bed that fades out at night, driven by the sky's Darkness.
+        var birds = AssetDatabase.LoadAssetAtPath<AudioClip>(BirdsWav);
+        if (birds != null)
+        {
+            var ambGo = new GameObject("Ambient_Birds");
+            ambGo.AddComponent<AudioSource>();
+            var amb = ambGo.AddComponent<AmbientAudio>();
+            amb.clip = birds;
+            amb.sky = GameObject.Find("Sky")?.GetComponent<SkyController>();
+            amb.dayVolume = 0.5f;
+            amb.nightVolume = 0f;
+        }
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
@@ -698,6 +724,12 @@ public static class HorrorGame3DSetup
         pt.puddleCells = puddles;
         pt.Build();
 
+        // Give the road a collider so footsteps can tell they're on gravel (raycast hits "Pathway").
+        // Flat and only ~4 cm proud of the grass — well under the controller's step offset, so it
+        // doesn't jolt movement.
+        var pathCol = go.AddComponent<MeshCollider>();
+        pathCol.sharedMesh = go.GetComponent<MeshFilter>().sharedMesh;
+
         foreach (var c in cells) _pathCells.Add(new Vector3(c.x + shiftX, 0f, c.y));   // world footprint
     }
 
@@ -838,6 +870,19 @@ public static class HorrorGame3DSetup
             }
         }
         return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    // Loads the sliced footstep clips (dirt_* / gravel_*) baked under FootstepDir, in name order.
+    static AudioClip[] LoadFootstepClips(string prefix)
+    {
+        if (!AssetDatabase.IsValidFolder(FootstepDir)) return new AudioClip[0];
+        return AssetDatabase.FindAssets("t:AudioClip", new[] { FootstepDir })
+            .Select(AssetDatabase.GUIDToAssetPath)
+            .Where(p => System.IO.Path.GetFileName(p).StartsWith(prefix))
+            .OrderBy(p => p)
+            .Select(AssetDatabase.LoadAssetAtPath<AudioClip>)
+            .Where(c => c != null)
+            .ToArray();
     }
 
     // Alpha-clipped unlit material for the range atlas: silhouettes are cut out (not blended) so the
