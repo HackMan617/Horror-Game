@@ -152,6 +152,18 @@ public class SkyController : MonoBehaviour
     Vector3 RectPoint(float nx, float ny) =>
         _center + _fwd * skyDistance + _tan * ((nx - 0.5f) * skyWidth) + Vector3.up * (skyHorizonY + ny * skyHeight);
 
+    // World point on the full sky dome from a compass azimuth and an elevation (0 = horizon, 1 = zenith).
+    // The sun/moon ride the flat sky rect (a directed backdrop on the scenic side); the stars and shooting
+    // star wrap this dome so they fill every viewing angle instead of clustering on one side.
+    Vector3 DomePoint(float azDeg, float el01, float radius)
+    {
+        float az = azDeg * Mathf.Deg2Rad;
+        float el = Mathf.Clamp01(el01) * (Mathf.PI * 0.5f);
+        float cosEl = Mathf.Cos(el);
+        Vector3 dir = new Vector3(cosEl * Mathf.Cos(az), Mathf.Sin(el), cosEl * Mathf.Sin(az));
+        return _center + dir * radius + Vector3.up * skyHorizonY;
+    }
+
     SpriteRenderer MakeSprite(string name, Sprite sp, float worldSize, bool billboard)
     {
         var go = new GameObject(name);
@@ -235,14 +247,15 @@ public class SkyController : MonoBehaviour
 
         var rng = new System.Random(starSeed);
         float R() => (float)rng.NextDouble();
+        float starR = domeRadius * 0.82f;                // just inside the gradient dome, all around us
         for (int k = 0; k < n; k++)
         {
             bool early = R() < lightFraction;
-            float nx = 0.02f + R() * 0.96f;
-            float ny = 0.30f + R() * 0.68f;              // upper ~¾ of the sky
+            float az = (float)(R() * 360.0);             // full compass sweep — every viewing angle
+            float el = 0.10f + R() * 0.82f;              // low sky up to near the zenith
             var go = new GameObject("Star");
             go.transform.SetParent(root, false);
-            go.transform.position = RectPoint(nx, ny);
+            go.transform.position = DomePoint(az, el, starR);
             go.transform.localScale = Vector3.one * (early ? starSize * 1.8f : starSize);
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = _dot;
@@ -374,9 +387,10 @@ public class SkyController : MonoBehaviour
             _shootTimer -= Time.deltaTime;
             if (Darkness > 0.85f && _shootTimer <= 0f)
             {
-                float x0 = Random.Range(0.10f, 0.60f), y0 = Random.Range(0.60f, 0.95f);
-                _shootFrom = RectPoint(x0, y0);
-                _shootTo = RectPoint(x0 + Random.Range(0.20f, 0.40f), y0 - Random.Range(0.10f, 0.25f));
+                float starR = domeRadius * 0.82f;
+                float az0 = Random.Range(0f, 360f), el0 = Random.Range(0.55f, 0.92f);
+                _shootFrom = DomePoint(az0, el0, starR);
+                _shootTo = DomePoint(az0 + Random.Range(8f, 26f), el0 - Random.Range(0.06f, 0.16f), starR);
                 _shootT = 0f;
             }
             else { _shootSr.color = new Color(1f, 1f, 1f, 0f); return; }

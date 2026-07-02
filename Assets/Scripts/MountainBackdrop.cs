@@ -39,6 +39,14 @@ public class MountainBackdrop : MonoBehaviour
     public float heroHeight = 30f;
     public float heroBaseY = 0f;
 
+    [Header("Extra surrounding peaks")]
+    [Tooltip("Big hero-style peaks at these compass azimuths (deg) so large mountains loom on every side, not just behind the cabin. Empty = the single hero peak only.")]
+    public float[] extraPeakAzimuthsDeg;
+    public float extraPeakRadius = 100f;
+    public float extraPeakWidth = 64f;
+    public float extraPeakHeight = 56f;
+    public float extraPeakBaseY = 0f;
+
     [Header("Dusk sky")]
     public bool buildSky = true;
     public float skyRadius = 150f;
@@ -59,6 +67,10 @@ public class MountainBackdrop : MonoBehaviour
             foreach (var L in layers)
                 if (L != null && L.sprite != null) BuildRing(L);
         if (heroSprite != null && material != null) BuildHero();
+        if (heroSprite != null && material != null && extraPeakAzimuthsDeg != null)
+            foreach (float az in extraPeakAzimuthsDeg)
+                BuildPeak(heroSprite, az, extraPeakRadius, extraPeakWidth, extraPeakHeight, extraPeakBaseY,
+                          "Peak_" + Mathf.RoundToInt(az));
     }
 
     // One ridge strip wrapped `copies` times around a ring of `radius`, each copy subdivided for curve.
@@ -101,13 +113,18 @@ public class MountainBackdrop : MonoBehaviour
     }
 
     // The dominant central peak: a single flat quad at one azimuth, tangent to the ring.
-    void BuildHero()
+    void BuildHero() =>
+        BuildPeak(heroSprite, heroAzimuthDeg, heroRadius, heroWidth, heroHeight, heroBaseY, "HeroPeak");
+
+    // A single flat peak quad at `azimuthDeg`, tangent to a ring of `radius` (shared by the hero peak
+    // and the extra surrounding peaks).
+    void BuildPeak(Sprite sprite, float azimuthDeg, float radius, float width, float height, float baseY, string name)
     {
-        Rect uv = UvRect(heroSprite);
-        float ang = heroAzimuthDeg * Mathf.Deg2Rad;
-        Vector3 c = new Vector3(Mathf.Cos(ang) * heroRadius, 0f, Mathf.Sin(ang) * heroRadius);
+        Rect uv = UvRect(sprite);
+        float ang = azimuthDeg * Mathf.Deg2Rad;
+        Vector3 c = new Vector3(Mathf.Cos(ang) * radius, 0f, Mathf.Sin(ang) * radius);
         Vector3 tan = new Vector3(-Mathf.Sin(ang), 0f, Mathf.Cos(ang));   // along the ring
-        float hw = heroWidth * 0.5f, yb = heroBaseY, yt = heroBaseY + heroHeight;
+        float hw = width * 0.5f, yb = baseY, yt = baseY + height;
         Vector3 l = c - tan * hw, r = c + tan * hw;
 
         var verts = new[]
@@ -120,7 +137,7 @@ public class MountainBackdrop : MonoBehaviour
             new Vector2(uv.xMin, uv.yMin), new Vector2(uv.xMin, uv.yMax),
             new Vector2(uv.xMax, uv.yMax), new Vector2(uv.xMax, uv.yMin),
         };
-        MakeChild("HeroPeak", verts, uvs, new[] { 0, 1, 2, 0, 2, 3 }, material);
+        MakeChild(name, verts, uvs, new[] { 0, 1, 2, 0, 2, 3 }, material);
     }
 
     // A tall cylinder with a vertical dusk gradient, drawn behind the mountains.
