@@ -7,6 +7,7 @@ using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Game.Interior;
 
 /// <summary>
 /// Stage 1 of the 2.5D pivot: ensures a 3D Universal Renderer exists (added to the
@@ -56,6 +57,10 @@ public static class HorrorGame3DSetup
     const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
+    const string FurnitureDir     = "Assets/Animation/Interior Atlas/interior_furniture_kit";
+    const string FurnitureDusk    = FurnitureDir + "/interior_furniture_dusk.png";
+    const string FurnitureLavender = FurnitureDir + "/interior_furniture_lavender.png";
+    const string FurnitureNightmare = FurnitureDir + "/interior_furniture_nightmare.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
@@ -152,6 +157,12 @@ public static class HorrorGame3DSetup
         // ---- dog companion (breed randomised at character select; overworld only, hides in the nightmare) ----
         MakeDog(new Vector3(3f, 0f, 5f), player.transform, nightmare, dogBreeds, spriteMat);
 
+        // ---- the cozy living room: the last comfort before the nightmare (interior_furniture_kit) ----
+        BuildLivingRoom(spriteMat);
+
+        // ---- exit door back out to the yard, on the south wall behind the spawn ----
+        BuildInteriorExitDoor(player.transform);
+
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
         Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the character (back " +
@@ -160,6 +171,116 @@ public static class HorrorGame3DSetup
                   "), and the partner (boy idle " + boyIdle.Length + "/girl idle " + girlIdle.Length + "). " +
                   "Walk to the bed + press E to enter the nightmare (the dog hides). " +
                   "Play: WASD + mouse, V = first/third, hold C = look behind.");
+    }
+
+    // -------------------------------------------------------------- living room (interior furniture)
+    // Dresses the interior with the interior_furniture_kit: a conversation grouping (occupied sofa +
+    // loveseat + armchair around a rug and coffee table) facing a TV, with a bookshelf and a lit floor
+    // lamp along the west wall. Each piece is an InteriorObject — it slices its own frames at runtime,
+    // animates itself (TV shimmer, the dog's breathing) and can flicker to its nightmare skin when the
+    // room-wide DreadProgress climbs. Cluster sits on the west side, clear of the bed / partner / dog.
+    static void BuildLivingRoom(Material spriteMat)
+    {
+        var day   = EnsureFurnitureAtlas(FurnitureDusk);        // warm rust furniture in a teal room
+        var night = EnsureFurnitureAtlas(FurnitureNightmare);   // the dream-rot skin (flickers in on dread)
+        if (day == null) { Debug.LogWarning("[HorrorGame] interior furniture atlas missing: " + FurnitureDusk); return; }
+
+        var room = new GameObject("LivingRoom");
+
+        // Floor rug first — laid FLAT on the boards (like the skittering leaves outside), enlarged to
+        // anchor the whole grouping. Everything else stands upright on top of it.
+        MakeFurniture(room.transform, "Rug", InteriorObject.Piece.Rug, new Vector3(-5.5f, 0.03f, -2f),
+                      day, night, spriteMat, startsOn: false, flat: true,
+                      pivot: new Vector2(0.5f, 0.5f), scale: new Vector3(1.9f, 1.5f, 1f));
+
+        // Seating grouped around the rug + coffee table, all facing the TV on the west wall.
+        MakeFurniture(room.transform, "CoffeeTable", InteriorObject.Piece.CoffeeTable, new Vector3(-5.5f, 0f, -2f),
+                      day, night, spriteMat);
+        MakeFurniture(room.transform, "SofaWithDog", InteriorObject.Piece.CouchDog, new Vector3(-3.3f, 0f, -2f),
+                      day, night, spriteMat);                                   // the dog naps here; opens an eye in the nightmare
+        MakeFurniture(room.transform, "Loveseat", InteriorObject.Piece.Couch, new Vector3(-5.5f, 0f, 0.9f),
+                      day, night, spriteMat);
+        MakeFurniture(room.transform, "Armchair", InteriorObject.Piece.Armchair, new Vector3(-5.5f, 0f, -5f),
+                      day, night, spriteMat);
+
+        // West wall: TV (on) flanked by a bookshelf and a warm floor lamp.
+        MakeFurniture(room.transform, "TV", InteriorObject.Piece.Tv, new Vector3(-8.7f, 0f, -2f),
+                      day, night, spriteMat, startsOn: true);                   // lit shimmer; snaps to static in the nightmare
+        MakeFurniture(room.transform, "Bookshelf", InteriorObject.Piece.Bookshelf, new Vector3(-8.7f, 0f, 1.6f),
+                      day, night, spriteMat);
+        MakeFurniture(room.transform, "FloorLamp", InteriorObject.Piece.FloorLamp, new Vector3(-8.9f, 0f, -5f),
+                      day, night, spriteMat, startsOn: true);                   // warm pool of light (sick green when wrong)
+    }
+
+    // One furniture piece: a SpriteRenderer + InteriorObject (+ Billboard for upright pieces). The
+    // sprite fills in at runtime (InteriorObject.Awake slices the atlas), so it's blank in the editor.
+    static GameObject MakeFurniture(Transform parent, string name, InteriorObject.Piece piece, Vector3 pos,
+                                    Texture2D day, Texture2D night, Material mat,
+                                    bool startsOn = false, bool flat = false,
+                                    Vector2 pivot = default, Vector3 scale = default)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        if (flat) go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);       // lie flat on the floor (rug)
+        go.transform.localScale = (scale == default) ? Vector3.one : scale;
+
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sharedMaterial = mat;
+        if (!flat) go.AddComponent<Billboard>();                               // upright pieces face the camera like the other props
+
+        var io = go.AddComponent<InteriorObject>();
+        io.piece = piece;
+        io.dayAtlas = day;
+        io.nightmareAtlas = night;
+        io.pixelsPerUnit = 16f;
+        io.pivot = (pivot == default) ? new Vector2(0.5f, 0f) : pivot;         // bottom-centre keeps pieces planted; rug uses centre
+        io.startsOn = startsOn;
+        return go;
+    }
+
+    // Import a furniture atlas for InteriorObject: raw texture it can slice — Read/Write ON, point-
+    // filtered, uncompressed, no mips, alpha as transparency (matches INTERIOR_FURNITURE.md install).
+    static Texture2D EnsureFurnitureAtlas(string path)
+    {
+        if (AssetImporter.GetAtPath(path) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Default || imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || !imp.isReadable || imp.wrapMode != TextureWrapMode.Clamp ||
+                         !imp.alphaIsTransparency;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Default;
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.isReadable = true;
+                imp.wrapMode = TextureWrapMode.Clamp;
+                imp.alphaSource = TextureImporterAlphaSource.FromInput;
+                imp.alphaIsTransparency = true;
+                imp.SaveAndReimport();
+            }
+        }
+        return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+    }
+
+    // A working front door on the interior's south wall (behind the spawn): the same house_tiles door
+    // quad + HousePortal as the cabin outside, but the player approaches it from the +Z (inside) side
+    // and it loads the Exterior scene. Walk up, press E — it swings open, fades, and you're back out.
+    static void BuildInteriorExitDoor(Transform player)
+    {
+        var mat = CabinAtlasMaterial();
+        var door = MakeTileQuad("ExitDoor", null, new Vector3(0f, 1.2f, -9.72f),
+                                Quaternion.identity, 1.5f, 2.4f, 6, 0, mat);
+        var hp = door.AddComponent<HousePortal>();
+        hp.player = player;
+        hp.interiorScene = "Exterior";
+        hp.openSound = AssetDatabase.LoadAssetAtPath<AudioClip>(DoorSfx);
+        hp.approachFromNegativeZ = false;               // the player is inside, on the +Z side of this door
+        hp.promptText = "Press E to step outside";
+        hp.overrideArrival = true;                      // step out into the yard just in front of the cabin door...
+        hp.arrivalPosition = new Vector3(0f, 0.1f, 2.8f);   // ...not back at the far default spawn (door is at z≈6.5; 2.8 keeps clear of its re-enter range)
     }
 
     // -------------------------------------------------------------- player rig
@@ -177,6 +298,7 @@ public static class HorrorGame3DSetup
         var cc = player.AddComponent<CharacterController>();
         cc.height = 2f; cc.radius = 0.3f; cc.center = new Vector3(0f, 1f, 0f);
         var pc3d = player.AddComponent<PlayerController3D>();
+        player.AddComponent<PlayerArrival>();   // drops the player at a door's arrival point after a scene load (else default spawn)
 
         // Footsteps: a sliced step clip per footfall (dirt on the grass, gravel on the cobble road).
         var footSrc = player.AddComponent<AudioSource>();
