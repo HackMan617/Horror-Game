@@ -52,6 +52,7 @@ public static class HorrorGame3DSetup
     const string MoonPng    = "Assets/Animation/moon.png";
     const string FootstepDir = "Assets/Sound Effects/Footsteps";
     const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
+    const string WoodStepsWav = "Assets/Sound Effects/Footsteps on Wooden Floor.wav";
     const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
@@ -124,6 +125,7 @@ public static class HorrorGame3DSetup
 
         // ---- player rig (recolored to the chosen look) ----
         var player = BuildPlayerRig(new Vector3(0f, 0.1f, -5f), spriteMat, grassFill: false);   // interior: no grass fill
+        AttachWoodFloorFootsteps(player);   // wooden interior floor: looping wood footfalls instead of grass steps
 
         // the dog + partner companions fill the two former blob slots
         MakePartner(new Vector3(-4f, 0f, 3f), player.transform, boyIdle, girlIdle, boySmile, girlSmile, boySpeak, girlSpeak, spriteMat);
@@ -606,6 +608,24 @@ public static class HorrorGame3DSetup
         sr.color = color;
         go.AddComponent<Billboard>();
         go.AddComponent<BlobAnimator>();
+    }
+
+    // Indoors the floor is wood: silence the per-step (grass) FootstepAudio and add a looping wood-floor
+    // footfall bed (a child so it owns its own AudioSource) that rises while the player walks.
+    static void AttachWoodFloorFootsteps(GameObject player)
+    {
+        var fs = player.GetComponent<FootstepAudio>();
+        if (fs != null) fs.enabled = false;
+
+        var go = new GameObject("WalkLoop");
+        go.transform.SetParent(player.transform, false);
+        var src = go.AddComponent<AudioSource>();
+        src.playOnAwake = false;
+        src.spatialBlend = 0f;
+        var walk = go.AddComponent<WalkLoopAudio>();
+        walk.player = player.GetComponent<PlayerController3D>();
+        walk.controller = player.GetComponent<CharacterController>();
+        walk.loopClip = AssetDatabase.LoadAssetAtPath<AudioClip>(WoodStepsWav);
     }
 
     static void MakeProp(string name, Vector3 pos, Sprite sprite, Material mat)

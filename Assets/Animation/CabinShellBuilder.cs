@@ -65,6 +65,16 @@ public class CabinShellBuilder : MonoBehaviour
     public float roofLift = 0.02f;
     public bool buildEaveFascia = true;
 
+    [Header("Roof style")]
+    [Tooltip("Gable = player house & neighbor A. Hipped = neighbor B (4 slopes). Saltbox = neighbor C (asymmetric).")]
+    public RoofStyle roofStyle = RoofStyle.Gable;
+    [Tooltip("Hipped only: how far the ridge is shortened at each end, as a fraction of the half-length (0 = pyramid-ish, 0.5 = long ridge).")]
+    [Range(0f, 0.9f)] public float hipInset = 0.4f;
+    [Tooltip("Saltbox only: how far the ridge is pushed toward the FRONT, as a fraction of the half-depth. Front slope gets short & steep, back slope long & shallow.")]
+    [Range(0f, 0.8f)] public float saltboxRidgeOffset = 0.4f;
+
+    public enum RoofStyle { Gable, Hipped, Saltbox }
+
     // ---- Atlas tile coordinates (col,row) in the 8x6 grid -------------------
     static readonly Vector2Int T_WALL      = new Vector2Int(0, 0); // wallA
     static readonly Vector2Int T_CORNERLOG = new Vector2Int(6, 1); // NEW notched corner
@@ -111,7 +121,12 @@ public class CabinShellBuilder : MonoBehaviour
         var mb = new MeshBuilder(this);
 
         BuildCornerPosts(mb, centre, hx, hz, top, bottom);
-        BuildGableRoof(mb, centre, hx, hz, top);
+        switch (roofStyle)
+        {
+            case RoofStyle.Hipped:  BuildHippedRoof(mb, centre, hx, hz, top);  break;
+            case RoofStyle.Saltbox: BuildSaltboxRoof(mb, centre, hx, hz, top); break;
+            default:                BuildGableRoof(mb, centre, hx, hz, top);   break;
+        }
 
         // convert world-space verts into shell-local (shell shares src's transform)
         var mesh = mb.ToMesh(src);
@@ -250,6 +265,56 @@ public class CabinShellBuilder : MonoBehaviour
         }
     }
 
+    // ===== Hipped roof (neighbor B) — four slopes to a shortened centered ridge =====
+    void BuildHippedRoof(MeshBuilder mb, Vector3 c, float hx, float hz, float top)
+    {
+        top += roofLift; float ridgeY = top + ridgeHeight;
+        float rx = hx + eaveOverhang, rz = hz + eaveOverhang;
+        float ridgeHalf = Mathf.Max(0f, hx * (1f - hipInset));      // ridge along X, centered, shortened
+        Vector3 ridgeL = new Vector3(c.x - ridgeHalf, ridgeY, c.z);
+        Vector3 ridgeR = new Vector3(c.x + ridgeHalf, ridgeY, c.z);
+        Vector3 eFL = new Vector3(c.x - rx, top, c.z - rz), eFR = new Vector3(c.x + rx, top, c.z - rz);
+        Vector3 eBL = new Vector3(c.x - rx, top, c.z + rz), eBR = new Vector3(c.x + rx, top, c.z + rz);
+        mb.Poly4(eFL, eFR, ridgeR, ridgeL, T_ROOF);                 // front slope (-Z), trapezoid
+        mb.Poly4(eBR, eBL, ridgeL, ridgeR, T_ROOF);                 // back slope (+Z), trapezoid
+        mb.Tri(eBL, eFL, ridgeL, T_ROOF);                           // -X hip end
+        mb.Tri(eFR, eBR, ridgeR, T_ROOF);                           // +X hip end
+        float cap = Mathf.Max(worldUnitsPerTile, cornerPostSize) * 0.5f;
+        mb.Poly4(new Vector3(c.x - ridgeHalf, ridgeY, c.z - cap), new Vector3(c.x + ridgeHalf, ridgeY, c.z - cap),
+                 new Vector3(c.x + ridgeHalf, ridgeY, c.z + cap), new Vector3(c.x - ridgeHalf, ridgeY, c.z + cap), T_RIDGE);
+        if (buildEaveFascia)
+        {
+            float f = worldUnitsPerTile * 0.5f; int nx = Mathf.Max(1, Mathf.RoundToInt((2 * rx) / worldUnitsPerTile));
+            mb.TiledQuad(eFL, eFR, eFL + Vector3.down * f, T_EAVE, nx, 1);
+            mb.TiledQuad(eBR, eBL, eBR + Vector3.down * f, T_EAVE, nx, 1);
+        }
+    }
+
+    // ===== Saltbox roof (neighbor C) — ridge pushed forward; short steep front, long shallow back =====
+    void BuildSaltboxRoof(MeshBuilder mb, Vector3 c, float hx, float hz, float top)
+    {
+        top += roofLift; float ridgeY = top + ridgeHeight;
+        float rx = hx + eaveOverhang;
+        float zr = c.z - hz * saltboxRidgeOffset;                   // ridge toward the front (-Z)
+        float zF = c.z - hz - gableOverhang, zB = c.z + hz + gableOverhang;
+        Vector3 ridgeL = new Vector3(c.x - rx, ridgeY, zr), ridgeR = new Vector3(c.x + rx, ridgeY, zr);
+        Vector3 eFL = new Vector3(c.x - rx, top, zF), eFR = new Vector3(c.x + rx, top, zF);
+        Vector3 eBL = new Vector3(c.x - rx, top, zB), eBR = new Vector3(c.x + rx, top, zB);
+        mb.Poly4(eFL, eFR, ridgeR, ridgeL, T_ROOF);                 // front slope (short/steep)
+        mb.Poly4(eBR, eBL, ridgeL, ridgeR, T_ROOF);                 // back slope (long/shallow)
+        mb.Tri(new Vector3(c.x - hx, top, c.z + hz), new Vector3(c.x - hx, top, c.z - hz), new Vector3(c.x - hx, ridgeY, zr), T_WALL);
+        mb.Tri(new Vector3(c.x + hx, top, c.z - hz), new Vector3(c.x + hx, top, c.z + hz), new Vector3(c.x + hx, ridgeY, zr), T_WALL);
+        float cap = Mathf.Max(worldUnitsPerTile, cornerPostSize) * 0.5f;
+        mb.Poly4(new Vector3(c.x - rx, ridgeY, zr - cap), new Vector3(c.x + rx, ridgeY, zr - cap),
+                 new Vector3(c.x + rx, ridgeY, zr + cap), new Vector3(c.x - rx, ridgeY, zr + cap), T_RIDGE);
+        if (buildEaveFascia)
+        {
+            float f = worldUnitsPerTile * 0.5f; int nx = Mathf.Max(1, Mathf.RoundToInt((2 * rx) / worldUnitsPerTile));
+            mb.TiledQuad(eFL, eFR, eFL + Vector3.down * f, T_EAVE, nx, 1);
+            mb.TiledQuad(eBR, eBL, eBR + Vector3.down * f, T_EAVE, nx, 1);
+        }
+    }
+
     // ===== helpers ==========================================================
     static Bounds MeasureBounds(GameObject go)
     {
@@ -329,6 +394,13 @@ public class CabinShellBuilder : MonoBehaviour
         {
             Rect r = o.TileUV(tile);
             AddQuad(a, b, b + (d - a), d, r);
+        }
+
+        // arbitrary 4-point quad (a=bottom-left, b=bottom-right, c=top-right, d=top-left), one tile.
+        public void Poly4(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector2Int tile)
+        {
+            Rect r = o.TileUV(tile);
+            AddQuad(a, b, c, d, r);
         }
 
         public void Tri(Vector3 a, Vector3 b, Vector3 peak, Vector2Int tile)

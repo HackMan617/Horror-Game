@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: 428b3d750dec5974aa00c02868d65381
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7158099941202444835
+    second: neighbor_A_tiles_nightmare_0
+  - first:
+      213: -77110616594216154
+    second: neighbor_A_tiles_nightmare_1
+  - first:
+      213: 4656267714007828789
+    second: neighbor_A_tiles_nightmare_2
+  - first:
+      213: -8883607223566219530
+    second: neighbor_A_tiles_nightmare_3
+  - first:
+      213: -2501671513432423569
+    second: neighbor_A_tiles_nightmare_4
+  - first:
+      213: -7165416736781766388
+    second: neighbor_A_tiles_nightmare_5
+  - first:
+      213: 806503800082526556
+    second: neighbor_A_tiles_nightmare_6
+  - first:
+      213: -854897934121485351
+    second: neighbor_A_tiles_nightmare_7
+  - first:
+      213: 5041002494982397319
+    second: neighbor_A_tiles_nightmare_8
+  - first:
+      213: -4759604328374385024
+    second: neighbor_A_tiles_nightmare_9
+  - first:
+      213: -5945155510809917696
+    second: neighbor_A_tiles_nightmare_10
+  - first:
+      213: -8523477922966465401
+    second: neighbor_A_tiles_nightmare_11
+  - first:
+      213: 8545123174488436178
+    second: neighbor_A_tiles_nightmare_12
+  - first:
+      213: -3027878719932368057
+    second: neighbor_A_tiles_nightmare_13
+  - first:
+      213: 609880076321409166
+    second: neighbor_A_tiles_nightmare_14
+  - first:
+      213: -3198450250300733081
+    second: neighbor_A_tiles_nightmare_15
+  - first:
+      213: -184815829575133836
+    second: neighbor_A_tiles_nightmare_16
+  - first:
+      213: 2024756568475059231
+    second: neighbor_A_tiles_nightmare_17
+  - first:
+      213: -3196092951182735369
+    second: neighbor_A_tiles_nightmare_18
+  - first:
+      213: -146065828044564054
+    second: neighbor_A_tiles_nightmare_19
+  - first:
+      213: -6819428795698491164
+    second: neighbor_A_tiles_nightmare_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 95
+        width: 169
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 322cd16a8fda65360800000000000000
+      internalID: 7158099941202444835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 121
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62b8d718d4c0eeef0800000000000000
+      internalID: -77110616594216154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5398e80e0d26e9040800000000000000
+      internalID: 4656267714007828789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f6cd3b2c4617b480800000000000000
+      internalID: -8883607223566219530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_4
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6385215307484dd0800000000000000
+      internalID: -2501671513432423569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_5
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c01fb7021735f8c90800000000000000
+      internalID: -7165416736781766388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c51fbe1eee6413b00800000000000000
+      internalID: 806503800082526556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_7
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 33
+        width: 20
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9db397dbbdac224f0800000000000000
+      internalID: -854897934121485351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_8
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 73
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78d98419f0d35f540800000000000000
+      internalID: 5041002494982397319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_9
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 35
+        width: 20
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08645dfa41d72fdb0800000000000000
+      internalID: -4759604328374385024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_10
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00708bbcf809e7da0800000000000000
+      internalID: -5945155510809917696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_11
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 47
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78413b60df586b980800000000000000
+      internalID: -8523477922966465401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dd6751d040669670800000000000000
+      internalID: 8545123174488436178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 97
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b777bb850daf5d0800000000000000
+      internalID: -3027878719932368057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_14
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e88c9b8b2bab67800800000000000000
+      internalID: 609880076321409166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_15
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 49
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 769c0178172dc93d0800000000000000
+      internalID: -3198450250300733081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_16
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 36
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4751e417bf66f6df0800000000000000
+      internalID: -184815829575133836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_17
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1448941f51691c10800000000000000
+      internalID: 2024756568475059231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_18
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f78f9ff46235a3d0800000000000000
+      internalID: -3196092951182735369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_19
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa9949d37e119fdf0800000000000000
+      internalID: -146065828044564054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neighbor_A_tiles_nightmare_20
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e0525524a58c51a0800000000000000
+      internalID: -6819428795698491164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      neighbor_A_tiles_nightmare_0: 7158099941202444835
+      neighbor_A_tiles_nightmare_1: -77110616594216154
+      neighbor_A_tiles_nightmare_10: -5945155510809917696
+      neighbor_A_tiles_nightmare_11: -8523477922966465401
+      neighbor_A_tiles_nightmare_12: 8545123174488436178
+      neighbor_A_tiles_nightmare_13: -3027878719932368057
+      neighbor_A_tiles_nightmare_14: 609880076321409166
+      neighbor_A_tiles_nightmare_15: -3198450250300733081
+      neighbor_A_tiles_nightmare_16: -184815829575133836
+      neighbor_A_tiles_nightmare_17: 2024756568475059231
+      neighbor_A_tiles_nightmare_18: -3196092951182735369
+      neighbor_A_tiles_nightmare_19: -146065828044564054
+      neighbor_A_tiles_nightmare_2: 4656267714007828789
+      neighbor_A_tiles_nightmare_20: -6819428795698491164
+      neighbor_A_tiles_nightmare_3: -8883607223566219530
+      neighbor_A_tiles_nightmare_4: -2501671513432423569
+      neighbor_A_tiles_nightmare_5: -7165416736781766388
+      neighbor_A_tiles_nightmare_6: 806503800082526556
+      neighbor_A_tiles_nightmare_7: -854897934121485351
+      neighbor_A_tiles_nightmare_8: 5041002494982397319
+      neighbor_A_tiles_nightmare_9: -4759604328374385024
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
