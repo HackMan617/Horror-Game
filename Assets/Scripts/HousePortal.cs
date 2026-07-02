@@ -22,6 +22,22 @@ public class HousePortal : MonoBehaviour
     public float range = 3.5f;
     public float fadeDuration = 0.7f;
     public AudioClip openSound;         // played as the door swings open
+    [Tooltip("On approach + activate prompt text.")]
+    public string promptText = "Press E to enter";
+    [Tooltip("Which side the player approaches from. True = the -Z side (exterior cabins, door faces -Z). " +
+             "False = the +Z side (an interior exit door on the south wall, facing +Z into the room).")]
+    public bool approachFromNegativeZ = true;
+
+    [Header("Arrival — where the player lands in the scene this door loads")]
+    [Tooltip("If on, the loaded scene's player is dropped at 'arrivalPosition' (e.g. just outside the " +
+             "cabin door) instead of that scene's default spawn. Read once by PlayerArrival on load.")]
+    public bool overrideArrival = false;
+    public Vector3 arrivalPosition;
+
+    // One-shot hand-off across the scene load: a door sets these, the next scene's PlayerArrival
+    // consumes them. Static so it survives SceneManager.LoadScene.
+    public static bool HasArrival;
+    public static Vector3 ArrivalPosition;
 
     [Header("Door open animation (house_tiles.png cells: column,row)")]
     // Windowed double door opening: closed (4,3) -> fully open (7,3).
@@ -77,10 +93,12 @@ public class HousePortal : MonoBehaviour
 
         Vector3 a = player.position; a.y = 0f;
         Vector3 b = transform.position; b.y = 0f;
-        bool inFront = Vector3.Distance(a, b) <= range && player.position.z < transform.position.z;
+        bool onFrontSide = approachFromNegativeZ ? player.position.z < transform.position.z
+                                                 : player.position.z > transform.position.z;
+        bool inFront = Vector3.Distance(a, b) <= range && onFrontSide;
         if (!inFront) return;
 
-        if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt("Press E to enter");
+        if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(promptText);
         if (EnterPressed()) StartCoroutine(Enter());
     }
 
@@ -100,6 +118,7 @@ public class HousePortal : MonoBehaviour
             yield return null;
         }
         _fade = 1f;
+        if (overrideArrival) { HasArrival = true; ArrivalPosition = arrivalPosition; }
         SceneManager.LoadScene(interiorScene);
     }
 
