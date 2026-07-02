@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: b12ec6ece813c144e9bd7f327bfbda6e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1633626775477573784
+    second: interior_furniture_nightmare_0
+  - first:
+      213: 470317128009811493
+    second: interior_furniture_nightmare_1
+  - first:
+      213: 943746048926931353
+    second: interior_furniture_nightmare_2
+  - first:
+      213: -3822029807532088841
+    second: interior_furniture_nightmare_3
+  - first:
+      213: 1210995799831901581
+    second: interior_furniture_nightmare_4
+  - first:
+      213: 3034491608484917928
+    second: interior_furniture_nightmare_5
+  - first:
+      213: -1426956942225168410
+    second: interior_furniture_nightmare_6
+  - first:
+      213: -5216841459889010993
+    second: interior_furniture_nightmare_7
+  - first:
+      213: 765935863773870636
+    second: interior_furniture_nightmare_8
+  - first:
+      213: -57447122063807535
+    second: interior_furniture_nightmare_9
+  - first:
+      213: 6293198239538824045
+    second: interior_furniture_nightmare_10
+  - first:
+      213: -3289260385537553257
+    second: interior_furniture_nightmare_11
+  - first:
+      213: -7046766312366168445
+    second: interior_furniture_nightmare_12
+  - first:
+      213: 9139132124477289080
+    second: interior_furniture_nightmare_13
+  - first:
+      213: 7821151513910508386
+    second: interior_furniture_nightmare_14
+  - first:
+      213: -6130735707495711653
+    second: interior_furniture_nightmare_15
+  - first:
+      213: 111624866091653868
+    second: interior_furniture_nightmare_16
+  - first:
+      213: 1080545918120202795
+    second: interior_furniture_nightmare_17
+  - first:
+      213: -6412506657505829233
+    second: interior_furniture_nightmare_18
+  - first:
+      213: -4714681239646695666
+    second: interior_furniture_nightmare_19
+  - first:
+      213: -4921300944528363436
+    second: interior_furniture_nightmare_20
+  - first:
+      213: 6480953865470499300
+    second: interior_furniture_nightmare_21
+  - first:
+      213: 5390865422872597471
+    second: interior_furniture_nightmare_22
+  - first:
+      213: -8684920642590711435
+    second: interior_furniture_nightmare_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 126
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 867a7106a113459e0800000000000000
+      internalID: -1633626775477573784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 96
+        width: 95
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5268ec2afe6e68600800000000000000
+      internalID: 470317128009811493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 64
+        width: 30
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 999d774080cd81d00800000000000000
+      internalID: 943746048926931353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_3
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 64
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f16819d32c65fac0800000000000000
+      internalID: -3822029807532088841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d85787983425ec010800000000000000
+      internalID: 1210995799831901581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_5
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 64
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a2b5ad5a0eac1a20800000000000000
+      internalID: 3034491608484917928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_6
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 64
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e724eca83e623ce0800000000000000
+      internalID: -1426956942225168410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_7
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 64
+        width: 16
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc609cd055e0a97b0800000000000000
+      internalID: -5216841459889010993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_8
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 65
+        width: 10
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2a39f82c9621aa00800000000000000
+      internalID: 765935863773870636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_9
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 65
+        width: 19
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dba4089528e33ff0800000000000000
+      internalID: -57447122063807535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 32
+        width: 30
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6343d0c47ee55750800000000000000
+      internalID: 6293198239538824045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_11
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 42
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79c054a4b133a52d0800000000000000
+      internalID: -3289260385537553257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_12
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 32
+        width: 30
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 386a930df5bd43e90800000000000000
+      internalID: -7046766312366168445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_13
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 42
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87274dafe38b4de70800000000000000
+      internalID: 9139132124477289080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_14
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 32
+        width: 30
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26bf4291ddf4a8c60800000000000000
+      internalID: 7821151513910508386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_15
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 42
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5c3ae62b504beaa0800000000000000
+      internalID: -6130735707495711653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_16
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 32
+        width: 30
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cea5e7b69329c8100800000000000000
+      internalID: 111624866091653868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_17
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 42
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b229d0d99cedefe00800000000000000
+      internalID: 1080545918120202795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_18
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 32
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8e998f7b233207a0800000000000000
+      internalID: -6412506657505829233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_19
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 42
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0f09a95466129eb0800000000000000
+      internalID: -4714681239646695666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_20
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 32
+        width: 20
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 450b7987dd604bbb0800000000000000
+      internalID: -4921300944528363436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 145
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e9501df339f0f950800000000000000
+      internalID: 6480953865470499300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_22
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 15
+        width: 28
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd3d1424a8330da40800000000000000
+      internalID: 5390865422872597471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_furniture_nightmare_23
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 46
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5716ce3b0b6f87780800000000000000
+      internalID: -8684920642590711435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      interior_furniture_nightmare_0: -1633626775477573784
+      interior_furniture_nightmare_1: 470317128009811493
+      interior_furniture_nightmare_10: 6293198239538824045
+      interior_furniture_nightmare_11: -3289260385537553257
+      interior_furniture_nightmare_12: -7046766312366168445
+      interior_furniture_nightmare_13: 9139132124477289080
+      interior_furniture_nightmare_14: 7821151513910508386
+      interior_furniture_nightmare_15: -6130735707495711653
+      interior_furniture_nightmare_16: 111624866091653868
+      interior_furniture_nightmare_17: 1080545918120202795
+      interior_furniture_nightmare_18: -6412506657505829233
+      interior_furniture_nightmare_19: -4714681239646695666
+      interior_furniture_nightmare_2: 943746048926931353
+      interior_furniture_nightmare_20: -4921300944528363436
+      interior_furniture_nightmare_21: 6480953865470499300
+      interior_furniture_nightmare_22: 5390865422872597471
+      interior_furniture_nightmare_23: -8684920642590711435
+      interior_furniture_nightmare_3: -3822029807532088841
+      interior_furniture_nightmare_4: 1210995799831901581
+      interior_furniture_nightmare_5: 3034491608484917928
+      interior_furniture_nightmare_6: -1426956942225168410
+      interior_furniture_nightmare_7: -5216841459889010993
+      interior_furniture_nightmare_8: 765935863773870636
+      interior_furniture_nightmare_9: -57447122063807535
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

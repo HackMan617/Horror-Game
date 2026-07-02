@@ -52,9 +52,16 @@ public class CameraRig : MonoBehaviour
     Texture2D _white;
     Transform _playerRoot;
 
+    // Remembers the chosen POV across scene loads (interior <-> exterior), so stepping through a door
+    // keeps you in whichever first/third-person view you were using instead of resetting each scene.
+    static bool _povRemembered;
+    static bool _rememberedFirstPerson;
+
     void Start()
     {
-        _firstPerson = startFirstPerson;
+        _firstPerson = _povRemembered ? _rememberedFirstPerson : startFirstPerson;
+        _povRemembered = true;
+        _rememberedFirstPerson = _firstPerson;
         _playerRoot = transform.root;   // to ignore our own colliders when probing for obstruction
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -85,7 +92,7 @@ public class CameraRig : MonoBehaviour
         lookBack = Input.GetKey(KeyCode.C);
 #endif
 
-        if (toggle) { _firstPerson = !_firstPerson; Apply(); }
+        if (toggle) { _firstPerson = !_firstPerson; _rememberedFirstPerson = _firstPerson; Apply(); }
 
         _pitch = Mathf.Clamp(_pitch - mouseY, minPitch, maxPitch);
         // Hold C to look behind: swing the camera arm 180 so it views the player's

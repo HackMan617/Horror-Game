@@ -55,12 +55,13 @@ public static class HorrorGame3DSetup
     const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
     const string WoodStepsWav = "Assets/Sound Effects/Footsteps on Wooden Floor.wav";
     const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
+    const string DogPantWav = "Assets/Sound Effects/Dog Panting.wav";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
-    const string FurnitureDir     = "Assets/Animation/Interior Atlas/interior_furniture_kit";
-    const string FurnitureDusk    = FurnitureDir + "/interior_furniture_dusk.png";
-    const string FurnitureLavender = FurnitureDir + "/interior_furniture_lavender.png";
-    const string FurnitureNightmare = FurnitureDir + "/interior_furniture_nightmare.png";
+    // Updated 256x128 atlases with FRONT/BACK/SIDE facings (Assets/Animation/INTERIOR_UPDATE.md).
+    const string FurnitureDusk      = "Assets/Animation/interior_furniture_dusk.png";
+    const string FurnitureLavender  = "Assets/Animation/interior_furniture_lavender.png";
+    const string FurnitureNightmare = "Assets/Animation/interior_furniture_nightmare.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
@@ -174,11 +175,13 @@ public static class HorrorGame3DSetup
     }
 
     // -------------------------------------------------------------- living room (interior furniture)
-    // Dresses the interior with the interior_furniture_kit: a conversation grouping (occupied sofa +
-    // loveseat + armchair around a rug and coffee table) facing a TV, with a bookshelf and a lit floor
-    // lamp along the west wall. Each piece is an InteriorObject — it slices its own frames at runtime,
-    // animates itself (TV shimmer, the dog's breathing) and can flicker to its nightmare skin when the
-    // room-wide DreadProgress climbs. Cluster sits on the west side, clear of the bed / partner / dog.
+    // Dresses the interior with the interior_furniture_kit (256x128 FRONT/BACK/SIDE atlas, see
+    // Assets/Animation/INTERIOR_UPDATE.md). Unlike the outdoor props these pieces do NOT billboard —
+    // each carries a fixed facing chosen for the wall it sits against, so it reads as real furniture
+    // in the room instead of spinning to face the player: TV + bookshelf FRONT along the far (north)
+    // wall, the occupied sofa + coffee table on the rug, and the two side chairs turned in profile
+    // toward the group. Each InteriorObject slices its own frames at runtime (TV shimmer, dog breathing)
+    // and flickers to its nightmare skin on the room-wide DreadProgress. Kept clear of bed/partner/dog.
     static void BuildLivingRoom(Material spriteMat)
     {
         var day   = EnsureFurnitureAtlas(FurnitureDusk);        // warm rust furniture in a teal room
@@ -186,57 +189,132 @@ public static class HorrorGame3DSetup
         if (day == null) { Debug.LogWarning("[HorrorGame] interior furniture atlas missing: " + FurnitureDusk); return; }
 
         var room = new GameObject("LivingRoom");
+        // A point 4u "in front" of a piece = the direction its FRONT faces (homeForward). Solid pieces
+        // read the camera's angle against this to pick front/back/side as the player walks around them.
+        Vector3 S(Vector3 p) => new Vector3(p.x, 0f, p.z - 4f);   // faces south / the room & entrance
 
-        // Floor rug first — laid FLAT on the boards (like the skittering leaves outside), enlarged to
-        // anchor the whole grouping. Everything else stands upright on top of it.
-        MakeFurniture(room.transform, "Rug", InteriorObject.Piece.Rug, new Vector3(-5.5f, 0.03f, -2f),
-                      day, night, spriteMat, startsOn: false, flat: true,
-                      pivot: new Vector2(0.5f, 0.5f), scale: new Vector3(1.9f, 1.5f, 1f));
+        // Rug first, flat on the boards, anchoring the grouping; everything else stands on top of it.
+        MakeRug(room.transform, new Vector3(-3.2f, 0.03f, 5f), new Vector3(1.8f, 1.8f, 1f), day, night, spriteMat);
 
-        // Seating grouped around the rug + coffee table, all facing the TV on the west wall.
-        MakeFurniture(room.transform, "CoffeeTable", InteriorObject.Piece.CoffeeTable, new Vector3(-5.5f, 0f, -2f),
-                      day, night, spriteMat);
-        MakeFurniture(room.transform, "SofaWithDog", InteriorObject.Piece.CouchDog, new Vector3(-3.3f, 0f, -2f),
-                      day, night, spriteMat);                                   // the dog naps here; opens an eye in the nightmare
-        MakeFurniture(room.transform, "Loveseat", InteriorObject.Piece.Couch, new Vector3(-5.5f, 0f, 0.9f),
-                      day, night, spriteMat);
-        MakeFurniture(room.transform, "Armchair", InteriorObject.Piece.Armchair, new Vector3(-5.5f, 0f, -5f),
-                      day, night, spriteMat);
+        // Far (north) wall: TV (on) + bookshelf, their FRONT toward the room. Solid pieces, so their
+        // side/back show as you circle them.
+        var tvPos = new Vector3(-6f, 0f, 9.4f);
+        MakeFurniture(room.transform, "TV", InteriorObject.Piece.Tv,
+                      tvPos, S(tvPos), day, night, spriteMat, startsOn: true);        // lit shimmer; snaps to static in the nightmare
+        var bsPos = new Vector3(-8.6f, 0f, 9.2f);
+        MakeFurniture(room.transform, "Bookshelf", InteriorObject.Piece.Bookshelf,
+                      bsPos, S(bsPos), day, night, spriteMat);
 
-        // West wall: TV (on) flanked by a bookshelf and a warm floor lamp.
-        MakeFurniture(room.transform, "TV", InteriorObject.Piece.Tv, new Vector3(-8.7f, 0f, -2f),
-                      day, night, spriteMat, startsOn: true);                   // lit shimmer; snaps to static in the nightmare
-        MakeFurniture(room.transform, "Bookshelf", InteriorObject.Piece.Bookshelf, new Vector3(-8.7f, 0f, 1.6f),
-                      day, night, spriteMat);
-        MakeFurniture(room.transform, "FloorLamp", InteriorObject.Piece.FloorLamp, new Vector3(-8.9f, 0f, -5f),
-                      day, night, spriteMat, startsOn: true);                   // warm pool of light (sick green when wrong)
+        // The occupied sofa (dog asleep on it — FRONT only, so it just billboards) faces the room,
+        // coffee table in front of it on the rug. Sofa sits east of the TV so it doesn't hide it.
+        var couchPos = new Vector3(-3.2f, 0f, 6.4f);
+        MakeFurniture(room.transform, "SofaWithDog", InteriorObject.Piece.CouchDog,
+                      couchPos, S(couchPos), day, night, spriteMat);                  // the dog naps here; opens an eye in the nightmare
+        var tablePos = new Vector3(-3.2f, 0f, 4.4f);
+        MakeFurniture(room.transform, "CoffeeTable", InteriorObject.Piece.CoffeeTable,
+                      tablePos, S(tablePos), day, night, spriteMat);
+
+        // Two side chairs whose FRONT faces the coffee table, so from the entrance you see them in
+        // profile and see their front as you step into the group.
+        var armPos = new Vector3(-6.8f, 0f, 4.6f);
+        MakeFurniture(room.transform, "Armchair", InteriorObject.Piece.Armchair,
+                      armPos, new Vector3(-3.2f, 0f, 4.4f), day, night, spriteMat);
+        var lovePos = new Vector3(0.3f, 0f, 5.2f);
+        MakeFurniture(room.transform, "Loveseat", InteriorObject.Piece.Couch,
+                      lovePos, new Vector3(-3.2f, 0f, 4.4f), day, night, spriteMat);
+
+        // A warm floor lamp in the north-west corner (single sprite; billboards to the camera).
+        var lampPos = new Vector3(-8.9f, 0f, 6.6f);
+        MakeFurniture(room.transform, "FloorLamp", InteriorObject.Piece.FloorLamp,
+                      lampPos, S(lampPos), day, night, spriteMat, startsOn: true);    // warm pool of light (sick green when wrong)
     }
 
-    // One furniture piece: a SpriteRenderer + InteriorObject (+ Billboard for upright pieces). The
-    // sprite fills in at runtime (InteriorObject.Awake slices the atlas), so it's blank in the editor.
-    static GameObject MakeFurniture(Transform parent, string name, InteriorObject.Piece piece, Vector3 pos,
-                                    Texture2D day, Texture2D night, Material mat,
-                                    bool startsOn = false, bool flat = false,
-                                    Vector2 pivot = default, Vector3 scale = default)
+    // One upright furniture piece. Every upright piece BILLBOARDS to the camera (2.5D, never edge-on);
+    // solid pieces (sofa/loveseat/armchair/bookshelf/tv) are additionally DIRECTIONAL — they swap
+    // front/back/side from the view angle around 'homeForward' (= toward 'faceToward'), like the
+    // neighbours. The sprite fills in at runtime (InteriorObject slices the atlas), blank in the editor.
+    static GameObject MakeFurniture(Transform parent, string name, InteriorObject.Piece piece,
+                                    Vector3 pos, Vector3 faceToward,
+                                    Texture2D day, Texture2D night, Material mat, bool startsOn = false)
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);
         go.transform.position = pos;
-        if (flat) go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);       // lie flat on the floor (rug)
-        go.transform.localScale = (scale == default) ? Vector3.one : scale;
 
         var sr = go.AddComponent<SpriteRenderer>();
         sr.sharedMaterial = mat;
-        if (!flat) go.AddComponent<Billboard>();                               // upright pieces face the camera like the other props
 
         var io = go.AddComponent<InteriorObject>();
         io.piece = piece;
         io.dayAtlas = day;
         io.nightmareAtlas = night;
         io.pixelsPerUnit = 16f;
-        io.pivot = (pivot == default) ? new Vector2(0.5f, 0f) : pivot;         // bottom-centre keeps pieces planted; rug uses centre
+        io.pivot = new Vector2(0.5f, 0f);          // bottom-centre keeps the piece planted on the floor line
         io.startsOn = startsOn;
+        io.billboard = true;                       // all upright pieces face the camera
+        if (InteriorSolid(piece))
+        {
+            io.directional = true;                 // ...and solid ones turn front/back/side with the view
+            Vector3 fwd = faceToward - pos; fwd.y = 0f;
+            io.homeForward = fwd.sqrMagnitude > 1e-4f ? fwd.normalized : Vector3.back;
+        }
+
+        AddFurnitureShadow(parent, pos, ShadowWidth(piece), mat);   // ground the billboard so it doesn't float
         return go;
+    }
+
+    static bool InteriorSolid(InteriorObject.Piece p) =>
+        p == InteriorObject.Piece.Sofa || p == InteriorObject.Piece.Couch || p == InteriorObject.Piece.Armchair
+        || p == InteriorObject.Piece.Bookshelf || p == InteriorObject.Piece.Tv;
+
+    static float ShadowWidth(InteriorObject.Piece p)
+    {
+        switch (p)
+        {
+            case InteriorObject.Piece.Sofa:
+            case InteriorObject.Piece.CouchDog:  return 3f;
+            case InteriorObject.Piece.FloorLamp: return 1f;
+            default:                             return 2f;
+        }
+    }
+
+    // A soft dark ellipse laid flat on the floor under a billboarded piece, so it reads as planted
+    // rather than floating (the piece's own base is already at y=0; this just gives it ground contact).
+    // Fixed, not billboarded; drawn just above the floor and beneath the furniture.
+    static void AddFurnitureShadow(Transform parent, Vector3 pos, float width, Material mat)
+    {
+        var sh = new GameObject("Shadow");
+        sh.transform.SetParent(parent, false);
+        sh.transform.position = new Vector3(pos.x, 0.02f, pos.z);
+        sh.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        const float baseSize = 0.64f;              // SmokePuff sprite ≈ 64 px @ 100 ppu
+        sh.transform.localScale = new Vector3(width * 1.25f / baseSize, width * 0.55f / baseSize, 1f);
+        var sr = sh.AddComponent<SpriteRenderer>();
+        sr.sprite = SmokePuffSprite();
+        sr.sharedMaterial = mat;
+        sr.color = new Color(0f, 0f, 0f, 0.33f);
+        sr.sortingOrder = -2;                      // under the furniture + rug
+    }
+
+    // The floor rug: an InteriorObject laid FLAT on the boards (like the skittering leaves outside),
+    // centre-pivoted and scaled up to anchor the grouping. Sits just above the floor; no billboard.
+    static void MakeRug(Transform parent, Vector3 pos, Vector3 scale, Texture2D day, Texture2D night, Material mat)
+    {
+        var go = new GameObject("Rug");
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        go.transform.localScale = scale;
+
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sharedMaterial = mat;
+
+        var io = go.AddComponent<InteriorObject>();
+        io.piece = InteriorObject.Piece.Rug;
+        io.dayAtlas = day;
+        io.nightmareAtlas = night;
+        io.pixelsPerUnit = 16f;
+        io.pivot = new Vector2(0.5f, 0.5f);
     }
 
     // Import a furniture atlas for InteriorObject: raw texture it can slice — Read/Write ON, point-
@@ -1563,12 +1641,20 @@ public static class HorrorGame3DSetup
         sr.sprite = (first != null && first.idle != null && first.idle.Length > 0) ? first.idle[0] : null;
         sr.sharedMaterial = mat;
         go.AddComponent<Billboard>();
+
+        // Intermittent panting: an AudioSource the dog plays a single pant through while trotting to
+        // the player (random gaps) and occasionally on a pet — 2D so it reads as the companion by you.
+        var pant = go.AddComponent<AudioSource>();
+        pant.playOnAwake = false;
+        pant.spatialBlend = 0f;
+
         var dog = go.AddComponent<DogCompanion>();
         dog.player = player;
         dog.nightmare = nightmare;
         dog.breeds = breeds;
         if (first != null) { dog.idleFrames = first.idle; dog.walkFrames = first.walk; dog.heartFrames = first.heart; }
         dog.fps = 6f;
+        dog.pantClip = AssetDatabase.LoadAssetAtPath<AudioClip>(DogPantWav);
     }
 
     static void MakePartner(Vector3 pos, Transform player, Sprite[] boyIdle, Sprite[] girlIdle,

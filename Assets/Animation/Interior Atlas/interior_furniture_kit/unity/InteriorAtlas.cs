@@ -25,21 +25,37 @@ namespace Game.Interior
 
     public static class InteriorAtlas
     {
-        public const int SHEET_W = 256, SHEET_H = 96;
+        public const int SHEET_W = 256, SHEET_H = 128;
 
         // name -> frame-0 rect (TOP-LEFT origin, like the PNG) + frame count.
         // Frames are laid out horizontally: frame f is at (x + f*w, y).
+        // Solid pieces carry three facings (FRONT / <name>Back / <name>Side) so they can sit against
+        // any wall; the SIDE profile is narrower. See Assets/Animation/INTERIOR_UPDATE.md.
         public static readonly Dictionary<string, AtlasItem> Items = new Dictionary<string, AtlasItem>
         {
-            { "sofa",        new AtlasItem(  0,  0, 48, 32, 1) },
-            { "couch",       new AtlasItem( 48,  0, 32, 32, 1) },
-            { "armchair",    new AtlasItem( 80,  0, 32, 32, 1) },
-            { "bookshelf",   new AtlasItem(112,  0, 32, 32, 1) },
-            { "floorLamp",   new AtlasItem(144,  0, 16, 32, 2) },   // 0 off · 1 on
-            { "coffeeTable", new AtlasItem(176,  0, 32, 16, 1) },
-            { "rug",         new AtlasItem(176, 16, 48, 16, 1) },   // draw UNDER furniture
-            { "tv",          new AtlasItem(  0, 32, 32, 32, 4) },   // 0 off · 1-2 on · 3 static
-            { "couchDog",    new AtlasItem(  0, 64, 48, 32, 3) },   // 0-2 breathing
+            // row 0 — sofa trio · loveseat trio
+            { "sofa",          new AtlasItem(  0,   0, 48, 32, 1) },
+            { "sofaBack",      new AtlasItem( 48,   0, 48, 32, 1) },
+            { "sofaSide",      new AtlasItem( 96,   0, 30, 32, 1) },
+            { "couch",         new AtlasItem(126,   0, 32, 32, 1) },   // loveseat
+            { "couchBack",     new AtlasItem(158,   0, 32, 32, 1) },
+            { "couchSide",     new AtlasItem(190,   0, 30, 32, 1) },
+            // row 1 — armchair trio · bookshelf trio · lamp
+            { "armchair",      new AtlasItem(  0,  32, 32, 32, 1) },
+            { "armchairBack",  new AtlasItem( 32,  32, 32, 32, 1) },
+            { "armchairSide",  new AtlasItem( 64,  32, 30, 32, 1) },
+            { "bookshelf",     new AtlasItem( 94,  32, 32, 32, 1) },
+            { "bookshelfBack", new AtlasItem(126,  32, 32, 32, 1) },
+            { "bookshelfSide", new AtlasItem(158,  32, 18, 32, 1) },
+            { "floorLamp",     new AtlasItem(176,  32, 16, 32, 2) },   // 0 off · 1 on
+            // row 2 — tv trio (front is the 4-frame clip)
+            { "tv",            new AtlasItem(  0,  64, 32, 32, 4) },   // 0 off · 1-2 on · 3 static
+            { "tvBack",        new AtlasItem(128,  64, 32, 32, 1) },
+            { "tvSide",        new AtlasItem(160,  64, 26, 32, 1) },
+            // row 3 — combo · table · rug
+            { "couchDog",      new AtlasItem(  0,  96, 48, 32, 3) },   // dog asleep on the sofa · 0-2 breathing
+            { "coffeeTable",   new AtlasItem(144,  96, 32, 16, 1) },
+            { "rug",           new AtlasItem(144, 112, 48, 16, 1) },   // draw UNDER furniture
         };
 
         /// <summary>Slice every frame of one object into sprites. Handles the top-left→Unity
