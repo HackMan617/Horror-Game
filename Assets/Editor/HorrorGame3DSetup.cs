@@ -52,11 +52,12 @@ public static class HorrorGame3DSetup
     const string MoonPng    = "Assets/Animation/moon.png";
     const string FootstepDir = "Assets/Sound Effects/Footsteps";
     const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
+    const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
-    const int SetupVersion  = 31;  // bump to force the auto-run to rebuild the scenes
+    const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
 
     static int _renderer3DIndex = 1;
 
@@ -182,8 +183,11 @@ public static class HorrorGame3DSetup
         var footsteps = player.AddComponent<FootstepAudio>();
         footsteps.player = pc3d;
         footsteps.controller = cc;
-        footsteps.dirtSteps = LoadFootstepClips("dirt_");
-        footsteps.gravelSteps = LoadFootstepClips("gravel_");
+        footsteps.defaultSteps = LoadFootstepClips("grass_");   // grassy yard = default surface
+        footsteps.surfaces = new[]
+        {
+            new FootstepAudio.Surface { colliderName = "Pathway", clips = LoadFootstepClips("gravel_") },
+        };
 
         var spriteGo = new GameObject("Sprite");
         spriteGo.transform.SetParent(player.transform, false);
@@ -1124,6 +1128,7 @@ public static class HorrorGame3DSetup
 
         var hp = door.AddComponent<HousePortal>();
         hp.interiorScene = "Sandbox3D";
+        hp.openSound = AssetDatabase.LoadAssetAtPath<AudioClip>(DoorSfx);
         return hp;
     }
 

@@ -21,6 +21,7 @@ public class HousePortal : MonoBehaviour
     public string interiorScene = "Sandbox3D";
     public float range = 3.5f;
     public float fadeDuration = 0.7f;
+    public AudioClip openSound;         // played as the door swings open
 
     [Header("Door open animation (house_tiles.png cells: column,row)")]
     // Windowed double door opening: closed (4,3) -> fully open (7,3).
@@ -42,12 +43,18 @@ public class HousePortal : MonoBehaviour
     Texture2D _black;
     Mesh _doorMesh;
     Vector2[] _uv;
+    AudioSource _audio;
 
     void Awake()
     {
         _black = new Texture2D(1, 1);
         _black.SetPixel(0, 0, Color.white);
         _black.Apply();
+
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null) _audio = gameObject.AddComponent<AudioSource>();
+        _audio.playOnAwake = false;
+        _audio.spatialBlend = 0f;   // 2D: it's a close-range interaction cue
     }
 
     void Start()
@@ -80,6 +87,7 @@ public class HousePortal : MonoBehaviour
     IEnumerator Enter()
     {
         _entering = true;
+        if (openSound != null && _audio != null) _audio.PlayOneShot(openSound);   // creak as it swings
 
         yield return OpenDoor();
         if (pauseAfterOpen > 0f) yield return new WaitForSeconds(pauseAfterOpen);
