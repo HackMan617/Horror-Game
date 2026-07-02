@@ -28,16 +28,27 @@ public class DogCompanion : MonoBehaviour
     public float petRange = 3.5f;           // press P within this distance to pet
     public float petDuration = 3f;          // how long the hearts reaction plays
 
+    [Header("Panting audio (intermittent — not a constant loop)")]
+    public AudioClip pantClip;              // Dog Panting.wav
+    public float pantMinGap = 3.5f;         // shortest wait between pants while trotting to the player
+    public float pantMaxGap = 7f;           // longest wait between pants while trotting
+    [Range(0f, 1f)] public float petPantChance = 0.4f;   // an occasional happy pant when petted
+    [Range(0f, 1f)] public float pantVolume = 0.7f;
+
     SpriteRenderer _sr;
+    AudioSource _audio;
     float _t;
     bool _hidden;
     float _petTimer;
+    float _pantTimer;
+    bool _wasWalking;
     PartnerController _partner;
     bool _partnerSearched;
 
     void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
+        _audio = GetComponent<AudioSource>();
         ApplyChosenBreed();
     }
 
@@ -82,6 +93,16 @@ public class DogCompanion : MonoBehaviour
             transform.position += (to / dist) * move;
         }
 
+        // Intermittent panting while trotting toward the player: a short delay when it starts moving,
+        // then a random gap between each pant so it never becomes a constant drone. Silent when sitting.
+        if (walking)
+        {
+            if (!_wasWalking) _pantTimer = Random.Range(0.3f, pantMinGap);   // pant soon after setting off
+            _pantTimer -= Time.deltaTime;
+            if (_pantTimer <= 0f) { PlayPant(); _pantTimer = Random.Range(pantMinGap, pantMaxGap); }
+        }
+        _wasWalking = walking;
+
         // Pet the dog (P) when the player is close.
         if (dist <= petRange && PetPressed()) Pet();
 
@@ -110,6 +131,14 @@ public class DogCompanion : MonoBehaviour
         _petTimer = petDuration;
         if (!_partnerSearched) { _partner = FindAnyObjectByType<PartnerController>(); _partnerSearched = true; }
         if (_partner != null) _partner.Smile();
+        if (Random.value < petPantChance) PlayPant();   // an occasional happy pant, not every pet
+    }
+
+    // Fire a single pant, unless one's already playing (keeps overlaps from stacking into a drone).
+    void PlayPant()
+    {
+        if (pantClip == null || _audio == null || _audio.isPlaying) return;
+        _audio.PlayOneShot(pantClip, pantVolume);
     }
 
     // One dog breed's animation frames (idle / walk / hearts). Wrapped in a class so Unity can
