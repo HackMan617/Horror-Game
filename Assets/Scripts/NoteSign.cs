@@ -21,6 +21,11 @@ public class NoteSign : MonoBehaviour
     public float range = 3.5f;
     public string prompt = "Press E to read";
     public string closePrompt = "Press E to close";
+    [Tooltip("Paper-handling sound played when the player opens or closes the note (not on walk-away).")]
+    public AudioClip paperSound;
+    [Range(0f, 1f)] public float soundVolume = 1f;
+    [Tooltip("Minimum seconds between note interactions, so E-mashing can't spam the crumple.")]
+    public float interactCooldown = 0.45f;
     [Range(0f, 1f)] public float dimAlpha = 0.82f;
     public float droopFps = 0.8f;                 // slow paper droop
 
@@ -28,6 +33,7 @@ public class NoteSign : MonoBehaviour
     Texture2D _dim;
     bool _reading;
     float _t;
+    float _cd;                                        // interaction cooldown remaining
 
     void Awake()
     {
@@ -43,6 +49,7 @@ public class NoteSign : MonoBehaviour
     void Update()
     {
         _t += Time.deltaTime;
+        if (_cd > 0f) _cd -= Time.deltaTime;
         if (_sr != null && farFrames != null && farFrames.Length > 0)
             _sr.sprite = farFrames[Droop(farFrames.Length)];       // slow droop on the mounted note
 
@@ -54,13 +61,19 @@ public class NoteSign : MonoBehaviour
         if (_reading)
         {
             if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(closePrompt);
-            if (EPressed() || !inRange) _reading = false;          // close on E, or when walking away
+            if (EPressed() && _cd <= 0f) { _reading = false; PlayPaper(); _cd = interactCooldown; } // crumple when they close it by hand
+            else if (!inRange) _reading = false;                   // silent close when they walk away
             return;
         }
 
         if (!inRange) return;
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(prompt);
-        if (EPressed() && nearFrames != null && nearFrames.Length > 0) _reading = true;
+        if (EPressed() && _cd <= 0f && nearFrames != null && nearFrames.Length > 0) { _reading = true; PlayPaper(); _cd = interactCooldown; }
+    }
+
+    void PlayPaper()
+    {
+        if (paperSound != null) AudioSource.PlayClipAtPoint(paperSound, transform.position, soundVolume);
     }
 
     static Vector3 Flat(Vector3 v) { v.y = 0f; return v; }
