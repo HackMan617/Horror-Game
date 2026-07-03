@@ -20,7 +20,9 @@ public class ChimneySmoke : MonoBehaviour
     public float startScale = 0.25f;
     public float endScale = 1.15f;
     public Color tint = new Color(0.82f, 0.82f, 0.86f, 0.65f);
-    public int sortingOrder = 30;
+    [Tooltip("Keep at 0 so puffs distance-sort with the trees/player billboards (also order 0) and get " +
+             "occluded by nearer ones. A higher value draws the smoke on top of everything (clips through).")]
+    public int sortingOrder = 0;
 
     class Puff
     {
