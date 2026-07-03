@@ -47,6 +47,8 @@ public static class HorrorGame3DSetup
     const string GrassSheet = "Assets/Animation/grass_tufts.png";
     const string SmokePuffPng = "Assets/Animation/smoke_puff.png";
     const string PropsAutumn = "Assets/Animation/props_autumn.png";
+    const string RobertPropsDay   = "Assets/Animation/props_robert.png";
+    const string RobertPropsNight = "Assets/Animation/props_robert_nightmare.png";
     const string BirdsPng    = "Assets/Animation/birds_flock.png";
     const string NoteSignPng = "Assets/Animation/note_sign.png";
     const string PathCobble  = "Assets/Animation/path_cobble.png";
@@ -1344,6 +1346,7 @@ public static class HorrorGame3DSetup
                 smoke.startScale   = 0.45f;
                 smoke.endScale     = 2.3f;
                 smoke.tint         = new Color(0.82f, 0.82f, 0.86f, 0.7f);
+                smoke.sortingOrder = 0;   // distance-sort with the tree/player billboards (no clip-through)
             }
         }
         else Debug.LogWarning("[HorrorGame] '" + PlayerChimneyPath + "/ChimneySmoke' not found — chimney built without a plume.");
@@ -1355,6 +1358,262 @@ public static class HorrorGame3DSetup
         Undo.RegisterCreatedObjectUndo(root, "Add Robert Chimney Smoke");
         EditorSceneManager.MarkSceneDirty(houseC.scene);
         Debug.Log("[HorrorGame] Built a neighbor-stone chimney + large plume on Robert's house (NeighborHouse_C). Enter Play to see it; save (Ctrl+S) to keep it.");
+    }
+
+    // Normalises every ChimneySmoke emitter in the open scene to sortingOrder 0 so the puffs
+    // distance-sort with the trees/player billboards instead of drawing on top of them (the smoke was
+    // clipping through nearer objects at order 30). Fixes the player cabin + Robert's chimney at once.
+    [MenuItem("Tools/Horror Game/Fix Chimney Smoke Sorting")]
+    public static void FixChimneySmokeSorting()
+    {
+        var smokes = Object.FindObjectsOfType<ChimneySmoke>(true);
+        if (smokes.Length == 0) { Debug.LogWarning("[HorrorGame] No ChimneySmoke found in the open scene."); return; }
+        foreach (var s in smokes)
+        {
+            Undo.RecordObject(s, "Fix Chimney Smoke Sorting");
+            s.sortingOrder = 0;
+            EditorUtility.SetDirty(s);
+            if (s.gameObject.scene.IsValid()) EditorSceneManager.MarkSceneDirty(s.gameObject.scene);
+        }
+        Debug.Log("[HorrorGame] Set " + smokes.Length + " ChimneySmoke emitter(s) to sortingOrder 0 (distance-sorts with trees/player). Enter Play to verify; save (Ctrl+S).");
+    }
+
+    // ----------------------------------------------------------------- Robert's yard props
+    // Tech-junk machines around Robert's house (ROBERT_PROPS.md): sliced from props_robert.png (day) +
+    // props_robert_nightmare.png (same 208x80 layout), each looping its idle strip at its own rate via
+    // YardMachine, which also holds the nightmare frames for a later dread swap. Placed in the yard in
+    // front of NeighborHouse_C, flanking the path, around where Robert stands. Re-runnable.
+    struct YardDef
+    {
+        public string name; public int x, y, w, h, frames; public float ms; public Vector3 pos;
+        public YardDef(string n, int x, int y, int w, int h, int f, float ms, Vector3 p)
+        { name = n; this.x = x; this.y = y; this.w = w; this.h = h; frames = f; this.ms = ms; pos = p; }
+    }
+    const int RobertPropsAtlasH = 80;
+    static readonly YardDef[] RobertYard =
+    {
+        //          name           x    y   w   h  fr   ms     world pos (feet on ground, y=0)
+        new YardDef("dish",         0,   0, 32, 48, 3, 520f, new Vector3(20.0f, 0f, 8.0f)),
+        new YardDef("crt",         96,   0, 32, 48, 3, 190f, new Vector3(25.8f, 0f, 8.0f)),
+        new YardDef("serverTower",  0,  48, 16, 32, 3, 360f, new Vector3(26.5f, 0f, 7.0f)),
+        new YardDef("scope",       48,  48, 32, 16, 4, 150f, new Vector3(20.5f, 0f, 6.5f)),
+        new YardDef("hacksaw",     48,  64, 32, 16, 2, 600f, new Vector3(25.2f, 0f, 5.5f)),
+        new YardDef("cables",     176,  48, 16, 16, 2, 430f, new Vector3(24.3f, 0f, 6.5f)),
+        new YardDef("battery",    176,  64, 16, 16, 2, 560f, new Vector3(20.8f, 0f, 5.0f)),
+    };
+
+    // Slice a Robert-props atlas into named per-frame sprites (dish_0.., crt_0..) with feet pivots —
+    // mirrors SlicePropsAtlas, using the RobertYard regions and the 208x80 atlas height.
+    static void SliceRobertProps(string path, float ppu)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = ppu;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories(); factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        var rects = new List<SpriteRect>();
+        foreach (var m in RobertYard)
+            for (int f = 0; f < m.frames; f++)
+                rects.Add(new SpriteRect
+                {
+                    name = m.name + "_" + f,
+                    spriteID = StableGuid(path + "#" + m.name + f),
+                    rect = new Rect(m.x + f * m.w, RobertPropsAtlasH - (m.y + m.h), m.w, m.h),
+                    pivot = new Vector2(0.5f, 0f),   // feet
+                    alignment = SpriteAlignment.Custom,
+                    border = Vector4.zero,
+                });
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
+
+    [MenuItem("Tools/Horror Game/Add Robert Yard Props")]
+    public static void AddRobertYardProps()
+    {
+        if (AssetDatabase.LoadAssetAtPath<Texture2D>(RobertPropsDay) == null)
+        { Debug.LogWarning("[HorrorGame] props_robert.png missing: " + RobertPropsDay); return; }
+        SliceRobertProps(RobertPropsDay, 16f);
+        SliceRobertProps(RobertPropsNight, 16f);
+
+        var mat = SpriteMaterial();
+        var existing = GameObject.Find("RobertYard");
+        if (existing != null) Undo.DestroyObjectImmediate(existing);
+        var yard = new GameObject("RobertYard");
+        Undo.RegisterCreatedObjectUndo(yard, "Add Robert Yard Props");
+
+        int placed = 0;
+        foreach (var m in RobertYard)
+        {
+            var day   = LoadSheetSprites(RobertPropsDay, m.name + "_");
+            var night = LoadSheetSprites(RobertPropsNight, m.name + "_");
+            if (day.Length == 0) { Debug.LogWarning("[HorrorGame] no day frames sliced for " + m.name); continue; }
+            var go = new GameObject("Yard_" + m.name);
+            go.transform.SetParent(yard.transform, false);
+            go.transform.position = m.pos;
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = day[0];
+            sr.sharedMaterial = mat;
+            sr.sortingOrder = 0;                 // distance-sort with the trees/Robert (no clip-through)
+            go.AddComponent<Billboard>();
+            var ym = go.AddComponent<YardMachine>();
+            ym.dayFrames = day; ym.nightFrames = night; ym.frameMs = m.ms;
+            placed++;
+        }
+        EditorSceneManager.MarkSceneDirty(yard.scene);
+        Debug.Log("[HorrorGame] Placed " + placed + " Robert yard machines (day idle animating; nightmare frames wired for a later dread swap). Save (Ctrl+S).");
+    }
+
+    // Adds/updates the RobertGoesHome routine on Robert and wires it to House C's door halves + a door
+    // point on the ground, so he occasionally walks inside (back sheet) and later back out (front sheet)
+    // with the door swinging. Daylight + player-proximity gated.
+    [MenuItem("Tools/Horror Game/Add Robert Goes Home")]
+    public static void AddRobertGoesHome()
+    {
+        var robert = GameObject.Find("Robert");
+        if (robert == null) { Debug.LogWarning("[HorrorGame] Robert not found — open the Exterior scene first."); return; }
+        var houseC = GameObject.Find("NeighborHouse_C");
+        if (houseC == null) { Debug.LogWarning("[HorrorGame] NeighborHouse_C (Robert's house) not found."); return; }
+
+        var rgh = robert.GetComponent<RobertGoesHome>();
+        if (rgh == null) rgh = Undo.AddComponent<RobertGoesHome>(robert);
+        else Undo.RecordObject(rgh, "Add Robert Goes Home");
+
+        var doors = new List<Game.Houses.TileStripQuad>();
+        Transform doorT = null;
+        foreach (var q in houseC.GetComponentsInChildren<Game.Houses.TileStripQuad>(true))
+            if (q.kind == Game.Houses.TileStripQuad.Kind.DoorTop || q.kind == Game.Houses.TileStripQuad.Kind.DoorBottom)
+            {
+                doors.Add(q);
+                if (q.kind == Game.Houses.TileStripQuad.Kind.DoorTop) doorT = q.transform;
+            }
+        rgh.doorQuads = doors.ToArray();
+        rgh.doorPoint = doorT != null ? new Vector3(doorT.position.x, 0f, doorT.position.z) : new Vector3(23f, 0f, 9f);
+
+        var player = GameObject.Find("Player");
+        rgh.player = player != null ? player.transform : null;
+
+        // Continuous short in/out cycle: a few seconds inside, a few outside, starting by going in.
+        rgh.idleWait = new Vector2(2f, 5f);
+        rgh.insideWait = new Vector2(3f, 6f);
+
+        EditorUtility.SetDirty(rgh);
+        EditorSceneManager.MarkSceneDirty(robert.scene);
+        Debug.Log("[HorrorGame] Robert now cycles in/out of his house (" + doors.Count + " door halves wired, door at " + rgh.doorPoint + "). Enter Play to watch; save (Ctrl+S).");
+    }
+
+    // ----------------------------------------------------------------- world edge
+    // The base ground plane only reached ±40 while the nearest mountain ring sits at r~60, so the
+    // player could walk off the plane into the void. This extends the ground + grass/dirt tiling out
+    // under the mountains, scatters autumn props through the new outer ring so it isn't bare, and rings
+    // the world with an INVISIBLE collider wall just inside the mountains (the CharacterController stops
+    // against it). Operates on the open Exterior scene — does not regenerate it.
+    [MenuItem("Tools/Horror Game/Fix World Edge (Extend Yard + Boundary)")]
+    public static void FixWorldEdge()
+    {
+        var ground = GameObject.Find("Ground");
+        if (ground == null) { Debug.LogWarning("[HorrorGame] 'Ground' not found — open the Exterior scene first."); return; }
+        Undo.RecordObject(ground.transform, "Fix World Edge");
+        ground.transform.localScale = new Vector3(13f, 1f, 13f);   // 130x130 (±65): reaches under the r60 mountains
+        EditorUtility.SetDirty(ground.transform);
+
+        var grass = GameObject.Find("GrassTiles");
+        if (grass != null && grass.GetComponent<GroundTiler>() is GroundTiler tiler)
+        { Undo.RecordObject(tiler, "Fix World Edge"); tiler.worldSize = 130f; tiler.Build(); EditorUtility.SetDirty(tiler); }
+
+        ScatterEdgeProps();          // fill the new outer ring with autumn dressing
+        BuildWorldBoundary(58f, 6f); // invisible wall just inside the mountains
+
+        EditorSceneManager.MarkSceneDirty(ground.scene);
+        Debug.Log("[HorrorGame] Extended the ground/grass to the mountains, scattered edge props, and ringed the world with an invisible boundary at r58. Enter Play; save (Ctrl+S).");
+    }
+
+    // Autumn props (trees, rocks, logs, mushrooms) scattered through the annulus r42..56 so the newly
+    // exposed ground between the old yard and the mountains reads as forest floor, not bare plane.
+    static void ScatterEdgeProps()
+    {
+        SlicePropsAtlas(PropsAutumn, 16f, 0f);
+        var sprites = LoadSheetSprites(PropsAutumn, "");
+        Sprite[] Fr(string n) => sprites.Where(s => s.name.StartsWith(n + "_")).OrderBy(s => s.name).ToArray();
+        Sprite One(string n) { var a = Fr(n); return a.Length > 0 ? a[0] : null; }
+        var mat = SpriteMaterial();
+        var bare = Fr("bareTree");
+
+        var group = GameObject.Find("YardEdgeProps");
+        if (group != null) Undo.DestroyObjectImmediate(group);
+        group = new GameObject("YardEdgeProps");
+        Undo.RegisterCreatedObjectUndo(group, "Fix World Edge");
+        var housesXZ = new[] { new Vector2(-23f, 12f), new Vector2(30f, 27f), new Vector2(23f, 12f) };
+
+        GameObject Spawn(string nm, Vector3 p, Sprite s)
+        {
+            if (s == null) return null;
+            var g = new GameObject(nm); g.transform.SetParent(group.transform, false); g.transform.position = p;
+            var sr = g.AddComponent<SpriteRenderer>(); sr.sprite = s; sr.sharedMaterial = mat; sr.sortingOrder = 0;
+            g.AddComponent<Billboard>();
+            return g;
+        }
+
+        for (int i = 0; i < 48; i++)
+        {
+            float a = Hash01(i * 97 + 5) * Mathf.PI * 2f;
+            float r = 42f + Hash01(i * 131 + 11) * 14f;                 // 42..56, inside the r58 boundary
+            var pos = new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+            bool nearHouse = false;
+            foreach (var h in housesXZ) if ((new Vector2(pos.x, pos.z) - h).sqrMagnitude < 36f) nearHouse = true;
+            if (nearHouse) continue;
+
+            int k = Mathf.FloorToInt(Hash01(i * 211 + 3) * 100f);
+            if (k < 46 && bare.Length > 0)                              // ~46% animated bare trees
+            {
+                var g = Spawn("EdgeTree", pos, bare[0]);
+                if (g != null) { var an = g.AddComponent<LoopSpriteAnimator>(); an.frames = bare; an.fps = 1000f / 240f; an.randomStartPhase = true; }
+            }
+            else
+            {
+                string nm = k < 60 ? "rock" : k < 72 ? "fallenLog" : k < 82 ? "woodpile" : k < 90 ? "hollowTree" : k < 96 ? "mushSickly" : "acorns";
+                Spawn("Edge_" + nm, pos, One(nm));
+            }
+        }
+    }
+
+    // A ring of invisible box colliders at `radius` (tall `height`) so the CharacterController is
+    // stopped just inside the mountains and can't walk off the world. Segments overlap so there are
+    // no gaps to slip through. No renderer -> invisible in play.
+    static void BuildWorldBoundary(float radius, float height)
+    {
+        var existing = GameObject.Find("WorldBoundary");
+        if (existing != null) Undo.DestroyObjectImmediate(existing);
+        var root = new GameObject("WorldBoundary");
+        Undo.RegisterCreatedObjectUndo(root, "Fix World Edge");
+
+        const int segs = 40;
+        float chord = 2f * radius * Mathf.Sin(Mathf.PI / segs);
+        var center = new Vector3(0f, height * 0.5f, 0f);
+        for (int i = 0; i < segs; i++)
+        {
+            float ang = (i / (float)segs) * Mathf.PI * 2f;
+            var seg = new GameObject("Bound_" + i);
+            seg.transform.SetParent(root.transform, false);
+            seg.transform.position = new Vector3(Mathf.Cos(ang) * radius, height * 0.5f, Mathf.Sin(ang) * radius);
+            seg.transform.LookAt(center);                              // local +Z faces the centre (radial)
+            var box = seg.AddComponent<BoxCollider>();
+            box.size = new Vector3(chord * 1.25f, height, 1f);        // X tangent (overlapped), Z radial thickness
+        }
     }
 
     // Import boarded_up_tiles.png like the neighbor atlases: Point filter, no compression, no
