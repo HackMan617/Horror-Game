@@ -57,6 +57,7 @@ public static class HorrorGame3DSetup
     const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
     const string WoodStepsWav = "Assets/Sound Effects/Footsteps on Wooden Floor.wav";
     const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
+    const string PaperSfx   = "Assets/Sound Effects/Paper Crumple.wav";
     const string DogPantWav = "Assets/Sound Effects/Dog Panting.wav";
     const string InteriorFloorTex = "Assets/Art/Environment/interior_floor.png";
     const string InteriorWallTex  = "Assets/Art/Environment/interior_wall.png";
@@ -1058,8 +1059,8 @@ public static class HorrorGame3DSetup
 
         var door = GameObject.Find("NeighborHouse_B/DoorTop");
         Vector3 pos = door != null
-            ? new Vector3(door.transform.position.x, door.transform.position.y, door.transform.position.z - 0.22f)
-            : new Vector3(30f, 1.65f, 23.5f);
+            ? new Vector3(door.transform.position.x, door.transform.position.y, door.transform.position.z - 0.03f)
+            : new Vector3(30f, 1.65f, 23.69f);
 
         var player = GameObject.Find("Player");
         var go = new GameObject("HouseB_Note");
@@ -1072,7 +1073,309 @@ public static class HorrorGame3DSetup
         ns.player = player != null ? player.transform : null;
         ns.farFrames = far;
         ns.nearFrames = near;
+        ns.paperSound = AssetDatabase.LoadAssetAtPath<AudioClip>(PaperSfx);
         return go;
+    }
+
+    // Wires the paper-crumple SFX onto the already-placed door note (NoteSign) without moving/rebuilding
+    // it — plays when the player opens or closes the note. Run after adding Paper Crumple.wav.
+    [MenuItem("Tools/Horror Game/House B/Add Note Crumple Sound")]
+    public static void AddNoteCrumpleSound()
+    {
+        var note = GameObject.Find("HouseB_Note");
+        if (note == null) { Debug.LogWarning("[HorrorGame] HouseB_Note not found — open the Exterior scene first."); return; }
+        var ns = note.GetComponent<NoteSign>();
+        if (ns == null) { Debug.LogWarning("[HorrorGame] HouseB_Note has no NoteSign component."); return; }
+        var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(PaperSfx);
+        if (clip == null) { Debug.LogWarning("[HorrorGame] Paper Crumple.wav missing: " + PaperSfx); return; }
+        Undo.RecordObject(ns, "Add Note Crumple Sound");
+        ns.paperSound = clip;
+        EditorUtility.SetDirty(ns);
+        EditorSceneManager.MarkSceneDirty(note.scene);
+        Debug.Log("[HorrorGame] Wired Paper Crumple.wav to the door note. Save (Ctrl+S) to keep it.");
+    }
+
+    // ----------------------------------------------------------------- board up House B (vacant)
+    // Turns Neighbor House B derelict per BOARDED_UP.md — the horror of a house no one lives in.
+    // Non-destructive & reversible: it only repoints House B's existing opening quads (TileStripQuad)
+    // at boarded_up_tiles.png and adds a few dead-ivy overlays; the 3D shell and layout are untouched.
+    // Windows become smashed/boarded panes (flies orbiting the hole, a moth at the lit upstairs slit),
+    // the door is barricaded with a condemned notice, the chimney goes dead cold (no smoke), and dead
+    // ivy creeps the siding. Vacancy is the whole state (no home/nightmare split — both point at the
+    // one boarded sheet). Run "Restore (Occupied)" to revert.
+    const string BoardedTiles   = "Assets/Animation/boarded_up_tiles.png";
+    const string NeighborBTiles = "Assets/Animation/Neighbor Houses Modified/neighbor_houses_kit/neighbor_B_tiles.png";
+    const string NeighborBNight = "Assets/Animation/Neighbor Houses Modified/neighbor_houses_kit/neighbor_B_tiles_nightmare.png";
+
+    [MenuItem("Tools/Horror Game/House B/Board Up (Vacant)")]
+    public static void BoardUpHouseB()
+    {
+        var houseB = GameObject.Find("NeighborHouse_B");
+        if (houseB == null) { Debug.LogWarning("[HorrorGame] NeighborHouse_B not found — open the Exterior scene first."); return; }
+
+        var boarded = ImportBoardedTiles();
+        if (boarded == null) { Debug.LogWarning("[HorrorGame] boarded_up_tiles.png missing: " + BoardedTiles); return; }
+
+        Undo.RegisterFullObjectHierarchyUndo(houseB, "Board Up House B");
+
+        foreach (var q in houseB.GetComponentsInChildren<Game.Houses.TileStripQuad>(true))
+        {
+            switch (q.kind)
+            {
+                case Game.Houses.TileStripQuad.Kind.WinSil:     // Win_L / Win_R -> smashed pane + flies
+                case Game.Houses.TileStripQuad.Kind.WinCandle:  // Win_Up -> moth at the lit slit
+                    q.tilesHome = boarded; q.tilesNightmare = boarded;
+                    break;
+                case Game.Houses.TileStripQuad.Kind.DoorTop:    // -> planks + condemned notice (static)
+                    q.tilesHome = boarded; q.tilesNightmare = boarded;
+                    q.kind = Game.Houses.TileStripQuad.Kind.BoardedDoorTop;
+                    break;
+                case Game.Houses.TileStripQuad.Kind.DoorBottom: // -> plank brace + threshold weeds (static)
+                    q.tilesHome = boarded; q.tilesNightmare = boarded;
+                    q.kind = Game.Houses.TileStripQuad.Kind.BoardedDoorBottom;
+                    break;
+                case Game.Houses.TileStripQuad.Kind.Smoke:      // dead chimney — no smoke
+                    q.gameObject.SetActive(false);
+                    break;
+            }
+            EditorUtility.SetDirty(q);
+        }
+
+        // The shell itself (rotting warped siding, missing shingles, cracked foundation, crumbling
+        // chimney): House B's walls/roof are textured at runtime by HouseDreadSwap via a property
+        // block, and the boarded atlas is cell-aligned with neighbor_B_tiles, so pointing home & night
+        // at the boarded sheet swaps every wall/roof/foundation/chimney cell for its derelict version.
+        var swap = houseB.GetComponent<HouseDreadSwap>();
+        if (swap != null) { swap.home = boarded; swap.night = boarded; EditorUtility.SetDirty(swap); }
+
+        // The "on vacation" note was mounted 0.22 m proud of the door, so it read as floating off the
+        // wall from the side — pull it flush against the boarded door.
+        var note = GameObject.Find("HouseB_Note");
+        var doorT = houseB.transform.Find("DoorTop");
+        if (note != null && doorT != null)
+        {
+            Undo.RecordObject(note.transform, "Board Up House B");
+            note.transform.position = new Vector3(doorT.position.x, doorT.position.y, doorT.position.z - 0.03f);
+            note.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+
+        // Boarded detail overlays around the WHOLE house — the shell siding is already boarded via
+        // HouseDreadSwap; these add the tile details (boarded/smashed windows, a moth at a slit, dead
+        // ivy, loose planks) on the sides and back too, not just the front. Fresh quads sliced from the
+        // boarded atlas, placed per wall face: front/back sit in the XY plane, the sides rotate 90° into
+        // the ZY plane. NeighborHouseTiles3D is double-sided, so a wall-proud quad reads from outside.
+        foreach (var t in houseB.GetComponentsInChildren<Transform>(true).ToArray())
+            if (t != null && (t.name.StartsWith("Ivy_") || t.name.StartsWith("Boarded_")))
+                Undo.DestroyObjectImmediate(t.gameObject);
+
+        var decalMat = AssetDatabase.LoadAssetAtPath<Material>(NeighborHouseMat);
+        var prim = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        var quadMesh = prim.GetComponent<MeshFilter>().sharedMesh;
+        Object.DestroyImmediate(prim);
+        var decalPlayer = GameObject.Find("Player");
+
+        var Kbw    = Game.Houses.TileStripQuad.Kind.BoardedWindow; // (7,0) static planks over glass
+        var Kbroke = Game.Houses.TileStripQuad.Kind.WinSil;        // row2 smashed pane + flies
+        var Kmoth  = Game.Houses.TileStripQuad.Kind.WinCandle;     // row3 moth at the lit slit
+        var Kivy   = Game.Houses.TileStripQuad.Kind.Overgrowth;    // row4 dead ivy
+        var Kplank = Game.Houses.TileStripQuad.Kind.LoosePlank;    // row5 rattling board
+
+        int decalN = 0;
+        void Decal(Game.Houses.TileStripQuad.Kind kind, int col, int row, Vector3 pos, float yRot, Vector2 size, bool preview)
+        {
+            var q = new GameObject("Boarded_" + (decalN++), typeof(MeshFilter), typeof(MeshRenderer), typeof(Game.Houses.TileStripQuad));
+            q.transform.SetParent(houseB.transform, false);
+            q.transform.localPosition = pos;
+            q.transform.localRotation = Quaternion.Euler(0f, yRot, 0f);
+            q.transform.localScale = new Vector3(size.x, size.y, 1f);
+            q.GetComponent<MeshFilter>().sharedMesh = quadMesh;
+            var mr = q.GetComponent<MeshRenderer>();
+            mr.sharedMaterial = decalMat;
+            var t = q.GetComponent<Game.Houses.TileStripQuad>();
+            t.kind = kind; t.tilesHome = boarded; t.tilesNightmare = boarded;
+            t.atlasWidth = 192; t.atlasHeight = 144; t.tilePx = 24;
+            if (decalPlayer != null) t.player = decalPlayer.transform;
+            if (preview)   // static cell only — an MPB on an animated strip would freeze its frames
+            {
+                float sx = 24f / 192f, sy = 24f / 144f;
+                var mpb = new MaterialPropertyBlock(); mr.GetPropertyBlock(mpb);
+                mpb.SetTexture("_BaseMap", boarded); mpb.SetTexture("_MainTex", boarded);
+                mpb.SetVector("_BaseMap_ST", new Vector4(sx, sy, col * sx, 1f - (row + 1) * sy));
+                mr.SetPropertyBlock(mpb);
+            }
+            Undo.RegisterCreatedObjectUndo(q, "Board Up House B");
+        }
+
+        // Footprint 7.7 (X) x 6.5 (Z): walls at x=±3.85, z=±3.25; decals sit ~0.03 proud of each face.
+        const float FR = -3.28f, BK = 3.28f, LF = -3.88f, RT = 3.88f;
+        var win  = new Vector2(1.2f, 1.2f);
+        var tall = new Vector2(1.2f, 1.3f);
+        var wide = new Vector2(1.35f, 1.0f);
+        // FRONT (z-) — keep dead ivy + a loose plank alongside the boarded windows/door already converted
+        Decal(Kivy,   0, 4, new Vector3(-2.9f, 0.95f, FR), 0f, tall, false);
+        Decal(Kivy,   0, 4, new Vector3( 2.9f, 1.35f, FR), 0f, tall, false);
+        Decal(Kplank, 0, 5, new Vector3(-1.15f, 2.6f, FR), 0f, wide, false);
+        // BACK (z+)
+        Decal(Kbw,    7, 0, new Vector3(-2.0f, 1.7f, BK), 0f, win,  true);
+        Decal(Kbroke, 0, 2, new Vector3( 2.0f, 1.7f, BK), 0f, win,  false);
+        Decal(Kmoth,  0, 3, new Vector3( 0.0f, 3.5f, BK), 0f, win,  false);
+        Decal(Kivy,   0, 4, new Vector3(-3.0f, 0.9f, BK), 0f, tall, false);
+        Decal(Kplank, 0, 5, new Vector3( 1.0f, 2.7f, BK), 0f, wide, false);
+        // LEFT (x-) — rotated into the ZY plane
+        Decal(Kbw,    7, 0, new Vector3(LF, 1.7f, -1.2f), 90f, win,  true);
+        Decal(Kbroke, 0, 2, new Vector3(LF, 1.7f,  1.4f), 90f, win,  false);
+        Decal(Kivy,   0, 4, new Vector3(LF, 0.9f,  0.1f), 90f, tall, false);
+        Decal(Kplank, 0, 5, new Vector3(LF, 2.9f, -1.6f), 90f, wide, false);
+        // RIGHT (x+)
+        Decal(Kbw,    7, 0, new Vector3(RT, 1.7f, -1.2f), 90f, win,  true);
+        Decal(Kmoth,  0, 3, new Vector3(RT, 3.4f,  1.0f), 90f, win,  false);
+        Decal(Kivy,   0, 4, new Vector3(RT, 1.0f,  1.7f), 90f, tall, false);
+        Decal(Kplank, 0, 5, new Vector3(RT, 2.6f, -1.7f), 90f, wide, false);
+
+        EditorSceneManager.MarkSceneDirty(houseB.scene);
+        Debug.Log("[HorrorGame] House B boarded up — save the scene (Ctrl+S) to keep it. Restore via Tools > Horror Game > House B > Restore.");
+    }
+
+    [MenuItem("Tools/Horror Game/House B/Restore (Occupied)")]
+    public static void RestoreHouseB()
+    {
+        var houseB = GameObject.Find("NeighborHouse_B");
+        if (houseB == null) { Debug.LogWarning("[HorrorGame] NeighborHouse_B not found."); return; }
+        var home  = AssetDatabase.LoadAssetAtPath<Texture2D>(NeighborBTiles);
+        var night = AssetDatabase.LoadAssetAtPath<Texture2D>(NeighborBNight);
+        if (home == null) { Debug.LogWarning("[HorrorGame] neighbor_B_tiles.png missing: " + NeighborBTiles); return; }
+
+        Undo.RegisterFullObjectHierarchyUndo(houseB, "Restore House B");
+        foreach (var t in houseB.GetComponentsInChildren<Transform>(true).ToArray())
+            if (t != null && (t.name.StartsWith("Ivy_") || t.name.StartsWith("Boarded_"))) Undo.DestroyObjectImmediate(t.gameObject);
+
+        foreach (var q in houseB.GetComponentsInChildren<Game.Houses.TileStripQuad>(true))
+        {
+            if (q.kind == Game.Houses.TileStripQuad.Kind.BoardedDoorTop)    q.kind = Game.Houses.TileStripQuad.Kind.DoorTop;
+            if (q.kind == Game.Houses.TileStripQuad.Kind.BoardedDoorBottom) q.kind = Game.Houses.TileStripQuad.Kind.DoorBottom;
+            q.tilesHome = home; q.tilesNightmare = night;
+            if (q.kind == Game.Houses.TileStripQuad.Kind.Smoke && !q.gameObject.activeSelf) q.gameObject.SetActive(true);
+            EditorUtility.SetDirty(q);
+        }
+        var swap = houseB.GetComponent<HouseDreadSwap>();
+        if (swap != null) { swap.home = home; swap.night = night; EditorUtility.SetDirty(swap); }
+        EditorSceneManager.MarkSceneDirty(houseB.scene);
+        Debug.Log("[HorrorGame] House B restored to occupied — save the scene (Ctrl+S) to keep it.");
+    }
+
+    // ----------------------------------------------------------------- Robert's chimney smoke
+    // Robert's house (NeighborHouse_C, the saltbox he stands in front of) had no visible chimney. This
+    // builds a fieldstone chimney from neighbor_B_tiles.png (the ChimneyBody + ChimneyTop cells, so it
+    // matches the neighbours' stone look) on the FRONT of C's ridge, plus the player cabin's pooled
+    // ChimneySmoke plume tuned LARGE — a warm, lived-in chimney rising above Robert's roof (a deliberate
+    // contrast to the dead, boarded House B). Re-runnable: replaces any prior build.
+    const string PlayerChimneyPath = "House/Chimney";
+    const string NeighborHouseMat  = "Assets/Settings/3D/NeighborHouseTiles3D.mat";
+
+    [MenuItem("Tools/Horror Game/Add Robert Chimney Smoke")]
+    public static void AddRobertChimneySmoke()
+    {
+        var houseC = GameObject.Find("NeighborHouse_C");
+        if (houseC == null) { Debug.LogWarning("[HorrorGame] NeighborHouse_C (Robert's house) not found — open the Exterior scene first."); return; }
+        var neighborB = AssetDatabase.LoadAssetAtPath<Texture2D>(NeighborBTiles);
+        var tilesMat  = AssetDatabase.LoadAssetAtPath<Material>(NeighborHouseMat);
+        if (neighborB == null || tilesMat == null) { Debug.LogWarning("[HorrorGame] neighbor_B_tiles.png / NeighborHouseTiles3D.mat missing."); return; }
+
+        // Replace any previous build so this is idempotent.
+        var prev = houseC.transform.Find("RobertChimney");
+        if (prev != null) Undo.DestroyObjectImmediate(prev.gameObject);
+
+        // Root on the FRONT of C's ridge so the player (who approaches from the south / -z, past Robert)
+        // sees it — the back slope was hiding the old stack. Walls top ~y5, saltbox ridge ~6.8.
+        var root = new GameObject("RobertChimney");
+        root.transform.SetParent(houseC.transform, false);
+        root.transform.localPosition = new Vector3(1.0f, 6.6f, -0.6f);
+
+        // Shared unit quad; TileStripQuad expects a 0-1 UV quad and scrolls the atlas UVs itself.
+        var prim = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        var quadMesh = prim.GetComponent<MeshFilter>().sharedMesh;
+        Object.DestroyImmediate(prim);
+        var playerT = GameObject.Find("Player");
+
+        // Build one chimney face from a neighbor_B cell. TileStripQuad only textures the material at
+        // play, so also push the cell into a property block for an in-editor preview.
+        void MakeFace(string nm, Game.Houses.TileStripQuad.Kind kind, int col, int row, Vector3 lp, Vector3 ls)
+        {
+            var q = new GameObject(nm, typeof(MeshFilter), typeof(MeshRenderer), typeof(Billboard), typeof(Game.Houses.TileStripQuad));
+            q.transform.SetParent(root.transform, false);
+            q.transform.localPosition = lp;
+            q.transform.localScale = ls;
+            q.GetComponent<MeshFilter>().sharedMesh = quadMesh;
+            var mr = q.GetComponent<MeshRenderer>();
+            mr.sharedMaterial = tilesMat;
+            q.GetComponent<Billboard>().yAxisOnly = true;
+            var t = q.GetComponent<Game.Houses.TileStripQuad>();
+            t.kind = kind; t.tilesHome = neighborB; t.tilesNightmare = neighborB;
+            t.atlasWidth = 192; t.atlasHeight = 144; t.tilePx = 24;
+            if (playerT != null) t.player = playerT.transform;
+
+            float sx = 24f / 192f, sy = 24f / 144f;
+            var mpb = new MaterialPropertyBlock();
+            mr.GetPropertyBlock(mpb);
+            mpb.SetTexture("_BaseMap", neighborB);
+            mpb.SetTexture("_MainTex", neighborB);
+            mpb.SetVector("_BaseMap_ST", new Vector4(sx, sy, col * sx, 1f - (row + 1) * sy));
+            mr.SetPropertyBlock(mpb);
+        }
+        // Fieldstone stack + capped top (with flue pots), stacked to poke above the front roofline.
+        MakeFace("Stack", Game.Houses.TileStripQuad.Kind.ChimneyBody, 4, 1, new Vector3(0f, 0f,   0f), new Vector3(0.95f, 1.3f,  1f));
+        MakeFace("Cap",   Game.Houses.TileStripQuad.Kind.ChimneyTop,  5, 1, new Vector3(0f, 0.9f, 0f), new Vector3(1.05f, 0.65f, 1f));
+
+        // Plume: clone the player cabin's pooled ChimneySmoke emitter and tune it large & billowy.
+        var smokeSrc = GameObject.Find(PlayerChimneyPath + "/ChimneySmoke");
+        if (smokeSrc != null)
+        {
+            var smokeGo = Object.Instantiate(smokeSrc, root.transform);
+            smokeGo.name = "ChimneySmoke";
+            smokeGo.transform.localPosition = new Vector3(0f, 1.25f, 0f);
+            var smoke = smokeGo.GetComponent<ChimneySmoke>();
+            if (smoke != null)
+            {
+                smoke.poolSize     = 14;
+                smoke.emitInterval = 0.4f;
+                smoke.riseSpeed    = 1.15f;
+                smoke.driftAmount  = 0.4f;
+                smoke.life         = 4.2f;
+                smoke.startScale   = 0.45f;
+                smoke.endScale     = 2.3f;
+                smoke.tint         = new Color(0.82f, 0.82f, 0.86f, 0.7f);
+            }
+        }
+        else Debug.LogWarning("[HorrorGame] '" + PlayerChimneyPath + "/ChimneySmoke' not found — chimney built without a plume.");
+
+        // Retire C's old tile-strip smoke quad (the one that wasn't reading) so there's no faint double.
+        var oldSmoke = houseC.transform.Find("Smoke");
+        if (oldSmoke != null) oldSmoke.gameObject.SetActive(false);
+
+        Undo.RegisterCreatedObjectUndo(root, "Add Robert Chimney Smoke");
+        EditorSceneManager.MarkSceneDirty(houseC.scene);
+        Debug.Log("[HorrorGame] Built a neighbor-stone chimney + large plume on Robert's house (NeighborHouse_C). Enter Play to see it; save (Ctrl+S) to keep it.");
+    }
+
+    // Import boarded_up_tiles.png like the neighbor atlases: Point filter, no compression, no
+    // mipmaps (crisp 24-px cells). Returns the loaded texture.
+    static Texture2D ImportBoardedTiles()
+    {
+        var imp = AssetImporter.GetAtPath(BoardedTiles) as TextureImporter;
+        if (imp != null)
+        {
+            bool dirty = imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled;
+            if (dirty)
+            {
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.SaveAndReimport();
+            }
+        }
+        return AssetDatabase.LoadAssetAtPath<Texture2D>(BoardedTiles);
     }
 
     // -------------------------------------------------------------- cobblestone pathway

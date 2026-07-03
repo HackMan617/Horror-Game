@@ -18,7 +18,13 @@ namespace Game.Houses
     [RequireComponent(typeof(MeshRenderer))]
     public class TileStripQuad : MonoBehaviour
     {
-        public enum Kind { WinSil, WinCandle, Smoke, LoosePlank, DoorTop, DoorBottom }
+        // 0-5 are the neighbor-house strips (do NOT reorder — scenes serialize these as ints).
+        // 6-9 are the boarded/vacant cells (BOARDED_UP.md): a house goes derelict by pointing these
+        // quads at boarded_up_tiles.png. The door/window statics are single-frame; Overgrowth is the
+        // dead-ivy strip on row 4 for creeping the siding.
+        public enum Kind { WinSil, WinCandle, Smoke, LoosePlank, DoorTop, DoorBottom,
+                           BoardedDoorTop, BoardedDoorBottom, BoardedWindow, Overgrowth,
+                           ChimneyBody, ChimneyTop }
 
         [Header("Atlas")]
         public Texture2D tilesHome;
@@ -65,7 +71,15 @@ namespace Game.Houses
                 case Kind.Smoke:      col0=0; row=4; frames=6; ms=150; break;
                 case Kind.LoosePlank: col0=0; row=5; frames=4; ms=240; break;
                 case Kind.DoorTop:    col0=4; row=3; frames=4; ms=300; break;
-                default:              col0=4; row=5; frames=4; ms=300; break; // DoorBottom
+                case Kind.DoorBottom: col0=4; row=5; frames=4; ms=300; break;
+                // --- boarded / vacant cells (static single-frame, except the ivy strip) ---
+                case Kind.BoardedDoorTop:    col0=5; row=0; frames=1; ms=1000; break; // planks + condemned notice
+                case Kind.BoardedDoorBottom: col0=6; row=0; frames=1; ms=1000; break; // plank brace + threshold weeds
+                case Kind.BoardedWindow:     col0=7; row=0; frames=1; ms=1000; break; // three planks over black glass
+                case Kind.Overgrowth:        col0=0; row=4; frames=6; ms=200;  break; // dead ivy creeping the siding
+                case Kind.ChimneyBody:       col0=4; row=1; frames=1; ms=1000; break; // stone chimney stack
+                case Kind.ChimneyTop:        col0=5; row=1; frames=1; ms=1000; break; // stone chimney top + flue pots
+                default:              col0=4; row=5; frames=4; ms=300; break; // (fallback) DoorBottom
             }
         }
 
