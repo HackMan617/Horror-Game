@@ -91,7 +91,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -105,7 +105,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,7 +129,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -154,419 +154,419 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: props_robert_0
+      name: dish_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 31
-        width: 25
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 45b9d0e65375ea470800000000000000
-      internalID: 8407753441338563412
+      spriteID: 190936aca3d82984f2c9337f33fd1c3d
+      internalID: 1693841719
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_1
+      name: dish_1
       rect:
         serializedVersion: 2
-        x: 34
-        y: 31
-        width: 23
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 32
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ee422c5fb078c4770800000000000000
-      internalID: 8596394274180965614
+      spriteID: 3ffc984ddc5e425ce915794289667434
+      internalID: -1597879868
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_2
+      name: dish_2
       rect:
         serializedVersion: 2
-        x: 69
-        y: 31
-        width: 21
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 64
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f9ede0bcc67c65570800000000000000
-      internalID: 8455164620511829663
+      spriteID: 72453d840d8b21801431d83f3ccad5a2
+      internalID: -136619947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_3
+      name: crt_0
       rect:
         serializedVersion: 2
-        x: 102
-        y: 33
-        width: 23
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 96
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 05b5a3d52bc14fd70800000000000000
-      internalID: 9075910701452254032
+      spriteID: 65b4944dca433c735fd7955f39b97a59
+      internalID: -1125887584
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_4
+      name: crt_1
       rect:
         serializedVersion: 2
-        x: 134
-        y: 33
-        width: 23
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 128
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1e5d646c137250420800000000000000
-      internalID: 2595523854982370785
+      spriteID: 8bf9ad36f7a5bf1d70d56fc5825d817f
+      internalID: -262704540
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_5
+      name: crt_2
       rect:
         serializedVersion: 2
-        x: 166
-        y: 33
-        width: 23
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 160
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 57dafb55913a833c0800000000000000
-      internalID: -4379571308409672331
+      spriteID: abf940a241d941ba42643e01bc870513
+      internalID: -1484168887
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_6
+      name: serverTower_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 0
-        width: 15
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 73091c598377c6c60800000000000000
-      internalID: 7812750538495332407
+      spriteID: 229a7aac40afd6c7f5b37c00f9c1936a
+      internalID: -258257734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_7
+      name: serverTower_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 0
-        width: 15
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e38ca43b4dcfb9150800000000000000
-      internalID: 5880571728933603390
+      spriteID: 64d1c658788ca32157e0de565d3bd9aa
+      internalID: 285379925
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_8
+      name: serverTower_2
       rect:
         serializedVersion: 2
-        x: 34
+        x: 32
         y: 0
-        width: 15
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f01114ef52918fcd0800000000000000
-      internalID: -2524239940171001585
+      spriteID: 4b60b4f8497ca9b9585bd1f5296d8070
+      internalID: -268763421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_9
+      name: scope_0
       rect:
         serializedVersion: 2
         x: 48
-        y: 17
+        y: 16
         width: 32
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 80bb0c8fad36179b0800000000000000
-      internalID: -5084172712197178616
+      spriteID: 8309f2ceaf79faf69fa1d2a8dc16c350
+      internalID: -2107148502
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_10
+      name: scope_1
       rect:
         serializedVersion: 2
         x: 80
-        y: 17
+        y: 16
         width: 32
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b786cfe9500b94290800000000000000
-      internalID: -7905594132683528069
+      spriteID: 4a9e051919e03f2c354f9253e5802053
+      internalID: -1797569548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_11
+      name: scope_2
       rect:
         serializedVersion: 2
         x: 112
-        y: 17
+        y: 16
         width: 32
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9dea56eb30fcb3f20800000000000000
-      internalID: 3403541558394728153
+      spriteID: e1cbc46911682dd1c6b5f901cbc90ff2
+      internalID: -520016985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_12
+      name: scope_3
       rect:
         serializedVersion: 2
         x: 144
-        y: 17
+        y: 16
         width: 32
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9791bcbd9158a5e20800000000000000
-      internalID: 3340128419756841337
+      spriteID: 5f723c9af8f54a6c4c0a4d3c0e4642ec
+      internalID: -1656653862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_13
+      name: hacksaw_0
       rect:
         serializedVersion: 2
-        x: 177
-        y: 15
+        x: 48
+        y: 0
+        width: 32
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a03cda329066752d7bf0fd75e723d18
+      internalID: -94411756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hacksaw_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 32
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73cf3a16a0633a35fcb32e417c10610d
+      internalID: -507140387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cables_0
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
         width: 16
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 413696be0f09f1560800000000000000
-      internalID: 7286702086524855060
+      spriteID: c678db3f3c0b30dedbce9e71daee89f7
+      internalID: -2073703269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_14
+      name: cables_1
       rect:
         serializedVersion: 2
-        x: 193
-        y: 15
-        width: 15
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 192
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 70880edc9945f6790800000000000000
-      internalID: -7534710632006776825
+      spriteID: 4f99cf7bf08f36331ae931c185f4b0d0
+      internalID: 100233646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_15
+      name: battery_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 1
-        width: 31
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 176
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cac6fcbe4b4227a30800000000000000
-      internalID: 4211468961013787820
+      spriteID: e37a7b43a8d8a5626fe432eb1f20ce85
+      internalID: -1019944397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_16
+      name: battery_1
       rect:
         serializedVersion: 2
-        x: 82
-        y: 1
-        width: 31
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 192
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c8e8e0055b1960260800000000000000
-      internalID: 7063493273495441036
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: props_robert_17
-      rect:
-        serializedVersion: 2
-        x: 178
-        y: 1
-        width: 14
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 873df3fa4262d2180800000000000000
-      internalID: -9138606129863994504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: props_robert_18
-      rect:
-        serializedVersion: 2
-        x: 194
-        y: 1
-        width: 14
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bd3c872c07a346af0800000000000000
-      internalID: -404133810583059493
+      spriteID: 2bb1e23a839de83a1cafa23ff0eb0f93
+      internalID: -1722795200
       vertices: []
       indices: 
       edges: []
@@ -575,7 +575,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3d4b5b940f1e7d64ea83b12fb402ac09
     internalID: 0
     vertices: []
     indices: 
@@ -585,25 +585,25 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      props_robert_0: 8407753441338563412
-      props_robert_1: 8596394274180965614
-      props_robert_10: -7905594132683528069
-      props_robert_11: 3403541558394728153
-      props_robert_12: 3340128419756841337
-      props_robert_13: 7286702086524855060
-      props_robert_14: -7534710632006776825
-      props_robert_15: 4211468961013787820
-      props_robert_16: 7063493273495441036
-      props_robert_17: -9138606129863994504
-      props_robert_18: -404133810583059493
-      props_robert_2: 8455164620511829663
-      props_robert_3: 9075910701452254032
-      props_robert_4: 2595523854982370785
-      props_robert_5: -4379571308409672331
-      props_robert_6: 7812750538495332407
-      props_robert_7: 5880571728933603390
-      props_robert_8: -2524239940171001585
-      props_robert_9: -5084172712197178616
+      battery_0: -1019944397
+      battery_1: -1722795200
+      cables_0: -2073703269
+      cables_1: 100233646
+      crt_0: -1125887584
+      crt_1: -262704540
+      crt_2: -1484168887
+      dish_0: 1693841719
+      dish_1: -1597879868
+      dish_2: -136619947
+      hacksaw_0: -94411756
+      hacksaw_1: -507140387
+      scope_0: -2107148502
+      scope_1: -1797569548
+      scope_2: -520016985
+      scope_3: -1656653862
+      serverTower_0: -258257734
+      serverTower_1: 285379925
+      serverTower_2: -268763421
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

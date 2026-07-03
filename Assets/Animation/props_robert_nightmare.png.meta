@@ -91,7 +91,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -105,7 +105,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,7 +129,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -154,419 +154,419 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: props_robert_nightmare_0
+      name: dish_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 31
-        width: 25
+        x: 0
+        y: 32
+        width: 32
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: db56a949e58999790800000000000000
-      internalID: -7522814170558208579
+      spriteID: 689420af869e0f49c78705f3c2985fa5
+      internalID: -695800634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_1
+      name: dish_1
       rect:
         serializedVersion: 2
-        x: 36
-        y: 31
-        width: 25
+        x: 32
+        y: 32
+        width: 32
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6503fa497c0ba5fb0800000000000000
-      internalID: -4658216493321867178
+      spriteID: ad04416aae44dd5c45cf0cc462a4fb32
+      internalID: 698170490
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_2
+      name: dish_2
       rect:
         serializedVersion: 2
-        x: 68
-        y: 31
-        width: 25
+        x: 64
+        y: 32
+        width: 32
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 12f923ca837cb5b50800000000000000
-      internalID: 6583074326553206561
+      spriteID: d214d00cfb911d4292c9b5184e98e24b
+      internalID: 135322511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_3
+      name: crt_0
       rect:
         serializedVersion: 2
-        x: 102
-        y: 33
-        width: 22
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 96
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 17b208b833b0008d0800000000000000
-      internalID: -2882291445505447055
+      spriteID: b9e8da8802039e96c79c3006fe32ca2f
+      internalID: 1453174572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_4
+      name: crt_1
       rect:
         serializedVersion: 2
-        x: 134
-        y: 33
-        width: 22
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 128
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6431cd03fc67f7650800000000000000
-      internalID: 6232831041554092870
+      spriteID: c383f31174d4a08e102ff5235a59e8cf
+      internalID: 342510419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_5
+      name: crt_2
       rect:
         serializedVersion: 2
-        x: 166
-        y: 33
-        width: 22
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 160
+        y: 32
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 449f33fe86ae517f0800000000000000
-      internalID: -642349635419768508
+      spriteID: cae41cdaeec655ad11f3ebe9e5ee0152
+      internalID: -1367105247
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_6
+      name: serverTower_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 0
-        width: 15
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 17f796ba49d5a1430800000000000000
-      internalID: 3754416132479090545
+      spriteID: 60b38e965a53f37bc5694796faa2407b
+      internalID: -925897544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_7
+      name: serverTower_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 0
-        width: 15
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 155e29f97c8dc19a0800000000000000
-      internalID: -6260891030064536239
+      spriteID: 0b8ec9a788201a7c40b340d366e9a9fa
+      internalID: 503359498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_8
+      name: serverTower_2
       rect:
         serializedVersion: 2
-        x: 34
+        x: 32
         y: 0
-        width: 15
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 16
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a6ad0cc98826cbe90800000000000000
-      internalID: -7008618581210375574
+      spriteID: a499d98923909b3c50ad202607fc9836
+      internalID: -171516607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_9
+      name: scope_0
       rect:
         serializedVersion: 2
         x: 48
-        y: 15
+        y: 16
         width: 32
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ca76125d9cd0d4700800000000000000
-      internalID: 526091891987539884
+      spriteID: 5ecb174669beba44d81f531aefe88722
+      internalID: -619996048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_10
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 0
-        width: 31
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1c602825248b3a340800000000000000
-      internalID: 4873941816736614081
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: props_robert_nightmare_11
+      name: scope_1
       rect:
         serializedVersion: 2
         x: 80
-        y: 15
+        y: 16
         width: 32
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cb03c6b635d1a4b90800000000000000
-      internalID: -7256955605432389444
+      spriteID: 55beef4316030ba17a0c72779993d327
+      internalID: 1945932146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_12
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 0
-        width: 31
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fd0adb047f4af2d50800000000000000
-      internalID: 6714766951282745567
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: props_robert_nightmare_13
+      name: scope_2
       rect:
         serializedVersion: 2
         x: 112
-        y: 15
+        y: 16
         width: 32
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 38acd12871d252660800000000000000
-      internalID: 7360338744997431939
+      spriteID: 69c2e7d4a919be69c226dc0deb246bf1
+      internalID: 703411334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_14
+      name: scope_3
       rect:
         serializedVersion: 2
         x: 144
-        y: 15
+        y: 16
         width: 32
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 40ef4d849fce81010800000000000000
-      internalID: 1159937459460832772
+      spriteID: abe9081555ec354b45f3e1937645f6f3
+      internalID: 464098180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_15
+      name: hacksaw_0
       rect:
         serializedVersion: 2
-        x: 177
-        y: 15
+        x: 48
+        y: 0
+        width: 32
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2517bb2b2f48bd5540def5fc9a05d1cc
+      internalID: 919012709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hacksaw_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 32
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3445ef51a1f2b4bf15a9bfe0a9aa7683
+      internalID: -1888431886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cables_0
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
         width: 16
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 818261c0cadf15030800000000000000
-      internalID: 3481842902313084952
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: props_robert_nightmare_16
-      rect:
-        serializedVersion: 2
-        x: 177
-        y: 0
-        width: 15
         height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: df868b87325a5e6a0800000000000000
-      internalID: -6420544121978984195
+      spriteID: 405b61b8d95cb69b9149a29591e6794b
+      internalID: -1933645691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: props_robert_nightmare_17
+      name: cables_1
       rect:
         serializedVersion: 2
-        x: 193
-        y: 15
-        width: 15
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 48b0dc671a31669d0800000000000000
-      internalID: -2781514135650890876
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: props_robert_nightmare_18
-      rect:
-        serializedVersion: 2
-        x: 193
-        y: 0
-        width: 15
+        x: 192
+        y: 16
+        width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 535d35c4c709ef500800000000000000
-      internalID: 431941477805053237
+      spriteID: e75241ab160fe5653dd39564a33e16de
+      internalID: -690749358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: battery_0
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3cd51868a797ca86c55d4bee4c92e8b
+      internalID: -1685799414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: battery_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44263241cad5012c7a4cb3cc83982064
+      internalID: 1667631723
       vertices: []
       indices: 
       edges: []
@@ -575,7 +575,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e6d2cfe1f421c354d99bcb0ca2181b4d
     internalID: 0
     vertices: []
     indices: 
@@ -585,25 +585,25 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      props_robert_nightmare_0: -7522814170558208579
-      props_robert_nightmare_1: -4658216493321867178
-      props_robert_nightmare_10: 4873941816736614081
-      props_robert_nightmare_11: -7256955605432389444
-      props_robert_nightmare_12: 6714766951282745567
-      props_robert_nightmare_13: 7360338744997431939
-      props_robert_nightmare_14: 1159937459460832772
-      props_robert_nightmare_15: 3481842902313084952
-      props_robert_nightmare_16: -6420544121978984195
-      props_robert_nightmare_17: -2781514135650890876
-      props_robert_nightmare_18: 431941477805053237
-      props_robert_nightmare_2: 6583074326553206561
-      props_robert_nightmare_3: -2882291445505447055
-      props_robert_nightmare_4: 6232831041554092870
-      props_robert_nightmare_5: -642349635419768508
-      props_robert_nightmare_6: 3754416132479090545
-      props_robert_nightmare_7: -6260891030064536239
-      props_robert_nightmare_8: -7008618581210375574
-      props_robert_nightmare_9: 526091891987539884
+      battery_0: -1685799414
+      battery_1: 1667631723
+      cables_0: -1933645691
+      cables_1: -690749358
+      crt_0: 1453174572
+      crt_1: 342510419
+      crt_2: -1367105247
+      dish_0: -695800634
+      dish_1: 698170490
+      dish_2: 135322511
+      hacksaw_0: 919012709
+      hacksaw_1: -1888431886
+      scope_0: -619996048
+      scope_1: 1945932146
+      scope_2: 703411334
+      scope_3: 464098180
+      serverTower_0: -925897544
+      serverTower_1: 503359498
+      serverTower_2: -171516607
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
