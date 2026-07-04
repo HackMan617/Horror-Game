@@ -997,6 +997,96 @@ public static class HorrorGame3DSetup
             BuildBirds(SpriteMaterial(), sky);
     }
 
+    // -------------------------------------------------------------- clouds (ambient sky backdrop)
+    // clouds_atmo.png atlas (120x54, top-left origin): five silhouettes, 2 shimmer frames each. See CLOUDS.md.
+    const string CloudsPng = "Assets/Animation/clouds_atmo.png";
+    const int CloudsAtlasH = 54;
+    static readonly PropCell[] CloudAtlas =
+    {
+        new PropCell("cloudWisp",  0,  0, 14,  5, 2),
+        new PropCell("cloudSmall", 0,  5, 20,  8, 2),
+        new PropCell("cloudMed",   0, 13, 30, 11, 2),
+        new PropCell("cloudLarge", 0, 24, 42, 14, 2),
+        new PropCell("cloudHero",  0, 38, 60, 16, 2),
+    };
+
+    // Slices clouds_atmo.png into centre-pivoted per-frame sprites (cloudWisp_0.., etc.).
+    static void SliceCloudsAtlas(string path, float ppu)
+    {
+        if (!(AssetImporter.GetAtPath(path) is TextureImporter imp)) return;
+        imp.textureType = TextureImporterType.Sprite;
+        imp.spriteImportMode = SpriteImportMode.Multiple;
+        imp.filterMode = FilterMode.Point;
+        imp.textureCompression = TextureImporterCompression.Uncompressed;
+        imp.spritePixelsPerUnit = ppu;
+        imp.mipmapEnabled = false;
+        imp.wrapMode = TextureWrapMode.Clamp;
+
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dp = factory.GetSpriteEditorDataProviderFromObject(imp);
+        dp.InitSpriteEditorDataProvider();
+
+        var rects = new List<SpriteRect>();
+        foreach (var p in CloudAtlas)
+            for (int f = 0; f < p.frames; f++)
+                rects.Add(new SpriteRect
+                {
+                    name = p.name + "_" + f,
+                    spriteID = StableGuid(path + "#" + p.name + f),
+                    rect = new Rect(p.x + f * p.w, CloudsAtlasH - (p.y + p.h), p.w, p.h),
+                    pivot = new Vector2(0.5f, 0.5f),
+                    alignment = SpriteAlignment.Custom,
+                    border = Vector4.zero,
+                });
+        dp.SetSpriteRects(rects.ToArray());
+        try
+        {
+            var nid = dp.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            if (nid != null) nid.SetNameFileIdPairs(rects.Select(r => new SpriteNameFileIdPair(r.name, r.spriteID)));
+        }
+        catch { }
+        dp.Apply();
+        imp.SaveAndReimport();
+    }
+
+    // Builds the ambient cloud backdrop (spawns/animates at runtime via CloudLayer), wired to the sky
+    // so the clouds ride its rect just behind the sun/moon. Uses the shared unlit sprite material.
+    public static GameObject BuildClouds(Material spriteMat, SkyController sky)
+    {
+        SliceCloudsAtlas(CloudsPng, 16f);
+        var wisp  = LoadSheetSprites(CloudsPng, "cloudWisp_");
+        var small = LoadSheetSprites(CloudsPng, "cloudSmall_");
+        var med   = LoadSheetSprites(CloudsPng, "cloudMed_");
+        var large = LoadSheetSprites(CloudsPng, "cloudLarge_");
+        var hero  = LoadSheetSprites(CloudsPng, "cloudHero_");
+        if (wisp.Length + small.Length + med.Length + large.Length + hero.Length == 0)
+        {
+            Debug.LogWarning("[HorrorGame] clouds atlas missing / failed to slice: " + CloudsPng);
+            return null;
+        }
+
+        var go = new GameObject("Clouds");
+        var layer = go.AddComponent<CloudLayer>();
+        layer.wispFrames  = wisp;
+        layer.smallFrames = small;
+        layer.medFrames   = med;
+        layer.largeFrames = large;
+        layer.heroFrames  = hero;
+        layer.material    = spriteMat;
+        layer.sky         = sky;
+        return go;
+    }
+
+    // Adds the ambient cloud backdrop to the CURRENTLY-OPEN Exterior scene without rebuilding it (so
+    // hand edits survive). Call, then save the scene. Idempotent — skips if a Clouds layer exists.
+    public static void SetupExteriorClouds()
+    {
+        var sky = Object.FindObjectOfType<SkyController>();
+        if (GameObject.Find("Clouds") == null)
+            BuildClouds(SpriteMaterial(), sky);
+    }
+
     // note_sign.png (176x80, top-left origin): the small illegible "far" note that pins to the door,
     // and the readable "near" close-up shown on interact. Each holds 2 slow droop frames. See NOTE.md.
     const int NoteAtlasH = 80;

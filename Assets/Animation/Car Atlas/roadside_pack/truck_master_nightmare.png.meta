@@ -1,0 +1,1989 @@
+fileFormatVersion: 2
+guid: e5ddd01d122fb9645a4cfbf7d377f90e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3197499724915509368
+    second: truck_master_nightmare_0
+  - first:
+      213: -4440021141417271375
+    second: truck_master_nightmare_1
+  - first:
+      213: -768918542221354000
+    second: truck_master_nightmare_2
+  - first:
+      213: -5336522399499553720
+    second: truck_master_nightmare_3
+  - first:
+      213: -2232081689881408243
+    second: truck_master_nightmare_4
+  - first:
+      213: 1579639303661152645
+    second: truck_master_nightmare_5
+  - first:
+      213: -4172879520057334858
+    second: truck_master_nightmare_6
+  - first:
+      213: -8792229777047350614
+    second: truck_master_nightmare_7
+  - first:
+      213: -6889874783311757386
+    second: truck_master_nightmare_8
+  - first:
+      213: -1177116050483248510
+    second: truck_master_nightmare_9
+  - first:
+      213: -6112087465420763578
+    second: truck_master_nightmare_10
+  - first:
+      213: -90159557367078823
+    second: truck_master_nightmare_11
+  - first:
+      213: 9074754457133649484
+    second: truck_master_nightmare_12
+  - first:
+      213: 2172212876901560468
+    second: truck_master_nightmare_13
+  - first:
+      213: -7064937261717422371
+    second: truck_master_nightmare_14
+  - first:
+      213: 3704469370876200329
+    second: truck_master_nightmare_15
+  - first:
+      213: -5768347206465481147
+    second: truck_master_nightmare_16
+  - first:
+      213: 6922483881044035145
+    second: truck_master_nightmare_17
+  - first:
+      213: -8824499152260127386
+    second: truck_master_nightmare_18
+  - first:
+      213: 2234556515325606929
+    second: truck_master_nightmare_19
+  - first:
+      213: -5806359533438342241
+    second: truck_master_nightmare_20
+  - first:
+      213: -6221660436507180809
+    second: truck_master_nightmare_21
+  - first:
+      213: -3309112987196961129
+    second: truck_master_nightmare_22
+  - first:
+      213: 2979917751110015297
+    second: truck_master_nightmare_23
+  - first:
+      213: 3893966888394475921
+    second: truck_master_nightmare_24
+  - first:
+      213: 4875344403086610917
+    second: truck_master_nightmare_25
+  - first:
+      213: 533525281419172941
+    second: truck_master_nightmare_26
+  - first:
+      213: 6888586405370362712
+    second: truck_master_nightmare_27
+  - first:
+      213: 882844924796449801
+    second: truck_master_nightmare_28
+  - first:
+      213: 5603674878832364234
+    second: truck_master_nightmare_29
+  - first:
+      213: 7757294196282169760
+    second: truck_master_nightmare_30
+  - first:
+      213: -3501769151458217048
+    second: truck_master_nightmare_31
+  - first:
+      213: 702670492430973508
+    second: truck_master_nightmare_32
+  - first:
+      213: 1940415952043056649
+    second: truck_master_nightmare_33
+  - first:
+      213: 8756430405940971022
+    second: truck_master_nightmare_34
+  - first:
+      213: 350872600918015859
+    second: truck_master_nightmare_35
+  - first:
+      213: 4325981959829276432
+    second: truck_master_nightmare_36
+  - first:
+      213: -930829268824174826
+    second: truck_master_nightmare_37
+  - first:
+      213: 8500163605753087593
+    second: truck_master_nightmare_38
+  - first:
+      213: -6940686018026561449
+    second: truck_master_nightmare_39
+  - first:
+      213: -7298392027322577103
+    second: truck_master_nightmare_40
+  - first:
+      213: 4015361792751726610
+    second: truck_master_nightmare_41
+  - first:
+      213: 1193797950685726810
+    second: truck_master_nightmare_42
+  - first:
+      213: 3499661366644643085
+    second: truck_master_nightmare_43
+  - first:
+      213: 8451726167078781457
+    second: truck_master_nightmare_44
+  - first:
+      213: 1382340336774656734
+    second: truck_master_nightmare_45
+  - first:
+      213: 7478171906632366151
+    second: truck_master_nightmare_46
+  - first:
+      213: 5883638401840061819
+    second: truck_master_nightmare_47
+  - first:
+      213: 4311253164278238711
+    second: truck_master_nightmare_48
+  - first:
+      213: -6316050964626932164
+    second: truck_master_nightmare_49
+  - first:
+      213: -8952019627040181535
+    second: truck_master_nightmare_50
+  - first:
+      213: 8548754648495938146
+    second: truck_master_nightmare_51
+  - first:
+      213: -1932239117891616229
+    second: truck_master_nightmare_52
+  - first:
+      213: 8418703038414264071
+    second: truck_master_nightmare_53
+  - first:
+      213: -4956464525624071744
+    second: truck_master_nightmare_54
+  - first:
+      213: 8540925575678778910
+    second: truck_master_nightmare_55
+  - first:
+      213: 7261950603068355692
+    second: truck_master_nightmare_56
+  - first:
+      213: 1898541165181249952
+    second: truck_master_nightmare_57
+  - first:
+      213: -1200887083412002005
+    second: truck_master_nightmare_58
+  - first:
+      213: 6181903694478466222
+    second: truck_master_nightmare_59
+  - first:
+      213: 4957344683817082050
+    second: truck_master_nightmare_60
+  - first:
+      213: -9058302998255727704
+    second: truck_master_nightmare_61
+  - first:
+      213: 774758552093545349
+    second: truck_master_nightmare_62
+  - first:
+      213: -1291070848232504505
+    second: truck_master_nightmare_63
+  - first:
+      213: -1306602852432973368
+    second: truck_master_nightmare_64
+  - first:
+      213: -3227559770876199855
+    second: truck_master_nightmare_65
+  - first:
+      213: 671331054390059937
+    second: truck_master_nightmare_66
+  - first:
+      213: -3907188728481359249
+    second: truck_master_nightmare_67
+  - first:
+      213: 7006089380420658510
+    second: truck_master_nightmare_68
+  - first:
+      213: -7203426817101029874
+    second: truck_master_nightmare_69
+  - first:
+      213: -1518039561261908392
+    second: truck_master_nightmare_70
+  - first:
+      213: -777459672022227719
+    second: truck_master_nightmare_71
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: truck_master_nightmare_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8788ff80f0dcf5c20800000000000000
+      internalID: 3197499724915509368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bf599ecb40e162c0800000000000000
+      internalID: -4440021141417271375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fb5fa5e8a04455f0800000000000000
+      internalID: -768918542221354000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 844f9e9d62dd0f5b0800000000000000
+      internalID: -5336522399499553720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_4
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0d07f4778d0601e0800000000000000
+      internalID: -2232081689881408243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_5
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 589e7ffc3910ce510800000000000000
+      internalID: 1579639303661152645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_6
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b3ea747f24f616c0800000000000000
+      internalID: -4172879520057334858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_7
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa21b7bd999bbf580800000000000000
+      internalID: -8792229777047350614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_8
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bff7c1836f3260a0800000000000000
+      internalID: -6889874783311757386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_9
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 282098f403b0aafe0800000000000000
+      internalID: -1177116050483248510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64e4a7b55d08d2ba0800000000000000
+      internalID: -6112087465420763578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_11
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 950670a3c50bfbef0800000000000000
+      internalID: -90159557367078823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_12
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e0851491100fd70800000000000000
+      internalID: 9074754457133649484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_13
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4903f384a10452e10800000000000000
+      internalID: 2172212876901560468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_14
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dde79eafdfc44fd90800000000000000
+      internalID: -7064937261717422371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_15
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9850464044be86330800000000000000
+      internalID: 3704469370876200329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_16
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 546128917c6b2ffa0800000000000000
+      internalID: -5768347206465481147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_17
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9464ff4b96a911060800000000000000
+      internalID: 6922483881044035145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 665acc476c4198580800000000000000
+      internalID: -8824499152260127386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_19
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11c748ebf4db20f10800000000000000
+      internalID: 2234556515325606929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_20
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9b643b84caab6fa0800000000000000
+      internalID: -5806359533438342241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_21
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f043e8fbc838a9a0800000000000000
+      internalID: -6221660436507180809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_22
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79e4e74454ba312d0800000000000000
+      internalID: -3309112987196961129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_23
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1491bc6086bca5920800000000000000
+      internalID: 2979917751110015297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_24
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 199c2edf0462a0630800000000000000
+      internalID: 3893966888394475921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_25
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e19aa767e3b8a340800000000000000
+      internalID: 4875344403086610917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_26
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c1eadaa66776700800000000000000
+      internalID: 533525281419172941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_27
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85b7fa0a6dc299f50800000000000000
+      internalID: 6888586405370362712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_28
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 904bf3618ce704c00800000000000000
+      internalID: 882844924796449801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_29
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aca459ddc9044cd40800000000000000
+      internalID: 5603674878832364234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_30
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a9199bb8f177ab60800000000000000
+      internalID: 7757294196282169760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_31
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a379e98287376fc0800000000000000
+      internalID: -3501769151458217048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_32
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44a3f77071360c900800000000000000
+      internalID: 702670492430973508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_33
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e1702170ebdea10800000000000000
+      internalID: 1940415952043056649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_34
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e068a868f07158970800000000000000
+      internalID: 8756430405940971022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_35
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37fb22385cc8ed400800000000000000
+      internalID: 350872600918015859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_36
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0174f542ca9f80c30800000000000000
+      internalID: 4325981959829276432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_37
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61fc23536b70513f0800000000000000
+      internalID: -930829268824174826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_38
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 966cd9d73c5a6f570800000000000000
+      internalID: 8500163605753087593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_39
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 750a10607dabdaf90800000000000000
+      internalID: -6940686018026561449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_40
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13f05e3ae17e6ba90800000000000000
+      internalID: -7298392027322577103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_41
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21074a5b64e69b730800000000000000
+      internalID: 4015361792751726610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_42
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58463049e8319010800000000000000
+      internalID: 1193797950685726810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_43
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d051301987b419030800000000000000
+      internalID: 3499661366644643085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_44
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 112ca977b209a4570800000000000000
+      internalID: 8451726167078781457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_45
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed2b52c563f0f2310800000000000000
+      internalID: 1382340336774656734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_46
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 748b0206abdc7c760800000000000000
+      internalID: 7478171906632366151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_47
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7d168024f1e6a150800000000000000
+      internalID: 5883638401840061819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_48
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fd459139e5a4db30800000000000000
+      internalID: 4311253164278238711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_49
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3ef52e8c11e858a0800000000000000
+      internalID: -6316050964626932164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_50
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e2f1fb349904c380800000000000000
+      internalID: -8952019627040181535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_51
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26ad19f3f0743a670800000000000000
+      internalID: 8548754648495938146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_52
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b12c4fc72ce4f25e0800000000000000
+      internalID: -1932239117891616229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_53
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7071f2a2fcd35d470800000000000000
+      internalID: 8418703038414264071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_54
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c92a5046c9173bb0800000000000000
+      internalID: -4956464525624071744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_55
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1ed16f2f86778670800000000000000
+      internalID: 8540925575678778910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_56
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c64b2581991a7c460800000000000000
+      internalID: 7261950603068355692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_57
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a9a51e7129f85a10800000000000000
+      internalID: 1898541165181249952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_58
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2b6fd96f87955fe0800000000000000
+      internalID: -1200887083412002005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_59
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eac501138a88ac550800000000000000
+      internalID: 6181903694478466222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_60
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cc961c89b60cc440800000000000000
+      internalID: 4957344683817082050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_61
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ab8c118a617a4280800000000000000
+      internalID: -9058302998255727704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_62
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5835b3c5cce70ca00800000000000000
+      internalID: 774758552093545349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_63
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7434d3767e1351ee0800000000000000
+      internalID: -1291070848232504505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_64
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c1783ed0a30edde0800000000000000
+      internalID: -1306602852432973368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_65
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15c359d1d776533d0800000000000000
+      internalID: -3227559770876199855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_66
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a3ab9f790c015900800000000000000
+      internalID: 671331054390059937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_67
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6a55787d80e6c9c0800000000000000
+      internalID: -3907188728481359249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_68
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e452c90fb21aa3160800000000000000
+      internalID: 7006089380420658510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_69
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0e9b29a979480c90800000000000000
+      internalID: -7203426817101029874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_70
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85e7efbdf07deeae0800000000000000
+      internalID: -1518039561261908392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_nightmare_71
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f46ce52c88e535f0800000000000000
+      internalID: -777459672022227719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      truck_master_nightmare_0: 3197499724915509368
+      truck_master_nightmare_1: -4440021141417271375
+      truck_master_nightmare_10: -6112087465420763578
+      truck_master_nightmare_11: -90159557367078823
+      truck_master_nightmare_12: 9074754457133649484
+      truck_master_nightmare_13: 2172212876901560468
+      truck_master_nightmare_14: -7064937261717422371
+      truck_master_nightmare_15: 3704469370876200329
+      truck_master_nightmare_16: -5768347206465481147
+      truck_master_nightmare_17: 6922483881044035145
+      truck_master_nightmare_18: -8824499152260127386
+      truck_master_nightmare_19: 2234556515325606929
+      truck_master_nightmare_2: -768918542221354000
+      truck_master_nightmare_20: -5806359533438342241
+      truck_master_nightmare_21: -6221660436507180809
+      truck_master_nightmare_22: -3309112987196961129
+      truck_master_nightmare_23: 2979917751110015297
+      truck_master_nightmare_24: 3893966888394475921
+      truck_master_nightmare_25: 4875344403086610917
+      truck_master_nightmare_26: 533525281419172941
+      truck_master_nightmare_27: 6888586405370362712
+      truck_master_nightmare_28: 882844924796449801
+      truck_master_nightmare_29: 5603674878832364234
+      truck_master_nightmare_3: -5336522399499553720
+      truck_master_nightmare_30: 7757294196282169760
+      truck_master_nightmare_31: -3501769151458217048
+      truck_master_nightmare_32: 702670492430973508
+      truck_master_nightmare_33: 1940415952043056649
+      truck_master_nightmare_34: 8756430405940971022
+      truck_master_nightmare_35: 350872600918015859
+      truck_master_nightmare_36: 4325981959829276432
+      truck_master_nightmare_37: -930829268824174826
+      truck_master_nightmare_38: 8500163605753087593
+      truck_master_nightmare_39: -6940686018026561449
+      truck_master_nightmare_4: -2232081689881408243
+      truck_master_nightmare_40: -7298392027322577103
+      truck_master_nightmare_41: 4015361792751726610
+      truck_master_nightmare_42: 1193797950685726810
+      truck_master_nightmare_43: 3499661366644643085
+      truck_master_nightmare_44: 8451726167078781457
+      truck_master_nightmare_45: 1382340336774656734
+      truck_master_nightmare_46: 7478171906632366151
+      truck_master_nightmare_47: 5883638401840061819
+      truck_master_nightmare_48: 4311253164278238711
+      truck_master_nightmare_49: -6316050964626932164
+      truck_master_nightmare_5: 1579639303661152645
+      truck_master_nightmare_50: -8952019627040181535
+      truck_master_nightmare_51: 8548754648495938146
+      truck_master_nightmare_52: -1932239117891616229
+      truck_master_nightmare_53: 8418703038414264071
+      truck_master_nightmare_54: -4956464525624071744
+      truck_master_nightmare_55: 8540925575678778910
+      truck_master_nightmare_56: 7261950603068355692
+      truck_master_nightmare_57: 1898541165181249952
+      truck_master_nightmare_58: -1200887083412002005
+      truck_master_nightmare_59: 6181903694478466222
+      truck_master_nightmare_6: -4172879520057334858
+      truck_master_nightmare_60: 4957344683817082050
+      truck_master_nightmare_61: -9058302998255727704
+      truck_master_nightmare_62: 774758552093545349
+      truck_master_nightmare_63: -1291070848232504505
+      truck_master_nightmare_64: -1306602852432973368
+      truck_master_nightmare_65: -3227559770876199855
+      truck_master_nightmare_66: 671331054390059937
+      truck_master_nightmare_67: -3907188728481359249
+      truck_master_nightmare_68: 7006089380420658510
+      truck_master_nightmare_69: -7203426817101029874
+      truck_master_nightmare_7: -8792229777047350614
+      truck_master_nightmare_70: -1518039561261908392
+      truck_master_nightmare_71: -777459672022227719
+      truck_master_nightmare_8: -6889874783311757386
+      truck_master_nightmare_9: -1177116050483248510
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

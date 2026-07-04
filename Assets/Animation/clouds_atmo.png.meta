@@ -1,28 +1,34 @@
 fileFormatVersion: 2
-guid: d41729e5c85c3a948b10a1232729a870
+guid: 100db7ee502f11e41bdc2e80bf349b6f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3014351441367334372
-    second: truck_back3q_0
+      213: -5734971162157004774
+    second: clouds_atmo_0
   - first:
-      213: 9181590648298215762
-    second: truck_back3q_1
+      213: -2575378410310089523
+    second: clouds_atmo_1
   - first:
-      213: 6965443680345287402
-    second: truck_back3q_2
+      213: -6735538850505579431
+    second: clouds_atmo_2
   - first:
-      213: -3910858177690155025
-    second: truck_back3q_3
+      213: 1479412897985303089
+    second: clouds_atmo_3
   - first:
-      213: -2561285253319070920
-    second: truck_back3q_4
+      213: 6879669927732832186
+    second: clouds_atmo_4
   - first:
-      213: -954984065442220357
-    second: truck_back3q_5
+      213: 4362814407277733130
+    second: clouds_atmo_5
   - first:
-      213: 2237838893734923420
-    second: truck_back3q_6
+      213: 4238654733537401862
+    second: clouds_atmo_6
+  - first:
+      213: -3040277513994507430
+    second: clouds_atmo_7
+  - first:
+      213: -2320176104017386881
+    second: clouds_atmo_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -93,7 +99,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,155 +124,221 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: truck_back3q_0
+      name: cloudWisp_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 49
+        width: 14
+        height: 5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c120d15b55fda26d0800000000000000
-      internalID: -3014351441367334372
+      spriteID: 3ffcb04eaffc5c6f4d389b3c830a3399
+      internalID: -32067903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_1
+      name: cloudWisp_1
       rect:
         serializedVersion: 2
-        x: 70
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 14
+        y: 49
+        width: 14
+        height: 5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2591dd86c009b6f70800000000000000
-      internalID: 9181590648298215762
+      spriteID: 68b39e66d7ef341c432a03c25e3cbf10
+      internalID: 1535390754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_2
+      name: cloudSmall_0
       rect:
         serializedVersion: 2
-        x: 134
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 41
+        width: 20
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: aea68fd6f1a3aa060800000000000000
-      internalID: 6965443680345287402
+      spriteID: 3fa147a31c4f389926aeae7063581067
+      internalID: -549027974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_3
+      name: cloudSmall_1
       rect:
         serializedVersion: 2
-        x: 198
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 20
+        y: 41
+        width: 20
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: fe7c8df3537d9b9c0800000000000000
-      internalID: -3910858177690155025
+      spriteID: 5dd2f786cfd1c43a7e0a15a3cd836004
+      internalID: 1989951242
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_4
+      name: cloudMed_0
       rect:
         serializedVersion: 2
-        x: 262
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 30
+        width: 30
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 83b6873e1ac747cd0800000000000000
-      internalID: -2561285253319070920
+      spriteID: 3c5fa2c23e127a9ffe96bc0a9ad4f170
+      internalID: 1691918774
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_5
+      name: cloudMed_1
       rect:
         serializedVersion: 2
-        x: 326
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 30
+        y: 30
+        width: 30
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bb6782d5d073fb2f0800000000000000
-      internalID: -954984065442220357
+      spriteID: 57ca5a11773684380dddfefaf5c1df06
+      internalID: 1429559129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_6
+      name: cloudLarge_0
       rect:
         serializedVersion: 2
-        x: 390
-        y: 0
-        width: 53
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 16
+        width: 42
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c9c8f950e966e0f10800000000000000
-      internalID: 2237838893734923420
+      spriteID: 874cfccf90183136c81d4171258a2437
+      internalID: 592652367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cloudLarge_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 16
+        width: 42
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 396855a02f3ece8226f7abbcee3354ce
+      internalID: 568770857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cloudHero_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 60
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a3f1ff598606c087fc56f4b65302e3f
+      internalID: -292578772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cloudHero_1
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 60
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0173ecccb610868ad0abb8a32b7d265
+      internalID: 1566538806
       vertices: []
       indices: 
       edges: []
@@ -275,7 +347,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e8e92736c138d37418a709c91d96b68b
     internalID: 0
     vertices: []
     indices: 
@@ -285,13 +357,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      truck_back3q_0: -3014351441367334372
-      truck_back3q_1: 9181590648298215762
-      truck_back3q_2: 6965443680345287402
-      truck_back3q_3: -3910858177690155025
-      truck_back3q_4: -2561285253319070920
-      truck_back3q_5: -954984065442220357
-      truck_back3q_6: 2237838893734923420
+      cloudHero_0: -292578772
+      cloudHero_1: 1566538806
+      cloudLarge_0: 592652367
+      cloudLarge_1: 568770857
+      cloudMed_0: 1691918774
+      cloudMed_1: 1429559129
+      cloudSmall_0: -549027974
+      cloudSmall_1: 1989951242
+      cloudWisp_0: -32067903
+      cloudWisp_1: 1535390754
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
