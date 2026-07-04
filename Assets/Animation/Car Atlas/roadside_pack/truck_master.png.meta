@@ -1,0 +1,1989 @@
+fileFormatVersion: 2
+guid: adb7855a91fd07c4db20cc0062b3f5a7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7462512744890362300
+    second: truck_master_0
+  - first:
+      213: 9184342518959778078
+    second: truck_master_1
+  - first:
+      213: -4501989242944202666
+    second: truck_master_2
+  - first:
+      213: 6599913775491087378
+    second: truck_master_3
+  - first:
+      213: 2840367963276622084
+    second: truck_master_4
+  - first:
+      213: 4557308789201636986
+    second: truck_master_5
+  - first:
+      213: 1595765879826169516
+    second: truck_master_6
+  - first:
+      213: 7292185815748933567
+    second: truck_master_7
+  - first:
+      213: 963832974656566386
+    second: truck_master_8
+  - first:
+      213: 1625284096465992757
+    second: truck_master_9
+  - first:
+      213: -5697371747150750564
+    second: truck_master_10
+  - first:
+      213: -3973040737224338074
+    second: truck_master_11
+  - first:
+      213: -1995705934123464370
+    second: truck_master_12
+  - first:
+      213: -5858184018562175378
+    second: truck_master_13
+  - first:
+      213: -2085292332047613422
+    second: truck_master_14
+  - first:
+      213: -7598649790693150803
+    second: truck_master_15
+  - first:
+      213: 2269524720305214771
+    second: truck_master_16
+  - first:
+      213: 1754804635872884402
+    second: truck_master_17
+  - first:
+      213: -58039941741832544
+    second: truck_master_18
+  - first:
+      213: -6950538693422467284
+    second: truck_master_19
+  - first:
+      213: 2850686915068052346
+    second: truck_master_20
+  - first:
+      213: -6147862424788844548
+    second: truck_master_21
+  - first:
+      213: -8199800562618270294
+    second: truck_master_22
+  - first:
+      213: -1083804447054035546
+    second: truck_master_23
+  - first:
+      213: -3090384102605392863
+    second: truck_master_24
+  - first:
+      213: 2185438428665282110
+    second: truck_master_25
+  - first:
+      213: 8490488870832603381
+    second: truck_master_26
+  - first:
+      213: -5096709997014379944
+    second: truck_master_27
+  - first:
+      213: -6062769058074070185
+    second: truck_master_28
+  - first:
+      213: 5074564878798088764
+    second: truck_master_29
+  - first:
+      213: -8987898290578966010
+    second: truck_master_30
+  - first:
+      213: 4543048008091821821
+    second: truck_master_31
+  - first:
+      213: 3606418931492784756
+    second: truck_master_32
+  - first:
+      213: 4794220469490086067
+    second: truck_master_33
+  - first:
+      213: -5410718392883680844
+    second: truck_master_34
+  - first:
+      213: -4408391314853440598
+    second: truck_master_35
+  - first:
+      213: -7398350886711187486
+    second: truck_master_36
+  - first:
+      213: 462836565065713913
+    second: truck_master_37
+  - first:
+      213: -2193022842146330417
+    second: truck_master_38
+  - first:
+      213: -3495493746940134805
+    second: truck_master_39
+  - first:
+      213: -4695002269144626410
+    second: truck_master_40
+  - first:
+      213: -2830801023237527401
+    second: truck_master_41
+  - first:
+      213: -1711321519362234894
+    second: truck_master_42
+  - first:
+      213: -6228835978841519250
+    second: truck_master_43
+  - first:
+      213: 4618907659536220282
+    second: truck_master_44
+  - first:
+      213: 6636163592328353886
+    second: truck_master_45
+  - first:
+      213: -6983496767336577789
+    second: truck_master_46
+  - first:
+      213: -1226785295446003644
+    second: truck_master_47
+  - first:
+      213: -6717295420602168482
+    second: truck_master_48
+  - first:
+      213: -4167812936906734807
+    second: truck_master_49
+  - first:
+      213: -4994577909464450067
+    second: truck_master_50
+  - first:
+      213: 3981262012411735325
+    second: truck_master_51
+  - first:
+      213: -4448454797491386661
+    second: truck_master_52
+  - first:
+      213: -1325796624423575321
+    second: truck_master_53
+  - first:
+      213: 5340532580523530206
+    second: truck_master_54
+  - first:
+      213: -3176312645049044201
+    second: truck_master_55
+  - first:
+      213: -3714158995046101970
+    second: truck_master_56
+  - first:
+      213: -1383745324503635392
+    second: truck_master_57
+  - first:
+      213: -4309059538227204289
+    second: truck_master_58
+  - first:
+      213: -5396621001643138884
+    second: truck_master_59
+  - first:
+      213: 3907086021862904265
+    second: truck_master_60
+  - first:
+      213: 3355495312868557355
+    second: truck_master_61
+  - first:
+      213: -762755065494202515
+    second: truck_master_62
+  - first:
+      213: 153991760632805924
+    second: truck_master_63
+  - first:
+      213: -6726055624313850414
+    second: truck_master_64
+  - first:
+      213: -359167419239830530
+    second: truck_master_65
+  - first:
+      213: -5153636764976145285
+    second: truck_master_66
+  - first:
+      213: 5231024315963897612
+    second: truck_master_67
+  - first:
+      213: -845872517224051314
+    second: truck_master_68
+  - first:
+      213: 1442896653301676750
+    second: truck_master_69
+  - first:
+      213: 6780007892350439172
+    second: truck_master_70
+  - first:
+      213: 4389489856403579732
+    second: truck_master_71
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: truck_master_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4461cf45234df6890800000000000000
+      internalID: -7462512744890362300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_1
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e192d1a3cd6557f70800000000000000
+      internalID: 9184342518959778078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6585ea7d2a8b581c0800000000000000
+      internalID: -4501989242944202666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21c7a586c9a979b50800000000000000
+      internalID: 6599913775491087378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_4
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 409b08a1d930b6720800000000000000
+      internalID: 2840367963276622084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_5
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7e0128b230de3f30800000000000000
+      internalID: 4557308789201636986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_6
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cae3abbec9c452610800000000000000
+      internalID: 1595765879826169516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_7
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb77bdf1d5c033560800000000000000
+      internalID: 7292185815748933567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_8
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 223
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 274763ddbf8306d00800000000000000
+      internalID: 963832974656566386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_9
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53c72fc464b2e8610800000000000000
+      internalID: 1625284096465992757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9c9bb9f49edee0b0800000000000000
+      internalID: -5697371747150750564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_11
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6655693ef7cecd8c0800000000000000
+      internalID: -3973040737224338074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_12
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e498e60d604dd44e0800000000000000
+      internalID: -1995705934123464370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_13
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6e2bb05cac83bea0800000000000000
+      internalID: -5858184018562175378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_14
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 212c47f1cad8f03e0800000000000000
+      internalID: -2085292332047613422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_15
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daf6325564c2c8690800000000000000
+      internalID: -7598649790693150803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_16
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33592ca65b8fe7f10800000000000000
+      internalID: 2269524720305214771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_17
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 191
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b6796bd4815a5810800000000000000
+      internalID: 1754804635872884402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a691b10bfcc13ff0800000000000000
+      internalID: -58039941741832544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_19
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2732f442e9ba8f90800000000000000
+      internalID: -6950538693422467284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_20
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a734c7a45acaf8720800000000000000
+      internalID: 2850686915068052346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_21
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff3d7a82b76eaaa0800000000000000
+      internalID: -6147862424788844548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_22
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aadf61c25d4743e80800000000000000
+      internalID: -8199800562618270294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_23
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a50b5ff89d85f0f0800000000000000
+      internalID: -1083804447054035546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_24
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 124f0b04800cc15d0800000000000000
+      internalID: -3090384102605392863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_25
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3ef4130cac345e10800000000000000
+      internalID: 2185438428665282110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_26
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 159
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f0826bb4a644d570800000000000000
+      internalID: 8490488870832603381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_27
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85296c0e249d449b0800000000000000
+      internalID: -5096709997014379944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_28
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 753f342e9a7bcdba0800000000000000
+      internalID: -6062769058074070185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_29
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3aee6efed97c6640800000000000000
+      internalID: 5074564878798088764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_30
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a33b8ef12944380800000000000000
+      internalID: -8987898290578966010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_31
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df6ebdfd7162c0f30800000000000000
+      internalID: 4543048008091821821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_32
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47a0fda19e29c0230800000000000000
+      internalID: 3606418931492784756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_33
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0fcdabd1e788240800000000000000
+      internalID: 4794220469490086067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_34
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b9ee74f94449e4b0800000000000000
+      internalID: -5410718392883680844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_35
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 127
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa35e3fa47f32d2c0800000000000000
+      internalID: -4408391314853440598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_36
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e722e11117c35990800000000000000
+      internalID: -7398350886711187486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_37
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f8cdc957635c6600800000000000000
+      internalID: 462836565065713913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_38
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc8ec8d1851d091e0800000000000000
+      internalID: -2193022842146330417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_39
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6ab80305f28d7fc0800000000000000
+      internalID: -3495493746940134805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_40
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61b4bf7bf4008deb0800000000000000
+      internalID: -4695002269144626410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_41
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7986d14b779f6b8d0800000000000000
+      internalID: -2830801023237527401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_42
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5aee5252a2048e0800000000000000
+      internalID: -1711321519362234894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_43
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6b8af4ddaabe89a0800000000000000
+      internalID: -6228835978841519250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_44
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 95
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a70ccf85b08a91040800000000000000
+      internalID: 4618907659536220282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_45
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e589c1890a3681c50800000000000000
+      internalID: 6636163592328353886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_46
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30580d4b0b2a51f90800000000000000
+      internalID: -6983496767336577789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_47
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 440b449064599fee0800000000000000
+      internalID: -1226785295446003644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_48
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5b46ab976f57c2a0800000000000000
+      internalID: -6717295420602168482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_49
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92385654734f826c0800000000000000
+      internalID: -4167812936906734807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_50
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: debbb5f8ad1bfaab0800000000000000
+      internalID: -4994577909464450067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_51
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1dee87e4b8404730800000000000000
+      internalID: 3981262012411735325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_52
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd6c42c3ee9e342c0800000000000000
+      internalID: -4448454797491386661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_53
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 63
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e022d49ef2d99de0800000000000000
+      internalID: -1325796624423575321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_54
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed7518d26126d1a40800000000000000
+      internalID: 5340532580523530206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_55
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71335486a787be3d0800000000000000
+      internalID: -3176312645049044201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_56
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2c84fc8218a47cc0800000000000000
+      internalID: -3714158995046101970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_57
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04a6a5175f2fbcce0800000000000000
+      internalID: -1383745324503635392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_58
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3f65fb2e252334c0800000000000000
+      internalID: -4309059538227204289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_59
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb0e5a1aac95b15b0800000000000000
+      internalID: -5396621001643138884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_60
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c158084902c83630800000000000000
+      internalID: 3907086021862904265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_61
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 31
+        width: 62
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b22c409753d119e20800000000000000
+      internalID: 3355495312868557355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_62
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 31
+        width: 63
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6796962f462a65f0800000000000000
+      internalID: -762755065494202515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_63
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42afadeb0b6132200800000000000000
+      internalID: 153991760632805924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_64
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d5314dbb0048a2a0800000000000000
+      internalID: -6726055624313850414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_65
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efbe059922bf30bf0800000000000000
+      internalID: -359167419239830530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_66
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7c143adaaa9a78b0800000000000000
+      internalID: -5153636764976145285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_67
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c07757476e4589840800000000000000
+      internalID: 5231024315963897612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_68
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8d489d5d6bd244f0800000000000000
+      internalID: -845872517224051314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_69
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eca75a38cd2360410800000000000000
+      internalID: 1442896653301676750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_70
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40f84ed814d671e50800000000000000
+      internalID: 6780007892350439172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck_master_71
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 0
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 453ad1494c99aec30800000000000000
+      internalID: 4389489856403579732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      truck_master_0: -7462512744890362300
+      truck_master_1: 9184342518959778078
+      truck_master_10: -5697371747150750564
+      truck_master_11: -3973040737224338074
+      truck_master_12: -1995705934123464370
+      truck_master_13: -5858184018562175378
+      truck_master_14: -2085292332047613422
+      truck_master_15: -7598649790693150803
+      truck_master_16: 2269524720305214771
+      truck_master_17: 1754804635872884402
+      truck_master_18: -58039941741832544
+      truck_master_19: -6950538693422467284
+      truck_master_2: -4501989242944202666
+      truck_master_20: 2850686915068052346
+      truck_master_21: -6147862424788844548
+      truck_master_22: -8199800562618270294
+      truck_master_23: -1083804447054035546
+      truck_master_24: -3090384102605392863
+      truck_master_25: 2185438428665282110
+      truck_master_26: 8490488870832603381
+      truck_master_27: -5096709997014379944
+      truck_master_28: -6062769058074070185
+      truck_master_29: 5074564878798088764
+      truck_master_3: 6599913775491087378
+      truck_master_30: -8987898290578966010
+      truck_master_31: 4543048008091821821
+      truck_master_32: 3606418931492784756
+      truck_master_33: 4794220469490086067
+      truck_master_34: -5410718392883680844
+      truck_master_35: -4408391314853440598
+      truck_master_36: -7398350886711187486
+      truck_master_37: 462836565065713913
+      truck_master_38: -2193022842146330417
+      truck_master_39: -3495493746940134805
+      truck_master_4: 2840367963276622084
+      truck_master_40: -4695002269144626410
+      truck_master_41: -2830801023237527401
+      truck_master_42: -1711321519362234894
+      truck_master_43: -6228835978841519250
+      truck_master_44: 4618907659536220282
+      truck_master_45: 6636163592328353886
+      truck_master_46: -6983496767336577789
+      truck_master_47: -1226785295446003644
+      truck_master_48: -6717295420602168482
+      truck_master_49: -4167812936906734807
+      truck_master_5: 4557308789201636986
+      truck_master_50: -4994577909464450067
+      truck_master_51: 3981262012411735325
+      truck_master_52: -4448454797491386661
+      truck_master_53: -1325796624423575321
+      truck_master_54: 5340532580523530206
+      truck_master_55: -3176312645049044201
+      truck_master_56: -3714158995046101970
+      truck_master_57: -1383745324503635392
+      truck_master_58: -4309059538227204289
+      truck_master_59: -5396621001643138884
+      truck_master_6: 1595765879826169516
+      truck_master_60: 3907086021862904265
+      truck_master_61: 3355495312868557355
+      truck_master_62: -762755065494202515
+      truck_master_63: 153991760632805924
+      truck_master_64: -6726055624313850414
+      truck_master_65: -359167419239830530
+      truck_master_66: -5153636764976145285
+      truck_master_67: 5231024315963897612
+      truck_master_68: -845872517224051314
+      truck_master_69: 1442896653301676750
+      truck_master_7: 7292185815748933567
+      truck_master_70: 6780007892350439172
+      truck_master_71: 4389489856403579732
+      truck_master_8: 963832974656566386
+      truck_master_9: 1625284096465992757
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

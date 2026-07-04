@@ -1,28 +1,28 @@
 fileFormatVersion: 2
-guid: d41729e5c85c3a948b10a1232729a870
+guid: 7f01ae60a8917ef45af2c4e09a5b2122
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3014351441367334372
-    second: truck_back3q_0
+      213: 6362419395268465459
+    second: truck_back_0
   - first:
-      213: 9181590648298215762
-    second: truck_back3q_1
+      213: -3759863452823624076
+    second: truck_back_1
   - first:
-      213: 6965443680345287402
-    second: truck_back3q_2
+      213: 1145388692978496111
+    second: truck_back_2
   - first:
-      213: -3910858177690155025
-    second: truck_back3q_3
+      213: 1417542861206207578
+    second: truck_back_3
   - first:
-      213: -2561285253319070920
-    second: truck_back3q_4
+      213: -2844596025685184731
+    second: truck_back_4
   - first:
-      213: -954984065442220357
-    second: truck_back3q_5
+      213: 8110239094289157600
+    second: truck_back_5
   - first:
-      213: 2237838893734923420
-    second: truck_back3q_6
+      213: 1966012027126507861
+    second: truck_back_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +55,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,12 +118,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: truck_back3q_0
+      name: truck_back_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 15
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -133,19 +133,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c120d15b55fda26d0800000000000000
-      internalID: -3014351441367334372
+      spriteID: 333580ffabadb4850800000000000000
+      internalID: 6362419395268465459
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_1
+      name: truck_back_1
       rect:
         serializedVersion: 2
-        x: 70
+        x: 79
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -155,19 +155,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2591dd86c009b6f70800000000000000
-      internalID: 9181590648298215762
+      spriteID: 476697a3c1842dbc0800000000000000
+      internalID: -3759863452823624076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_2
+      name: truck_back_2
       rect:
         serializedVersion: 2
-        x: 134
+        x: 143
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -177,19 +177,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aea68fd6f1a3aa060800000000000000
-      internalID: 6965443680345287402
+      spriteID: f627bbe92fc35ef00800000000000000
+      internalID: 1145388692978496111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_3
+      name: truck_back_3
       rect:
         serializedVersion: 2
-        x: 198
+        x: 207
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -199,19 +199,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe7c8df3537d9b9c0800000000000000
-      internalID: -3910858177690155025
+      spriteID: a5c3618c8bf1ca310800000000000000
+      internalID: 1417542861206207578
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_4
+      name: truck_back_4
       rect:
         serializedVersion: 2
-        x: 262
+        x: 271
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -221,19 +221,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 83b6873e1ac747cd0800000000000000
-      internalID: -2561285253319070920
+      spriteID: 52feb876cf6f588d0800000000000000
+      internalID: -2844596025685184731
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_5
+      name: truck_back_5
       rect:
         serializedVersion: 2
-        x: 326
+        x: 335
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -243,19 +243,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bb6782d5d073fb2f0800000000000000
-      internalID: -954984065442220357
+      spriteID: 0ed47928c7b5d8070800000000000000
+      internalID: 8110239094289157600
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck_back3q_6
+      name: truck_back_6
       rect:
         serializedVersion: 2
-        x: 390
+        x: 399
         y: 0
-        width: 53
+        width: 35
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -265,8 +265,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c9c8f950e966e0f10800000000000000
-      internalID: 2237838893734923420
+      spriteID: 5596505b58da84b10800000000000000
+      internalID: 1966012027126507861
       vertices: []
       indices: 
       edges: []
@@ -285,13 +285,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      truck_back3q_0: -3014351441367334372
-      truck_back3q_1: 9181590648298215762
-      truck_back3q_2: 6965443680345287402
-      truck_back3q_3: -3910858177690155025
-      truck_back3q_4: -2561285253319070920
-      truck_back3q_5: -954984065442220357
-      truck_back3q_6: 2237838893734923420
+      truck_back_0: 6362419395268465459
+      truck_back_1: -3759863452823624076
+      truck_back_2: 1145388692978496111
+      truck_back_3: 1417542861206207578
+      truck_back_4: -2844596025685184731
+      truck_back_5: 8110239094289157600
+      truck_back_6: 1966012027126507861
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
