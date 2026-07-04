@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,29 +5,21 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { Lobby, Nightmare }
-
 /// <summary>
-/// Persistent coordinator: game state, faded scene transitions, a shared
-/// EventSystem (so UI works in every scene), and an Escape pause menu
+/// Persistent coordinator: a shared EventSystem (so UI works in every scene),
+/// cursor lock/visibility for mouse-look scenes, and an Escape pause menu
 /// ("Game Test" + Retry / Quit). Self-bootstraps before the first scene loads.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GameState State { get; private set; } = GameState.Lobby;
-    public bool LastNightmareSurvived { get; private set; }
     public bool IsPaused => _paused;
 
-    const string LobbyScene = "Lobby";
-    const string NightmareScene = "Nightmare";
     const string MenuScene = "MainMenu";
 
     Font _font;
-    CanvasGroup _fade;
     GameObject _pauseRoot;
-    bool _transitioning;
     bool _paused;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -46,55 +37,15 @@ public class GameManager : MonoBehaviour
 
         _font = Resources.Load<Font>("HerculesPixelFontRegular");
         EnsureEventSystem();
-        BuildFadeOverlay();
         BuildPauseMenu();
     }
 
     void Update()
     {
-        if (_transitioning) return;
         var kb = Keyboard.current;
         if (kb != null && kb.escapeKey.wasPressedThisFrame &&
             SceneManager.GetActiveScene().name != MenuScene)
             SetPaused(!_paused);
-    }
-
-    // ---------------------------------------------------------------- state
-    public void EnterNightmare()
-    {
-        if (_transitioning) return;
-        State = GameState.Nightmare;
-        StartCoroutine(Transition(NightmareScene));
-    }
-
-    public void ReturnToLobby(bool survived)
-    {
-        if (_transitioning) return;
-        LastNightmareSurvived = survived;
-        State = GameState.Lobby;
-        StartCoroutine(Transition(LobbyScene));
-    }
-
-    IEnumerator Transition(string scene)
-    {
-        _transitioning = true;
-        if (_paused) SetPaused(false);
-        yield return Fade(1f, 0.5f);
-        yield return SceneManager.LoadSceneAsync(scene);
-        yield return Fade(0f, 0.5f);
-        _transitioning = false;
-    }
-
-    IEnumerator Fade(float target, float dur)
-    {
-        float start = _fade.alpha, t = 0f;
-        while (t < dur)
-        {
-            t += Time.unscaledDeltaTime;
-            _fade.alpha = Mathf.Lerp(start, target, t / dur);
-            yield return null;
-        }
-        _fade.alpha = target;
     }
 
     // ---------------------------------------------------------------- pause
@@ -135,22 +86,6 @@ public class GameManager : MonoBehaviour
         var es = new GameObject("EventSystem", typeof(EventSystem));
         es.AddComponent<InputSystemUIInputModule>();
         DontDestroyOnLoad(es);
-    }
-
-    void BuildFadeOverlay()
-    {
-        var go = new GameObject("FadeCanvas", typeof(Canvas), typeof(CanvasGroup));
-        DontDestroyOnLoad(go);
-        var canvas = go.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 999;
-        _fade = go.GetComponent<CanvasGroup>();
-        _fade.alpha = 0f;
-        _fade.blocksRaycasts = false;
-        _fade.interactable = false;
-        var img = NewUI("Black", go.transform).AddComponent<Image>();
-        img.color = Color.black; img.raycastTarget = false;
-        Stretch(img.GetComponent<RectTransform>());
     }
 
     void BuildPauseMenu()
