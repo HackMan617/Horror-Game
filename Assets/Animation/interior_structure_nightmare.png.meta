@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: dfa4b045a2097bc4b9386ea4a5367de3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6150652737140001826
+    second: interior_structure_nightmare_0
+  - first:
+      213: -7158023508733549920
+    second: interior_structure_nightmare_1
+  - first:
+      213: 2584543637072079272
+    second: interior_structure_nightmare_2
+  - first:
+      213: -1085829278693109238
+    second: interior_structure_nightmare_3
+  - first:
+      213: 2156595998490516027
+    second: interior_structure_nightmare_4
+  - first:
+      213: 2351796143332505821
+    second: interior_structure_nightmare_5
+  - first:
+      213: 4269785977952480634
+    second: interior_structure_nightmare_6
+  - first:
+      213: 3742188829462112979
+    second: interior_structure_nightmare_7
+  - first:
+      213: -2179121330111967797
+    second: interior_structure_nightmare_8
+  - first:
+      213: 2525157377703473123
+    second: interior_structure_nightmare_9
+  - first:
+      213: -1869417439652406130
+    second: interior_structure_nightmare_10
+  - first:
+      213: 1095368209711408761
+    second: interior_structure_nightmare_11
+  - first:
+      213: 3382026892331220087
+    second: interior_structure_nightmare_12
+  - first:
+      213: -6835801229537173000
+    second: interior_structure_nightmare_13
+  - first:
+      213: -5333480688115006097
+    second: interior_structure_nightmare_14
+  - first:
+      213: 7076499550799286071
+    second: interior_structure_nightmare_15
+  - first:
+      213: -5425396399938187521
+    second: interior_structure_nightmare_16
+  - first:
+      213: -535487376642680768
+    second: interior_structure_nightmare_17
+  - first:
+      213: -3099866434039385461
+    second: interior_structure_nightmare_18
+  - first:
+      213: 3979509494811427406
+    second: interior_structure_nightmare_19
+  - first:
+      213: -1323224363655561365
+    second: interior_structure_nightmare_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: interior_structure_nightmare_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 97
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed37cf15ced74aaa0800000000000000
+      internalID: -6150652737140001826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 175
+        width: 50
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a2aa0c2b8799ac90800000000000000
+      internalID: -7158023508733549920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 179
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a96d229eb42ed320800000000000000
+      internalID: 2584543637072079272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 176
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0257c4260c5ee0f0800000000000000
+      internalID: -1085829278693109238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_4
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 176
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3a5e0e62a4cded10800000000000000
+      internalID: 2156595998490516027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_5
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 174
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd8b77bc12243a020800000000000000
+      internalID: 2351796143332505821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_6
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 174
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7d2dc289b3514b30800000000000000
+      internalID: 4269785977952480634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_7
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 174
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3da2686d9eceee330800000000000000
+      internalID: 3742188829462112979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 111
+        width: 17
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcd033c12b432c1e0800000000000000
+      internalID: -2179121330111967797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_9
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 127
+        width: 12
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3efe8f391492b0320800000000000000
+      internalID: 2525157377703473123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 161
+        width: 30
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8c19944ebe7e06e0800000000000000
+      internalID: -1869417439652406130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_11
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 160
+        width: 30
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 976aa1e4597833f00800000000000000
+      internalID: 1095368209711408761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_12
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 144
+        width: 14
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77c78323a8f5fee20800000000000000
+      internalID: 3382026892331220087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_13
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 128
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f12246dffa5221a0800000000000000
+      internalID: -6835801229537173000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 47
+        width: 45
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f65cf78729babf5b0800000000000000
+      internalID: -5333480688115006097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_15
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 47
+        width: 45
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73f4a9a39d6c43260800000000000000
+      internalID: 7076499550799286071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_16
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 47
+        width: 45
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffe400028be15b4b0800000000000000
+      internalID: -5425396399938187521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_17
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 15
+        width: 82
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 048d18d61119198f0800000000000000
+      internalID: -535487376642680768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 45
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b82fcebe6ef0bf4d0800000000000000
+      internalID: -3099866434039385461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_19
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 45
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e42878a1dce0a3730800000000000000
+      internalID: 3979509494811427406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_structure_nightmare_20
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 45
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6ffa26b376f2ade0800000000000000
+      internalID: -1323224363655561365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      interior_structure_nightmare_0: -6150652737140001826
+      interior_structure_nightmare_1: -7158023508733549920
+      interior_structure_nightmare_10: -1869417439652406130
+      interior_structure_nightmare_11: 1095368209711408761
+      interior_structure_nightmare_12: 3382026892331220087
+      interior_structure_nightmare_13: -6835801229537173000
+      interior_structure_nightmare_14: -5333480688115006097
+      interior_structure_nightmare_15: 7076499550799286071
+      interior_structure_nightmare_16: -5425396399938187521
+      interior_structure_nightmare_17: -535487376642680768
+      interior_structure_nightmare_18: -3099866434039385461
+      interior_structure_nightmare_19: 3979509494811427406
+      interior_structure_nightmare_2: 2584543637072079272
+      interior_structure_nightmare_20: -1323224363655561365
+      interior_structure_nightmare_3: -1085829278693109238
+      interior_structure_nightmare_4: 2156595998490516027
+      interior_structure_nightmare_5: 2351796143332505821
+      interior_structure_nightmare_6: 4269785977952480634
+      interior_structure_nightmare_7: 3742188829462112979
+      interior_structure_nightmare_8: -2179121330111967797
+      interior_structure_nightmare_9: 2525157377703473123
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
