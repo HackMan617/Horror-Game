@@ -48,6 +48,8 @@ public class CameraRig : MonoBehaviour
     public float crosshairGap = 4f;         // gap between the centre and each arm
 
     bool _firstPerson;
+    /// <summary>True while the head camera is in first-person mode (used by the axe viewmodel).</summary>
+    public bool IsFirstPerson => _firstPerson;
     float _pitch;
     Texture2D _white;
     Transform _playerRoot;

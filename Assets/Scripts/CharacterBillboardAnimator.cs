@@ -16,6 +16,9 @@ public class CharacterBillboardAnimator : MonoBehaviour
     public PlayerController3D player;
     public Transform cameraTransform;     // used for front/back selection
 
+    /// <summary>While true, another system (e.g. AxeChopper) is driving the sprite — don't touch it.</summary>
+    [System.NonSerialized] public bool suspended;
+
     SpriteRenderer _sr;
     float _t;
     int _frame;
@@ -24,6 +27,7 @@ public class CharacterBillboardAnimator : MonoBehaviour
 
     void Update()
     {
+        if (suspended) return;
         var frames = SelectFrames();
         if (frames == null || frames.Length == 0) return;
 
