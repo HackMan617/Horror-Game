@@ -9794,6 +9794,10 @@ MonoBehaviour:
   hitsPerStage: 3
   fallFrameSec: 0.18
   logPickupPrefab: {fileID: 229502287}
+  logSplitSound: {fileID: 8300000, guid: e848b45a59ec4fa0a64295a2f3187e2c, type: 3}
+  logSplitVolume: 1
+  chopSound: {fileID: 8300000, guid: 7661adb27744f2a4aa4c96c76a12f60c, type: 3}
+  chopVolume: 1
 --- !u!114 &395115249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20030,6 +20034,10 @@ MonoBehaviour:
   hitsPerStage: 3
   fallFrameSec: 0.18
   logPickupPrefab: {fileID: 229502287}
+  logSplitSound: {fileID: 8300000, guid: e848b45a59ec4fa0a64295a2f3187e2c, type: 3}
+  logSplitVolume: 1
+  chopSound: {fileID: 8300000, guid: 7661adb27744f2a4aa4c96c76a12f60c, type: 3}
+  chopVolume: 1
 --- !u!114 &808790552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21638,6 +21646,10 @@ MonoBehaviour:
   pitchRange: {x: 0.92, y: 1.08}
   volumeRange: {x: 0.8, y: 1}
   surfaceRayDistance: 1.5
+  loopSurfaceName: Road
+  loopClip: {fileID: 8300000, guid: e1409e1d7be40f44ba60764b48f99ea3, type: 3}
+  loopVolume: 0.7
+  loopFade: 6
 --- !u!82 &881444935
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21824,6 +21836,8 @@ MonoBehaviour:
   reach: 3.2
   swingFps: 11
   promptText: Press E to chop
+  swingSound: {fileID: 8300000, guid: c1c1aa0578909eb449786e8025a4eef6, type: 3}
+  swingVolume: 1
 --- !u!1 &891375985
 GameObject:
   m_ObjectHideFlags: 0
@@ -27456,6 +27470,10 @@ MonoBehaviour:
   hitsPerStage: 3
   fallFrameSec: 0.18
   logPickupPrefab: {fileID: 229502287}
+  logSplitSound: {fileID: 8300000, guid: e848b45a59ec4fa0a64295a2f3187e2c, type: 3}
+  logSplitVolume: 1
+  chopSound: {fileID: 8300000, guid: 7661adb27744f2a4aa4c96c76a12f60c, type: 3}
+  chopVolume: 1
 --- !u!114 &1032000045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34975,6 +34993,10 @@ MonoBehaviour:
   hitsPerStage: 3
   fallFrameSec: 0.18
   logPickupPrefab: {fileID: 229502287}
+  logSplitSound: {fileID: 8300000, guid: e848b45a59ec4fa0a64295a2f3187e2c, type: 3}
+  logSplitVolume: 1
+  chopSound: {fileID: 8300000, guid: 7661adb27744f2a4aa4c96c76a12f60c, type: 3}
+  chopVolume: 1
 --- !u!114 &1302912234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37748,6 +37770,10 @@ MonoBehaviour:
   hitsPerStage: 3
   fallFrameSec: 0.18
   logPickupPrefab: {fileID: 229502287}
+  logSplitSound: {fileID: 8300000, guid: e848b45a59ec4fa0a64295a2f3187e2c, type: 3}
+  logSplitVolume: 1
+  chopSound: {fileID: 8300000, guid: 7661adb27744f2a4aa4c96c76a12f60c, type: 3}
+  chopVolume: 1
 --- !u!114 &1400879974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44636,6 +44662,10 @@ MonoBehaviour:
   hitsPerStage: 3
   fallFrameSec: 0.18
   logPickupPrefab: {fileID: 229502287}
+  logSplitSound: {fileID: 8300000, guid: e848b45a59ec4fa0a64295a2f3187e2c, type: 3}
+  logSplitVolume: 1
+  chopSound: {fileID: 8300000, guid: 7661adb27744f2a4aa4c96c76a12f60c, type: 3}
+  chopVolume: 1
 --- !u!114 &1671617182
 MonoBehaviour:
   m_ObjectHideFlags: 0

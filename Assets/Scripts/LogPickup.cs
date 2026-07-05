@@ -16,6 +16,13 @@ public class LogPickup : MonoBehaviour
     public float armDelay = 0.5f;           // ignore pickups for this long after spawning
     public string pickupMessage = "Picked up a log";
 
+    /// <summary>
+    /// Wood the player is carrying from felled logs, spent to feed the cabin <see cref="Fireplace"/>.
+    /// Static so it survives the walk from the woods into the cabin (a scene load) yet clears when the
+    /// game restarts — same session-scoped pattern as the felled-tree registry.
+    /// </summary>
+    public static int Wood;
+
     Transform _player;
     SpriteRenderer _sr;
     float _t, _arm;
@@ -45,6 +52,7 @@ public class LogPickup : MonoBehaviour
         Vector3 b = _player.position; b.y = 0f;
         if ((a - b).sqrMagnitude <= pickupRadius * pickupRadius)
         {
+            Wood++;                                          // one log of wood, spendable at the hearth
             if (DialogUI.Instance != null) DialogUI.Instance.ShowDialog(pickupMessage, 1.5f);
             // Put the player into the hold-wood carry pose — they're now holding the log in-hand.
             var chopper = FindAnyObjectByType<AxeChopper>();

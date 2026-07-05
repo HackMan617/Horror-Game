@@ -35,9 +35,28 @@ public class ChoppableTree : MonoBehaviour
     public float fallFrameSec = 0.18f;
     [Tooltip("Log pickup spawned when the tree finishes falling (log_pickup).")]
     public GameObject logPickupPrefab;
+    [Tooltip("Source recording for the chop hit (Tree Chop.wav). A short snippet of it plays per swing. Self-wired in the editor.")]
+    public AudioClip chopSound;
+    [Range(0f, 1f)] public float chopVolume = 1f;
+    [Tooltip("Seconds [start,end] of the single-chop snippet to play per swing (the full clip is a long chop loop).")]
+    public float chopSoundStart = 0.70f, chopSoundEnd = 1.58f;
+    [Tooltip("Played when the felled wood lands on the ground (Log Split.wav). Self-wired in the editor.")]
+    public AudioClip logSplitSound;
+    [Range(0f, 1f)] public float logSplitVolume = 1f;
 
     /// <summary>Every live, standing choppable tree — the player's axe searches this for a target.</summary>
     public static readonly List<ChoppableTree> Active = new List<ChoppableTree>();
+
+    /// <summary>
+    /// Ids (by position) of trees the player has felled this session. Static so it survives the
+    /// <see cref="HousePortal"/> scene loads (enter/leave the house) — felled trees stay down — but it
+    /// naturally clears when the game restarts, so the forest is whole again on a fresh run. Mirrors
+    /// HousePortal's static arrival hand-off.
+    /// </summary>
+    static readonly HashSet<string> _felledIds = new HashSet<string>();
+
+    /// <summary>Forget all felled trees (call from a New Game flow if you want them restored without a full restart).</summary>
+    public static void ResetSession() => _felledIds.Clear();
 
     // Sheet geometry — must match the tree_chop.png import (PPU 32, feet pivot) so the runtime-sliced
     // sprites are the exact size/pivot of the hand-placed trees.
@@ -46,6 +65,7 @@ public class ChoppableTree : MonoBehaviour
     const float Ppu = 32f;
     static readonly Vector2 Pivot = new Vector2(0.5f, 0.051470588f);
 
+    AudioClip _chopSnippet;     // one short chop sliced out of the long Tree Chop recording
     Sprite[] _chop;             // 8 chop/fall stages (top row of the sheet)
     Sprite[] _idle;             // 8 idle sway frames (bottom row)
     SpriteRenderer _sr;
@@ -61,9 +81,22 @@ public class ChoppableTree : MonoBehaviour
     {
         _sr = GetComponent<SpriteRenderer>();
         _trunk = GetComponent<Collider>();
+
+        // Felled earlier this session (e.g. before ducking into the house)? Stay gone on reload.
+        // Deactivating in Awake also skips OnEnable, so it never re-registers in Active.
+        if (_felledIds.Contains(TreeId())) { _felled = true; gameObject.SetActive(false); return; }
 #if UNITY_EDITOR
         if (sheet == null) sheet = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Animation/tree_chop.png");
+        if (chopSound == null) chopSound = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound Effects/Tree Chop.wav");
+        if (logSplitSound == null) logSplitSound = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound Effects/Log Split.wav");
 #endif
+        // The Tree Chop recording is ~22s of repeated chops; slice one short chop out so a single
+        // snippet plays per swing instead of the whole loop.
+        if (chopSound != null)
+        {
+            if (chopSound.loadState != AudioDataLoadState.Loaded) chopSound.LoadAudioData();
+            _chopSnippet = SubClip(chopSound, chopSoundStart, chopSoundEnd, "TreeChopHit");
+        }
         BuildSprites();
 
         if (_idle != null && _idle.Length > 0) _sr.sprite = _idle[0];        // start on the idle loop
@@ -97,6 +130,9 @@ public class ChoppableTree : MonoBehaviour
         var chop = _chop ?? stages;
         if (chop == null || chop.Length < 8) return;
 
+        var hit = _chopSnippet ?? chopSound;
+        if (hit != null) AudioSource.PlayClipAtPoint(hit, transform.position, chopVolume);
+
         if (_stage < 3)                                   // deepen the notch (this ends the idle sway)
         {
             if (++_hits >= hitsPerStage) { _hits = 0; _sr.sprite = chop[++_stage]; }
@@ -114,6 +150,8 @@ public class ChoppableTree : MonoBehaviour
         if (_trunk != null) _trunk.enabled = false;       // stop blocking the player as it comes down
         for (int s = 4; s <= 7; s++) { _sr.sprite = chop[s]; yield return new WaitForSeconds(fallFrameSec); }
         _felled = true;
+        _felledIds.Add(TreeId());                          // remember it so it stays down across scene loads
+        if (logSplitSound != null) AudioSource.PlayClipAtPoint(logSplitSound, transform.position, logSplitVolume);
         yield return new WaitForSeconds(0.2f);            // a beat resting felled before it clears
 
         if (logPickupPrefab != null)
@@ -122,6 +160,14 @@ public class ChoppableTree : MonoBehaviour
             log.SetActive(true);
         }
         Destroy(gameObject);                              // the tree disappears, leaving the log
+    }
+
+    // Stable per-tree id from its placed position (rounded to 0.01u) — identical every time the
+    // Exterior scene reloads, so a felled tree is recognised and stays down.
+    string TreeId()
+    {
+        Vector3 p = transform.position;
+        return "tree_" + Mathf.RoundToInt(p.x * 100f) + "_" + Mathf.RoundToInt(p.z * 100f);
     }
 
     // Slice both rows straight from the texture. Top image row (chop) is the UPPER texture half;
@@ -140,5 +186,21 @@ public class ChoppableTree : MonoBehaviour
         for (int c = 0; c < Cols; c++)
             arr[c] = Sprite.Create(sheet, new Rect(c * CellW, y, CellW, CellH), Pivot, Ppu, 0, SpriteMeshType.FullRect);
         return arr;
+    }
+
+    // Copies the samples in [startSec, endSec] of src into a fresh clip — one chop out of the long loop.
+    static AudioClip SubClip(AudioClip src, float startSec, float endSec, string name)
+    {
+        if (src == null) return null;
+        int freq = src.frequency, ch = src.channels;
+        int startS = Mathf.Clamp(Mathf.RoundToInt(startSec * freq), 0, src.samples);
+        int endS   = Mathf.Clamp(Mathf.RoundToInt(endSec   * freq), startS, src.samples);
+        int len = Mathf.Max(1, endS - startS);
+
+        var data = new float[len * ch];
+        src.GetData(data, startS);
+        var clip = AudioClip.Create(name, len, ch, freq, false);
+        clip.SetData(data, 0);
+        return clip;
     }
 }

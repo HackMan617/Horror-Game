@@ -91,6 +91,13 @@ public class RoadTiler : MonoBehaviour
 
         GetComponent<MeshFilter>().sharedMesh = _mesh;
         if (material != null) GetComponent<MeshRenderer>().sharedMaterial = material;
+
+        // Give the strip a collider (like the cobble Pathway) so a downward ray from the player can
+        // name this surface "Road" — that's what FootstepAudio keys the asphalt walking loop off.
+        var mc = GetComponent<MeshCollider>();
+        if (mc == null) mc = gameObject.AddComponent<MeshCollider>();
+        mc.sharedMesh = null;
+        mc.sharedMesh = _mesh;
     }
 
     int PickColumn(int i, int mid, Vector2Int cell)
