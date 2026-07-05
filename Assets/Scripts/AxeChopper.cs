@@ -52,6 +52,9 @@ public class AxeChopper : MonoBehaviour
     public float carrySeconds = 2f;
     [Tooltip("Frame rate of the carry-walk cycle shown while the player moves holding the log.")]
     public float carryWalkFps = 9f;
+    [Tooltip("Played once each time the player swings the axe (Axe Slash.wav). Self-wired in the editor.")]
+    public AudioClip swingSound;
+    [Range(0f, 1f)] public float swingVolume = 1f;
 
     [Header("Axe gating")]
     [Tooltip("If off, the player can't chop until they take the axe-in-stump by the cabin (AxePickup calls EquipAxe). The equipped state persists across scenes/sessions.")]
@@ -92,6 +95,7 @@ public class AxeChopper : MonoBehaviour
         if (carryWalkFemale == null)     carryWalkFemale     = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Animation/carry_walk_female.png");
         if (carryWalkMaleBack == null)   carryWalkMaleBack   = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Animation/carry_walk_male_back.png");
         if (carryWalkFemaleBack == null) carryWalkFemaleBack = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Animation/carry_walk_female_back.png");
+        if (swingSound == null) swingSound = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound Effects/Axe Slash.wav");
 #endif
         var look = CharacterStore.Load();
         bool female = look.body == BodyType.Female;
@@ -149,7 +153,11 @@ public class AxeChopper : MonoBehaviour
         if (target == null) return;
 
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(promptText);
-        if (EPressed()) StartCoroutine(fp ? SwingFP(target) : SwingTP(target));
+        if (EPressed())
+        {
+            if (swingSound != null) AudioSource.PlayClipAtPoint(swingSound, transform.position, swingVolume);
+            StartCoroutine(fp ? SwingFP(target) : SwingTP(target));
+        }
     }
 
     /// <summary>
