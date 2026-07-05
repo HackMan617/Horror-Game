@@ -24,14 +24,21 @@ public class CarDoor : MonoBehaviour
     public float stepSeconds = 0.07f;
     [Tooltip("Minimum seconds between toggles, so E-mashing can't spam the swing.")]
     public float interactCooldown = 0.4f;
-    [Tooltip("Played once when the door starts opening or closing.")]
-    public AudioClip doorSound;
+
+    [Header("Audio — one 'Open and Close Door' clip, split into the two foley hits")]
+    [Tooltip("The 'Open and Close Door.wav': an open creak, a silence, then a close slam. Self-wired in the editor.")]
+    public AudioClip openCloseClip;
     [Range(0f, 1f)] public float soundVolume = 1f;
+    [Tooltip("Seconds [start,end] of the OPEN foley inside the clip (leading silence trimmed for a snappy play).")]
+    public float openStart = 0.70f, openEnd = 1.45f;
+    [Tooltip("Seconds [start,end] of the CLOSE foley inside the clip.")]
+    public float closeStart = 3.65f, closeEnd = 4.40f;
 
     // CAR.md: door stage 0..3 -> frame in the 7-frame view sheet (0 shut, 4/5/6 swing open).
     static readonly int[] StageToFrame = { 0, 4, 5, 6 };
 
     DirectionalSprite _ds;
+    AudioClip _openClip, _closeClip;   // the two foley hits sliced out of openCloseClip
     int _stage;        // current door stage: 0 = shut .. 3 = fully open
     int _target;       // stage we're easing toward
     float _stepT;      // per-step timer
@@ -40,7 +47,22 @@ public class CarDoor : MonoBehaviour
     /// <summary>True while the door is open or opening (enter/drive hooks can read this later).</summary>
     public bool IsOpen => _target > 0;
 
-    void Awake() { _ds = GetComponent<DirectionalSprite>(); }
+    void Awake()
+    {
+        _ds = GetComponent<DirectionalSprite>();
+#if UNITY_EDITOR
+        if (openCloseClip == null)
+            openCloseClip = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound Effects/Open and Close Door.wav");
+#endif
+        // One clip holds both foley hits (open creak, silence, close slam) — slice each into its own
+        // clip once so opening plays the open half and closing plays the close half.
+        if (openCloseClip != null)
+        {
+            if (openCloseClip.loadState != AudioDataLoadState.Loaded) openCloseClip.LoadAudioData();
+            _openClip  = SubClip(openCloseClip, openStart, openEnd, "DoorOpen");
+            _closeClip = SubClip(openCloseClip, closeStart, closeEnd, "DoorClose");
+        }
+    }
 
     void Start()
     {
@@ -76,13 +98,33 @@ public class CarDoor : MonoBehaviour
 
         if (EPressed() && _cd <= 0f)
         {
-            _target = IsOpen ? 0 : 3;
+            bool willOpen = !IsOpen;                 // currently shut -> this press opens it
+            _target = willOpen ? 3 : 0;
             _cd = interactCooldown;
-            if (doorSound != null) AudioSource.PlayClipAtPoint(doorSound, transform.position, soundVolume);
+
+            var clip = willOpen ? _openClip : _closeClip;
+            if (clip != null) AudioSource.PlayClipAtPoint(clip, transform.position, soundVolume);
         }
     }
 
     static Vector3 Flat(Vector3 v) { v.y = 0f; return v; }
+
+    // Copies the samples in [startSec, endSec] of src into a fresh clip, so each door action can play
+    // just its own foley hit out of the combined "Open and Close Door" recording.
+    static AudioClip SubClip(AudioClip src, float startSec, float endSec, string name)
+    {
+        if (src == null) return null;
+        int freq = src.frequency, ch = src.channels;
+        int startS = Mathf.Clamp(Mathf.RoundToInt(startSec * freq), 0, src.samples);
+        int endS   = Mathf.Clamp(Mathf.RoundToInt(endSec   * freq), startS, src.samples);
+        int len = Mathf.Max(1, endS - startS);
+
+        var data = new float[len * ch];
+        src.GetData(data, startS);
+        var clip = AudioClip.Create(name, len, ch, freq, false);
+        clip.SetData(data, 0);
+        return clip;
+    }
 
     bool EPressed()
     {
