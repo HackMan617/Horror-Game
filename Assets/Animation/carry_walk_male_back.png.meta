@@ -1,22 +1,31 @@
 fileFormatVersion: 2
-guid: 301ecd2743050864ab098cfbe7ad3dd9
+guid: a71c237e606cbd44d8505961327febc9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4773919141116083738
-    second: chop_female_back_0
+      213: 7180273819325622771
+    second: carry_walk_male_back_0
   - first:
-      213: 275428395743610703
-    second: chop_female_back_1
+      213: -1153230211540301564
+    second: carry_walk_male_back_1
   - first:
-      213: -1575981150825846255
-    second: chop_female_back_2
+      213: -2211226859346198263
+    second: carry_walk_male_back_2
   - first:
-      213: -5717586975592551958
-    second: chop_female_back_3
+      213: -1712496878619803378
+    second: carry_walk_male_back_3
   - first:
-      213: 7072399226718185581
-    second: chop_female_back_4
+      213: 1061832373113055901
+    second: carry_walk_male_back_4
+  - first:
+      213: -1796408514313383520
+    second: carry_walk_male_back_5
+  - first:
+      213: 3520740345308817937
+    second: carry_walk_male_back_6
+  - first:
+      213: 6064240238937236653
+    second: carry_walk_male_back_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,101 +121,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chop_female_back_0
+      name: carry_walk_male_back_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 0
-        width: 24
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6e1865f95d1afbdb0800000000000000
-      internalID: -4773919141116083738
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chop_female_back_1
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 0
-        width: 26
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f478a59aaa482d300800000000000000
-      internalID: 275428395743610703
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chop_female_back_2
-      rect:
-        serializedVersion: 2
-        x: 71
-        y: 0
-        width: 26
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 11a60544e7df02ae0800000000000000
-      internalID: -1575981150825846255
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chop_female_back_3
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 0
-        width: 26
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ae9e76350fc07a0b0800000000000000
-      internalID: -5717586975592551958
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chop_female_back_4
-      rect:
-        serializedVersion: 2
-        x: 134
-        y: 0
+        x: 6
+        y: 10
         width: 21
-        height: 32
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +136,162 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d68e84220a5362260800000000000000
-      internalID: 7072399226718185581
+      spriteID: 3f9e0f6fef475a360800000000000000
+      internalID: 7180273819325622771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40944e09b37eeffe0800000000000000
+      internalID: -1153230211540301564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 11
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9010ed213e42051e0800000000000000
+      internalID: -2211226859346198263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_3
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e01c6ee792dfb38e0800000000000000
+      internalID: -1712496878619803378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_4
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 10
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9ae962eae26cbe00800000000000000
+      internalID: 1061832373113055901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_5
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a11dd859ffd117e0800000000000000
+      internalID: -1796408514313383520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_6
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 11
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11aa48cb0be2cd030800000000000000
+      internalID: 3520740345308817937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_back_7
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 0
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da4eb7a1e52882450800000000000000
+      internalID: 6064240238937236653
       vertices: []
       indices: 
       edges: []
@@ -235,11 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      chop_female_back_0: -4773919141116083738
-      chop_female_back_1: 275428395743610703
-      chop_female_back_2: -1575981150825846255
-      chop_female_back_3: -5717586975592551958
-      chop_female_back_4: 7072399226718185581
+      carry_walk_male_back_0: 7180273819325622771
+      carry_walk_male_back_1: -1153230211540301564
+      carry_walk_male_back_2: -2211226859346198263
+      carry_walk_male_back_3: -1712496878619803378
+      carry_walk_male_back_4: 1061832373113055901
+      carry_walk_male_back_5: -1796408514313383520
+      carry_walk_male_back_6: 3520740345308817937
+      carry_walk_male_back_7: 6064240238937236653
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

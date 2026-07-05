@@ -45,14 +45,21 @@ public class CharacterBillboardAnimator : MonoBehaviour
         _sr.sprite = frames[Mathf.Clamp(_frame, 0, frames.Length - 1)];
     }
 
-    Sprite[] SelectFrames()
+    Sprite[] SelectFrames() => FacingCamera ? frontFrames : backFrames;
+
+    /// <summary>
+    /// True when the camera is looking at the player's front (so front frames should show). Defaults
+    /// to false — the camera normally sits behind the player, so the back sheet is what it sees. Other
+    /// systems (e.g. <see cref="AxeChopper"/>) read this to keep their poses on the same facing side.
+    /// </summary>
+    public bool FacingCamera
     {
-        if (frontFrames != null && frontFrames.Length > 0 && player != null && cameraTransform != null)
+        get
         {
+            if (frontFrames == null || frontFrames.Length == 0 || player == null || cameraTransform == null)
+                return false;
             Vector3 toCam = cameraTransform.position - player.transform.position;
-            bool facingCamera = Vector3.Dot(player.transform.forward, toCam) > 0f;
-            return facingCamera ? frontFrames : backFrames;
+            return Vector3.Dot(player.transform.forward, toCam) > 0f;
         }
-        return backFrames;
     }
 }

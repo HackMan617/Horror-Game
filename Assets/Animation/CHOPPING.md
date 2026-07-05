@@ -8,11 +8,23 @@ and walk sheets with no seams.
 
 | File | Size | Cell | Cells |
 |---|---|---|---|
-| `sprites/chop_male.png`   | 160×32 | 32×32 | 5 — swing 0-3, then **hold-wood** |
-| `sprites/chop_female.png` | 160×32 | 32×32 | 5 — swing 0-3, then **hold-wood** |
+| `sprites/chop_male.png`   | 160×32 | 32×32 | 5 — swing 0-3, then **hold-wood** (front) |
+| `sprites/chop_female.png` | 160×32 | 32×32 | 5 — swing 0-3, then **hold-wood** (front) |
+| `sprites/chop_male_back.png`   | 160×32 | 32×32 | 5 — swing 0-3, then hold-wood (**back view**) |
+| `sprites/chop_female_back.png` | 160×32 | 32×32 | 5 — swing 0-3, then hold-wood (**back view**) |
+| `sprites/carry_walk_male.png`   | 128×32 | 32×32 | 4 — **walk cycle holding the log** (front) |
+| `sprites/carry_walk_female.png` | 128×32 | 32×32 | 4 — walk cycle holding the log (front) |
+| `sprites/carry_walk_male_back.png`   | 128×32 | 32×32 | 4 — walk cycle holding the log (**back**) |
+| `sprites/carry_walk_female_back.png` | 128×32 | 32×32 | 4 — walk cycle holding the log (**back**) |
 | `sprites/log_pickup.png`  | 32×16  | 16×16 | 2 — idle bob + glint |
 | `sprites/fp_axe.png`      | 640×128 | 128×128 | 5 — first-person viewmodel swing |
 | `sprites/*-6x.png` · `fp_axe-3x.png` | — | — | preview blow-ups — **do not ship** |
+
+**Front + back:** the `_back` sheets share the exact cell map and timing as the front sheets —
+swap to them when the player faces **up/away** from the camera (walking north), same as your base
+front/back player sheets. The axe is held out to the side so the blade stays visible from behind;
+the hold-wood cell shows the carried log peeking past the body. `PlayerChop` / `FirstPersonAxe`
+code below is identical — just point `chop[]` at whichever facing sheet the movement state selects.
 
 **Point filter · integer scale.** Cell index → `(col*W, 0, W, H)`.
 
@@ -25,8 +37,24 @@ and walk sheets with no seams.
 
 - **Swing** is cells **0→1→2→3** (play once per axe stroke, ~10–12 fps). Land the tree-damage /
   chip VFX on cell **2** (the bite) — that frame already throws a couple of chips.
-- **Hold-wood** (cell 4) is a **static carry pose** — show it while the player walks back with a
-  log, or as the "you got wood" beat.
+- **Hold-wood** (cell 4) is a **static carry pose** — use it when the player stands still with a
+  log. For **movement**, use the dedicated carry-walk sheets below.
+
+### Cell map (carry-walk — walking with the log)
+
+`carry_walk_*` sheets are a **4-frame walk cycle**, front and back, both genders:
+
+```
+0 step-left   1 pass   2 step-right   3 pass
+```
+
+- Loop **0→1→2→3** at ~**8–10 fps** while the player moves; the hips bob up on the pass
+  frames (1, 3) and the feet alternate lead so it reads as a walk.
+- The log is hugged to the chest. From the **front** both forearms cup it across the belly; from
+  the **back** it's held in front of the body, so only the cut ends peek past the sides (correct
+  occlusion — no floating hands behind the character).
+- Pick front vs back from the movement facing, exactly like the base walk sheets. Swap to the
+  static **hold-wood** cell when the player stops.
 
 ---
 
@@ -40,18 +68,23 @@ and walk sheets with no seams.
 | Filter Mode | Point (no filter) |
 | Compression | None · Mip Maps off |
 
-Slice **Grid By Cell Count**: characters Column **5** Row **1**; log Column **2** Row **1**.
+Slice **Grid By Cell Count**: chop characters Column **5** Row **1**; carry-walk Column **4**
+Row **1**; log Column **2** Row **1**.
 Pivot **Bottom-Center** on the characters (feet on the ground line), **Center** on the log.
 
 ---
 
-## Shirt color = the player's chosen customization color
+## Character customization = recolor shirt + skin + hair
 
-The red on these sprites is the player's **shirt**, and it must be tied to whatever color the
-player picked in character customization — the sleeve on the arm should always match the shirt
-they're wearing, in **both** the third-person swing and the first-person viewmodel. The shirt
-pixels are authored in the exact same base palette as `character_sprite_sheet*.png`, so the same
-runtime recolor that tints the idle/walk sheets tints these with no extra work:
+These sprites reuse the **exact base-player pixels** (`character_sprite_sheet*.png`), so whatever
+customization recolor you already run on the idle/walk sheets applies here **unchanged** — the
+player's chosen **shirt, skin and hair** must drive every one of these frames too. Nothing here
+is hard-coded to "red shirt / this skin / this hair"; the shipped PNGs just happen to show the
+default palette. Recolor all customization slots, on **every** sheet in this set
+(`chop_*`, `chop_*_back`, `carry_walk_*`, `carry_walk_*_back`, and `fp_axe`), so a facing change
+or a first/third-person switch never shows a mismatched character.
+
+**Shirt / sleeve** (the red — arms, shoulders, torso; the only red pixels in the sheets):
 
 | Role | Sprite pixels (source) | Recolor to |
 |---|---|---|
@@ -59,18 +92,30 @@ runtime recolor that tints the idle/walk sheets tints these with no extra work:
 | Shirt / sleeve shadow | `#983018` | player shirt **shadow** (≈ base × 0.7) |
 | Sleeve deep shadow (FP only) | `#6a1e14` | player shirt **deep shadow** (≈ base × 0.5) |
 
-- These are the **only** red pixels in the sheets — skin, wood and steel use separate ramps, so
-  a shirt recolor never bleeds onto the hand, handle or blade.
-- Apply the identical recolor to `chop_male` / `chop_female` **and** `fp_axe` so a perspective
-  switch never shows a mismatched shirt.
-- Implementation options: the same **palette-swap/LUT** you already use for the base character;
-  or, if the shirt is the only tinted element, a shader/material that maps the shirt ramp to the
-  chosen color; or a `Color` multiply **only** if the shirt is isolated on its own material.
-  Recolor the **base and shadow together** (don't flat-tint) so the fabric keeps its shading.
+**Skin** (face + the hands gripping the axe/log):
 
-If your customization also swaps skin or hair tone, those pixels (`#f0b890`/`#c07a4c` skin;
-hair ramp on the characters) map the same way as the base sheets — the chop frames reuse the
-exact base pixels, so every existing customization option Just Works here too.
+| Role | Sprite pixels (source) | Recolor to |
+|---|---|---|
+| Skin base | `#f0b890` | player skin **base** |
+| Skin shadow | `#c07a4c` | player skin **shadow** |
+
+**Hair** (the fringe/cap on the front sheets and the full head/long-hair on the back sheets):
+
+| Role | Sprite pixels (source) | Recolor to |
+|---|---|---|
+| Hair base | `#9c5a26` | player hair **base** |
+| Hair shadow | `#5e3410` | player hair **shadow** |
+
+- Each slot uses its **own** ramp, so recoloring the shirt never touches skin, hair, wood or
+  steel (and vice-versa). Recolor the **base + shadow together** (don't flat-tint) so shading is
+  preserved.
+- The blue trousers (`#3a5bd0` / `#26398c`) and dark boots (`#4a4a4a`) match the base sheets
+  too — fold them into the same recolor if your customization covers legwear.
+- Implementation: the same **palette-swap / LUT** you already use for the base character is the
+  cleanest path (one lookup table covers shirt + skin + hair + legs at once). A per-slot shader
+  tint also works; a flat `Color` multiply does **not** (it would tint every slot the same).
+- Apply the identical table to the third-person **and** first-person art so switching views
+  reads as the same customized character.
 
 ---
 
