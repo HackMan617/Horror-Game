@@ -4,7 +4,8 @@ using UnityEngine;
 /// A dropped log left behind when a <see cref="ChoppableTree"/> is felled (the <c>log_pickup</c>
 /// sheet, see CHOPPING.md). Bobs between its two frames (idle + cut-end glint) and is collected when
 /// the player walks up to it — a short arm delay stops it from being grabbed the instant it spawns
-/// under the player who just chopped it.
+/// under the player who just chopped it. On pickup it puts the player into the hold-wood carry pose
+/// via <see cref="AxeChopper.ShowCarry"/>, so they're shown holding the log in-hand.
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public class LogPickup : MonoBehaviour
@@ -45,6 +46,9 @@ public class LogPickup : MonoBehaviour
         if ((a - b).sqrMagnitude <= pickupRadius * pickupRadius)
         {
             if (DialogUI.Instance != null) DialogUI.Instance.ShowDialog(pickupMessage, 1.5f);
+            // Put the player into the hold-wood carry pose — they're now holding the log in-hand.
+            var chopper = FindAnyObjectByType<AxeChopper>();
+            if (chopper != null) chopper.ShowCarry(true);
             Destroy(gameObject);
         }
     }
