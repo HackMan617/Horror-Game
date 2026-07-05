@@ -61,6 +61,17 @@ public static class CharacterStore
     public static int LoadDog() =>
         Mathf.Clamp(PlayerPrefs.GetInt(Key + "dog", 0), 0, DogNames.Length - 1);
 
+    // ---- world progress flags (one-shot bits: picked-up items, claimed props, opened things) ----
+    // Persist across scenes and sessions like everything else here, so e.g. the axe stump stays
+    // empty and the player keeps their axe after stepping through a door or reloading.
+    public static bool GetFlag(string id) => PlayerPrefs.GetInt(Key + "flag_" + id, 0) != 0;
+
+    public static void SetFlag(string id, bool value)
+    {
+        PlayerPrefs.SetInt(Key + "flag_" + id, value ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
     public struct Preset
     {
         public string name;

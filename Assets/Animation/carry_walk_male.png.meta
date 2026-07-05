@@ -1,22 +1,31 @@
 fileFormatVersion: 2
-guid: 301ecd2743050864ab098cfbe7ad3dd9
+guid: c962892c30a9b51488e90b8a3a652965
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4773919141116083738
-    second: chop_female_back_0
+      213: -5032291310342530293
+    second: carry_walk_male_0
   - first:
-      213: 275428395743610703
-    second: chop_female_back_1
+      213: 1156297702862135002
+    second: carry_walk_male_1
   - first:
-      213: -1575981150825846255
-    second: chop_female_back_2
+      213: 582390215722831841
+    second: carry_walk_male_2
   - first:
-      213: -5717586975592551958
-    second: chop_female_back_3
+      213: -1267090053035212246
+    second: carry_walk_male_3
   - first:
-      213: 7072399226718185581
-    second: chop_female_back_4
+      213: 1608361573703587044
+    second: carry_walk_male_4
+  - first:
+      213: -6088033865388893101
+    second: carry_walk_male_5
+  - first:
+      213: -9116613341788660609
+    second: carry_walk_male_6
+  - first:
+      213: 351324003922599499
+    second: carry_walk_male_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,13 +121,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chop_female_back_0
+      name: carry_walk_male_0
       rect:
         serializedVersion: 2
         x: 7
-        y: 0
-        width: 24
-        height: 32
+        y: 10
+        width: 18
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,20 +136,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6e1865f95d1afbdb0800000000000000
-      internalID: -4773919141116083738
+      spriteID: b0b9fb827b5b92ab0800000000000000
+      internalID: -5032291310342530293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chop_female_back_1
+      name: carry_walk_male_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ade92b962aefb0010800000000000000
+      internalID: 1156297702862135002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_2
       rect:
         serializedVersion: 2
         x: 39
-        y: 0
-        width: 26
-        height: 32
+        y: 11
+        width: 18
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,20 +180,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f478a59aaa482d300800000000000000
-      internalID: 275428395743610703
+      spriteID: 1ef82d8c0d0151800800000000000000
+      internalID: 582390215722831841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chop_female_back_2
+      name: carry_walk_male_3
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a22c7626f446a6ee0800000000000000
+      internalID: -1267090053035212246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_4
       rect:
         serializedVersion: 2
         x: 71
-        y: 0
-        width: 26
-        height: 32
+        y: 10
+        width: 18
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +224,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 11a60544e7df02ae0800000000000000
-      internalID: -1575981150825846255
+      spriteID: 4e49dfe645c025610800000000000000
+      internalID: 1608361573703587044
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chop_female_back_3
+      name: carry_walk_male_5
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c52f88475f28ba0800000000000000
+      internalID: -6088033865388893101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carry_walk_male_6
       rect:
         serializedVersion: 2
         x: 103
-        y: 0
-        width: 26
-        height: 32
+        y: 11
+        width: 18
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +268,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ae9e76350fc07a0b0800000000000000
-      internalID: -5717586975592551958
+      spriteID: f7c9910b7784b7180800000000000000
+      internalID: -9116613341788660609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chop_female_back_4
+      name: carry_walk_male_7
       rect:
         serializedVersion: 2
-        x: 134
+        x: 104
         y: 0
-        width: 21
-        height: 32
+        width: 16
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +290,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d68e84220a5362260800000000000000
-      internalID: 7072399226718185581
+      spriteID: b4edfd6f15720e400800000000000000
+      internalID: 351324003922599499
       vertices: []
       indices: 
       edges: []
@@ -235,11 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      chop_female_back_0: -4773919141116083738
-      chop_female_back_1: 275428395743610703
-      chop_female_back_2: -1575981150825846255
-      chop_female_back_3: -5717586975592551958
-      chop_female_back_4: 7072399226718185581
+      carry_walk_male_0: -5032291310342530293
+      carry_walk_male_1: 1156297702862135002
+      carry_walk_male_2: 582390215722831841
+      carry_walk_male_3: -1267090053035212246
+      carry_walk_male_4: 1608361573703587044
+      carry_walk_male_5: -6088033865388893101
+      carry_walk_male_6: -9116613341788660609
+      carry_walk_male_7: 351324003922599499
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
