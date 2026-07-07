@@ -74,6 +74,7 @@ public class CarDoor : MonoBehaviour
     float _engineT;        // seconds of engine run remaining before it dies
     ParticleSystem _smoke; // exhaust puffs, emitted only while the engine runs
     TruckDriver _driver;   // present once the truck is driving-enabled; owns the in-world drive
+    CarLights _lights;     // headlights/tail-lights + idle rumble; woken while the engine runs
 
     /// <summary>True while the door is open or opening (enter/drive hooks can read this later).</summary>
     public bool IsOpen => _target > 0;
@@ -116,6 +117,7 @@ public class CarDoor : MonoBehaviour
             if (p != null) player = p.transform;
         }
         _driver = GetComponent<TruckDriver>();   // present once the truck is driving-enabled
+        _lights = GetComponent<CarLights>();     // headlights/tail-lights + rumble, woken while the engine runs
     }
 
     void Update()
@@ -202,6 +204,7 @@ public class CarDoor : MonoBehaviour
         _engineOn = true;
         _engineT = Mathf.Max(0.1f, engineSeconds);
         if (_smoke != null) _smoke.Play();
+        if (_lights != null) _lights.engineRunning = true;   // rumble + headlights + tail/brake lights on
     }
 
     void StopEngine()
@@ -210,6 +213,7 @@ public class CarDoor : MonoBehaviour
         if (_engine != null) { _engine.Stop(); _engine.volume = engineVolume; }
         // Stop emitting but let the puffs already in the air rise and fade for a natural tail.
         if (_smoke != null) _smoke.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        if (_lights != null) _lights.engineRunning = false;
     }
 
     // A small runtime particle system on the exhaust: grey puffs that rise, billow and fade, emitted

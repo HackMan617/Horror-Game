@@ -27,6 +27,9 @@ public class CarLights : MonoBehaviour
     public float rumblePx = 0.8f;
     [Tooltip("How often the rumble offset is refreshed (CAR.md ≈ 110 ms idle).")]
     public float rumbleInterval = 0.11f;
+    [Tooltip("Set true while the engine is running (CarDoor starts it). Forces the rumble + headlights + " +
+             "steady tail/brake lights on regardless of time of day — the truck 'wakes up' when you start it.")]
+    public bool engineRunning;
 
     const float CellH = 32f;   // 64×32 authoring cell (CAR.md)
 
@@ -94,7 +97,7 @@ public class CarLights : MonoBehaviour
     void LateUpdate()
     {
         float dark = sky != null ? sky.Darkness : 0f;
-        bool on = dark >= nightThreshold;
+        bool on = engineRunning || dark >= nightThreshold;   // engine start wakes the truck up any time of day
 
         // --- idle rumble: jitter the whole sprite while the engine is "running" ---
         if (on)
@@ -136,8 +139,8 @@ public class CarLights : MonoBehaviour
         SetHead(_core0, _halo0, _cone0, lit && fx.head.Length > 0, fx, 0, flip, s);
         SetHead(_core1, _halo1, _cone1, lit && fx.head.Length > 1, fx, 1, flip, s);
 
-        // --- hazard blinkers (all lamps blink in unison) ---
-        bool blinkOn = ((int)(Time.time / blinkInterval)) % 2 == 0;
+        // --- side/hazard + tail/brake lamps: blink at night, STEADY while the engine runs (brake/running lights) ---
+        bool blinkOn = engineRunning || ((int)(Time.time / blinkInterval)) % 2 == 0;
         Color bc = fx.red ? new Color(1f, 0.20f, 0.13f) : new Color(1f, 0.66f, 0.13f);
         SetBlink(_blink0, fx.blink != null && fx.blink.Length > 0 && blinkOn, fx.blink, 0, bc, flip, s);
         SetBlink(_blink1, fx.blink != null && fx.blink.Length > 1 && blinkOn, fx.blink, 1, bc, flip, s);
