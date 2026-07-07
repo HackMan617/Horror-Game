@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,89 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: road_stopsign_0
+      name: stopsign_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 23
+        width: 24
         height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8e88dbbb17ef1ac20800000000000000
-      internalID: 3216131373353765096
+      spriteID: b151e5d97a19113afd743693ddb80d84
+      internalID: -943652538
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_stopsign_1
+      name: stopsign_1
       rect:
         serializedVersion: 2
-        x: 25
+        x: 24
         y: 0
-        width: 23
+        width: 24
         height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bc6c933f22e5a6040800000000000000
-      internalID: 4641625870161266379
+      spriteID: b2bf324005cac60b1345d1dfd03ddda6
+      internalID: 1978643799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_stopsign_2
+      name: stopsign_2
       rect:
         serializedVersion: 2
         x: 48
         y: 0
-        width: 23
+        width: 24
         height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5927b58d32eb70ff0800000000000000
-      internalID: -69878208037948779
+      spriteID: 0fdaca40d9cc438c43bfecc0c8d90570
+      internalID: -352364971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_stopsign_3
+      name: stopsign_3
       rect:
         serializedVersion: 2
-        x: 71
+        x: 72
         y: 0
-        width: 23
+        width: 24
         height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 169afc7a1fd7ae010800000000000000
-      internalID: 1218925126013135201
+      spriteID: 7ed637b71ca5e380665bd3dea84d14ed
+      internalID: -557842098
       vertices: []
       indices: 
       edges: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 4661ec9510affe447905c4e971bbbbcd
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      road_stopsign_0: 3216131373353765096
-      road_stopsign_1: 4641625870161266379
-      road_stopsign_2: -69878208037948779
-      road_stopsign_3: 1218925126013135201
+      stopsign_0: -943652538
+      stopsign_1: 1978643799
+      stopsign_2: -352364971
+      stopsign_3: -557842098
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

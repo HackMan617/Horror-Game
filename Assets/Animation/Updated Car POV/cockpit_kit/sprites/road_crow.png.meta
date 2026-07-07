@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,89 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: road_crow_0
+      name: crow_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
+        x: 0
+        y: 0
         width: 16
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: dcda395735bce4700800000000000000
-      internalID: 526581765764263373
+      spriteID: 953f8dbd21cedbaa80bed83b93d94dc8
+      internalID: 1206446846
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_crow_1
+      name: crow_1
       rect:
         serializedVersion: 2
-        x: 17
-        y: 1
+        x: 16
+        y: 0
         width: 16
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e398d26a24c1b0cc0800000000000000
-      internalID: -3743867592647014082
+      spriteID: 710c38fd917b287114a1384ac2126436
+      internalID: 1937436515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_crow_2
+      name: crow_2
       rect:
         serializedVersion: 2
         x: 32
-        y: 1
-        width: 17
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 467148db3312110f0800000000000000
-      internalID: -1148099923896166556
+      spriteID: 39543e16eb54cf2f4658e6cc23575e14
+      internalID: 2136189359
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_crow_3
+      name: crow_3
       rect:
         serializedVersion: 2
-        x: 49
-        y: 1
-        width: 15
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5eb4974daa4c9ab40800000000000000
-      internalID: 5452105061896899557
+      spriteID: 744d1127584f7e0acd64ef283a2cfe7b
+      internalID: 456167857
       vertices: []
       indices: 
       edges: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fc183abfeba4e014f9e1f55bb6a894bf
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      road_crow_0: 526581765764263373
-      road_crow_1: -3743867592647014082
-      road_crow_2: -1148099923896166556
-      road_crow_3: 5452105061896899557
+      crow_0: 1206446846
+      crow_1: 1937436515
+      crow_2: 2136189359
+      crow_3: 456167857
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
