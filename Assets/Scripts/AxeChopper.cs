@@ -337,9 +337,52 @@ public class AxeChopper : MonoBehaviour
     // ---------- recolor (shirt = customization) + slice ----------
     static Sprite[] SliceRecolored(Texture2D master, CharacterLook look, int fw, int fh, float ppu, Vector2 pivot)
     {
-        Texture2D rec = CharacterPalette.Recolor(master, look);   // skin/hair/eyes/pants + shirt base & shadow
+        Texture2D rec = CharacterPalette.Recolor(master, look);   // skin/hair/pants + shirt base & shadow (+ magenta eyes if present)
         PatchExtraShirtShadows(rec, look);                        // #983018 shadow variant + deep sleeve shadow
+        StampEyes(master, rec, look);                             // ink-black-in-skin eyes -> chosen eye color (CHOPPING.md)
         return CharacterPalette.Slice(rec, fw, fh, ppu, pivot);
+    }
+
+    // The base idle/walk sheets bake eyes as a magenta sentinel that CharacterPalette recolors; the
+    // chop / carry-walk / fp sheets instead bake eyes as ink-black surrounded by skin (see CHOPPING.md),
+    // so CharacterPalette leaves them black and the chosen eye color never shows while chopping or
+    // carrying. Detect those eye pixels on the ORIGINAL master (a black pixel whose four neighbours are
+    // all skin) and stamp the player's eye color onto the recolored copy, so eyes match the customized
+    // base character. Back views and the fp arm have no such pixels, so this is a no-op there.
+    static readonly Color32 EyeSkinBase   = new Color32(240, 184, 144, 255);   // #f0b890
+    static readonly Color32 EyeSkinShadow = new Color32(192, 122,  76, 255);   // #c07a4c
+    static void StampEyes(Texture2D master, Texture2D rec, CharacterLook look)
+    {
+        if (master == null || rec == null || !master.isReadable || !rec.isReadable) return;
+        int w = master.width, h = master.height;
+        if (rec.width != w || rec.height != h) return;
+
+        Color32[] src = master.GetPixels32();
+        bool IsSkin(int x, int y)
+        {
+            if (x < 0 || x >= w || y < 0 || y >= h) return false;
+            var p = src[y * w + x];
+            return p.a != 0 && (Same(p, EyeSkinBase) || Same(p, EyeSkinShadow));
+        }
+
+        var tone = CharacterPalette.Eyes[Mathf.Clamp(look.eyes, 0, CharacterPalette.Eyes.Length - 1)];
+        Color32 eyeCol = Hex(tone.hex);
+        Color32[] dst = rec.GetPixels32();
+        bool changed = false;
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int i = y * w + x;
+                var p = src[i];
+                if (p.a != 0 && p.r == 0 && p.g == 0 && p.b == 0 &&
+                    IsSkin(x - 1, y) && IsSkin(x + 1, y) && IsSkin(x, y - 1) && IsSkin(x, y + 1))
+                {
+                    eyeCol.a = 255;
+                    dst[i] = eyeCol;
+                    changed = true;
+                }
+            }
+        if (changed) { rec.SetPixels32(dst); rec.Apply(); }
     }
 
     // CharacterPalette maps the shirt base (#d83030) and shadow (#982018). The chop/fp sheets also

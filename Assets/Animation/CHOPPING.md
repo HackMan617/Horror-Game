@@ -48,9 +48,17 @@ code below is identical — just point `chop[]` at whichever facing sheet the mo
 0 step-left   1 pass   2 step-right   3 pass
 ```
 
-- Loop **0→1→2→3** at ~**8–10 fps** while the player moves; the hips bob up on the pass
-  frames (1, 3) and the feet alternate lead so it reads as a walk.
-- The log is hugged to the chest. From the **front** both forearms cup it across the belly; from
+- Loop **0→1→2→3** at ~**8–10 fps** while the player moves; the body bobs up on the pass
+  frames (1, 3), the lead foot steps out and the trailing heel lifts, so it reads as a walk.
+- **Every body pixel is the untouched base-sprite pixel.** The head (face **and eyes**), the
+  hair — including the female long-hair drape, which runs the full torso on both the front and
+  back sheets — the shirt, and the legs (the base sheets' own pant + boot pixels, re-posed per
+  frame) all come straight from `character_sprite_sheet*.png`. That means the exact recolor /
+  LUT pass you run for customization (hair, skin, eyes, shirt — see below) applies to these
+  sheets **unchanged**, and the carrying player always matches the chopping player and the base
+  walk cycle, per gender.
+- The log is hugged to the chest. From the **front** both forearms cup it across the belly (the
+  base sprite's idle side-hands are painted over in shirt color — no phantom third hands); from
   the **back** it's held in front of the body, so only the cut ends peek past the sides (correct
   occlusion — no floating hands behind the character).
 - Pick front vs back from the movement facing, exactly like the base walk sheets. Swap to the
@@ -67,6 +75,7 @@ code below is identical — just point `chop[]` at whichever facing sheet the mo
 | Pixels Per Unit | 32 (match your other player sheets) |
 | Filter Mode | Point (no filter) |
 | Compression | None · Mip Maps off |
+| Read/Write Enabled | **On** (required by the CPU recolor pass below) |
 
 Slice **Grid By Cell Count**: chop characters Column **5** Row **1**; carry-walk Column **4**
 Row **1**; log Column **2** Row **1**.
@@ -74,13 +83,15 @@ Pivot **Bottom-Center** on the characters (feet on the ground line), **Center** 
 
 ---
 
-## Character customization = recolor shirt + skin + hair
+## Character customization = recolor shirt + skin + hair + eyes
 
 These sprites reuse the **exact base-player pixels** (`character_sprite_sheet*.png`), so whatever
 customization recolor you already run on the idle/walk sheets applies here **unchanged** — the
-player's chosen **shirt, skin and hair** must drive every one of these frames too. Nothing here
-is hard-coded to "red shirt / this skin / this hair"; the shipped PNGs just happen to show the
-default palette. Recolor all customization slots, on **every** sheet in this set
+player's chosen **shirt, skin, hair and eyes** must drive every one of these frames too, and the
+**gender** the player picked selects the male vs female sheet for every state (chop, hold, carry-
+walk, front and back) so the character never flickers build or hair mid-action. Nothing here
+is hard-coded to "red shirt / this skin / this hair / these eyes"; the shipped PNGs just happen
+to show the default palette. Recolor all customization slots, on **every** sheet in this set
 (`chop_*`, `chop_*_back`, `carry_walk_*`, `carry_walk_*_back`, and `fp_axe`), so a facing change
 or a first/third-person switch never shows a mismatched character.
 
@@ -106,8 +117,21 @@ or a first/third-person switch never shows a mismatched character.
 | Hair base | `#9c5a26` | player hair **base** |
 | Hair shadow | `#5e3410` | player hair **shadow** |
 
-- Each slot uses its **own** ramp, so recoloring the shirt never touches skin, hair, wood or
-  steel (and vice-versa). Recolor the **base + shadow together** (don't flat-tint) so shading is
+**Eyes** (front-facing sheets only — back views have no visible eyes):
+
+| Role | Sprite pixels (source) | Recolor to |
+|---|---|---|
+| Eye | `#000000` pixels **fully surrounded by skin** | player eye **base** |
+
+The eyes are ink-black in the source art, same as the outline — so don't recolor `#000000`
+globally. Detect them at load time: a black pixel whose four neighbours are all skin
+(`#f0b890` / `#c07a4c`) is an eye; every other black pixel is outline. Detect on the **source**
+pixels, apply the palette LUT, then write the eye color (the eye rows shift 1px on the bob
+frames, so detect per sheet — the C# pass below handles all of it). Works on `chop_*` and
+`carry_walk_*` (front) alike.
+
+- Each slot uses its **own** ramp, so recoloring the shirt never touches skin, hair, eyes, wood
+  or steel (and vice-versa). Recolor the **base + shadow together** (don't flat-tint) so shading is
   preserved.
 - The blue trousers (`#3a5bd0` / `#26398c`) and dark boots (`#4a4a4a`) match the base sheets
   too — fold them into the same recolor if your customization covers legwear.
@@ -116,6 +140,71 @@ or a first/third-person switch never shows a mismatched character.
   tint also works; a flat `Color` multiply does **not** (it would tint every slot the same).
 - Apply the identical table to the third-person **and** first-person art so switching views
   reads as the same customized character.
+
+### Recolor pass (C#)
+
+Requires **Read/Write Enabled** on the texture import. Run once per sheet whenever the
+player's customization changes, then re-slice sprites from the returned texture (or feed it
+to a `MaterialPropertyBlock`-driven palette shader if you recolor on the GPU instead).
+
+```csharp
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class CharacterRecolor
+{
+    static readonly Color32 SkinBase = new Color32(240, 184, 144, 255);   // #f0b890
+    static readonly Color32 SkinSh   = new Color32(192, 122,  76, 255);   // #c07a4c
+    static readonly Color32 Ink      = new Color32(  0,   0,   0, 255);
+
+    static bool Eq(Color32 a, Color32 b) => a.r == b.r && a.g == b.g && a.b == b.b;
+
+    // lut maps SOURCE color -> player color (shirt/skin/hair/pants rows from the tables above)
+    public static Texture2D Recolor(Texture2D src, Dictionary<Color, Color32> lut, Color32 eyeColor)
+    {
+        int w = src.width, h = src.height;
+        Color32[] px = src.GetPixels32();
+
+        bool IsSkin(int x, int y)
+        {
+            if (x < 0 || x >= w || y < 0 || y >= h) return false;
+            var p = px[y * w + x];
+            return p.a != 0 && (Eq(p, SkinBase) || Eq(p, SkinSh));
+        }
+
+        // pass 1 — find eyes on the SOURCE pixels: black, all four neighbours skin
+        var eyes = new List<int>();
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int i = y * w + x;
+                if (px[i].a != 0 && Eq(px[i], Ink) &&
+                    IsSkin(x - 1, y) && IsSkin(x + 1, y) && IsSkin(x, y - 1) && IsSkin(x, y + 1))
+                    eyes.Add(i);
+            }
+
+        // pass 2 — palette LUT (base + shadow pairs together, so shading is preserved)
+        for (int i = 0; i < px.Length; i++)
+        {
+            if (px[i].a == 0) continue;
+            if (lut.TryGetValue(px[i], out var c)) { c.a = px[i].a; px[i] = c; }
+        }
+
+        // pass 3 — stamp the eye color
+        foreach (int i in eyes) { var c = eyeColor; c.a = 255; px[i] = c; }
+
+        var tex = new Texture2D(w, h, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
+        tex.SetPixels32(px);
+        tex.Apply();
+        return tex;
+    }
+}
+```
+
+Build the `lut` from the player's saved customization (one entry per row of the tables above)
+and run it over **every sheet in this set plus the base idle/walk sheets** with the same
+dictionary — that single call site is what guarantees chop, pickup, carry and plain walking
+all show the same character.
 
 ---
 
@@ -262,17 +351,9 @@ logic is identical in either view.
 
 ---
 
-## Re-exporting
+## Source art
 
-```js
-eval(await readFile('choppergen.js'));
-await window.ChopperGen.buildAll({ createCanvas, saveFile });   // 3rd-person swing + log
-
-eval(await readFile('fpaxegen.js'));
-await window.FpAxeGen.buildAll({ createCanvas, saveFile });     // first-person viewmodel
-```
-
-`choppergen.js` re-poses only the arms and stamps the axe over the exact base-player pixels
-(`ChopperGen.MALE` / `.FEMALE` grids). `fpaxegen.js` renders one rigid axe (`buildAxe`) and
-rotates it around the grip per frame (`POSES`), with the forearm as an overlapping-disc capsule
-(`arm`). Tunables there: the `POSES` angles, `buildAxe` head profile, and `chips`.
+The PNGs are generated in the art workspace (`choppergen.js` / `fpaxegen.js`) — those
+generators are **not** part of the Unity project and nothing in-engine depends on them. If the
+poses or palette change, re-exported PNGs drop into the same paths with the same slicing, so
+no import settings or code change.
