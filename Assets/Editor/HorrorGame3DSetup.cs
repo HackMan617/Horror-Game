@@ -59,6 +59,8 @@ public static class HorrorGame3DSetup
     const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
     const string WoodStepsWav = "Assets/Sound Effects/Footsteps on Wooden Floor.wav";
     const string AsphaltWav = "Assets/Sound Effects/Walking on Asphalt.wav";
+    const string RoadSignPng = "Assets/Animation/Car Atlas/roadside_pack/road_sign.png";  // TOWN / MILL RD directional post
+    const string RedwoodDir = "Assets/Big Tree Updates/redwood_kit/sprites";               // giant idle-sway redwoods
     const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
     const string PaperSfx   = "Assets/Sound Effects/Paper Crumple.wav";
     const string DogPantWav = "Assets/Sound Effects/Dog Panting.wav";
@@ -74,7 +76,7 @@ public static class HorrorGame3DSetup
     const string CockpitDir = "Assets/Animation/Updated Car POV/cockpit_kit/sprites";
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
-    const int DrivingSetupVersion = 4;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int DrivingSetupVersion = 8;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
 
     static int _renderer3DIndex = 1;
 
@@ -612,6 +614,10 @@ public static class HorrorGame3DSetup
         rt.dashedCentre = true;
         rt.Build();
 
+        // A TOWN / MILL RD sign on the road shoulder pointing back toward the cabin and the other houses.
+        if (GameObject.Find("TownSign") == null)
+            MakeTownSign(new Vector3(3f, 0f, -8f), EnsureRoadsideSprites(), SpriteMaterial());
+
         // Trigger just inside the r58 boundary wall so the truck transitions before it can hit it.
         var trig = GameObject.Find("OutOfTownTrigger") ?? new GameObject("OutOfTownTrigger");
         trig.transform.position = new Vector3(0f, 0f, -42f);
@@ -642,46 +648,235 @@ public static class HorrorGame3DSetup
 
         var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
         ground.name = "Ground";
-        ground.transform.localScale = new Vector3(8f, 1f, 8f);
+        ground.transform.localScale = new Vector3(20f, 1f, 20f);   // ±100 units — fits the long looping road
         ground.GetComponent<Renderer>().sharedMaterial =
-            LitMaterial("OutOfTownGround", new Color(0.33f, 0.42f, 0.26f), null, Vector2.one, false);
+            LitMaterial("YardMat3D", new Color(0.36f, 0.5f, 0.28f), null, Vector2.one, false);   // same base green as the yard
+
+        // Same grass/dirt patchwork the exterior yard uses (GroundTiler + grass_tiles atlas), sized to cover
+        // the whole drive so the road and its roadside props sit on the same ground as home.
+        var grassTiles = new GameObject("GrassTiles", typeof(MeshFilter), typeof(MeshRenderer));
+        grassTiles.transform.position = new Vector3(0f, 0.02f, 0f);
+        var tiler = grassTiles.AddComponent<GroundTiler>();
+        tiler.material = GrassAtlasMaterial();
+        tiler.worldSize = 200f;
+        tiler.tileWorldSize = 2f;
+        tiler.Build();
 
         var spriteMat = SpriteMaterial();
 
-        // Straight road down the middle (z −30..30).
+        // A long straight asphalt road down the middle. z −86 (far end) .. 46 (town end); you start near
+        // the town end and drive away south. Reaching the far end wraps you back to the start (DriveLoopTrigger).
+        const float zStart = 38f, zHome = 44f, zSignZ = 32f, zFar = -82f, zNorth = 46f, zSouth = -86f;
         var roadGo = new GameObject("DriveRoad", typeof(MeshFilter), typeof(MeshRenderer));
         var rt = roadGo.AddComponent<RoadTiler>();
         rt.material = RoadAtlasMaterial();
         rt.tileWorldSize = 1f; rt.roadY = 0.03f;
-        rt.originX = -1; rt.width = 3; rt.originZ = -30; rt.length = 60;
+        rt.originX = -1; rt.width = 3;
+        rt.originZ = Mathf.RoundToInt(zSouth); rt.length = Mathf.RoundToInt(zNorth - zSouth);
         rt.surfaceRow = 0; rt.dashedCentre = true;   // asphalt, matching the paved road home (not dirt)
         rt.Build();
 
-        BuildSkySystem(sun);
+        // Range-backdrop ridgelines (same sprites as the exterior yard) that FOLLOW the camera so the peaks
+        // stay far off however far you drive — the "travelling far away" feel — over a big static day/night sky.
+        BuildMountainRings().AddComponent<BackdropFollow>();
+        BuildSkySystem(sun, 260f);
         new GameObject("DialogUI").AddComponent<DialogUI>();
 
-        // Player rig at the town edge — its camera is what the truck borrows when auto-entering drive.
-        BuildPlayerRig(new Vector3(0f, 0.1f, 24f), spriteMat, grassFill: false);
+        // Town sign + roadside scenery (dead trees, stop signs, debris, crows) down both shoulders.
+        var road = EnsureRoadsideSprites();
+        MakeTownSign(new Vector3(3.1f, 0f, zSignZ), road, spriteMat);
+        ScatterRoadside(road, spriteMat, zFrom: zFar + 6f, zTo: zStart - 6f);
+        // Dense giant-redwood forest walling both sides behind the roadside scenery.
+        ScatterForest(EnsureForestSprites(), spriteMat, zFrom: zFar + 4f, zTo: zStart - 2f);
 
-        // Driver rig (invisible truck), co-located, auto-enters drive on load facing south down the road.
-        var truck = new GameObject("Truck");
-        truck.transform.position = new Vector3(0f, 0.84f, 24f);
-        truck.AddComponent<DrivingRig>();
-        var cockpit = truck.AddComponent<CockpitController>();
-        WireCockpit(cockpit);
-        var td = truck.AddComponent<TruckDriver>();
+        // Player rig at the town edge — its camera is what the truck borrows when auto-entering drive.
+        BuildPlayerRig(new Vector3(0f, 0.1f, zStart), spriteMat, grassFill: false);
+
+        // A full, re-enterable truck (body + door + lights), auto-entering drive on load facing south — so
+        // getting out on the road leaves a truck you can walk back to and climb into again.
+        var truck = BuildDrivableTruck(new Vector3(0f, 0.84f, zStart), spriteMat);
+        var td = truck.GetComponent<TruckDriver>();
         td.autoEnterOnStart = true; td.startHeadingYaw = 180f;
 
-        // Return-home trigger at the far (south) end -> back to Exterior, on foot beside the cabin/truck.
+        // Loop wrap: rolling onto the far (south) end teleports the truck back to the start by the sign,
+        // so continuing to drive endlessly returns you to the town sign.
+        var loop = new GameObject("LoopWrap").AddComponent<DriveLoopTrigger>();
+        loop.transform.position = new Vector3(0f, 0f, zFar);
+        loop.halfExtents = new Vector2(6f, 3f);
+        loop.returnPosition = new Vector3(0f, 0.84f, zStart);
+
+        // Follow the TOWN sign home: driving north to the town end returns you to Exterior on foot at the cabin.
         var trig = new GameObject("HomeTrigger");
-        trig.transform.position = new Vector3(0f, 0f, -24f);
+        trig.transform.position = new Vector3(0f, 0f, zHome);
         var sx = trig.AddComponent<SceneExitTrigger>();
-        sx.targetScene = "Exterior"; sx.halfExtents = new Vector2(4f, 3f);
+        sx.targetScene = "Exterior"; sx.halfExtents = new Vector2(4f, 2.5f);
         sx.arriveOnFoot = true; sx.arrivalPosition = new Vector3(5f, 0.1f, 8.5f);
 
         EditorSceneManager.SaveScene(scene, OutOfTownSceneOut);
         AddSceneToBuild(OutOfTownSceneOut);
         Debug.Log("[HorrorGame] OutOfTown stub built at " + OutOfTownSceneOut + ".");
+    }
+
+    // A full, visible, re-enterable truck (the same component set as the hand-placed Exterior truck):
+    // billboarded 8-way body, headlights/tail-lights, a walk-up door, and the drive rig. Used in OutOfTown
+    // so getting out on the road leaves a truck you can walk back to and climb into again.
+    static GameObject BuildDrivableTruck(Vector3 pos, Material spriteMat)
+    {
+        const string dir = "Assets/Animation/Car/roadside_pack/";   // ppu-16 sheets, same as the hand-placed Exterior truck
+        Sprite[] L(string sheet) => LoadSheetSprites(dir + sheet + ".png", sheet + "_");
+        var front = L("truck_front"); var back = L("truck_back"); var side = L("truck_side");
+        var f3q = L("truck_front3q"); var b3q = L("truck_back3q");
+
+        var truck = new GameObject("Truck");
+        truck.transform.position = pos;
+
+        var sr = truck.AddComponent<SpriteRenderer>();
+        sr.sharedMaterial = spriteMat;
+        sr.sprite = front.Length > 0 ? front[0] : null;
+
+        truck.AddComponent<Billboard>();
+
+        var ds = truck.AddComponent<DirectionalSprite>();   // 8-way facing (parked pointing south)
+        ds.noseYaw = 180f;
+        if (front.Length > 0) { ds.front = front[0]; ds.frontFrames = front; }
+        if (f3q.Length > 0)   { ds.front3q = f3q[0]; ds.front3qFrames = f3q; }
+        if (side.Length > 0)  { ds.side = side[0];   ds.sideFrames = side; }
+        if (b3q.Length > 0)   { ds.back3q = b3q[0];  ds.back3qFrames = b3q; }
+        if (back.Length > 0)  { ds.back = back[0];   ds.backFrames = back; }
+
+        truck.AddComponent<CarLights>();
+
+        var carDoor = truck.AddComponent<CarDoor>();
+        carDoor.openCloseClip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound Effects/Open and Close Door.wav");
+        carDoor.carStartClip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound Effects/Car Start and Rumble.wav");
+
+        truck.AddComponent<DrivingRig>();
+        WireCockpit(truck.AddComponent<CockpitController>());
+        truck.AddComponent<TruckDriver>();
+        return truck;
+    }
+
+    // Sliced world sprites for the roadside scenery (DRIVING.md §5b) + the TOWN sign (CAR.md §3).
+    class RoadsideKit { public Sprite[] deadtree, stopsign, debris, crow, sign; }
+
+    static RoadsideKit EnsureRoadsideSprites()
+    {
+        string dir = CockpitDir;   // road_deadtree/stopsign/crow/debris live beside the cockpit sheets
+        SliceStrip(dir + "/road_deadtree.png", "deadtree_", 4, 40, 56, 16f, 0f);
+        SliceStrip(dir + "/road_stopsign.png", "stopsign_", 4, 24, 44, 16f, 0f);
+        SliceStrip(dir + "/road_debris.png",   "debris_",   4, 16, 12, 16f, 0f);
+        SliceStrip(dir + "/road_crow.png",     "crow_",     4, 16, 16, 16f, 0.5f);   // flying: centre pivot
+        SliceStrip(RoadSignPng,                "roadsign_", 2, 32, 48, 16f, 0f);
+        return new RoadsideKit
+        {
+            deadtree = LoadSheetSprites(dir + "/road_deadtree.png", "deadtree_"),
+            stopsign = LoadSheetSprites(dir + "/road_stopsign.png", "stopsign_"),
+            debris   = LoadSheetSprites(dir + "/road_debris.png",   "debris_"),
+            crow     = LoadSheetSprites(dir + "/road_crow.png",     "crow_"),
+            sign     = LoadSheetSprites(RoadSignPng,                "roadsign_"),
+        };
+    }
+
+    // A billboard sprite with an always-playing flip-book (dead trees sway, signs creak, crows flap).
+    static GameObject MakeAnimProp(string name, Vector3 pos, Sprite[] frames, Material mat, float fps,
+                                   bool randomPhase, bool gateOnFoot = false, bool hideWhenAway = false)
+    {
+        if (frames == null || frames.Length == 0) return null;
+        var go = new GameObject(name);
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = frames[0];
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+        var anim = go.AddComponent<LoopSpriteAnimator>();
+        anim.frames = frames; anim.fps = fps; anim.randomStartPhase = randomPhase;
+        // Gate the flip-book (and, for crows/debris, visibility) to when the player is on foot nearby, so
+        // the roadside doesn't wiggle/flit past the windscreen while driving.
+        if (gateOnFoot) go.AddComponent<OnFootProximityProp>().hideWhenAway = hideWhenAway;
+        return go;
+    }
+
+    // The weathered TOWN / MILL RD directional post at the road's east shoulder. A REAL directional sign:
+    // it does NOT billboard (a billboard would spin the whole post so the TOWN arrow never points at town).
+    // It faces west toward the road so you read it as you drive, and the arrow is flipped to point north —
+    // back toward the town/cabin — and you see it turn to profile as you pass, like a real sign.
+    static void MakeTownSign(Vector3 pos, RoadsideKit kit, Material mat)
+    {
+        if (kit.sign == null || kit.sign.Length == 0) return;
+        var go = new GameObject("TownSign");
+        go.transform.position = pos;
+        go.transform.rotation = Quaternion.Euler(0f, -90f, 0f);   // face west, across the road toward the driver
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = kit.sign[0];
+        sr.sharedMaterial = mat;
+        sr.flipX = true;                                          // arrow points north — toward town
+        var anim = go.AddComponent<LoopSpriteAnimator>();
+        anim.frames = kit.sign; anim.fps = 1.1f;
+    }
+
+    // Slice the three giant idle-sway redwoods (8 frames each, 224×480, bottom pivot) into world sprites.
+    static Sprite[][] EnsureForestSprites()
+    {
+        string[] names = { "giant_elder", "giant_gnarl", "giant_winter" };
+        var result = new Sprite[names.Length][];
+        for (int i = 0; i < names.Length; i++)
+        {
+            string path = RedwoodDir + "/" + names[i] + ".png";
+            SliceStrip(path, names[i] + "_", 8, 224, 480, 40f, 0f);   // ppu 40 -> ~12 units tall, towering
+            result[i] = LoadSheetSprites(path, names[i] + "_");
+        }
+        return result;
+    }
+
+    // A dense stand of giant redwoods walling both sides of the road (3 depth rows per side, staggered down
+    // the length) for a thick forest. Big + far, so they're frozen while driving (OnFootProximityProp) and
+    // only sway when you park and walk in among them.
+    static void ScatterForest(Sprite[][] forest, Material mat, float zFrom, float zTo)
+    {
+        if (forest.Length == 0 || forest[0] == null || forest[0].Length == 0) return;
+        float[] rowX = { 9f, 18f, 28f };
+        int idx = 0;
+        for (int side = -1; side <= 1; side += 2)
+            for (int r = 0; r < rowX.Length; r++)
+                for (float z = zFrom; z <= zTo; z += 9f, idx++)
+                {
+                    var frames = forest[System.Math.Abs(idx * 7 + r) % forest.Length];
+                    if (frames == null || frames.Length == 0) continue;
+                    float jx = ((idx * 5) % 5 - 2) * 1.2f;
+                    float jz = ((idx * 13) % 7 - 3) * 0.8f;
+                    float x = side * (rowX[r] + jx);
+                    MakeAnimProp("Redwood", new Vector3(x, 0f, z + jz), frames, mat, 8f,
+                                 randomPhase: true, gateOnFoot: true, hideWhenAway: false);
+                }
+    }
+
+    // Scatter roadside scenery down both shoulders between zFrom and zTo: mostly bare dead trees, some
+    // leaning stop signs, the odd blowing debris, and a handful of crows flapping over the road.
+    static void ScatterRoadside(RoadsideKit kit, Material mat, float zFrom, float zTo)
+    {
+        int i = 0;
+        for (float z = zFrom; z <= zTo; z += 7f, i++)
+        {
+            PlaceShoulderProp(kit, mat, i,     z,        side: -1);
+            PlaceShoulderProp(kit, mat, i + 5, z + 3.5f, side: +1);
+        }
+        for (int c = 0; c < 7; c++)
+        {
+            float z = Mathf.Lerp(zFrom, zTo, (c + 0.5f) / 7f);
+            MakeAnimProp("Crow", new Vector3(((c % 2) * 2 - 1) * 1.3f, 3.0f + (c % 3) * 0.7f, z),
+                         kit.crow, mat, 7f, randomPhase: true, gateOnFoot: true, hideWhenAway: true);
+        }
+    }
+
+    static void PlaceShoulderProp(RoadsideKit kit, Material mat, int i, float z, int side)
+    {
+        int pick = (i * 3 + 1) % 10;                 // deterministic mix: ~half trees, some signs, some debris
+        Sprite[] frames; float fps; string name; float xOff; bool hide;
+        if (pick < 5)      { frames = kit.deadtree; fps = 2.5f; name = "DeadTree"; xOff = 3.4f + (i % 3) * 0.9f; hide = false; }
+        else if (pick < 8) { frames = kit.stopsign; fps = 2.0f; name = "StopSign"; xOff = 2.9f;                 hide = false; }
+        else               { frames = kit.debris;   fps = 6.0f; name = "Debris";   xOff = 1.7f;                 hide = true;  }
+        // Trees/signs stay visible while driving (frozen); debris only appears when you park and walk up.
+        MakeAnimProp(name, new Vector3(side * xOff, 0f, z), frames, mat, fps, randomPhase: true, gateOnFoot: true, hideWhenAway: hide);
     }
 
     // Assign the cockpit sheet textures (home + _nightmare twins) so they serialize into the scene and
@@ -2081,7 +2276,16 @@ public static class HorrorGame3DSetup
     // are the ridge strips far->near, _6 the hero peak). MountainBackdrop wraps each strip into a ring
     // around the yard so it reads in every direction. Radii/heights grow with distance; the far snow
     // peaks loom highest and farthest. Face/wanderer/fog from the README are deferred.
+    // Exterior wrapper: the range-backdrop ridgeline rings + the day/night sky.
     static void BuildMountainBackdrop(Light sun)
+    {
+        BuildMountainRings();
+        BuildSkySystem(sun);
+    }
+
+    // The range-backdrop ridgeline rings (no sky). Returns the root so callers can, e.g., make it follow
+    // the camera on the long drive. Shared by the Exterior yard and the OutOfTown road.
+    static GameObject BuildMountainRings()
     {
         EnsureRangeImport();
         var byName = new Dictionary<string, Sprite>();
@@ -2111,20 +2315,20 @@ public static class HorrorGame3DSetup
         mb.heroHeight = 46f;
         mb.buildSky = false;   // SkyController owns the sky now (animated gradient + sun/moon/stars)
         mb.Build();
-
-        BuildSkySystem(sun);
+        return root;
     }
 
     // The day→night sky (SKY_README): a gradient dome behind the mountains, a sun that arcs and sets,
     // a moon that rises, and a twinkling star field — all driven by SkyController.timeOfDay. Also lets
     // the sky dim the scene's directional light + ambient so the world darkens with it.
-    static void BuildSkySystem(Light sun)
+    static void BuildSkySystem(Light sun, float domeRadius = 150f)
     {
         var sunSprite = EnsureSkySprite(SunPng);
         var moonSprite = EnsureSkySprite(MoonPng);
 
         var skyGo = new GameObject("Sky");
         var sky = skyGo.AddComponent<SkyController>();
+        sky.domeRadius = domeRadius;   // larger for the long drive so the following mountains stay inside it
         sky.sunSprite = sunSprite;
         sky.moonSprite = moonSprite;
         sky.sunLight = sun;
