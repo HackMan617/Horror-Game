@@ -45,6 +45,13 @@ public class CarDoor : MonoBehaviour
     [Tooltip("Prompt shown (with the close-door prompt) while the door is open and the engine is off.")]
     public string startPrompt = "Press F to start the truck";
 
+    [Header("Get in & drive — once the engine is running (CAR POV / DRIVING.md)")]
+    [Tooltip("Prompt shown while the engine runs, inviting the player to climb in and drive off. " +
+             "Requires a TruckDriver on this truck (added by Tools/Horror Game/Setup Exterior Driving).")]
+    public string getInPrompt = "Press G to get in and drive";
+    [Tooltip("Drive the corrupted cockpit (lying gauges, passenger in the mirror). Normally off outside the nightmare.")]
+    public bool nightmare = false;
+
     [Header("Exhaust smoke (puffs while the engine runs)")]
     [Tooltip("Local offset from the truck origin where the smoke rises from (the exhaust / engine bay).")]
     public Vector3 smokeLocalOffset = new Vector3(0f, 0.4f, 0f);
@@ -66,6 +73,7 @@ public class CarDoor : MonoBehaviour
     bool _engineOn;        // true while the engine is running its brief spell
     float _engineT;        // seconds of engine run remaining before it dies
     ParticleSystem _smoke; // exhaust puffs, emitted only while the engine runs
+    TruckDriver _driver;   // present once the truck is driving-enabled; owns the in-world drive
 
     /// <summary>True while the door is open or opening (enter/drive hooks can read this later).</summary>
     public bool IsOpen => _target > 0;
@@ -107,10 +115,12 @@ public class CarDoor : MonoBehaviour
             var p = GameObject.Find("Player");
             if (p != null) player = p.transform;
         }
+        _driver = GetComponent<TruckDriver>();   // present once the truck is driving-enabled
     }
 
     void Update()
     {
+        if (_driver != null && _driver.IsDriving) return;   // TruckDriver owns input while we're driving
         if (GameManager.Instance != null && GameManager.Instance.IsPaused) return;
         if (_cd > 0f) _cd -= Time.deltaTime;
 
@@ -143,9 +153,16 @@ public class CarDoor : MonoBehaviour
 
         if (DialogUI.Instance != null)
         {
-            // While the door is open and the engine is off, also offer to start the truck.
-            string prompt = IsOpen ? closePrompt : openPrompt;
-            if (IsOpen && !_engineOn && carStartClip != null) prompt += "   ·   " + startPrompt;
+            // Engine running -> invite the player to climb in and drive (needs a TruckDriver). Otherwise
+            // open/close the door, and offer to start the truck once the door is open.
+            string prompt;
+            if (IsOpen && _engineOn && _driver != null)
+                prompt = getInPrompt + "   ·   " + closePrompt;
+            else
+            {
+                prompt = IsOpen ? closePrompt : openPrompt;
+                if (IsOpen && !_engineOn && carStartClip != null) prompt += "   ·   " + startPrompt;
+            }
             DialogUI.Instance.ShowPrompt(prompt);
         }
 
@@ -162,6 +179,16 @@ public class CarDoor : MonoBehaviour
         // Start the truck: only with the door open, and not while it's already turning over.
         if (IsOpen && !_engineOn && carStartClip != null && FPressed())
             StartEngine();
+
+        // Climb in and drive in place: only once the engine is turning over. Hands off to TruckDriver,
+        // which hides the walking player, mounts the cab camera and shows the dashboard overlay.
+        if (IsOpen && _engineOn && _driver != null && GPressed())
+        {
+            var rig = GetComponent<DrivingRig>();
+            if (rig != null) rig.nightmare = nightmare;
+            StopEngine();               // the idle rolls into the live drive
+            _driver.EnterDrive();
+        }
     }
 
     // Turn the engine over: play from the start of the recording (starter + rumble) and arm the timer
@@ -306,6 +333,15 @@ public class CarDoor : MonoBehaviour
         return Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame;
 #else
         return Input.GetKeyDown(KeyCode.F);
+#endif
+    }
+
+    bool GPressed()
+    {
+#if ENABLE_INPUT_SYSTEM
+        return Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame;
+#else
+        return Input.GetKeyDown(KeyCode.G);
 #endif
     }
 }

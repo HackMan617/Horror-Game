@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: f4d6de62dc6ec824c98d33a79217ca2d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2372304628256445426
+    second: bed_left_nightmare_0
+  - first:
+      213: 6667999165947605364
+    second: bed_left_nightmare_1
+  - first:
+      213: -2259643394597149573
+    second: bed_left_nightmare_2
+  - first:
+      213: 8452754797138484274
+    second: bed_left_nightmare_3
+  - first:
+      213: -6662895191780312499
+    second: bed_left_nightmare_4
+  - first:
+      213: -5241326136077996251
+    second: bed_left_nightmare_5
+  - first:
+      213: -5493181054783594543
+    second: bed_left_nightmare_6
+  - first:
+      213: 7082293059195370177
+    second: bed_left_nightmare_7
+  - first:
+      213: 2180706617040053001
+    second: bed_left_nightmare_8
+  - first:
+      213: 6734854990211075052
+    second: bed_left_nightmare_9
+  - first:
+      213: -1545308041174692231
+    second: bed_left_nightmare_10
+  - first:
+      213: -8881813875136197208
+    second: bed_left_nightmare_11
+  - first:
+      213: 3952235198003791764
+    second: bed_left_nightmare_12
+  - first:
+      213: -3261794263054699789
+    second: bed_left_nightmare_13
+  - first:
+      213: 5247988271482627538
+    second: bed_left_nightmare_14
+  - first:
+      213: -3116295882082401481
+    second: bed_left_nightmare_15
+  - first:
+      213: -9025174753525831495
+    second: bed_left_nightmare_16
+  - first:
+      213: 2554359477622147180
+    second: bed_left_nightmare_17
+  - first:
+      213: 2944270035276674507
+    second: bed_left_nightmare_18
+  - first:
+      213: -7179884282149609398
+    second: bed_left_nightmare_19
+  - first:
+      213: -2033385218176012942
+    second: bed_left_nightmare_20
+  - first:
+      213: -7480726709839542497
+    second: bed_left_nightmare_21
+  - first:
+      213: -2889539963880452434
+    second: bed_left_nightmare_22
+  - first:
+      213: -8198295850314359121
+    second: bed_left_nightmare_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bed_left_nightmare_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f39d3a8d7e1ce020800000000000000
+      internalID: 2372304628256445426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47178e0b9ed798c50800000000000000
+      internalID: 6667999165947605364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b74aaf10e4224a0e0800000000000000
+      internalID: -2259643394597149573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_3
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23c1be014b73e4570800000000000000
+      internalID: 8452754797138484274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_4
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ab646ef14a883a0800000000000000
+      internalID: -6662895191780312499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_5
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52fa91326a11347b0800000000000000
+      internalID: -5241326136077996251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_6
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dfd7be4fec44c3b0800000000000000
+      internalID: -5493181054783594543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_7
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 136
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cafd84830c594260800000000000000
+      internalID: 7082293059195370177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_8
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90324044d1d634e10800000000000000
+      internalID: 2180706617040053001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_9
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceb4c494ee2077d50800000000000000
+      internalID: 6734854990211075052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_10
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97e4a312686fd8ae0800000000000000
+      internalID: -1545308041174692231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_11
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ad0f53a6557db480800000000000000
+      internalID: -8881813875136197208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_12
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 497cfc509f829d630800000000000000
+      internalID: 3952235198003791764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_13
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f2b7344667cbb2d0800000000000000
+      internalID: -3261794263054699789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_14
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d56323278994d840800000000000000
+      internalID: 5247988271482627538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_15
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 72
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7334775f761b0c4d0800000000000000
+      internalID: -3116295882082401481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_16
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b8e44c016320c280800000000000000
+      internalID: -9025174753525831495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_17
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c68025c4968e27320800000000000000
+      internalID: 2554359477622147180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_18
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc53e776ff52cd820800000000000000
+      internalID: 2944270035276674507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_19
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a40ef0a394deb5c90800000000000000
+      internalID: -7179884282149609398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_20
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27da61bdae6f7c3e0800000000000000
+      internalID: -2033385218176012942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_21
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f17cc3621be1f2890800000000000000
+      internalID: -7480726709839542497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_22
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eae4c9856ba46e7d0800000000000000
+      internalID: -2889539963880452434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_left_nightmare_23
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 8
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fae147e4c5dc93e80800000000000000
+      internalID: -8198295850314359121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bed_left_nightmare_0: 2372304628256445426
+      bed_left_nightmare_1: 6667999165947605364
+      bed_left_nightmare_10: -1545308041174692231
+      bed_left_nightmare_11: -8881813875136197208
+      bed_left_nightmare_12: 3952235198003791764
+      bed_left_nightmare_13: -3261794263054699789
+      bed_left_nightmare_14: 5247988271482627538
+      bed_left_nightmare_15: -3116295882082401481
+      bed_left_nightmare_16: -9025174753525831495
+      bed_left_nightmare_17: 2554359477622147180
+      bed_left_nightmare_18: 2944270035276674507
+      bed_left_nightmare_19: -7179884282149609398
+      bed_left_nightmare_2: -2259643394597149573
+      bed_left_nightmare_20: -2033385218176012942
+      bed_left_nightmare_21: -7480726709839542497
+      bed_left_nightmare_22: -2889539963880452434
+      bed_left_nightmare_23: -8198295850314359121
+      bed_left_nightmare_3: 8452754797138484274
+      bed_left_nightmare_4: -6662895191780312499
+      bed_left_nightmare_5: -5241326136077996251
+      bed_left_nightmare_6: -5493181054783594543
+      bed_left_nightmare_7: 7082293059195370177
+      bed_left_nightmare_8: 2180706617040053001
+      bed_left_nightmare_9: 6734854990211075052
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

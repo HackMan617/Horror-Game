@@ -76,6 +76,18 @@ public class Fireplace : MonoBehaviour
 #endif
         _front = Slice(frontSheet);
         _side  = Slice(sideSheet);
+
+        // Wall fixture: face a FIXED direction into the room instead of billboarding. A Billboard would
+        // rotate this wide (~3u) sprite so, at side angles, its far edge swings THROUGH the wall behind it
+        // ("sprite going into the wall"); a fixed facing keeps the quad parallel to the wall so it never
+        // clips. The hearth is only ever seen from the room side, so a fixed front reads fine — it just
+        // foreshortens at an angle. Disable any paired Billboard so it doesn't fight this rotation.
+        var bb = GetComponent<Billboard>();
+        if (bb != null) bb.enabled = false;
+        Vector3 face = homeForward; face.y = 0f;
+        if (face.sqrMagnitude < 1e-4f) face = Vector3.back;
+        transform.rotation = Quaternion.LookRotation(face.normalized, Vector3.up);
+
         Paint();
     }
 
@@ -198,23 +210,13 @@ public class Fireplace : MonoBehaviour
         _sr.flipX = _flip;
     }
 
-    // Front sheet when the camera looks at the hearth head-on, side sheet (mirrored for the far side)
-    // when viewing it along the wall. Mirrors the room props' directional test.
+    // The hearth is a FIXED-facing wall fixture (see Awake) — the quad no longer turns to the camera, so
+    // it always shows the FRONT sheet. The dedicated side sheet was drawn for a rotated/billboarded view;
+    // painting it on the fixed front quad would look wrong, so it's no longer used here.
     void UpdateFacing()
     {
-        if (_cam == null) { var c = Camera.main; if (c == null) return; _cam = c; }
-        Vector3 to = _cam.transform.position - transform.position; to.y = 0f;
-        if (to.sqrMagnitude < 1e-4f) return;
-        to.Normalize();
-        Vector3 fwd = homeForward; fwd.y = 0f;
-        if (fwd.sqrMagnitude < 1e-4f) fwd = Vector3.back;
-        fwd.Normalize();
-        Vector3 right = Vector3.Cross(Vector3.up, fwd);
-
-        float f = Vector3.Dot(to, fwd);
-        float r = Vector3.Dot(to, right);
-        if (f > 0.5f) { _useSide = false; _flip = false; }   // camera in front -> front view
-        else { _useSide = true; _flip = r < 0f; }            // to the side -> side view (mirror far side)
+        _useSide = false;
+        _flip = false;
     }
 
     // Slice a 7x5 sheet into 35 sprites (row*7 + col). Row 0 (Cold) is the TOP strip of the texture.

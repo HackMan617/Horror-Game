@@ -69,7 +69,11 @@ public static class HorrorGame3DSetup
     const string FurnitureNightmare = "Assets/Animation/interior_furniture_nightmare.png";
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
+    const string OutOfTownSceneOut = "Assets/Scenes/OutOfTown.unity";
+    const string CockpitDir = "Assets/Animation/Car POV/cockpit_kit/sprites";
+    const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
+    const int DrivingSetupVersion = 1;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
 
     static int _renderer3DIndex = 1;
 
@@ -80,10 +84,24 @@ public static class HorrorGame3DSetup
         {
             if (EditorApplication.isCompiling || EditorApplication.isUpdating ||
                 EditorApplication.isPlayingOrWillChangePlaymode) return;
-            if (EditorPrefs.GetInt("HG3D_SetupVersion", 0) >= SetupVersion) return;
-            EditorPrefs.SetInt("HG3D_SetupVersion", SetupVersion);
-            try { BuildSandbox3D(); BuildExterior(); }
-            catch (System.Exception e) { Debug.LogError("[HorrorGame] 3D auto-build failed: " + e); }
+
+            // Version-gated full rebuild of the two hand-tended scenes (wipes + regenerates them).
+            if (EditorPrefs.GetInt("HG3D_SetupVersion", 0) < SetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_SetupVersion", SetupVersion);
+                try { BuildSandbox3D(); BuildExterior(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] 3D auto-build failed: " + e); }
+            }
+
+            // In-world driving self-installs once: build the OutOfTown stub + augment the hand-placed
+            // truck with the driving components and the road. Gated by its own pref (does NOT bump
+            // SetupVersion, so it never wipes Exterior/Sandbox — the hand-placed truck stays safe).
+            if (EditorPrefs.GetInt("HG3D_DrivingSetup", 0) < DrivingSetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_DrivingSetup", DrivingSetupVersion);
+                try { BuildOutOfTown(); SetupExteriorDriving(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Driving setup failed: " + e); }
+            }
         };
     }
 
@@ -148,14 +166,21 @@ public static class HorrorGame3DSetup
         new GameObject("DialogUI").AddComponent<DialogUI>();   // shared interaction prompt + dialog
 
         var bed = new GameObject("Bed");
-        bed.transform.position = new Vector3(5f, 0f, 8.2f);    // across the room, by the north wall
+        bed.transform.position = new Vector3(5f, 0f, 8.2f);    // across the room, head to the north wall
         var bedSr = bed.AddComponent<SpriteRenderer>();
-        bedSr.sprite = bedSprites.Length > 0 ? bedSprites[0] : null;
         bedSr.sharedMaterial = spriteMat;
-        bed.AddComponent<Billboard>();
-        var bedAnim = bed.AddComponent<LoopSpriteAnimator>();
-        bedAnim.frames = bedSprites;
-        bedAnim.fps = 6f;
+        // Directional four-view bed (BED.md): shows the front/back/left/right oblique view for the side the
+        // camera is on, drawn on an AXIS-ALIGNED quad (never a free billboard). A billboard would rotate
+        // the long bed so its far end sweeps THROUGH the wall behind it; the fixed per-view facing keeps it
+        // parallel to the wall (the sprite depth-bias covers the rest). See Bed.cs.
+        var bedComp = bed.AddComponent<Bed>();
+        bedComp.homeForward = new Vector3(0f, 0f, -1f);        // foot faces the room (south); head at the wall
+        const string BedKit = "Assets/Animation/Updated Bed/bed_kit/sprites/";
+        Texture2D BedTex(string n) => AssetDatabase.LoadAssetAtPath<Texture2D>(BedKit + n + ".png");
+        bedComp.frontDay = BedTex("bed_front");             bedComp.backDay  = BedTex("bed_back");
+        bedComp.leftDay  = BedTex("bed_left");              bedComp.rightDay = BedTex("bed_right");
+        bedComp.frontNight = BedTex("bed_front_nightmare"); bedComp.backNight  = BedTex("bed_back_nightmare");
+        bedComp.leftNight  = BedTex("bed_left_nightmare");  bedComp.rightNight = BedTex("bed_right_nightmare");
         var portal = bed.AddComponent<BedPortal>();
         portal.player = player.transform;
         portal.nightmare = nightmare;
@@ -536,6 +561,186 @@ public static class HorrorGame3DSetup
                   grassPos.Length + " grass tufts + autumn props. Walk up to the cabin; from the front press E to enter.");
     }
 
+    // -------------------------------------------------------------- in-world driving
+    // Augments the HAND-PLACED truck in Exterior with the driving components + lays the road running off
+    // the map to the OutOfTown trigger. Opens/saves Exterior but does NOT regenerate it, so the truck (and
+    // everything else hand-tended in the scene) survives.
+    [MenuItem("Tools/Horror Game/Setup Exterior Driving")]
+    public static void SetupExteriorDriving()
+    {
+        EnsureRenderer3D();
+        EnsureCockpitImport();
+
+        var scene = EditorSceneManager.OpenScene(ExteriorSceneOut, OpenSceneMode.Single);
+        var truck = GameObject.Find("Truck");
+        if (truck == null) { Debug.LogError("[HorrorGame] Setup Exterior Driving: no 'Truck' in Exterior."); return; }
+
+        if (truck.GetComponent<DrivingRig>() == null) truck.AddComponent<DrivingRig>();
+        var cockpit = truck.GetComponent<CockpitController>();
+        if (cockpit == null) cockpit = truck.AddComponent<CockpitController>();
+        WireCockpit(cockpit);
+        if (truck.GetComponent<TruckDriver>() == null) truck.AddComponent<TruckDriver>();
+
+        // Road: continue the entrance line (world x≈0) SOUTH, off the map, from the doorstep past spawn.
+        var roadGo = GameObject.Find("DriveRoad") ?? new GameObject("DriveRoad", typeof(MeshFilter), typeof(MeshRenderer));
+        roadGo.transform.position = Vector3.zero;
+        var rt = roadGo.GetComponent<RoadTiler>() ?? roadGo.AddComponent<RoadTiler>();
+        rt.material = RoadAtlasMaterial();
+        rt.tileWorldSize = 1f; rt.roadY = 0.03f;
+        rt.originX = -1; rt.width = 3;          // cells x -1,0,1 -> centred on the door line
+        rt.originZ = -46; rt.length = 52;       // z -46..6: from near the boundary up to the doorstep
+        rt.surfaceRow = 1;                      // dirt/gravel, continuing the cobble entrance
+        rt.dashedCentre = true;
+        rt.Build();
+
+        // Trigger just inside the r58 boundary wall so the truck transitions before it can hit it.
+        var trig = GameObject.Find("OutOfTownTrigger") ?? new GameObject("OutOfTownTrigger");
+        trig.transform.position = new Vector3(0f, 0f, -42f);
+        var sx = trig.GetComponent<SceneExitTrigger>() ?? trig.AddComponent<SceneExitTrigger>();
+        sx.targetScene = "OutOfTown"; sx.halfExtents = new Vector2(4f, 3f); sx.arriveOnFoot = false;
+
+        EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
+        AddSceneToBuild(OutOfTownSceneOut);
+        Debug.Log("[HorrorGame] Exterior driving set up: the truck is drivable; the road runs south to the OutOfTown trigger.");
+    }
+
+    // A minimal drivable "out of town" stub: ground + sky + a straight road. You arrive already driving and
+    // reach a return trigger at the far end that lands you back on foot at the cabin (closing the loop home).
+    [MenuItem("Tools/Horror Game/Build Out Of Town")]
+    public static void BuildOutOfTown()
+    {
+        EnsureRenderer3D();
+        EnsureCockpitImport();
+
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        RenderSettings.ambientMode = AmbientMode.Flat;
+        RenderSettings.ambientLight = new Color(0.5f, 0.52f, 0.55f);
+
+        var sun = new GameObject("Directional Light").AddComponent<Light>();
+        sun.type = LightType.Directional; sun.intensity = 1.1f;
+        sun.color = new Color(1f, 0.96f, 0.86f);
+        sun.transform.rotation = Quaternion.Euler(55f, -25f, 0f);
+
+        var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        ground.name = "Ground";
+        ground.transform.localScale = new Vector3(8f, 1f, 8f);
+        ground.GetComponent<Renderer>().sharedMaterial =
+            LitMaterial("OutOfTownGround", new Color(0.33f, 0.42f, 0.26f), null, Vector2.one, false);
+
+        var spriteMat = SpriteMaterial();
+
+        // Straight road down the middle (z −30..30).
+        var roadGo = new GameObject("DriveRoad", typeof(MeshFilter), typeof(MeshRenderer));
+        var rt = roadGo.AddComponent<RoadTiler>();
+        rt.material = RoadAtlasMaterial();
+        rt.tileWorldSize = 1f; rt.roadY = 0.03f;
+        rt.originX = -1; rt.width = 3; rt.originZ = -30; rt.length = 60;
+        rt.surfaceRow = 1; rt.dashedCentre = true;
+        rt.Build();
+
+        BuildSkySystem(sun);
+        new GameObject("DialogUI").AddComponent<DialogUI>();
+
+        // Player rig at the town edge — its camera is what the truck borrows when auto-entering drive.
+        BuildPlayerRig(new Vector3(0f, 0.1f, 24f), spriteMat, grassFill: false);
+
+        // Driver rig (invisible truck), co-located, auto-enters drive on load facing south down the road.
+        var truck = new GameObject("Truck");
+        truck.transform.position = new Vector3(0f, 0.84f, 24f);
+        truck.AddComponent<DrivingRig>();
+        var cockpit = truck.AddComponent<CockpitController>();
+        WireCockpit(cockpit);
+        var td = truck.AddComponent<TruckDriver>();
+        td.autoEnterOnStart = true; td.startHeadingYaw = 180f;
+
+        // Return-home trigger at the far (south) end -> back to Exterior, on foot beside the cabin/truck.
+        var trig = new GameObject("HomeTrigger");
+        trig.transform.position = new Vector3(0f, 0f, -24f);
+        var sx = trig.AddComponent<SceneExitTrigger>();
+        sx.targetScene = "Exterior"; sx.halfExtents = new Vector2(4f, 3f);
+        sx.arriveOnFoot = true; sx.arrivalPosition = new Vector3(5f, 0.1f, 8.5f);
+
+        EditorSceneManager.SaveScene(scene, OutOfTownSceneOut);
+        AddSceneToBuild(OutOfTownSceneOut);
+        Debug.Log("[HorrorGame] OutOfTown stub built at " + OutOfTownSceneOut + ".");
+    }
+
+    // Assign the cockpit sheet textures (home + _nightmare twins) so they serialize into the scene and
+    // survive into a player build; CockpitController slices them at runtime by the DRIVING.md anchor table.
+    static void WireCockpit(CockpitController c)
+    {
+        Texture2D T(string file) => AssetDatabase.LoadAssetAtPath<Texture2D>(CockpitDir + "/" + file);
+        c.shellTex = T("cockpit_shell.png");          c.shellNm = T("cockpit_shell_nightmare.png");
+        c.gaugeSpeedTex = T("gauge_speed.png");       c.gaugeSpeedNm = T("gauge_speed_nightmare.png");
+        c.gaugeFuelTex = T("gauge_fuel.png");         c.gaugeFuelNm = T("gauge_fuel_nightmare.png");
+        c.needleTex = T("needle.png");                c.needleNm = T("needle_nightmare.png");
+        c.warningTex = T("warning_lights.png");       c.warningNm = T("warning_lights_nightmare.png");
+        c.odometerTex = T("odometer_digits.png");     c.odometerNm = T("odometer_digits_nightmare.png");
+        c.mirrorTex = T("mirror.png");                c.mirrorNm = T("mirror_nightmare.png");
+        c.charmTex = T("charm.png");                  c.charmNm = T("charm_nightmare.png");
+        c.wheelTex = T("steering_wheel.png");         c.wheelNm = T("steering_wheel_nightmare.png");
+        c.passengerNm = T("mirror_passenger_nightmare.png");
+    }
+
+    // Cockpit pixel art: Point filter, no compression, no mips (DRIVING.md §2). We slice at runtime, so
+    // the meta's own (auto) slicing is irrelevant — only the display filtering/compression matters here.
+    static void EnsureCockpitImport()
+    {
+        foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { CockpitDir }))
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            if (!(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
+            bool changed = false;
+            if (ti.filterMode != FilterMode.Point) { ti.filterMode = FilterMode.Point; changed = true; }
+            if (ti.textureCompression != TextureImporterCompression.Uncompressed)
+            { ti.textureCompression = TextureImporterCompression.Uncompressed; changed = true; }
+            if (ti.mipmapEnabled) { ti.mipmapEnabled = false; changed = true; }
+            if (changed) ti.SaveAndReimport();
+        }
+    }
+
+    // Alpha-clipped (cutout) unlit material for road_tiles.png, same recipe as PathAtlasMaterial: writes
+    // depth so upright billboards (the parked truck, the player) sort correctly over the road.
+    static Material RoadAtlasMaterial()
+    {
+        if (AssetImporter.GetAtPath(RoadTiles) is TextureImporter imp)
+        {
+            bool dirty = imp.filterMode != FilterMode.Point ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || imp.wrapMode != TextureWrapMode.Clamp || !imp.alphaIsTransparency;
+            if (dirty)
+            {
+                imp.filterMode = FilterMode.Point;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.wrapMode = TextureWrapMode.Clamp;
+                imp.alphaIsTransparency = true;
+                imp.SaveAndReimport();
+            }
+        }
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(RoadTiles);
+        EnsureFolder(MatDir);
+        string matPath = MatDir + "/RoadTiles3D.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        var sh = Shader.Find("Universal Render Pipeline/Unlit");
+        if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
+        else mat.shader = sh;
+
+        mat.SetFloat("_Surface", 0f);
+        mat.SetFloat("_AlphaClip", 1f);
+        mat.SetFloat("_Cutoff", 0.5f);
+        mat.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.One);
+        mat.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.Zero);
+        mat.SetFloat("_ZWrite", 1f);
+        mat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+        mat.EnableKeyword("_ALPHATEST_ON");
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
+        mat.mainTexture = tex;
+        if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
     // -------------------------------------------------------------- renderer
     static void EnsureRenderer3D()
     {
@@ -775,6 +980,17 @@ public static class HorrorGame3DSetup
         {
             mat = new Material(Shader.Find("Sprites/Default"));   // unlit, renders under any pipeline
             AssetDatabase.CreateAsset(mat, path);
+        }
+        // Depth-bias variant of the sprite shader: nudges billboards toward the camera in the depth
+        // buffer so they stop clipping into walls they stand against, while still being occluded by
+        // geometry clearly in front (see SpriteBillboardDepthBias.shader). Falls back to Sprites/Default
+        // if the shader is missing so builds never break.
+        var biased = Shader.Find("Sprites/BillboardDepthBias");
+        if (biased != null)
+        {
+            if (mat.shader != biased) mat.shader = biased;
+            mat.SetFloat("_DepthBias", 0.8f);
+            EditorUtility.SetDirty(mat);
         }
         return mat;
     }
