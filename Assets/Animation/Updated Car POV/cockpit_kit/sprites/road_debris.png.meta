@@ -72,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,177 +121,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: road_debris_0
+      name: debris_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 3
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c53b7d4170c965050800000000000000
-      internalID: 5788985925259735900
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_1
-      rect:
-        serializedVersion: 2
-        x: 8
         y: 0
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ad9ef24e4f5746b80800000000000000
-      internalID: -8402461310105687590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_2
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 4
-        width: 10
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 087f7ffe043301800800000000000000
-      internalID: 581020705927722880
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_3
-      rect:
-        serializedVersion: 2
-        x: 22
-        y: 1
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2ef1c1effda317180800000000000000
-      internalID: -9119443036733169694
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_4
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 0
-        width: 15
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d01d888bad236ed20800000000000000
-      internalID: 3307386891330441485
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_5
-      rect:
-        serializedVersion: 2
-        x: 41
-        y: 0
-        width: 6
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fb90894a2a055ba20800000000000000
-      internalID: 3077454579853953471
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_6
-      rect:
-        serializedVersion: 2
-        x: 49
-        y: 3
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: be81cb979da3e3d10800000000000000
-      internalID: 2107186381380655339
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: road_debris_7
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 0
-        width: 10
+        width: 16
         height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9e370740df8d5ba80800000000000000
-      internalID: -8451610544478063639
+      spriteID: 54b87d3e52ee2a281dd1c5eebb4fff07
+      internalID: 1316880762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: debris_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 860b3ea5f01be69f2a7c0efdcdfbc328
+      internalID: 1945398329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: debris_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d0fa17d60572e83f5a925c8582f657b
+      internalID: 1491333125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: debris_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa43fe9cbb2bd9bfe1be37935a2eb170
+      internalID: 243545611
       vertices: []
       indices: 
       edges: []
@@ -300,7 +212,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: eb3bca3baa4e5604882eff3514999f03
     internalID: 0
     vertices: []
     indices: 
@@ -310,14 +222,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      road_debris_0: 5788985925259735900
-      road_debris_1: -8402461310105687590
-      road_debris_2: 581020705927722880
-      road_debris_3: -9119443036733169694
-      road_debris_4: 3307386891330441485
-      road_debris_5: 3077454579853953471
-      road_debris_6: 2107186381380655339
-      road_debris_7: -8451610544478063639
+      debris_0: 1316880762
+      debris_1: 1945398329
+      debris_2: 1491333125
+      debris_3: 243545611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

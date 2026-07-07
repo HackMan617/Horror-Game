@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,89 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: road_deadtree_0
+      name: deadtree_0
       rect:
         serializedVersion: 2
-        x: 5
+        x: 0
         y: 0
-        width: 32
+        width: 40
         height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ab8e30814d7239110800000000000000
-      internalID: 1266399712110700730
+      spriteID: 054c698bae47be6ccbd0139d98d500b3
+      internalID: -819602881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_deadtree_1
+      name: deadtree_1
       rect:
         serializedVersion: 2
-        x: 46
+        x: 40
         y: 0
-        width: 33
+        width: 40
         height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 22f962ce03f8893e0800000000000000
-      internalID: -2046728590356734174
+      spriteID: c281791e8892617e49a0c458925860f0
+      internalID: 69406681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_deadtree_2
+      name: deadtree_2
       rect:
         serializedVersion: 2
-        x: 87
+        x: 80
         y: 0
-        width: 33
+        width: 40
         height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d07cab95704ba03a0800000000000000
-      internalID: -6698343552097007859
+      spriteID: cb35587a4514de07a5da2f07806dcce1
+      internalID: 505556274
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: road_deadtree_3
+      name: deadtree_3
       rect:
         serializedVersion: 2
-        x: 126
+        x: 120
         y: 0
-        width: 33
+        width: 40
         height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 74abcd72031751a40800000000000000
-      internalID: 5338297384958736967
+      spriteID: 7eda4c07efa2a1e3098db5157541a3f6
+      internalID: 1472374794
       vertices: []
       indices: 
       edges: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1c5bcc74b62b5f146a9a8018a3aa102e
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      road_deadtree_0: 1266399712110700730
-      road_deadtree_1: -2046728590356734174
-      road_deadtree_2: -6698343552097007859
-      road_deadtree_3: 5338297384958736967
+      deadtree_0: -819602881
+      deadtree_1: 69406681
+      deadtree_2: 505556274
+      deadtree_3: 1472374794
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
