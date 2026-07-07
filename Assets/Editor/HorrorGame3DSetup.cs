@@ -58,6 +58,7 @@ public static class HorrorGame3DSetup
     const string FootstepDir = "Assets/Sound Effects/Footsteps";
     const string BirdsWav   = "Assets/Sound Effects/Birds Singing.wav";
     const string WoodStepsWav = "Assets/Sound Effects/Footsteps on Wooden Floor.wav";
+    const string AsphaltWav = "Assets/Sound Effects/Walking on Asphalt.wav";
     const string DoorSfx    = "Assets/Sound Effects/door opening.mp3";
     const string PaperSfx   = "Assets/Sound Effects/Paper Crumple.wav";
     const string DogPantWav = "Assets/Sound Effects/Dog Panting.wav";
@@ -70,10 +71,10 @@ public static class HorrorGame3DSetup
     const string SceneOut   = "Assets/Scenes/Sandbox3D.unity";
     const string ExteriorSceneOut = "Assets/Scenes/Exterior.unity";
     const string OutOfTownSceneOut = "Assets/Scenes/OutOfTown.unity";
-    const string CockpitDir = "Assets/Animation/Car POV/cockpit_kit/sprites";
+    const string CockpitDir = "Assets/Animation/Updated Car POV/cockpit_kit/sprites";
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
-    const int DrivingSetupVersion = 1;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int DrivingSetupVersion = 4;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
 
     static int _renderer3DIndex = 1;
 
@@ -420,6 +421,12 @@ public static class HorrorGame3DSetup
         {
             new FootstepAudio.Surface { colliderName = "Pathway", clips = LoadFootstepClips("gravel_") },
         };
+        // On the asphalt road tiles (the "Road" by the cabin + the "DriveRoad" running out of town) play a
+        // continuous walking-on-asphalt loop instead of the grass per-step clips. Matched by name-contains
+        // so both road objects trigger it.
+        footsteps.loopSurfaceName = "Road";
+        footsteps.loopClip = AssetDatabase.LoadAssetAtPath<AudioClip>(AsphaltWav);
+        footsteps.loopVolume = 0.7f;
 
         var spriteGo = new GameObject("Sprite");
         spriteGo.transform.SetParent(player.transform, false);
@@ -581,6 +588,18 @@ public static class HorrorGame3DSetup
         WireCockpit(cockpit);
         if (truck.GetComponent<TruckDriver>() == null) truck.AddComponent<TruckDriver>();
 
+        // Walking on the asphalt road tiles plays the continuous "Walking on Asphalt" loop (matched by
+        // name-contains "Road", covering both the cabin "Road" and this "DriveRoad"). Applied here — the
+        // safe in-place augment path — since a full BuildExterior would wipe the hand-placed truck.
+        var playerGo = GameObject.Find("Player");
+        var fs = playerGo != null ? playerGo.GetComponent<FootstepAudio>() : null;
+        if (fs != null)
+        {
+            fs.loopSurfaceName = "Road";
+            fs.loopClip = AssetDatabase.LoadAssetAtPath<AudioClip>(AsphaltWav);
+            fs.loopVolume = 0.7f;
+        }
+
         // Road: continue the entrance line (world x≈0) SOUTH, off the map, from the doorstep past spawn.
         var roadGo = GameObject.Find("DriveRoad") ?? new GameObject("DriveRoad", typeof(MeshFilter), typeof(MeshRenderer));
         roadGo.transform.position = Vector3.zero;
@@ -589,7 +608,7 @@ public static class HorrorGame3DSetup
         rt.tileWorldSize = 1f; rt.roadY = 0.03f;
         rt.originX = -1; rt.width = 3;          // cells x -1,0,1 -> centred on the door line
         rt.originZ = -46; rt.length = 52;       // z -46..6: from near the boundary up to the doorstep
-        rt.surfaceRow = 1;                      // dirt/gravel, continuing the cobble entrance
+        rt.surfaceRow = 0;                      // asphalt — same tiles as the "Road" the truck is parked on by the house
         rt.dashedCentre = true;
         rt.Build();
 
@@ -635,7 +654,7 @@ public static class HorrorGame3DSetup
         rt.material = RoadAtlasMaterial();
         rt.tileWorldSize = 1f; rt.roadY = 0.03f;
         rt.originX = -1; rt.width = 3; rt.originZ = -30; rt.length = 60;
-        rt.surfaceRow = 1; rt.dashedCentre = true;
+        rt.surfaceRow = 0; rt.dashedCentre = true;   // asphalt, matching the paved road home (not dirt)
         rt.Build();
 
         BuildSkySystem(sun);
@@ -676,6 +695,8 @@ public static class HorrorGame3DSetup
         c.needleTex = T("needle.png");                c.needleNm = T("needle_nightmare.png");
         c.warningTex = T("warning_lights.png");       c.warningNm = T("warning_lights_nightmare.png");
         c.odometerTex = T("odometer_digits.png");     c.odometerNm = T("odometer_digits_nightmare.png");
+        c.odoTenthsTex = T("odometer_tenths.png");    c.odoTenthsNm = T("odometer_tenths_nightmare.png");
+        c.gearTex = T("gear_indicator.png");          c.gearNm = T("gear_indicator_nightmare.png");
         c.mirrorTex = T("mirror.png");                c.mirrorNm = T("mirror_nightmare.png");
         c.charmTex = T("charm.png");                  c.charmNm = T("charm_nightmare.png");
         c.wheelTex = T("steering_wheel.png");         c.wheelNm = T("steering_wheel_nightmare.png");

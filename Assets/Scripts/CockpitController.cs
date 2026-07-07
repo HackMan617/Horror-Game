@@ -19,11 +19,15 @@ public class CockpitController : MonoBehaviour
     const float FrameW = 260f, FrameH = 180f;   // shell-frame px; anchors are px, x right, y DOWN from top
 
     [Header("Cockpit sheets (home). The generator assigns these; self-wired in editor as a fallback.")]
-    public Texture2D shellTex, gaugeSpeedTex, gaugeFuelTex, needleTex, warningTex, odometerTex, mirrorTex, charmTex, wheelTex;
+    public Texture2D shellTex, gaugeSpeedTex, gaugeFuelTex, needleTex, warningTex, odometerTex, odoTenthsTex, gearTex, mirrorTex, charmTex, wheelTex;
     [Header("Cockpit sheets (_nightmare twins)")]
-    public Texture2D shellNm, gaugeSpeedNm, gaugeFuelNm, needleNm, warningNm, odometerNm, mirrorNm, charmNm, wheelNm, passengerNm;
+    public Texture2D shellNm, gaugeSpeedNm, gaugeFuelNm, needleNm, warningNm, odometerNm, odoTenthsNm, gearNm, mirrorNm, charmNm, wheelNm, passengerNm;
 
     public float maxWheelDeg = 135f;
+    [Tooltip("Frames/sec of the hanging totem's idle flip-book (8-frame charm sheet).")]
+    public float totemFps = 7f;
+    [Tooltip("Flip if the tenths drum scrolls the wrong way (0 at top vs 0 at bottom in the art).")]
+    public bool invertTenths = false;
 
     DrivingRig _rig;
     Canvas _canvas;
@@ -31,19 +35,23 @@ public class CockpitController : MonoBehaviour
     bool _nmState;
 
     // live layers
-    Image _shell, _speedFace, _fuelFace, _speedNeedle, _fuelNeedle, _mirrorFrame, _drain, _passenger, _charm, _wheel;
+    Image _shell, _speedFace, _fuelFace, _speedNeedle, _fuelNeedle, _mirrorFrame, _drain, _passenger, _charm, _wheel, _gear, _tenthsDrum;
     RawImage _mirrorGlass;
     Image[] _lamps = new Image[4];
     Image[] _odoDigits = new Image[5];
 
     // cached slices (home + nightmare)
     Sprite _sShell, _sShellNm, _sSpeed, _sSpeedNm, _sFuel, _sFuelNm, _sNeedle, _sNeedleNm;
-    Sprite _sMirror, _sMirrorNm, _sCharm, _sCharmNm, _sWheel, _sWheelNm, _sPassenger;
+    Sprite _sMirror, _sMirrorNm, _sWheel, _sWheelNm, _sPassenger, _sTenths, _sTenthsNm;
     Sprite[] _sLampsUnlit = new Sprite[6], _sLampsLit = new Sprite[6];
     Sprite[] _sLampsUnlitNm = new Sprite[6], _sLampsLitNm = new Sprite[6];
     Sprite[] _sDigits = new Sprite[10], _sDigitsNm = new Sprite[10];
+    Sprite[] _sCharmFrames = new Sprite[8], _sCharmFramesNm = new Sprite[8];   // 8-frame idle totem
+    Sprite[] _sGear = new Sprite[4], _sGearNm = new Sprite[4];                 // P R N D
 
     float _charmA, _charmV;
+    int _charmFrame; float _charmFt;   // totem idle flip-book
+    const float TenthsBaseY = 6.5f, TenthCell = 13f;   // drum window is 9×13; 11 cells (0..9,0) tall
 
     void Awake()
     {
@@ -77,15 +85,19 @@ public class CockpitController : MonoBehaviour
         DriveWheel();
         DriveGauges();
         DriveLamps();
+        DriveGear();
         DriveOdometer();
         DriveCharm();
         DriveMirror();
     }
 
-    // Keep the 260×180 shell pinned to the screen bottom and scaled to fill the width.
+    // Keep the 260×180 shell pinned to the screen bottom, scaled to FIT the screen (not just fill width) so
+    // the whole cockpit — including the rear-view mirror near the top of the shell — stays on-screen. On a
+    // wide (16:9) screen, filling the width made the shell taller than the viewport and pushed the mirror
+    // off the top; the live 3D world shows in the side margins (it's an overlay), like cab side windows.
     void FitFrame()
     {
-        float s = Screen.width / FrameW;
+        float s = Mathf.Min(Screen.width / FrameW, Screen.height / FrameH);
         _frame.localScale = new Vector3(s, s, 1f);
     }
 
@@ -106,8 +118,9 @@ public class CockpitController : MonoBehaviour
             float p = Mathf.Sin(Time.time * 0.7f);
             fv = p > 0.4f ? 1f : (p < -0.4f ? _rig.fuel * 0.35f : _rig.fuel);               // full…then empty
         }
-        _speedNeedle.rectTransform.localEulerAngles = new Vector3(0, 0, Ang(sv));
-        _fuelNeedle.rectTransform.localEulerAngles = new Vector3(0, 0, Ang(fv));
+        // −z so the needle sweeps CLOCKWISE as the value rises (low→high, E→F); +z ran it backwards.
+        _speedNeedle.rectTransform.localEulerAngles = new Vector3(0, 0, -Ang(sv));
+        _fuelNeedle.rectTransform.localEulerAngles = new Vector3(0, 0, -Ang(fv));
     }
 
     void DriveLamps()
@@ -132,21 +145,55 @@ public class CockpitController : MonoBehaviour
         }
     }
 
+    // Gear P R N D: D moving / P parked, glitching to R/N on its own in the nightmare (DRIVING.md §4).
+    void DriveGear()
+    {
+        int gear = _rig.speed > 0.03f ? 3 : 0;
+        if (_rig.nightmare)
+        {
+            int k = Mathf.FloorToInt(Time.time * 1.5f) % 9;
+            if (k == 0) gear = 1; else if (k == 3) gear = 2;
+        }
+        var frames = _nmState ? _sGearNm : _sGear;
+        if (frames[gear] != null) _gear.sprite = frames[gear];
+    }
+
     void DriveOdometer()
     {
-        int odo = _rig.nightmare
-            ? Mathf.Max(0, 99999 - Mathf.FloorToInt(_rig.distance * 3f) % 100000)   // backward
-            : Mathf.FloorToInt(_rig.distance) % 100000;
+        // Whole miles across the 5 white digits; the last digit is the separate rolling tenths drum.
+        float val = _rig.nightmare ? Mathf.Max(0f, 100000f - _rig.distance * 3f) : _rig.distance;
+        int odo = Mathf.FloorToInt(val) % 100000;
         var digits = _nmState ? _sDigitsNm : _sDigits;
         for (int slot = 0; slot < 5; slot++)
         {
             int place = (int)Mathf.Pow(10, 4 - slot);
             _odoDigits[slot].sprite = digits[(odo / place) % 10];
         }
+
+        // Tenths drum: offset the strip so the current tenth is mid-roll (0..9,0 stacked; 11 cells tall).
+        if (_tenthsDrum != null)
+        {
+            float tenth = val * 10f;
+            int cur = ((Mathf.FloorToInt(tenth) % 10) + 10) % 10;
+            float roll = Mathf.Repeat(tenth, 1f);
+            float cells = cur + roll;
+            if (invertTenths) cells = 10f - cells;
+            _tenthsDrum.rectTransform.anchoredPosition = new Vector2(0f, TenthsBaseY + cells * TenthCell);
+        }
     }
 
     void DriveCharm()
     {
+        // Idle flip-book (8 frames) under the physics swing — the frames don't move the pivot so they layer.
+        _charmFt += Time.deltaTime;
+        if (totemFps > 0f && _charmFt >= 1f / totemFps)
+        {
+            _charmFt = 0f;
+            _charmFrame = (_charmFrame + 1) % 8;
+        }
+        var frames = _nmState ? _sCharmFramesNm : _sCharmFrames;
+        if (frames[_charmFrame] != null) _charm.sprite = frames[_charmFrame];
+
         float lateral = -_rig.steer * _rig.speed * 3.4f
                       - (_rig.nightmare ? Mathf.Sin(Time.time * 3f) * 0.4f : 0f);
         _charmV += (lateral - _charmA * 7f - _charmV * 2.2f) * Time.deltaTime;
@@ -156,8 +203,9 @@ public class CockpitController : MonoBehaviour
 
     void DriveMirror()
     {
-        // The real rear view sits under a dark overlay that thickens as the rear view drains to black.
-        float drain = Mathf.Clamp01(1f - _rig.rearFill);
+        // The rear view stays clear in the home realm (you need to see behind you while driving); the
+        // "no turning back" drain-to-black at speed is a nightmare-only beat.
+        float drain = _rig.nightmare ? Mathf.Clamp01(1f - _rig.rearFill) : 0f;
         _drain.color = new Color(0f, 0f, 0f, drain * 0.9f);
 
         _passenger.enabled = _rig.nightmare;
@@ -176,8 +224,9 @@ public class CockpitController : MonoBehaviour
         _speedNeedle.sprite = nm && _sNeedleNm ? _sNeedleNm : _sNeedle;
         _fuelNeedle.sprite = nm && _sNeedleNm ? _sNeedleNm : _sNeedle;
         _mirrorFrame.sprite = nm && _sMirrorNm ? _sMirrorNm : _sMirror;
-        _charm.sprite = nm && _sCharmNm ? _sCharmNm : _sCharm;
         _wheel.sprite = nm && _sWheelNm ? _sWheelNm : _sWheel;
+        if (_tenthsDrum != null) _tenthsDrum.sprite = nm && _sTenthsNm ? _sTenthsNm : _sTenths;
+        // charm (totem) + gear frames are chosen per-frame in DriveCharm/DriveGear off _nmState.
     }
 
     // -------------------------------------------------------------- build
@@ -202,27 +251,51 @@ public class CockpitController : MonoBehaviour
         _fuelNeedle = Layer("FuelNeedle", _sNeedle, 158, 108, 60, 60);
         _fuelNeedle.rectTransform.localScale = Vector3.one * (17f / 26f);   // fuel dial is smaller
 
-        for (int i = 0; i < 4; i++)   // warning grid 2×2, centre (202,104), 15px pitch
+        for (int i = 0; i < 4; i++)   // warning grid 2×2, centre (202,100), 17px pitch (DRIVING.md)
         {
-            float gx = 202f + ((i % 2) - 0.5f) * 15f;
-            float gy = 104f + ((i / 2) - 0.5f) * 15f;
+            float gx = 202f + ((i % 2) - 0.5f) * 17f;
+            float gy = 100f + ((i / 2) - 0.5f) * 17f;
             _lamps[i] = Layer("Lamp" + i, _sLampsUnlit[i], gx, gy, 12, 12);
         }
 
-        for (int s = 0; s < 5; s++)   // odometer window x86,y122, 9px pitch (9×13 digits)
-            _odoDigits[s] = Layer("Odo" + s, _sDigits[0], 86f + s * 9f, 122f, 9, 13);
+        for (int s = 0; s < 5; s++)   // odometer window x82,y120, 9px pitch (5 white 9×13 digits)
+            _odoDigits[s] = Layer("Odo" + s, _sDigits[0], 82f + s * 9f, 120f, 9, 13);
 
-        // mirror at (130,22); glass rect 80×26. Glass (rear RT) -> drain -> passenger -> frame.
-        _mirrorGlass = LayerRaw("MirrorGlass", 130, 22, 80, 26);
-        _mirrorGlass.uvRect = new Rect(1f, 0f, -1f, 1f);   // mirror = horizontal flip
-        _drain = Layer("MirrorDrain", null, 130, 22, 80, 26); _drain.color = new Color(0, 0, 0, 0);
-        _passenger = Layer("Passenger", _sPassenger, 130, 22, 81, 27); _passenger.enabled = false;
+        // rolling tenths drum: a tall 9×143 strip clipped to a 9×13 window just right of the 5 digits,
+        // scrolled vertically so the last digit is always mid-roll (DRIVING.md odometer).
+        _tenthsDrum = BuildTenthsDrum(82f + 5 * 9f, 120f);
+
+        // gear indicator P R N D at window x116,y138 (4-frame sheet; the lit letter = current gear).
+        _gear = Layer("Gear", _sGear.Length > 0 ? _sGear[0] : null, 116f, 138f, 26, 11);
+
+        // mirror at (130,22). The frame sprite is OPAQUE (no cut-out glass hole), so the rear-view feed is
+        // drawn ON TOP of it, filling the glass rect — the frame reads as the surrounding bezel. Order:
+        // frame (bezel, back) -> glass (rear RT) -> drain -> passenger.
         _mirrorFrame = Layer("MirrorFrame", _sMirror, 130, 22, 104, 40);
+        _mirrorGlass = LayerRaw("MirrorGlass", 130, 23.5f, 81, 26);   // exactly over the frame's painted glass (x12..92 y9..34)
+        _drain = Layer("MirrorDrain", null, 130, 23.5f, 81, 26); _drain.color = new Color(0, 0, 0, 0);
+        _passenger = Layer("Passenger", _sPassenger, 130, 23.5f, 81, 26); _passenger.enabled = false;
 
-        _charm = Layer("Charm", _sCharm, 176, 34, 26, 52);
+        _charm = Layer("Charm", _sCharmFrames.Length > 0 ? _sCharmFrames[0] : null, 176, 34, 26, 52);
         _charm.rectTransform.pivot = new Vector2(0.5f, 1f);   // hangs from its top
 
         _wheel = Layer("Wheel", _sWheel, 130, 192, 140, 140);
+    }
+
+    // A 9×13 masked window with the full 9×143 tenths drum inside it, pivoted at its top so a positive
+    // Y offset scrolls lower cells up into view (driven each frame in DriveOdometer).
+    Image BuildTenthsDrum(float px, float py)
+    {
+        var maskRt = NewRect("TenthsWindow", _frame, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
+                             new Vector2(9, 13), new Vector2(px - FrameW * 0.5f, FrameH - py));
+        maskRt.gameObject.AddComponent<RectMask2D>();
+        var drumRt = NewRect("TenthsDrum", maskRt, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+                             new Vector2(9, 143), new Vector2(0, TenthsBaseY));
+        drumRt.pivot = new Vector2(0.5f, 1f);   // top pivot: cell 0 sits in the window at baseY
+        var img = drumRt.gameObject.AddComponent<Image>();
+        img.sprite = _sTenths; img.raycastTarget = false;
+        if (_sTenths == null) img.color = Color.white;
+        return img;
     }
 
     // A child Image at shell-frame px (px right, py down-from-top) sized w×h px.
@@ -263,13 +336,25 @@ public class CockpitController : MonoBehaviour
         _sFuel = Whole(gaugeFuelTex); _sFuelNm = Whole(gaugeFuelNm);
         _sNeedle = Whole(needleTex); _sNeedleNm = Whole(needleNm);
         _sMirror = Whole(mirrorTex); _sMirrorNm = Whole(mirrorNm);
-        _sCharm = Whole(charmTex); _sCharmNm = Whole(charmNm);
         _sWheel = Whole(wheelTex); _sWheelNm = Whole(wheelNm);
         _sPassenger = Whole(passengerNm);
+        _sTenths = Whole(odoTenthsTex); _sTenthsNm = Whole(odoTenthsNm);
         SliceWarning(warningTex, _sLampsUnlit, _sLampsLit);
         SliceWarning(warningNm, _sLampsUnlitNm, _sLampsLitNm);
         SliceDigits(odometerTex, _sDigits);
         SliceDigits(odometerNm, _sDigitsNm);
+        SliceStrip(charmTex, _sCharmFrames, 26, 52, new Vector2(0.5f, 1f));   // 8-frame totem, hangs from top
+        SliceStrip(charmNm, _sCharmFramesNm, 26, 52, new Vector2(0.5f, 1f));
+        SliceStrip(gearTex, _sGear, 26, 11, new Vector2(0.5f, 0.5f));         // 4-frame P R N D
+        SliceStrip(gearNm, _sGearNm, 26, 11, new Vector2(0.5f, 0.5f));
+    }
+
+    // Slice a single-row horizontal sheet into cell-sized frames (0..n-1 left→right).
+    static void SliceStrip(Texture2D t, Sprite[] frames, int cw, int ch, Vector2 pivot)
+    {
+        if (t == null) return;
+        for (int f = 0; f < frames.Length; f++)
+            frames[f] = Sprite.Create(t, new Rect(f * cw, 0, cw, ch), pivot, SlicePpu, 0, SpriteMeshType.FullRect);
     }
 
     const float SlicePpu = 100f;
@@ -300,13 +385,15 @@ public class CockpitController : MonoBehaviour
 #if UNITY_EDITOR
     void SelfWire()
     {
-        const string dir = "Assets/Animation/Car POV/cockpit_kit/sprites/";
+        const string dir = "Assets/Animation/Updated Car POV/cockpit_kit/sprites/";
         T(ref shellTex, dir + "cockpit_shell.png"); T(ref shellNm, dir + "cockpit_shell_nightmare.png");
         T(ref gaugeSpeedTex, dir + "gauge_speed.png"); T(ref gaugeSpeedNm, dir + "gauge_speed_nightmare.png");
         T(ref gaugeFuelTex, dir + "gauge_fuel.png"); T(ref gaugeFuelNm, dir + "gauge_fuel_nightmare.png");
         T(ref needleTex, dir + "needle.png"); T(ref needleNm, dir + "needle_nightmare.png");
         T(ref warningTex, dir + "warning_lights.png"); T(ref warningNm, dir + "warning_lights_nightmare.png");
         T(ref odometerTex, dir + "odometer_digits.png"); T(ref odometerNm, dir + "odometer_digits_nightmare.png");
+        T(ref odoTenthsTex, dir + "odometer_tenths.png"); T(ref odoTenthsNm, dir + "odometer_tenths_nightmare.png");
+        T(ref gearTex, dir + "gear_indicator.png"); T(ref gearNm, dir + "gear_indicator_nightmare.png");
         T(ref mirrorTex, dir + "mirror.png"); T(ref mirrorNm, dir + "mirror_nightmare.png");
         T(ref charmTex, dir + "charm.png"); T(ref charmNm, dir + "charm_nightmare.png");
         T(ref wheelTex, dir + "steering_wheel.png"); T(ref wheelNm, dir + "steering_wheel_nightmare.png");

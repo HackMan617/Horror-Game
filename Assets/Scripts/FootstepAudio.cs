@@ -94,7 +94,9 @@ public class FootstepAudio : MonoBehaviour
 
         // Sample the surface under the player once per frame; used for both the loop gate and per-step.
         string surfName = SampleSurfaceName();
-        bool onLoop = _loopSrc != null && !string.IsNullOrEmpty(loopSurfaceName) && surfName == loopSurfaceName;
+        // Contains-match so one loop name (e.g. "Road") covers every road object ("Road", "DriveRoad", ...).
+        bool onLoop = _loopSrc != null && !string.IsNullOrEmpty(loopSurfaceName)
+                      && surfName != null && surfName.Contains(loopSurfaceName);
 
         // Ease the surface loop (asphalt) in while walking on its surface, out otherwise.
         if (_loopSrc != null)
