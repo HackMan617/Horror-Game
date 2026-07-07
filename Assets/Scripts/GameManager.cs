@@ -43,7 +43,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         var kb = Keyboard.current;
-        if (kb != null && kb.escapeKey.wasPressedThisFrame &&
+        // Don't toggle pause on the same Escape that just closed the Settings panel (or while it's open).
+        bool settingsBusy = SettingsManager.Instance != null &&
+                            (SettingsManager.Instance.IsOpen || SettingsManager.Instance.ConsumedEscapeThisFrame);
+        if (kb != null && kb.escapeKey.wasPressedThisFrame && !settingsBusy &&
             SceneManager.GetActiveScene().name != MenuScene)
             SetPaused(!_paused);
     }
@@ -111,12 +114,18 @@ public class GameManager : MonoBehaviour
         title.verticalOverflow = VerticalWrapMode.Overflow;
         var trt = title.GetComponent<RectTransform>();
         trt.anchorMin = trt.anchorMax = trt.pivot = new Vector2(0.5f, 0.5f);
-        trt.anchoredPosition = new Vector2(0f, 190f); trt.sizeDelta = new Vector2(1300f, 240f);
+        trt.anchoredPosition = new Vector2(0f, 300f); trt.sizeDelta = new Vector2(1300f, 240f);
 
+        MakeButton("Settings", new Vector2(0f, 130f), OpenSettings);
         MakeButton("Retry", new Vector2(0f, 0f), Retry);
         MakeButton("Quit", new Vector2(0f, -130f), QuitToMenu);
 
         _pauseRoot.SetActive(false);
+    }
+
+    void OpenSettings()
+    {
+        if (SettingsManager.Instance != null) SettingsManager.Instance.Open();
     }
 
     void MakeButton(string label, Vector2 pos, UnityEngine.Events.UnityAction action)
