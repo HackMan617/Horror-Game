@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: a5b90ad771f47bd4e8c62f52c8ff1bd9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5365539014417527788
+    second: bed_front_nightmare_0
+  - first:
+      213: 2133672814314162242
+    second: bed_front_nightmare_1
+  - first:
+      213: -5770869256810524118
+    second: bed_front_nightmare_2
+  - first:
+      213: -7812798771140845172
+    second: bed_front_nightmare_3
+  - first:
+      213: -3954591123547608104
+    second: bed_front_nightmare_4
+  - first:
+      213: 4368533605336021234
+    second: bed_front_nightmare_5
+  - first:
+      213: -2251762654435697862
+    second: bed_front_nightmare_6
+  - first:
+      213: 5593510663263562133
+    second: bed_front_nightmare_7
+  - first:
+      213: 6584363527870500112
+    second: bed_front_nightmare_8
+  - first:
+      213: 173195411453283895
+    second: bed_front_nightmare_9
+  - first:
+      213: 2019000392030496637
+    second: bed_front_nightmare_10
+  - first:
+      213: -7922009849767955325
+    second: bed_front_nightmare_11
+  - first:
+      213: -5666675543618415994
+    second: bed_front_nightmare_12
+  - first:
+      213: 4663602625073247992
+    second: bed_front_nightmare_13
+  - first:
+      213: 1397664587445183093
+    second: bed_front_nightmare_14
+  - first:
+      213: 6616394088779388507
+    second: bed_front_nightmare_15
+  - first:
+      213: 2881874580786138360
+    second: bed_front_nightmare_16
+  - first:
+      213: -4634430304253371110
+    second: bed_front_nightmare_17
+  - first:
+      213: -417610203497097500
+    second: bed_front_nightmare_18
+  - first:
+      213: 1467686742969805752
+    second: bed_front_nightmare_19
+  - first:
+      213: -4516267984853240504
+    second: bed_front_nightmare_20
+  - first:
+      213: 4971877536834631371
+    second: bed_front_nightmare_21
+  - first:
+      213: 2185723098039782846
+    second: bed_front_nightmare_22
+  - first:
+      213: 7361905343102788560
+    second: bed_front_nightmare_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bed_front_nightmare_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41cc429b1b6c985b0800000000000000
+      internalID: -5365539014417527788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_1
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2488a14be145c9d10800000000000000
+      internalID: 2133672814314162242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_2
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a22169e7cf0c9efa0800000000000000
+      internalID: -5770869256810524118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_3
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c81aa8069ec539390800000000000000
+      internalID: -7812798771140845172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_4
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8db280153587e19c0800000000000000
+      internalID: -3954591123547608104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_5
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f8f8672b2620ac30800000000000000
+      internalID: 4368533605336021234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_6
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3b9edfcbc120c0e0800000000000000
+      internalID: -2251762654435697862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_7
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 135
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5992f23005420ad40800000000000000
+      internalID: 5593510663263562133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_8
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d42ce3ebb506b50800000000000000
+      internalID: 6584363527870500112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_9
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73e86602f40576200800000000000000
+      internalID: 173195411453283895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_10
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d772a50d82ee40c10800000000000000
+      internalID: 2019000392030496637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_11
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3847f65a30e5f0290800000000000000
+      internalID: -7922009849767955325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_12
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6821b3dcd9ceb51b0800000000000000
+      internalID: -5666675543618415994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_13
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f6f111f0e178b040800000000000000
+      internalID: 4663602625073247992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_14
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57220d18980856310800000000000000
+      internalID: 1397664587445183093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_15
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 71
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5690bb5e5722db50800000000000000
+      internalID: 6616394088779388507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_16
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fc4cf299a97ef720800000000000000
+      internalID: 2881874580786138360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_17
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d1caa41323fafb0800000000000000
+      internalID: -4634430304253371110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_18
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e61af58bb9543af0800000000000000
+      internalID: -417610203497097500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_19
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bbe34c01554e5410800000000000000
+      internalID: 1467686742969805752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_20
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8457a5c223ef251c0800000000000000
+      internalID: -4516267984853240504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_21
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc6b5c11748aff440800000000000000
+      internalID: 4971877536834631371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_22
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebd0704c39f355e10800000000000000
+      internalID: 2185723098039782846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed_front_nightmare_23
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 7
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d321bd87edba2660800000000000000
+      internalID: 7361905343102788560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bed_front_nightmare_0: -5365539014417527788
+      bed_front_nightmare_1: 2133672814314162242
+      bed_front_nightmare_10: 2019000392030496637
+      bed_front_nightmare_11: -7922009849767955325
+      bed_front_nightmare_12: -5666675543618415994
+      bed_front_nightmare_13: 4663602625073247992
+      bed_front_nightmare_14: 1397664587445183093
+      bed_front_nightmare_15: 6616394088779388507
+      bed_front_nightmare_16: 2881874580786138360
+      bed_front_nightmare_17: -4634430304253371110
+      bed_front_nightmare_18: -417610203497097500
+      bed_front_nightmare_19: 1467686742969805752
+      bed_front_nightmare_2: -5770869256810524118
+      bed_front_nightmare_20: -4516267984853240504
+      bed_front_nightmare_21: 4971877536834631371
+      bed_front_nightmare_22: 2185723098039782846
+      bed_front_nightmare_23: 7361905343102788560
+      bed_front_nightmare_3: -7812798771140845172
+      bed_front_nightmare_4: -3954591123547608104
+      bed_front_nightmare_5: 4368533605336021234
+      bed_front_nightmare_6: -2251762654435697862
+      bed_front_nightmare_7: 5593510663263562133
+      bed_front_nightmare_8: 6584363527870500112
+      bed_front_nightmare_9: 173195411453283895
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

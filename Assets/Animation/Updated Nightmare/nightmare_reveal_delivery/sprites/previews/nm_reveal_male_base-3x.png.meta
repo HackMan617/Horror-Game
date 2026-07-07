@@ -1,0 +1,1157 @@
+fileFormatVersion: 2
+guid: 7e934f7c9c29dd64f829cf6f454b0b28
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8976188436187605509
+    second: nm_reveal_male_base-3x_0
+  - first:
+      213: -1528046730881572571
+    second: nm_reveal_male_base-3x_1
+  - first:
+      213: -787797673468678252
+    second: nm_reveal_male_base-3x_2
+  - first:
+      213: 1415968667731758941
+    second: nm_reveal_male_base-3x_3
+  - first:
+      213: 7887505870464808624
+    second: nm_reveal_male_base-3x_4
+  - first:
+      213: -3662099906182496170
+    second: nm_reveal_male_base-3x_5
+  - first:
+      213: -6066660579480195621
+    second: nm_reveal_male_base-3x_6
+  - first:
+      213: 3649012926688325084
+    second: nm_reveal_male_base-3x_7
+  - first:
+      213: 5779831025345994073
+    second: nm_reveal_male_base-3x_8
+  - first:
+      213: 8007492057746758296
+    second: nm_reveal_male_base-3x_9
+  - first:
+      213: -3831433630638443218
+    second: nm_reveal_male_base-3x_10
+  - first:
+      213: -1296636107969749390
+    second: nm_reveal_male_base-3x_11
+  - first:
+      213: 5414851644826943682
+    second: nm_reveal_male_base-3x_12
+  - first:
+      213: -7217250789843976462
+    second: nm_reveal_male_base-3x_13
+  - first:
+      213: 3899685957460402142
+    second: nm_reveal_male_base-3x_14
+  - first:
+      213: 4231392817047216344
+    second: nm_reveal_male_base-3x_15
+  - first:
+      213: 5233353644290422479
+    second: nm_reveal_male_base-3x_16
+  - first:
+      213: -3793252152181899050
+    second: nm_reveal_male_base-3x_17
+  - first:
+      213: 1727694230348428759
+    second: nm_reveal_male_base-3x_18
+  - first:
+      213: -903729362079695762
+    second: nm_reveal_male_base-3x_19
+  - first:
+      213: 308356158327732422
+    second: nm_reveal_male_base-3x_20
+  - first:
+      213: 8718718325624542519
+    second: nm_reveal_male_base-3x_21
+  - first:
+      213: 2011289948085411340
+    second: nm_reveal_male_base-3x_22
+  - first:
+      213: 6906053029857943217
+    second: nm_reveal_male_base-3x_23
+  - first:
+      213: 5670342236811102233
+    second: nm_reveal_male_base-3x_24
+  - first:
+      213: -8893746105161826994
+    second: nm_reveal_male_base-3x_25
+  - first:
+      213: -3630138287502776802
+    second: nm_reveal_male_base-3x_26
+  - first:
+      213: 6999246335705268012
+    second: nm_reveal_male_base-3x_27
+  - first:
+      213: -7528064923737126229
+    second: nm_reveal_male_base-3x_28
+  - first:
+      213: -4504776006742286234
+    second: nm_reveal_male_base-3x_29
+  - first:
+      213: -4975919245442015190
+    second: nm_reveal_male_base-3x_30
+  - first:
+      213: -701653752754969664
+    second: nm_reveal_male_base-3x_31
+  - first:
+      213: 4142908318087244215
+    second: nm_reveal_male_base-3x_32
+  - first:
+      213: -3244407403617005171
+    second: nm_reveal_male_base-3x_33
+  - first:
+      213: -6469660456367501406
+    second: nm_reveal_male_base-3x_34
+  - first:
+      213: -871236059622609370
+    second: nm_reveal_male_base-3x_35
+  - first:
+      213: -4512585275177242904
+    second: nm_reveal_male_base-3x_36
+  - first:
+      213: 7516132840648677597
+    second: nm_reveal_male_base-3x_37
+  - first:
+      213: 2531037473826109157
+    second: nm_reveal_male_base-3x_38
+  - first:
+      213: 4510254701581054212
+    second: nm_reveal_male_base-3x_39
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 587
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf59118dc2c2e6380800000000000000
+      internalID: -8976188436187605509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_1
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 587
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5216b9d18994bcae0800000000000000
+      internalID: -1528046730881572571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_2
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 584
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49f250e903e2115f0800000000000000
+      internalID: -787797673468678252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_3
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 587
+        width: 83
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5f0c3d400886a310800000000000000
+      internalID: 1415968667731758941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_4
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 575
+        width: 95
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b6fcd4accc067d60800000000000000
+      internalID: 7887505870464808624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_5
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 575
+        width: 110
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6504008b98b9d2dc0800000000000000
+      internalID: -3662099906182496170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_6
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 575
+        width: 128
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdda7337854eecba0800000000000000
+      internalID: -6066660579480195621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_7
+      rect:
+        serializedVersion: 2
+        x: 1370
+        y: 575
+        width: 146
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdde01c6ce5e3a230800000000000000
+      internalID: 3649012926688325084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_8
+      rect:
+        serializedVersion: 2
+        x: 1559
+        y: 575
+        width: 155
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95d9787d1b5163050800000000000000
+      internalID: 5779831025345994073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_9
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 575
+        width: 161
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89ad1cbd993502f60800000000000000
+      internalID: 8007492057746758296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_10
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 395
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e257f49a96304dac0800000000000000
+      internalID: -3831433630638443218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_11
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 395
+        width: 77
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27e9485645c610ee0800000000000000
+      internalID: -1296636107969749390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_12
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 395
+        width: 77
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c08951c1ea652b40800000000000000
+      internalID: 5414851644826943682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_13
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 395
+        width: 74
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fe317035ac27db90800000000000000
+      internalID: -7217250789843976462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_14
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 395
+        width: 74
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf910687b77e1630800000000000000
+      internalID: 3899685957460402142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_15
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 395
+        width: 74
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d02d35295de8ba30800000000000000
+      internalID: 4231392817047216344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_16
+      rect:
+        serializedVersion: 2
+        x: 1217
+        y: 395
+        width: 71
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc63de7796b90a840800000000000000
+      internalID: 5233353644290422479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_17
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 395
+        width: 74
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d046bdd349ab5bc0800000000000000
+      internalID: -3793252152181899050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_18
+      rect:
+        serializedVersion: 2
+        x: 1598
+        y: 395
+        width: 74
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d5f860bfb00af710800000000000000
+      internalID: 1727694230348428759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_19
+      rect:
+        serializedVersion: 2
+        x: 1793
+        y: 395
+        width: 74
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6c3620feee4573f0800000000000000
+      internalID: -903729362079695762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_20
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 203
+        width: 65
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c8bd61da40874400800000000000000
+      internalID: 308356158327732422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_21
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 203
+        width: 65
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7351a879f1c1ff870800000000000000
+      internalID: 8718718325624542519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_22
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 203
+        width: 65
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ed1ff2d8989eb10800000000000000
+      internalID: 2011289948085411340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_23
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 203
+        width: 65
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1be51bc04aa37df50800000000000000
+      internalID: 6906053029857943217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_24
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 203
+        width: 77
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 918050cb83a11be40800000000000000
+      internalID: 5670342236811102233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_25
+      rect:
+        serializedVersion: 2
+        x: 1016
+        y: 203
+        width: 80
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4db057d901139480800000000000000
+      internalID: -8893746105161826994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_26
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 203
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e162ad7f5782f9dc0800000000000000
+      internalID: -3630138287502776802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_27
+      rect:
+        serializedVersion: 2
+        x: 1403
+        y: 203
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2fba2f6571522160800000000000000
+      internalID: 6999246335705268012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_28
+      rect:
+        serializedVersion: 2
+        x: 1592
+        y: 203
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baa029656d0f68790800000000000000
+      internalID: -7528064923737126229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_29
+      rect:
+        serializedVersion: 2
+        x: 1787
+        y: 203
+        width: 80
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6606c65d612db71c0800000000000000
+      internalID: -4504776006742286234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_30
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 11
+        width: 152
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2026605fcbf1fab0800000000000000
+      internalID: -4975919245442015190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_31
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 11
+        width: 152
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c368bf11a93346f0800000000000000
+      internalID: -701653752754969664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_32
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 11
+        width: 152
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b9e99c4a219e7930800000000000000
+      internalID: 4142908318087244215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_33
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 11
+        width: 152
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d81d2c0f7ac89f2d0800000000000000
+      internalID: -3244407403617005171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_34
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 11
+        width: 152
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2afc2d8b7162736a0800000000000000
+      internalID: -6469660456367501406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_35
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 11
+        width: 152
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62eeea67b6fb8e3f0800000000000000
+      internalID: -871236059622609370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_36
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 11
+        width: 152
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8eee666d9931061c0800000000000000
+      internalID: -4512585275177242904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_37
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 11
+        width: 152
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd813831ffaae4860800000000000000
+      internalID: 7516132840648677597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_38
+      rect:
+        serializedVersion: 2
+        x: 1571
+        y: 11
+        width: 152
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e67b942c2d002320800000000000000
+      internalID: 2531037473826109157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nm_reveal_male_base-3x_39
+      rect:
+        serializedVersion: 2
+        x: 1763
+        y: 11
+        width: 152
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 401364631c4a79e30800000000000000
+      internalID: 4510254701581054212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      nm_reveal_male_base-3x_0: -8976188436187605509
+      nm_reveal_male_base-3x_1: -1528046730881572571
+      nm_reveal_male_base-3x_10: -3831433630638443218
+      nm_reveal_male_base-3x_11: -1296636107969749390
+      nm_reveal_male_base-3x_12: 5414851644826943682
+      nm_reveal_male_base-3x_13: -7217250789843976462
+      nm_reveal_male_base-3x_14: 3899685957460402142
+      nm_reveal_male_base-3x_15: 4231392817047216344
+      nm_reveal_male_base-3x_16: 5233353644290422479
+      nm_reveal_male_base-3x_17: -3793252152181899050
+      nm_reveal_male_base-3x_18: 1727694230348428759
+      nm_reveal_male_base-3x_19: -903729362079695762
+      nm_reveal_male_base-3x_2: -787797673468678252
+      nm_reveal_male_base-3x_20: 308356158327732422
+      nm_reveal_male_base-3x_21: 8718718325624542519
+      nm_reveal_male_base-3x_22: 2011289948085411340
+      nm_reveal_male_base-3x_23: 6906053029857943217
+      nm_reveal_male_base-3x_24: 5670342236811102233
+      nm_reveal_male_base-3x_25: -8893746105161826994
+      nm_reveal_male_base-3x_26: -3630138287502776802
+      nm_reveal_male_base-3x_27: 6999246335705268012
+      nm_reveal_male_base-3x_28: -7528064923737126229
+      nm_reveal_male_base-3x_29: -4504776006742286234
+      nm_reveal_male_base-3x_3: 1415968667731758941
+      nm_reveal_male_base-3x_30: -4975919245442015190
+      nm_reveal_male_base-3x_31: -701653752754969664
+      nm_reveal_male_base-3x_32: 4142908318087244215
+      nm_reveal_male_base-3x_33: -3244407403617005171
+      nm_reveal_male_base-3x_34: -6469660456367501406
+      nm_reveal_male_base-3x_35: -871236059622609370
+      nm_reveal_male_base-3x_36: -4512585275177242904
+      nm_reveal_male_base-3x_37: 7516132840648677597
+      nm_reveal_male_base-3x_38: 2531037473826109157
+      nm_reveal_male_base-3x_39: 4510254701581054212
+      nm_reveal_male_base-3x_4: 7887505870464808624
+      nm_reveal_male_base-3x_5: -3662099906182496170
+      nm_reveal_male_base-3x_6: -6066660579480195621
+      nm_reveal_male_base-3x_7: 3649012926688325084
+      nm_reveal_male_base-3x_8: 5779831025345994073
+      nm_reveal_male_base-3x_9: 8007492057746758296
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

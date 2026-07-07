@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#0a0708;}
+  *{box-sizing:border-box;}
+  canvas{image-rendering:pixelated;image-rendering:crisp-edges;}
+  @keyframes nrscan{0%{background-position:0 0}100%{background-position:0 6px}}
+  @keyframes nrflick{0%,100%{opacity:.5}46%{opacity:.32}54%{opacity:.62}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:radial-gradient(120% 85% at 50% -8%,#1a0f0e 0%,#0a0708 70%);color:#e7dcd9;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:34px 38px 60px;">
+
+  <!-- header -->
+  <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px;">
+    <h1 style="font-family:'Press Start 2P',monospace;font-size:20px;line-height:1.5;margin:0;color:#d8362a;letter-spacing:.5px;text-shadow:0 0 16px rgba(200,40,40,.4),2px 2px 0 #000;">NIGHTMARE&nbsp;REVEAL</h1>
+    <span style="font-size:12.5px;color:#8a7674;">64px hi-bit scare sheets &middot; <span style="color:#9c4a44;">it&rsquo;s wearing your character</span></span>
+  </div>
+  <div style="height:2px;background:linear-gradient(90deg,#d8362a,#5a1414,transparent);margin:12px 0 20px;max-width:620px;"></div>
+
+  <div style="max-width:820px;font-size:12.5px;line-height:1.85;color:#9a8987;margin-bottom:24px;">
+    The close-up tier of the <span style="color:#c9b4b1;">WRUNG</span> nightmare player &mdash; rotting from the inside, the skin withering off it. Four baked clips: the <span style="color:#d8362a;">FLASH</span> lunge at the camera, the <span style="color:#c9b4b1;">SCREAM</span> as the jaw unhinges, the <span style="color:#c9b4b1;">HEAD-SNAP</span> when it notices you, and the <span style="color:#c9b4b1;">CRAWL</span> as it drags itself on its own guts. Pick your palette on the right &mdash; or load your saved character &mdash; and it wears <span style="color:#c9b4b1;">you</span>, drained.
+  </div>
+
+  <div style="display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- ===== stage ===== -->
+    <div style="flex:1 1 420px;min-width:360px;background:#120d0c;border:1px solid #2a1a18;border-radius:8px;padding:18px;">
+      <div style="position:relative;height:420px;border:1px solid #2a1a18;border-radius:6px;overflow:hidden;background:radial-gradient(70% 60% at 50% 42%,#1c1413 0%,#080606 82%);">
+        <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.02) 3px 4px);animation:nrscan 1.1s linear infinite;pointer-events:none;"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(58% 50% at 50% 48%,transparent 36%,rgba(0,0,0,.66) 100%);animation:nrflick 4.2s ease-in-out infinite;pointer-events:none;"></div>
+        <canvas ref="{{ heroRef }}" width="64" height="64" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:384px;height:384px;"></canvas>
+      </div>
+
+      <!-- readout -->
+      <div style="display:flex;align-items:baseline;gap:12px;margin-top:12px;">
+        <span style="font-family:'Press Start 2P',monospace;font-size:11px;color:#d8362a;letter-spacing:.5px;">{{ clipLabel }}</span>
+        <span style="font-size:11px;color:#7a6a68;">{{ clipSub }}</span>
+        <span style="font-size:11px;color:#5f4f4d;margin-left:auto;">frame {{ frameNum }}/10</span>
+      </div>
+
+      <!-- clips -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+        <sc-for list="{{ clipButtons }}" as="c" hint-placeholder-count="4">
+          <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+
+      <!-- tier / body -->
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:170px;">
+          <div style="font-size:9px;letter-spacing:1px;color:#6a5856;margin-bottom:6px;">GORE TIER</div>
+          <div style="display:flex;border:1px solid #2a1a18;border-radius:4px;overflow:hidden;">
+            <button onClick="{{ tierBase }}" style="{{ tBase }}">DOPPEL</button>
+            <button onClick="{{ tierYou }}" style="{{ tYou }}">WEARING&nbsp;YOU</button>
+          </div>
+        </div>
+        <div style="flex:1;min-width:140px;">
+          <div style="font-size:9px;letter-spacing:1px;color:#6a5856;margin-bottom:6px;">ARCHETYPE</div>
+          <div style="display:flex;border:1px solid #2a1a18;border-radius:4px;overflow:hidden;">
+            <button onClick="{{ bodyMale }}" style="{{ bMale }}">MALE</button>
+            <button onClick="{{ bodyFemale }}" style="{{ bFem }}">FEMALE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== customization ===== -->
+    <div style="flex:1 1 340px;min-width:320px;background:#120d0c;border:1px solid #2a1a18;border-radius:8px;padding:18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <span style="font-family:'Press Start 2P',monospace;font-size:11px;color:#e7cf9a;letter-spacing:.5px;">IT WEARS YOUR CHARACTER</span>
+      </div>
+      <div style="font-size:11.5px;color:#8a7a78;line-height:1.7;margin-bottom:14px;">The Character Creator&rsquo;s palettes, pulled through the nightmare &mdash; every choice is drained toward wax and rot but stays <span style="color:#c9b4b1;">recognisably yours</span>. Eye colour survives as the pin-light in the sockets.</div>
+
+      <button onClick="{{ loadSaved }}" style="{{ loadBtnStyle }}">{{ loadBtnLabel }}</button>
+
+      <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="5">
+        <div style="margin-top:13px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;">
+            <span style="font-size:9px;letter-spacing:1px;color:#6a5856;">{{ cat.label }}</span>
+            <span style="font-size:10.5px;color:#9c8a88;">{{ cat.selectedName }}</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <sc-for list="{{ cat.options }}" as="opt" hint-placeholder-count="7">
+              <button onClick="{{ opt.onClick }}" title="{{ opt.name }}" style="{{ opt.style }}"></button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- filmstrip -->
+  <div style="margin-top:22px;">
+    <div style="font-size:9px;letter-spacing:1px;color:#6a5856;margin-bottom:7px;">{{ clipLabel }} &middot; 10 FRAMES &middot; 64&times;64 &middot; {{ fileName }}</div>
+    <div style="display:inline-block;padding:8px;background:#0c0807;border:1px solid #241716;border-radius:4px;max-width:100%;overflow-x:auto;">
+      <canvas ref="{{ stripRef }}" width="640" height="64" style="width:1280px;max-width:none;height:auto;display:block;"></canvas>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:22px;border-top:1px solid #221615;padding-top:16px;">
+    <span style="font-size:11px;color:#5f4f4d;">4 sheets &middot; 640&times;256 &middot; 10 cols &times; 4 rows (flash &middot; scream &middot; snap &middot; crawl-loop) &middot; the 32px rig sheets are unchanged &mdash; these are the close-up scare tier. Recolour keys &amp; drain recipe in NIGHTMARE_REVEAL.md.</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1000,&quot;height&quot;:980}}">
+class Component extends DCLogic {
+  PAL = {
+    hair: [
+      {name:'Brunette', base:'#9c5a26', sh:'#5e3410'},
+      {name:'Blonde',   base:'#e6bd63', sh:'#b0863a'},
+      {name:'Black',    base:'#2c2c33', sh:'#161619'},
+      {name:'Auburn',   base:'#a8442a', sh:'#6e2818'},
+      {name:'Chestnut', base:'#6b4423', sh:'#3f2614'},
+      {name:'Ash Grey', base:'#b9b9c4', sh:'#83838f'},
+      {name:'Crimson',  base:'#c0303a', sh:'#7e1c24'},
+      {name:'Mint',     base:'#7fd0a8', sh:'#4f9e78'},
+    ],
+    skin: [
+      {name:'Porcelain', base:'#f6cda8', sh:'#d49a6e'},
+      {name:'Light',     base:'#f0b890', sh:'#c07a4c'},
+      {name:'Tan',       base:'#d99a5c', sh:'#a86a34'},
+      {name:'Brown',     base:'#a86a40', sh:'#714525'},
+      {name:'Deep',      base:'#7a4a2c', sh:'#4f2e18'},
+      {name:'Rich',      base:'#553018', sh:'#371d0e'},
+    ],
+    eyes: [
+      {name:'Brown', base:'#4a2e1a'},
+      {name:'Black', base:'#1a1410'},
+      {name:'Blue',  base:'#2f5bd0'},
+      {name:'Green', base:'#2f7d4f'},
+      {name:'Hazel', base:'#8a6a2a'},
+      {name:'Amber', base:'#c07a1a'},
+      {name:'Grey',  base:'#6a7480'},
+    ],
+    shirt: [
+      {name:'Red',      base:'#d83030', sh:'#982018'},
+      {name:'Blue',     base:'#2a5bd0', sh:'#1c3c8c'},
+      {name:'Green',    base:'#2f9d52', sh:'#1d6a36'},
+      {name:'Purple',   base:'#7a3fb0', sh:'#512876'},
+      {name:'Teal',     base:'#2aa0a0', sh:'#1c6e6e'},
+      {name:'Charcoal', base:'#34343c', sh:'#1c1c22'},
+      {name:'Gold',     base:'#e0b020', sh:'#a87e14'},
+      {name:'Cream',    base:'#e8e0c8', sh:'#b8ac8c'},
+    ],
+    pants: [
+      {name:'Blue',   base:'#3a5bd0', sh:'#26398c'},
+      {name:'Slate',  base:'#5a5a64', sh:'#3a3a42'},
+      {name:'Khaki',  base:'#a8895a', sh:'#6e5832'},
+      {name:'Black',  base:'#2c2c33', sh:'#161619'},
+      {name:'Forest', base:'#3f6a3f', sh:'#284628'},
+      {name:'Maroon', base:'#8a2f3a', sh:'#5a1c24'},
+    ],
+  };
+  // the EXACT key colors baked into the sheets (see NIGHTMARE_REVEAL.md)
+  KEY = {
+    skinHi:'#ffe0c4', skin:'#f0b890', skinSh:'#c07a4c', skinDp:'#8f5432',
+    hairHi:'#c98a4a', hair:'#9c5a26', hairSh:'#5e3410',
+    shirtHi:'#f06a5a', shirt:'#d83030', shirtSh:'#982018',
+    pantsHi:'#6a8ae8', pants:'#3a5bd0', pantsSh:'#26398c',
+    eye:'#00e2ff',
+  };
+  CLIPS = [
+    { key:'flash',  label:'FLASH',     sub:'it lunges at the camera',      loop:false, ms:70 },
+    { key:'scream', label:'SCREAM',    sub:'the jaw unhinges',             loop:false, ms:95 },
+    { key:'snap',   label:'HEAD-SNAP', sub:'it notices you',               loop:false, ms:95 },
+    { key:'crawl',  label:'CRAWL',     sub:'drags itself on its guts',     loop:true,  ms:110 },
+  ];
+
+  constructor(props){
+    super(props);
+    let sel = { hair:0, skin:1, eyes:0, shirt:0, pants:0 };
+    let loaded = false;
+    try { const sv = JSON.parse(localStorage.getItem('charCreatorSel')); if (sv) { sel = { ...sel, ...sv }; loaded = true; } } catch(e){}
+    this.state = { body:'male', tier:'you', row:2, frame:0, sel, loaded };
+    this.raw = {}; this.cooked = {}; this.playing = true;
+  }
+
+  // ---- color helpers ----
+  hx(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+  toHex(c){ return '#'+c.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join(''); }
+  mix(a,b,t){ const A=this.hx(a),B=this.hx(b); return this.toHex(A.map((v,i)=>v+(B[i]-v)*t)); }
+  scale(a,f){ return this.toHex(this.hx(a).map(v=>v*f)); }
+
+  // the DRAIN — chosen palette pulled toward wax & rot, still recognisably yours
+  drainMap(){
+    const s = this.state.sel;
+    const skin = this.PAL.skin[s.skin], hair = this.PAL.hair[s.hair],
+          shirt = this.PAL.shirt[s.shirt], pants = this.PAL.pants[s.pants], eye = this.PAL.eyes[s.eyes];
+    const dSkin = (c)=>this.mix(c,'#c9c2b2',0.55);
+    const dHair = (c)=>this.mix(c,'#8a8478',0.45);
+    const dFab  = (c)=>this.mix(c,'#6a655c',0.42);
+    const m = {};
+    m[this.KEY.skinHi] = this.scale(dSkin(skin.base),1.16);
+    m[this.KEY.skin]   = dSkin(skin.base);
+    m[this.KEY.skinSh] = dSkin(skin.sh);
+    m[this.KEY.skinDp] = this.scale(dSkin(skin.sh),0.72);
+    m[this.KEY.hairHi] = this.scale(dHair(hair.base),1.15);
+    m[this.KEY.hair]   = dHair(hair.base);
+    m[this.KEY.hairSh] = dHair(hair.sh);
+    m[this.KEY.shirtHi]= this.scale(dFab(shirt.base),1.18);
+    m[this.KEY.shirt]  = dFab(shirt.base);
+    m[this.KEY.shirtSh]= dFab(shirt.sh);
+    m[this.KEY.pantsHi]= this.scale(dFab(pants.base),1.18);
+    m[this.KEY.pants]  = dFab(pants.base);
+    m[this.KEY.pantsSh]= dFab(pants.sh);
+    m[this.KEY.eye]    = this.mix(eye.base,'#dff0ff',0.5);   // the pin-light keeps your eye colour
+    return m;
+  }
+
+  file(){ return 'sprites/nm_reveal_' + this.state.body + '_' + this.state.tier + '.png'; }
+  rawImg(cb){
+    const f = this.file();
+    if (this.raw[f]) { if (this.raw[f].complete && cb) cb(); return this.raw[f]; }
+    const im = new Image();
+    this.raw[f] = im;
+    im.onload = ()=>{ if(cb) cb(); this.paint(); };
+    im.src = f;
+    return im;
+  }
+  cookedSheet(){
+    const f = this.file();
+    const im = this.rawImg();
+    if (!im.complete || !im.naturalWidth) return null;
+    const ck = f + '|' + JSON.stringify(this.state.sel);
+    if (this.cooked[ck]) return this.cooked[ck];
+    const cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height;
+    const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = false; ctx.drawImage(im,0,0);
+    const id = ctx.getImageData(0,0,cv.width,cv.height); const d = id.data;
+    const map = this.drainMap();
+    const lut = {};
+    for (const k in map) { const K = this.hx(k), V = this.hx(map[k]); lut[(K[0]<<16)|(K[1]<<8)|K[2]] = V; }
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i+3] === 0) continue;
+      const v = lut[(d[i]<<16)|(d[i+1]<<8)|d[i+2]];
+      if (v) { d[i]=v[0]; d[i+1]=v[1]; d[i+2]=v[2]; }
+    }
+    ctx.putImageData(id,0,0);
+    this.cooked = { [ck]: cv };                    // keep just the current cook
+    return cv;
+  }
+
+  componentDidMount(){
+    ['male','female'].forEach(b=>['base','you'].forEach(t=>{ const im=new Image(); im.src='sprites/nm_reveal_'+b+'_'+t+'.png'; this.raw['sprites/nm_reveal_'+b+'_'+t+'.png']=im; im.onload=()=>this.paint(); }));
+    this.enter(2);                                  // it notices you on load
+    this.timer = setInterval(()=>this.tick(), 40);
+    this._last = 0; this._acc = 0;
+  }
+  componentWillUnmount(){ clearInterval(this.timer); }
+
+  enter(row){
+    this.playing = true;
+    this.setState({ row, frame:0 });
+    this._acc = 0;
+    this.paint(row, 0);
+  }
+  tick(){
+    if (!this.playing) return;
+    const clip = this.CLIPS[this.state.row];
+    this._acc += 40;
+    if (this._acc < clip.ms) return;
+    this._acc = 0;
+    let f = this.state.frame + 1;
+    if (f > 9) { if (clip.loop) f = 0; else { f = 9; this.playing = false; } }
+    this.setState({ frame:f });
+    this.paint(this.state.row, f);
+  }
+
+  paint(row, f){
+    row = row==null ? this.state.row : row; f = f==null ? this.state.frame : f;
+    const sheet = this.cookedSheet(); if (!sheet) return;
+    const cv = this.hero; if (cv) { const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,64,64); ctx.drawImage(sheet, f*64, row*64, 64,64, 0,0,64,64); }
+    const st = this.strip;
+    if (st) { const ctx = st.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,640,64);
+      for (let i=0;i<10;i++){ ctx.globalAlpha = i===f?1:0.42; ctx.drawImage(sheet, i*64, row*64, 64,64, i*64,0,64,64); }
+      ctx.globalAlpha = 1; ctx.strokeStyle = '#d8362a'; ctx.lineWidth = 2; ctx.strokeRect(f*64+1,1,62,62);
+    }
+  }
+
+  setSel(k, i){ this.setState(st=>({ sel:{ ...st.sel, [k]:i }, loaded:false })); this.cooked = {}; setTimeout(()=>this.paint(),0); }
+  loadSaved(){
+    try { const sv = JSON.parse(localStorage.getItem('charCreatorSel'));
+      if (sv) { this.setState(st=>({ sel:{ ...st.sel, ...sv }, loaded:true })); this.cooked = {}; setTimeout(()=>this.paint(),0); return; }
+    } catch(e){}
+    this.setState({ loaded:false });
+  }
+
+  seg(active, accent){ return `flex:1;font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.4px;border:none;padding:9px 6px;cursor:pointer;background:${active?accent:'#0e0a09'};color:${active?'#0a0708':'#8a7a78'};`; }
+
+  renderVals(){
+    const { row, tier, body, frame, sel, loaded } = this.state;
+    const clip = this.CLIPS[row];
+    const clipButtons = this.CLIPS.map((c,i)=>({
+      label: (i===row && this.playing===false && !c.loop ? '\u21bb ' : '') + c.label + (c.loop ? ' \u221e' : ''),
+      onClick: ()=>this.enter(i),
+      style: `font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:.5px;border:1px solid ${i===row?'#d8362a':'#2a1a18'};border-radius:4px;padding:12px 8px;cursor:pointer;background:${i===row?'#3a0e0c':'#0e0a09'};color:${i===row?'#f0c4c0':'#8a7a78'};`,
+    }));
+    const categories = [['hair','HAIR'],['skin','SKIN'],['eyes','EYES'],['shirt','SHIRT'],['pants','PANTS']].map(([key,label])=>({
+      key, label,
+      selectedName: this.PAL[key][sel[key]].name,
+      options: this.PAL[key].map((o,i)=>({
+        name: o.name,
+        onClick: ()=>this.setSel(key,i),
+        style: `width:30px;height:30px;border-radius:4px;cursor:pointer;padding:0;`
+          + `background:linear-gradient(135deg,${o.base} 0 52%,${o.sh||o.base} 52% 100%);`
+          + `border:2px solid ${i===sel[key]?'#d8362a':'#2a1a18'};`
+          + (i===sel[key]?'box-shadow:0 0 8px rgba(216,54,42,.45);':''),
+      })),
+    }));
+    return {
+      heroRef:(el)=>{ if(el){ this.hero=el; this.paint(); } },
+      stripRef:(el)=>{ if(el){ this.strip=el; this.paint(); } },
+      clipLabel: clip.label,
+      clipSub: clip.sub + (clip.loop ? ' \u00b7 loops' : ' \u00b7 plays once'),
+      frameNum: frame+1,
+      fileName: this.file(),
+      clipButtons, categories,
+      tierBase: ()=>{ this.setState({tier:'base'}); this.cooked={}; setTimeout(()=>this.paint(),0); },
+      tierYou:  ()=>{ this.setState({tier:'you'});  this.cooked={}; setTimeout(()=>this.paint(),0); },
+      bodyMale: ()=>{ this.setState({body:'male'}); this.cooked={}; setTimeout(()=>this.paint(),0); },
+      bodyFemale: ()=>{ this.setState({body:'female'}); this.cooked={}; setTimeout(()=>this.paint(),0); },
+      tBase: this.seg(tier==='base','#9c4a44'), tYou: this.seg(tier==='you','#d8362a'),
+      bMale: this.seg(body==='male','#5a6a78'), bFem: this.seg(body==='female','#a8447a'),
+      loadSaved: ()=>this.loadSaved(),
+      loadBtnLabel: loaded ? '\u2713 WEARING YOUR SAVED CHARACTER' : 'LOAD MY CHARACTER (from the Creator)',
+      loadBtnStyle: `width:100%;font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.4px;border:1px solid ${loaded?'#7fae8e':'#3a2a28'};border-radius:4px;padding:11px 8px;cursor:pointer;background:${loaded?'#12201a':'#1a100f'};color:${loaded?'#a8d8be':'#b9a8a5'};`,
+    };
+  }
+}
+</script>
+</body>
+</html>
