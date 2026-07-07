@@ -317,6 +317,17 @@ public class TruckDriver : MonoBehaviour
     Vector3 ThirdPersonLookTarget() =>
         transform.position + HeadingDir() * thirdPersonLookAhead + Vector3.up * thirdPersonLookHeight;
 
+    /// <summary>Seamlessly move the driving truck to a new spot (keeps heading/speed) — the road-loop wrap.</summary>
+    public void TeleportTo(Vector3 worldPos)
+    {
+        bool ccWas = _cc != null && _cc.enabled;
+        if (_cc != null) _cc.enabled = false;      // CC would fight a direct position write
+        transform.position = worldPos;
+        PlantOnGround();
+        _vSpeed = 0f;
+        if (_cc != null) _cc.enabled = ccWas;
+    }
+
     // Raise/lower the truck so its sprite's bottom edge (the wheels) rests on the ground under it, plus a
     // small clearance. Robust to the sprite's centre pivot — reads the actual rendered bounds. Used for the
     // parked truck (Start) and after exiting a drive.
