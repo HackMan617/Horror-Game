@@ -194,6 +194,15 @@ public class CarLights : MonoBehaviour
         return new Vector3(ox, oy, z);
     }
 
+    // When the component is switched off (TruckDriver disables CarLights the moment you go first-person —
+    // see ApplyView) LateUpdate stops running, so the glow children would otherwise stay frozen on their
+    // last state. That left the headlight/tail-light sprites lit exactly when the rear-view mirror is live
+    // (the mirror only renders in first person), so they appeared "on" even parked. Snuff them on disable.
+    void OnDisable()
+    {
+        if (_core0 != null) AllOff();
+    }
+
     void AllOff()
     {
         _core0.enabled = _core1.enabled = _halo0.enabled = _halo1.enabled = false;
