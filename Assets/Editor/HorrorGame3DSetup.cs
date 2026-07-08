@@ -76,7 +76,7 @@ public static class HorrorGame3DSetup
     const string CockpitDir = "Assets/Animation/Updated Car POV/cockpit_kit/sprites";
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
-    const int DrivingSetupVersion = 8;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int DrivingSetupVersion = 10;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
 
     static int _renderer3DIndex = 1;
 
@@ -688,6 +688,10 @@ public static class HorrorGame3DSetup
         ScatterRoadside(road, spriteMat, zFrom: zFar + 6f, zTo: zStart - 6f);
         // Dense giant-redwood forest walling both sides behind the roadside scenery.
         ScatterForest(EnsureForestSprites(), spriteMat, zFrom: zFar + 4f, zTo: zStart - 2f);
+        // Home in the distance: the log cabin standing at the head of the road (north/town end), a plain
+        // world-anchored billboard so ordinary perspective looms it larger as you drive home and shrinks it
+        // as you head out of town — you can always see the cabin far off up the road.
+        MakeDistantCabin(spriteMat, new Vector3(0f, 0f, zNorth + 16f));
 
         // Player rig at the town edge — its camera is what the truck borrows when auto-entering drive.
         BuildPlayerRig(new Vector3(0f, 0.1f, zStart), spriteMat, grassFill: false);
@@ -814,6 +818,25 @@ public static class HorrorGame3DSetup
         anim.frames = kit.sign; anim.fps = 1.1f;
     }
 
+    // A far-off view of home: the log cabin (house.png front view) standing up the road at the town end.
+    // It's a plain world-anchored billboard — no camera-follow — so it sits at a fixed spot on the road and
+    // ordinary perspective does the work: it looms larger as you drive toward home and shrinks into the
+    // distance as you head out of town, and the following ridgelines hide/reveal it as you close the gap.
+    static void MakeDistantCabin(Material mat, Vector3 pos)
+    {
+        // 5-frame front cabin, 128×152 cells with ~10px of ground pad at the base; pivot at that base line so
+        // the cabin rests on the ground. ppu 12 -> ~12.7u tall, a prominent landmark readable from far off.
+        SliceStrip(HouseSheet, "house_", 5, 128, 152, 12f, 10f / 152f);
+        var frames = LoadSheetSprites(HouseSheet, "house_");
+        if (frames.Length == 0) return;
+        var go = new GameObject("DistantCabin");
+        go.transform.position = pos;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = frames[0];
+        sr.sharedMaterial = mat;
+        go.AddComponent<Billboard>();
+    }
+
     // Slice the three giant idle-sway redwoods (8 frames each, 224×480, bottom pivot) into world sprites.
     static Sprite[][] EnsureForestSprites()
     {
@@ -845,7 +868,10 @@ public static class HorrorGame3DSetup
                     float jx = ((idx * 5) % 5 - 2) * 1.2f;
                     float jz = ((idx * 13) % 7 - 3) * 0.8f;
                     float x = side * (rowX[r] + jx);
-                    MakeAnimProp("Redwood", new Vector3(x, 0f, z + jz), frames, mat, 8f,
+                    // Sink the base slightly below the ground plane so the trunk beds INTO the grass instead
+                    // of appearing to hover above its own contact shadow (the billboard depth-bias otherwise
+                    // lifts the visible base off the ground when seen from the driving camera).
+                    MakeAnimProp("Redwood", new Vector3(x, -0.4f, z + jz), frames, mat, 8f,
                                  randomPhase: true, gateOnFoot: true, hideWhenAway: false);
                 }
     }
@@ -863,20 +889,30 @@ public static class HorrorGame3DSetup
         for (int c = 0; c < 7; c++)
         {
             float z = Mathf.Lerp(zFrom, zTo, (c + 0.5f) / 7f);
-            MakeAnimProp("Crow", new Vector3(((c % 2) * 2 - 1) * 1.3f, 3.0f + (c % 3) * 0.7f, z),
-                         kit.crow, mat, 7f, randomPhase: true, gateOnFoot: true, hideWhenAway: true);
+            var crow = MakeAnimProp("Crow", new Vector3(((c % 2) * 2 - 1) * 1.3f, 3.0f + (c % 3) * 0.7f, z),
+                                    kit.crow, mat, 7f, randomPhase: true, gateOnFoot: true, hideWhenAway: true);
+            // Glide the crow side-to-side across the road (not just flap in place): it reads as a bird
+            // travelling over the road rather than a sprite hovering while it cycles its wing frames.
+            if (crow != null)
+            {
+                var mover = crow.AddComponent<SideToSideMover>();
+                mover.amplitude = 2.6f + (c % 3) * 0.5f;   // varied sweep widths so they don't drift in unison
+                mover.speed = 0.55f + (c % 4) * 0.12f;
+            }
         }
     }
 
     static void PlaceShoulderProp(RoadsideKit kit, Material mat, int i, float z, int side)
     {
         int pick = (i * 3 + 1) % 10;                 // deterministic mix: ~half trees, some signs, some debris
-        Sprite[] frames; float fps; string name; float xOff; bool hide;
-        if (pick < 5)      { frames = kit.deadtree; fps = 2.5f; name = "DeadTree"; xOff = 3.4f + (i % 3) * 0.9f; hide = false; }
-        else if (pick < 8) { frames = kit.stopsign; fps = 2.0f; name = "StopSign"; xOff = 2.9f;                 hide = false; }
-        else               { frames = kit.debris;   fps = 6.0f; name = "Debris";   xOff = 1.7f;                 hide = true;  }
+        Sprite[] frames; float fps; string name; float xOff; bool hide; float groundY;
+        // Dead trees bed slightly INTO the ground (groundY < 0) so the trunk doesn't hover above its own
+        // base/contact shadow; signs and debris keep their base right on the surface.
+        if (pick < 5)      { frames = kit.deadtree; fps = 2.5f; name = "DeadTree"; xOff = 3.4f + (i % 3) * 0.9f; hide = false; groundY = -0.25f; }
+        else if (pick < 8) { frames = kit.stopsign; fps = 2.0f; name = "StopSign"; xOff = 2.9f;                 hide = false; groundY = 0f;     }
+        else               { frames = kit.debris;   fps = 6.0f; name = "Debris";   xOff = 1.7f;                 hide = true;  groundY = 0f;     }
         // Trees/signs stay visible while driving (frozen); debris only appears when you park and walk up.
-        MakeAnimProp(name, new Vector3(side * xOff, 0f, z), frames, mat, fps, randomPhase: true, gateOnFoot: true, hideWhenAway: hide);
+        MakeAnimProp(name, new Vector3(side * xOff, groundY, z), frames, mat, fps, randomPhase: true, gateOnFoot: true, hideWhenAway: hide);
     }
 
     // Assign the cockpit sheet textures (home + _nightmare twins) so they serialize into the scene and
