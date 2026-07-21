@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" font-family="'Courier New', monospace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0c1420"/>
+      <stop offset="100%" stop-color="#1a0e12"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#3a6b5c"/>
+      <stop offset="20%" stop-color="#5c7a4a"/>
+      <stop offset="45%" stop-color="#b08a2e"/>
+      <stop offset="70%" stop-color="#b0552e"/>
+      <stop offset="100%" stop-color="#7a1414"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="300" fill="url(#bg)"/>
+  <text x="40" y="46" font-size="22" font-weight="bold" letter-spacing="4" fill="#e6e9f2">THE DREAD LADDER</text>
+  <text x="40" y="70" font-size="13" letter-spacing="1" fill="#8b93b0">one shared value, 0.0 &#8594; 1.0 &#8212; the whole world reads it and turns wrong together</text>
+
+  <!-- gradient rail -->
+  <rect x="40" y="196" width="1120" height="10" rx="5" fill="url(#rail)"/>
+
+  <!-- threshold marker at ~0.5 (world-swap point) -->
+  <g>
+    <line x1="600" y1="120" x2="600" y2="230" stroke="#e05b5b" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="600" y="112" text-anchor="middle" font-size="11" letter-spacing="1" fill="#e05b5b">&#9660; ~0.5 : the world swaps to its nightmare skin</text>
+  </g>
+
+  <!-- six stages -->
+  <g text-anchor="middle" font-size="13">
+    <!-- 0 -->
+    <g transform="translate(133 201)">
+      <circle r="20" fill="#12202a" stroke="#3a6b5c" stroke-width="2"/>
+      <circle cx="-6" cy="-3" r="2.5" fill="#a9c4b8"/><circle cx="6" cy="-3" r="2.5" fill="#a9c4b8"/>
+      <path d="M-7 7 Q0 10 7 7" stroke="#a9c4b8" stroke-width="1.6" fill="none"/>
+      <text y="-32" fill="#3a6b5c" font-weight="bold">0</text>
+      <text y="46" fill="#c4ccdd">DORMANT</text>
+    </g>
+    <!-- 1 -->
+    <g transform="translate(273 201)">
+      <circle r="20" fill="#152218" stroke="#5c7a4a" stroke-width="2"/>
+      <circle cx="-6" cy="-3" r="2.5" fill="#c4d0a9"/><circle cx="6" cy="-3" r="2.5" fill="#c4d0a9"/>
+      <path d="M-7 8 L7 8" stroke="#c4d0a9" stroke-width="1.6" fill="none"/>
+      <text y="-32" fill="#5c7a4a" font-weight="bold">1</text>
+      <text y="46" fill="#c4ccdd">UNEASY</text>
+    </g>
+    <!-- 2 -->
+    <g transform="translate(413 201)">
+      <circle r="20" fill="#22200f" stroke="#b08a2e" stroke-width="2"/>
+      <circle cx="-6" cy="-3" r="2.5" fill="#e0d2a0"/><circle cx="6" cy="-3" r="2.5" fill="#e0d2a0"/>
+      <path d="M-7 9 Q0 5 7 9" stroke="#e0d2a0" stroke-width="1.6" fill="none"/>
+      <text y="-32" fill="#b08a2e" font-weight="bold">2</text>
+      <text y="46" fill="#c4ccdd">WORRIED</text>
+    </g>
+    <!-- 3 -->
+    <g transform="translate(553 201)">
+      <circle r="20" fill="#241606" stroke="#b0552e" stroke-width="2"/>
+      <circle cx="-6" cy="-4" r="2.5" fill="#f0c090"/><circle cx="6" cy="-4" r="2.5" fill="#f0c090"/>
+      <path d="M-7 10 Q0 4 7 10" stroke="#f0c090" stroke-width="1.6" fill="none"/>
+      <text y="-32" fill="#b0552e" font-weight="bold">3</text>
+      <text y="46" fill="#c4ccdd">ANXIOUS</text>
+    </g>
+    <!-- 4 -->
+    <g transform="translate(693 201)">
+      <circle r="20" fill="#26100c" stroke="#c0402e" stroke-width="2"/>
+      <circle cx="-6" cy="-4" r="3" fill="#f0a090"/><circle cx="6" cy="-4" r="3" fill="#f0a090"/>
+      <path d="M-8 11 Q0 3 8 11" stroke="#f0a090" stroke-width="1.8" fill="none"/>
+      <path d="M-3 -12 L-9 -6 M3 -12 L9 -6" stroke="#c0402e" stroke-width="1.4"/>
+      <text y="-32" fill="#c0402e" font-weight="bold">4</text>
+      <text y="46" fill="#e0b4b4">PARASITIC</text>
+    </g>
+    <!-- 5 -->
+    <g transform="translate(833 201)">
+      <circle r="22" fill="#1c0808" stroke="#7a1414" stroke-width="2.5"/>
+      <circle cx="-7" cy="-4" r="3.5" fill="#e05b5b"/><circle cx="7" cy="-4" r="3.5" fill="#e05b5b"/>
+      <path d="M-9 12 Q0 2 9 12" stroke="#e05b5b" stroke-width="2" fill="none"/>
+      <path d="M-5 -13 L-11 -6 M5 -13 L11 -6" stroke="#7a1414" stroke-width="1.6"/>
+      <text y="-34" fill="#e05b5b" font-weight="bold">5</text>
+      <text y="48" fill="#e05b5b" font-weight="bold">NIGHTMARE</text>
+    </g>
+  </g>
+
+  <!-- caption -->
+  <text x="965" y="205" font-size="12" fill="#6b7390">the Dread Detector face</text>
+  <text x="965" y="222" font-size="12" fill="#6b7390">degrades &amp; animates faster</text>
+  <text x="965" y="239" font-size="12" fill="#6b7390">at every rung.</text>
+</svg>
