@@ -54,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 18
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -103,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: green0_0
+      name: spruceIdle0_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 152
-        width: 80
-        height: 152
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22ba1200b2b2d66049704968248a600d
-      internalID: -675570569
+      spriteID: 1c898bfde4579944e62c383dd9602f32
+      internalID: -140373720
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_1
+      name: spruceIdle0_1
       rect:
         serializedVersion: 2
-        x: 80
-        y: 152
-        width: 80
-        height: 152
+        x: 96
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 710258cc65feea14e8b5d806e2ae6d50
-      internalID: 1578437189
+      spriteID: 1eb29a4e2e7623ad677465b452b28a9a
+      internalID: -576635628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_2
+      name: spruceIdle0_2
       rect:
         serializedVersion: 2
-        x: 160
-        y: 152
-        width: 80
-        height: 152
+        x: 192
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +162,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b4947fb717388e302d41c9352081d20
-      internalID: 988631679
+      spriteID: b29499d707bf464456e102f9c6d54546
+      internalID: -1783671726
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_3
+      name: spruceIdle0_3
       rect:
         serializedVersion: 2
-        x: 240
-        y: 152
-        width: 80
-        height: 152
+        x: 288
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e695fbc4d71e586b25218190457157bc
-      internalID: 1879382477
+      spriteID: 3ec470a6340c6f7c5b4d9984cf0ac936
+      internalID: -551241551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_4
+      name: spruceIdle0_4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 152
-        width: 80
-        height: 152
+        x: 384
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,20 +206,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d69f1627c428e045c89dbbd05d6ba52
-      internalID: 1369435553
+      spriteID: 2eea939e1fa6c91ad80d44b3baa961c5
+      internalID: 585889457
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green0_5
+      name: spruceIdle0_5
       rect:
         serializedVersion: 2
-        x: 400
-        y: 152
-        width: 80
-        height: 152
+        x: 480
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,20 +228,284 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 377d22dd4ebb93d941226a976776a4fa
-      internalID: 45424465
+      spriteID: e2188a46c268ff889a1dd83674dfa62a
+      internalID: -863644904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_0
+      name: spruceIdle1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02bac9232a6b8f26ed5c7a624c53a744
+      internalID: 604649008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceIdle1_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cf225aea77b8df30086039afb8140af
+      internalID: 339619084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceIdle1_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c804a8d64f62fd278a4a6ab6eb25780
+      internalID: 1477062848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceIdle1_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b17bc8f5518860afadacd4d068ffba63
+      internalID: -570846914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceIdle1_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b42bb8cdc68e013c221b32179d0d8602
+      internalID: 1864494456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceIdle1_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89af4843cd74124a52a92b9360cb1b63
+      internalID: -2054739205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ba587ffae1f1e04dfb41965357a5bc1
+      internalID: -821873616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway0_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265232b666d7d20e3c839dfe008dc4e0
+      internalID: -1777331485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway0_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8389b7ee4fd096de5df6bb9b7ecca427
+      internalID: -1004154446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway0_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f30a0e01db3831cbd6b21a0d2641f2e2
+      internalID: 1391563773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway0_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7876ecd4573928de23350219a75c7e77
+      internalID: 2054509934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway0_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b8f80973b0d3a54f8ab2e79bfaa5ff
+      internalID: 1207906384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spruceSway1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,20 +514,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d76f85efea3ffde364a864290512f13b
-      internalID: -630889799
+      spriteID: b5d0c6a191d94c49198229e89fb137c6
+      internalID: -1936215510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_1
+      name: spruceSway1_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 96
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -272,20 +536,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ad007ad0e1b4d0d6ae304c6fa8d4b8
-      internalID: -1147058613
+      spriteID: 81454803536cb64f08872faf5cadd6c1
+      internalID: -1327000624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_2
+      name: spruceSway1_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 192
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,20 +558,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dd2895a55dc7ee30a969870393bec25
-      internalID: -1525339653
+      spriteID: fc28a5b5c712887bb9181cfe0bff0d23
+      internalID: -400272392
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_3
+      name: spruceSway1_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 288
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -316,20 +580,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d78020793eaa663cfe65dce4506229dd
-      internalID: 2022649084
+      spriteID: 6ac9c4f8c95c7bd3b03a7f471fe1453a
+      internalID: -560427460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_4
+      name: spruceSway1_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 384
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -338,20 +602,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99a85344939800398dc0961ec18be895
-      internalID: -1449007208
+      spriteID: 8d0461cfcc0d358233089870cd6a7ab9
+      internalID: -1754255625
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: green1_5
+      name: spruceSway1_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 480
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,8 +624,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba24c922870ea65851d9cab10a65e746
-      internalID: -2025214138
+      spriteID: debf0e7d0823c9733e47d01419dd72c6
+      internalID: -954788209
       vertices: []
       indices: 
       edges: []
@@ -380,18 +644,30 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      green0_0: -675570569
-      green0_1: 1578437189
-      green0_2: 988631679
-      green0_3: 1879382477
-      green0_4: 1369435553
-      green0_5: 45424465
-      green1_0: -630889799
-      green1_1: -1147058613
-      green1_2: -1525339653
-      green1_3: 2022649084
-      green1_4: -1449007208
-      green1_5: -2025214138
+      spruceIdle0_0: -140373720
+      spruceIdle0_1: -576635628
+      spruceIdle0_2: -1783671726
+      spruceIdle0_3: -551241551
+      spruceIdle0_4: 585889457
+      spruceIdle0_5: -863644904
+      spruceIdle1_0: 604649008
+      spruceIdle1_1: 339619084
+      spruceIdle1_2: 1477062848
+      spruceIdle1_3: -570846914
+      spruceIdle1_4: 1864494456
+      spruceIdle1_5: -2054739205
+      spruceSway0_0: -821873616
+      spruceSway0_1: -1777331485
+      spruceSway0_2: -1004154446
+      spruceSway0_3: 1391563773
+      spruceSway0_4: 2054509934
+      spruceSway0_5: 1207906384
+      spruceSway1_0: -1936215510
+      spruceSway1_1: -1327000624
+      spruceSway1_2: -400272392
+      spruceSway1_3: -560427460
+      spruceSway1_4: -1754255625
+      spruceSway1_5: -954788209
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

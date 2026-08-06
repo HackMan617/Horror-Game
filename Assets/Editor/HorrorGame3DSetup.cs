@@ -77,6 +77,7 @@ public static class HorrorGame3DSetup
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
     const int DrivingSetupVersion = 10;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int ForestSetupVersion  = 1;   // bump to re-grow the Exterior woods in place (never wipes the scene)
 
     static int _renderer3DIndex = 1;
 
@@ -104,6 +105,16 @@ public static class HorrorGame3DSetup
                 EditorPrefs.SetInt("HG3D_DrivingSetup", DrivingSetupVersion);
                 try { BuildOutOfTown(); SetupExteriorDriving(); }
                 catch (System.Exception e) { Debug.LogError("[HorrorGame] Driving setup failed: " + e); }
+            }
+
+            // The woods self-install the same safe way: the old sparse tree rings come out and the dense
+            // ForestField stand goes in, IN PLACE in Exterior — so the hand-placed truck, the choppable
+            // trees and everything else hand-tended survive a re-grow.
+            if (EditorPrefs.GetInt("HG3D_ForestSetup", 0) < ForestSetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_ForestSetup", ForestSetupVersion);
+                try { ReforestExterior(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Forest setup failed: " + e); }
             }
         };
     }
@@ -474,11 +485,8 @@ public static class HorrorGame3DSetup
     public static void BuildExterior()
     {
         EnsureRenderer3D();
-        SliceGrid(GreenTree, 18f, 0.05f, 80, 152, 6, new[] { "green0_", "green1_" });   // 12-frame sway
-        SliceGrid(WinterTree, 18f, 0.05f, 80, 152, 6, new[] { "winter0_", "winter1_" });
+        var spruce = EnsureSpruceSprites();   // reworked 6x4 sheets: 12-frame idle + 12-frame dread sway
         SliceGrid(GrassSheet, 32f, 0f, 32, 32, 6, new[] { "grassa_", "grassb_", "grassc_" });
-        var greenFrames = LoadSheetSprites(GreenTree, "green");
-        var winterFrames = LoadSheetSprites(WinterTree, "winter");
         var grass = LoadSheetSprites(GrassSheet, "grass");
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -526,13 +534,9 @@ public static class HorrorGame3DSetup
         // Cobble road first, so the forest can open up a corridor for it (trees skip the road cells).
         BuildPathway();                  // double-wide route to the door, branching out to neighbouring plots
 
-        // ---- dense forest ring: green spruces near the house, snowy winter farther out ----
-        Vector3 forest = new Vector3(0f, 0f, 6f);
-        int treeCount = 0;
-        treeCount += PlaceTreeRing(forest, 15f,   11, greenFrames,  spriteMat, 1);
-        treeCount += PlaceTreeRing(forest, 19f,   14, greenFrames,  spriteMat, 2);
-        treeCount += PlaceTreeRing(forest, 23.5f, 17, winterFrames, spriteMat, 3);
-        treeCount += PlaceTreeRing(forest, 28f,   21, winterFrames, spriteMat, 4);
+        // ---- the woods: a packed, depth-tinted stand walling the clearing in (see GrowForest) ----
+        var woods = GrowForest(spruce, spriteMat);
+        int treeCount = woods != null && woods.trees != null ? woods.trees.Length : 0;
 
         Vector3[] grassPos = {
             new Vector3(-3f, 0f, 3f), new Vector3(3f, 0f, 5f), new Vector3(-5f, 0f, -2f),
@@ -546,6 +550,9 @@ public static class HorrorGame3DSetup
 
         ScatterAutumnProps(spriteMat);   // autumn dressing: bare/hollow trees, bench, mushrooms, crow, leaves...
         BuildMountainBackdrop(sun);      // far mountain range surrounding the yard + the day→night sky system
+
+        // The stand is unlit sprite work, so it needs the sky to tell it when to go dark (built above).
+        if (woods != null) woods.sky = GameObject.Find("Sky")?.GetComponent<SkyController>();
 
         // Distant ambient flock crossing the daytime sky (roosts / fades out at night).
         BuildBirds(spriteMat, GameObject.Find("Sky")?.GetComponent<SkyController>());
@@ -566,7 +573,7 @@ public static class HorrorGame3DSetup
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(ExteriorSceneOut);
         Debug.Log("[HorrorGame] Exterior built at " + ExteriorSceneOut + " with the log cabin (tiled walls + " +
-                  "corner logs + gable roof), " + treeCount + " animated trees (green + winter), " +
+                  "corner logs + gable roof), a " + treeCount + "-tree forest walling the clearing, " +
                   grassPos.Length + " grass tufts + autumn props. Walk up to the cabin; from the front press E to enter.");
     }
 
@@ -2466,9 +2473,9 @@ public static class HorrorGame3DSetup
     }
 
     // -------------------------------------------------------------- prop scatter
-    // The walkable exterior is the clearing inside the innermost tree ring (PlaceTreeRing at
-    // r=15 around forest centre 0,0,6). Props scatter across this whole disc rather than
-    // clustering by the cabin door, so the yard reads as sporadically dressed.
+    // The walkable exterior is the clearing inside the treeline (the sentinels stand at r~11-13
+    // around forest centre 0,0,6 — see ForestBands). Props scatter across this whole disc rather
+    // than clustering by the cabin door, so the yard reads as sporadically dressed.
     static readonly Vector3 ClearingCentre = new Vector3(0f, 0f, 6f);
     const float ClearingRadius = 12f;
     static readonly List<Vector3> _placed = new List<Vector3>();
@@ -2868,44 +2875,262 @@ public static class HorrorGame3DSetup
         return AssetDatabase.LoadAssetAtPath<Sprite>(SmokePuffPng);
     }
 
-    static void MakeTree(Vector3 pos, Sprite[] frames, Material mat)
-    {
-        if (frames == null || frames.Length == 0) return;
-        var go = new GameObject("Tree");
-        go.transform.position = pos;
-        var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = frames[0];
-        sr.sharedMaterial = mat;
-        go.AddComponent<Billboard>();
-        var anim = go.AddComponent<LoopSpriteAnimator>();
-        anim.frames = frames;
-        anim.fps = 5f;                  // gentle sway
-        anim.randomStartPhase = true;   // out of sync between trees
+    // -------------------------------------------------------------- the woods
+    // The reworked spruce sheets (Assets/Animation/TREES_UNITY.md): 6 cols x 4 rows of 96x196 cells —
+    // rows 0-1 are a 12-frame IDLE breath, rows 2-3 a 12-frame dread SWAY. Sliced bottom-pivoted so a
+    // tree stays planted whatever we scale it to.
+    const int TreeCellW = 96, TreeCellH = 196;
+    const float TreePpu = 20f;        // 196 px cell -> ~9.8 world units, so a grown spruce towers over the cabin
+    const float TreePivotY = 0.05f;   // the sheet bakes a ground shadow into the bottom ~8% of the cell
 
-        // Thin trunk collider: gives the third-person camera something to pull in front of (so the
-        // arm no longer clips through the forest) and stops the player walking through trunks. Kept
-        // slim so it doesn't snag movement; ring trees are already skipped near the road.
-        var col = go.AddComponent<CapsuleCollider>();
-        col.radius = 0.35f;
-        col.height = 5f;
-        col.center = new Vector3(0f, 2.5f, 0f);
+    class SpruceKit { public Sprite[] summerIdle, summerSway, winterIdle, winterSway; }
+
+    static SpruceKit EnsureSpruceSprites()
+    {
+        SliceGrid(GreenTree, TreePpu, TreePivotY, TreeCellW, TreeCellH, 6,
+                  new[] { "spruceIdle0_", "spruceIdle1_", "spruceSway0_", "spruceSway1_" });
+        SliceGrid(WinterTree, TreePpu, TreePivotY, TreeCellW, TreeCellH, 6,
+                  new[] { "winterIdle0_", "winterIdle1_", "winterSway0_", "winterSway1_" });
+        return new SpruceKit
+        {
+            summerIdle = LoadSheetSprites(GreenTree, "spruceIdle"),
+            summerSway = LoadSheetSprites(GreenTree, "spruceSway"),
+            winterIdle = LoadSheetSprites(WinterTree, "winterIdle"),
+            winterSway = LoadSheetSprites(WinterTree, "winterSway"),
+        };
     }
 
-    // Rings of trees around a centre with deterministic jitter (so rebuilds don't churn the scene).
-    // Trees that land on the cobble road are skipped so the path stays walkable through the woods.
-    static int PlaceTreeRing(Vector3 center, float radius, int count, Sprite[] frames, Material mat, int seed)
+    static readonly Vector3 ForestCentre = new Vector3(0f, 0f, 6f);
+
+    // Depth bands out from the clearing. Angles are spread evenly WITHIN a band and jittered by less
+    // than a full step, so the wall closes up instead of leaving the clumps-and-holes a free scatter
+    // gives you. Each band darkens and cools as it goes back, and the snow-loaded sheet takes over
+    // deeper in, so you can't see through the far bands at all.
+    struct ForestBand
     {
-        int placed = 0;
-        for (int i = 0; i < count; i++)
+        public float r0, r1;      // radius range from ForestCentre
+        public int count;         // trees attempted (ones landing on a road or a doorstep are dropped)
+        public float s0, s1;      // scale range
+        public float bright;      // baked daylight brightness
+        public float winterMix;   // 0..1 share on the snow-loaded sheet
+        public bool collide;      // trunk colliders — only out to where the player actually walks
+        public ForestBand(float a, float b, int c, float x, float y, float br, float wm, bool col)
+        { r0 = a; r1 = b; count = c; s0 = x; s1 = y; bright = br; winterMix = wm; collide = col; }
+    }
+
+    // Counts scale with each band's circumference, so the trees-per-arc-length stays high all the way
+    // out — a far band spread at near-band counts leaves gaps you can see the mountains through.
+    static readonly ForestBand[] ForestBands =
+    {
+        new ForestBand(13.5f, 16.0f, 46, 1.00f, 1.30f, 0.84f, 0.00f, true),   // treeline
+        new ForestBand(16.0f, 19.5f, 56, 0.95f, 1.30f, 0.72f, 0.00f, true),   // near woods
+        new ForestBand(19.5f, 23.5f, 66, 0.92f, 1.25f, 0.60f, 0.20f, true),   // mid woods
+        new ForestBand(23.5f, 28.0f, 76, 0.88f, 1.22f, 0.48f, 0.55f, false),  // deep woods
+        new ForestBand(28.0f, 33.5f, 86, 0.84f, 1.18f, 0.37f, 0.85f, false),  // far woods
+        new ForestBand(33.5f, 40.0f, 96, 0.80f, 1.15f, 0.28f, 1.00f, false),  // the murk
+    };
+
+    // Ground the woods must not close over, and whether a trail is kept open to it from the clearing.
+    struct Clearing
+    {
+        public Vector2 xz; public float radius; public bool trail;
+        public Clearing(float x, float z, float r, bool t) { xz = new Vector2(x, z); radius = r; trail = t; }
+    }
+
+    static readonly Clearing[] ForestClearings =
+    {
+        new Clearing(0f, 10f, 10.5f, false),   // the player's cabin (already inside the clearing)
+        new Clearing(-23f, 12f, 8f, true),     // NeighborHouse_A
+        new Clearing(23f, 12f, 8f, true),      // NeighborHouse_C
+        new Clearing(30f, 27f, 9f, true),      // NeighborHouse_B — Robert's
+    };
+
+    // A tree position is dropped if it would block a road, a doorstep, or one of the trails out.
+    static bool ForestBlocked(Vector3 p)
+    {
+        if (NearPath(p, 2.2f)) return true;                                        // the cobble road
+        if (p.x > -4.5f && p.x < 5.5f && p.z < 5f && p.z > -50f) return true;      // the drive road, south out of town
+        var xz = new Vector2(p.x, p.z);
+        var c0 = new Vector2(ForestCentre.x, ForestCentre.z);
+        foreach (var c in ForestClearings)
         {
-            float a = (i + 0.5f) / count * Mathf.PI * 2f + (Hash01(seed * 131 + i) - 0.5f) * 0.4f;
-            float r = radius + (Hash01(seed * 197 + i) - 0.5f) * 4f;
-            var pos = center + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
-            if (NearPath(pos, 1.6f)) continue;
-            MakeTree(pos, frames, mat);
-            placed++;
+            if ((xz - c.xz).sqrMagnitude < c.radius * c.radius) return true;
+            if (c.trail && DistToSegment(xz, c0, c.xz) < 2.6f) return true;   // a footpath, not a boulevard
         }
-        return placed;
+        return false;
+    }
+
+    static float DistToSegment(Vector2 p, Vector2 a, Vector2 b)
+    {
+        Vector2 ab = b - a;
+        float len2 = ab.sqrMagnitude;
+        if (len2 < 0.0001f) return Vector2.Distance(p, a);
+        float t = Mathf.Clamp01(Vector2.Dot(p - a, ab) / len2);
+        return Vector2.Distance(p, a + ab * t);
+    }
+
+    // The stand darkens and cools with depth so the far bands read as one black-green wall rather than
+    // a countable row of sprites — you can see there's forest, not how far into it you could get. Red
+    // drops fastest and blue holds, so the murk goes cold rather than just dim (and the snow-loaded
+    // sheet deep in the woods reads as pale and bloodless instead of bright).
+    static Color DepthTint(float bright)
+    {
+        float b = Mathf.Clamp01(bright);
+        float cool = 1f - b;
+        return new Color(b * (1f - 0.28f * cool), b * (1f - 0.12f * cool), Mathf.Min(1f, b * (1f + 0.18f * cool)));
+    }
+
+    /// <summary>
+    /// Plants the whole stand under one "Forest" root driven by a single <see cref="ForestField"/>:
+    /// sentinel elders on the treeline, then five depth bands out to the murk, plus the canopy debris
+    /// emitter. Deterministic (Hash01 off the tree index), so a re-grow doesn't churn the scene.
+    /// </summary>
+    static ForestField GrowForest(SpruceKit kit, Material mat)
+    {
+        if (kit == null || kit.summerIdle == null || kit.summerIdle.Length < ForestField.Frames)
+        {
+            Debug.LogError("[HorrorGame] GrowForest: tree_spruce.png didn't slice into 12 idle frames — is it the 576x784 sheet?");
+            return null;
+        }
+
+        var root = new GameObject("Forest");
+        root.transform.position = ForestCentre;
+
+        var field = root.AddComponent<ForestField>();
+        field.summerIdle = kit.summerIdle; field.summerSway = kit.summerSway;
+        field.winterIdle = kit.winterIdle; field.winterSway = kit.winterSway;
+
+        var planted = new List<ForestField.Tree>();
+        float rIn = ForestBands[0].r0, rOut = ForestBands[ForestBands.Length - 1].r1;
+        var centreXZ = new Vector2(ForestCentre.x, ForestCentre.z);
+
+        void Plant(Vector3 pos, float scale, bool winter, float bright, bool collide, int seed)
+        {
+            var frames = winter ? kit.winterIdle : kit.summerIdle;
+            if (frames == null || frames.Length == 0) frames = kit.summerIdle;
+
+            var go = new GameObject(winter ? "Spruce_Winter" : "Spruce");
+            go.transform.SetParent(root.transform);
+            go.transform.position = pos;
+            go.transform.localScale = Vector3.one * scale;
+            // Bake a facing toward the yard so the Scene view reads right before ForestField takes over in play.
+            Vector3 look = new Vector3(-pos.x, 0f, 3f - pos.z);
+            go.transform.rotation = Quaternion.Euler(0f, Mathf.Atan2(look.x, look.z) * Mathf.Rad2Deg, 0f);
+
+            float depth01 = Mathf.InverseLerp(rIn, rOut, Vector2.Distance(new Vector2(pos.x, pos.z), centreXZ));
+            Color tint = DepthTint(bright + (Hash01(seed * 313 + 7) - 0.5f) * 0.12f);
+
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = frames[Hash01(seed * 89 + 3) < 0.5f ? 0 : frames.Length / 2];   // stagger the resting pose
+            sr.sharedMaterial = mat;
+            sr.color = tint;
+            sr.flipX = Hash01(seed * 149 + 11) < 0.5f;   // mirror half of them so the repeat doesn't show
+            sr.sortingOrder = 0;                         // distance-sorts with the other world billboards
+
+            if (collide)
+            {
+                // Thin trunk collider: something for the third-person camera to pull in front of, and it
+                // stops you walking through a trunk. Slim so it doesn't snag movement.
+                var col = go.AddComponent<CapsuleCollider>();
+                col.radius = 0.34f;
+                col.height = 5f;
+                col.center = new Vector3(0f, 2.5f, 0f);
+            }
+
+            planted.Add(new ForestField.Tree
+            {
+                t = go.transform,
+                sr = sr,
+                winter = winter,
+                phase = (byte)Mathf.Min(ForestField.Frames - 1, (int)(Hash01(seed * 211 + 5) * ForestField.Frames)),
+                depth01 = depth01,
+                swayBias = Hash01(seed * 331 + 17),
+                tint = tint,
+            });
+        }
+
+        int seedN = 0;
+
+        // Sentinels: a ring of elders standing right on the treeline, half again the height of the stand
+        // and tinted almost to silhouette, so the clearing is fenced by things that loom over it.
+        // Attempted generously: the ring overlaps the cabin yard and both road corridors, so roughly
+        // half of these are dropped and only the ones with room to stand survive.
+        for (int i = 0; i < 14; i++, seedN++)
+        {
+            float a = (i + 0.5f) / 14f * Mathf.PI * 2f + (Hash01(seedN * 401 + 3) - 0.5f) * 0.4f;
+            float r = 11.0f + Hash01(seedN * 419 + 7) * 2.5f;
+            var pos = ForestCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+            if (ForestBlocked(pos)) continue;
+            Plant(pos, Mathf.Lerp(1.5f, 1.8f, Hash01(seedN * 433 + 11)), false, 0.24f, true, seedN);
+        }
+
+        for (int b = 0; b < ForestBands.Length; b++)
+        {
+            var band = ForestBands[b];
+            float step = Mathf.PI * 2f / band.count;
+            for (int i = 0; i < band.count; i++, seedN++)
+            {
+                float a = (i + 0.5f) * step + (Hash01(seedN * 131 + b * 17) - 0.5f) * step * 0.85f;
+                float r = Mathf.Lerp(band.r0, band.r1, Hash01(seedN * 197 + b * 29));
+                var pos = ForestCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+                if (ForestBlocked(pos)) continue;
+                Plant(pos,
+                      Mathf.Lerp(band.s0, band.s1, Hash01(seedN * 251 + b * 13)),
+                      Hash01(seedN * 173 + b * 31) < band.winterMix,
+                      band.bright, band.collide, seedN);
+            }
+        }
+
+        field.trees = planted.ToArray();
+
+        // Leaves and sticks shedding out of the canopy (TREES_UNITY.md section 5), shedding hardest when
+        // the ForestField is mid-gust — the falling debris is the same wind you can see in the trees.
+        var debrisGo = new GameObject("ForestDebris");
+        debrisGo.transform.SetParent(root.transform, false);
+        var debris = debrisGo.AddComponent<ForestDebris>();
+        debris.field = field;
+        debris.spriteMaterial = mat;
+        debris.forestCentre = ForestCentre;
+        debris.clearingRadius = ForestBands[0].r0 - 3f;
+
+        return field;
+    }
+
+    // Re-grows the woods IN PLACE in the already-built Exterior: the old sparse tree rings come out, the
+    // dense ForestField stand goes in, and nothing else in the scene is touched — so the hand-placed
+    // truck, the choppable trees and the rest of the hand-tended dressing survive (unlike BuildExterior,
+    // which regenerates the whole scene from scratch).
+    [MenuItem("Tools/Horror Game/Reforest Exterior (Dense Woods)")]
+    public static void ReforestExterior()
+    {
+        var kit = EnsureSpruceSprites();
+        var scene = EditorSceneManager.OpenScene(ExteriorSceneOut, OpenSceneMode.Single);
+
+        int removed = 0;
+        foreach (var go in new List<GameObject>(scene.GetRootGameObjects()))
+            if (go.name == "Tree" || go.name == "Forest") { GameObject.DestroyImmediate(go); removed++; }
+
+        CollectPathCellsFromScene();   // the road is already laid; read its footprint back off the tiler
+        var woods = GrowForest(kit, SpriteMaterial());
+        if (woods == null) return;
+        woods.sky = GameObject.Find("Sky")?.GetComponent<SkyController>();
+
+        EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
+        Debug.Log("[HorrorGame] Reforested the Exterior: cleared " + removed + " old tree object(s) and grew " +
+                  woods.trees.Length + " spruces in five depth bands + sentinels, all driven by one ForestField " +
+                  "(idle/sway flip-book, travelling gusts, dread + night tinting) with canopy debris.");
+    }
+
+    // BuildPathway fills _pathCells as it lays the cobble; when the forest is re-grown in place the road
+    // is already there, so read the footprint back off the scene's PathTiler instead.
+    static void CollectPathCellsFromScene()
+    {
+        _pathCells.Clear();
+        var go = GameObject.Find("Pathway");
+        var pt = go != null ? go.GetComponent<PathTiler>() : null;
+        if (pt == null || pt.cells == null) return;
+        Vector3 o = go.transform.position;
+        foreach (var c in pt.cells) _pathCells.Add(new Vector3(c.x + o.x, 0f, c.y + o.z));
     }
 
     // True if a world point sits within `radius` of any cobble-road cell (see _pathCells).

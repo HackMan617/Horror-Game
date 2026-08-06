@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#10130f;}
+  .pix{image-rendering:pixelated;image-rendering:crisp-edges;}
+</style>
+<script src="./treegen.js"></script>
+</helmet>
+<div style="min-height:100vh;background:#10130f;color:#e7ece2;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:40px 44px 56px;box-sizing:border-box;">
+
+  <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 ref="{{ titleRef }}" style="font-family:'Press Start 2P',monospace;font-size:19px;line-height:1.5;margin:0;color:#8cc079;letter-spacing:0.5px;">SPRUCE_01</h1>
+    <span style="font-size:13px;color:#69715f;">12-frame dread-sway + idle &middot; 96&times;196 cells &middot; snow-loaded boughs &middot; leaves &amp; sticks shed &middot; transparent</span>
+    <div style="display:flex;gap:0;margin-left:auto;border:1px solid #2c3328;border-radius:4px;overflow:hidden;">
+      <button onClick="{{ showGreen }}" style="{{ greenBtnStyle }}">SUMMER</button>
+      <button onClick="{{ showWinter }}" style="{{ winterBtnStyle }}">WINTER</button>
+    </div>
+  </div>
+  <div ref="{{ ruleRef }}" style="height:2px;background:linear-gradient(90deg,#8cc079,#387140,transparent);margin:14px 0 34px;max-width:620px;"></div>
+
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- dense-forest stage -->
+    <div style="text-align:center;">
+      <div ref="{{ stageRef }}" style="padding:0;border:1px solid #28301f;border-radius:6px;overflow:hidden;line-height:0;">
+        <canvas ref="{{ groveRef }}" width="540" height="280" class="pix" style="width:540px;height:280px;display:block;"></canvas>
+      </div>
+      <div ref="{{ captionRef }}" style="margin-top:12px;font-size:13px;color:#8a907f;line-height:1.6;text-align:left;max-width:540px;">a stand of the same loop, each tree offset in phase &middot; <span style="color:#5a6150;">this is the wall of forest the house sits inside</span></div>
+    </div>
+
+    <!-- single showcase + spec -->
+    <div style="display:flex;gap:28px;align-items:flex-start;">
+      <div style="text-align:center;">
+        <div style="padding:14px 18px 6px;background:#171b13;border:1px solid #262d1d;border-radius:6px;background-image:radial-gradient(120% 80% at 50% 18%,#1d2218 0%,#12150e 72%);">
+          <canvas ref="{{ heroRef }}" width="96" height="196" class="pix" style="width:147px;height:300px;display:block;"></canvas>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:#69715f;">single loop &middot; <span ref="{{ fpsLabelRef }}" style="color:#8cc079;">8 fps</span></div>
+      </div>
+
+      <div style="min-width:230px;font-size:13px;line-height:2;color:#aeb4a4;">
+        <div style="color:#69715f;font-size:11px;letter-spacing:1px;margin-bottom:8px;">SHEET SPEC</div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Cell size</span><span style="color:#8cc079;">96 &times; 196 px</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Grid</span><span style="color:#8cc079;">6 &times; 4 &middot; 24 frames</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Sheet size</span><span style="color:#8cc079;">576 &times; 784 px</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Read order</span><span style="color:#e7ece2;">idle r0&ndash;1, sway r2&ndash;3</span></div>
+        <div style="display:flex;justify-content:space-between;max-width:300px;border-bottom:1px solid #232a1c;"><span>Loop</span><span style="color:#e7ece2;">seamless</span></div>
+
+        <div style="margin-top:18px;color:#69715f;font-size:11px;letter-spacing:1px;margin-bottom:8px;">WHAT MOVES</div>
+        <div style="max-width:300px;">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>dread sway <span style="color:#5a6150;">gust, twist, shudder</span></span><span style="color:#8cc079;">12&times;</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>crown <span style="color:#5a6150;">whips &amp; lurches</span></span><span style="color:#8cc079;">per-f</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>leaves &amp; sticks <span style="color:#5a6150;">shed, tumble, fall</span></span><span style="color:#8cc079;">live</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>snow load <span style="color:#5a6150;">winter caps</span></span><span style="color:#cddae2;">toggle</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #232a1c;"><span>foreground giants</span><span style="color:#e7ece2;">framing</span></div>
+        </div>
+        <div style="margin-top:16px;color:#8a907f;max-width:300px;line-height:1.7;font-size:12px;">A dense backlit stand that hazes out into the distance. The sway isn't restful &mdash; boughs whip and shudder and the whole tree lurches, like the forest is <i>breathing wrong</i>. Huge trees crowd the foreground; leaves and sticks keep shedding loose.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- raw sheets -->
+  <div style="margin-top:44px;display:flex;gap:40px;flex-wrap:wrap;">
+    <div>
+      <div style="color:#69715f;font-size:11px;letter-spacing:1px;margin-bottom:12px;">SHEET <span style="color:#3a4030;">(tree_spruce.png &mdash; import this)</span></div>
+      <div style="display:inline-block;padding:14px;background:#1b2014;border:1px solid #2c3320;border-radius:4px;background-image:linear-gradient(45deg,#171c11 25%,transparent 25%),linear-gradient(-45deg,#171c11 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#171c11 75%),linear-gradient(-45deg,transparent 75%,#171c11 75%);background-size:16px 16px;">
+        <img ref="{{ sheetImgRef }}" src="tree_spruce.png" class="pix" style="height:228px;display:block;" alt="spruce sprite sheet">
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:760},&quot;fps&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:8,&quot;min&quot;:2,&quot;max&quot;:16,&quot;step&quot;:1,&quot;unit&quot;:&quot;fps&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Playback&quot;}}">
+class Component extends DCLogic {
+  state = { season: 'summer' };
+  renderVals(){
+    const s = this.state.season;
+    const onG = { background:'#e0a24a', color:'#160b04' };
+    const onW = { background:'#cddae2', color:'#0a0e12' };
+    const off = { background:'#1b2014', color:'#8a907f' };
+    const base = "font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px;border:none;padding:7px 14px;cursor:pointer;";
+    const btn = (o)=> base + `background:${o.background};color:${o.color};`;
+    const fps = this.props.fps ?? 8;
+    return {
+      showGreen:  ()=> this.setState({ season:'summer' }),
+      showWinter: ()=> this.setState({ season:'winter' }),
+      greenBtnStyle:  btn(s==='summer' ? onG : off),
+      winterBtnStyle: btn(s==='winter' ? onW : off),
+      titleRef:   (el)=>{ this.titleEl = el; },
+      ruleRef:    (el)=>{ this.ruleEl = el; },
+      stageRef:   (el)=>{ this.stageEl = el; },
+      captionRef: (el)=>{ this.captionEl = el; },
+      fpsLabelRef:(el)=>{ if(el) el.textContent = fps + ' fps'; },
+      groveRef:   (el)=>{ this.grove = el; this._start(); },
+      heroRef:    (el)=>{ this.hero = el; this._start(); },
+      sheetImgRef:(el)=>{ this.sheetImg = el; this._applyMode(); },
+    };
+  }
+  componentDidMount(){
+    const H = 280;
+    this.layers = this._buildLayers(H);
+    this.leaves = []; this.sticks = [];
+    this._tintCache = {};
+    this._lastT = performance.now();
+    this._applyMode();
+    this._start();
+  }
+  componentDidUpdate(){ this._applyMode(); }
+
+  // depth bands, far → near, then framing giants (packed wall)
+  _buildLayers(H){
+    const inst = [];
+    const horizon = H - 108;
+    // band 0 — far ridge silhouettes, hazed toward the sky
+    for(let i=0;i<15;i++){
+      inst.push({ sp:'ridge', x: -6 + i*38 + (i%2?9:0), baseY: horizon + (i%3), scale: 0.85 + (i%3)*0.16,
+                  a: 0.34 + (i%4)*0.03, ph:(i*5)%12, tint:{a:0.62} });
+    }
+    // band 1 — mid stand
+    const mid = [['spruce',0.52],['pine',0.5],['spruce',0.6],['pine',0.55],['spruce',0.5],['snag',0.5],['spruce',0.62],['pine',0.52],['spruce',0.56],['pine',0.5]];
+    mid.forEach((m,i)=> inst.push({ sp:m[0], x: -20 + i*60, baseY: H-56 + (i%2)*5, scale:m[1],
+                  a: 0.66 + (i%3)*0.05, ph:(i*7)%12, tint:{a:0.30} }));
+    // band 2 — near, full-detail trees
+    const near = [['spruce',0.98],['pine',0.92],['spruce',1.08],['snag',0.92],['pine',1.02],['spruce',0.95]];
+    near.forEach((m,i)=> inst.push({ sp:m[0], x: -30 + i*104, baseY: H-14 + (i%2)*6, scale:m[1],
+                  a:1, ph:(i*11)%12 }));
+    // band 3 — foreground giants (partly off-canvas, darkened backlit silhouettes framing the view)
+    inst.push({ sp:'spruce', x:-58, baseY:H+64, scale:2.15, a:1, ph:3, tint:{a:0.46, dark:true} });
+    inst.push({ sp:'pine',   x:452, baseY:H+80, scale:2.35, a:1, ph:8, tint:{a:0.5,  dark:true} });
+    return inst;
+  }
+
+  _atlas(T, sp, winter){ return T.buildAtlas(sp, 'sunset', 'sway', winter); }
+
+  // tint only the tree's opaque pixels (atmospheric haze far, silhouette near) — cached
+  _tinted(at, color, alpha, key){
+    if(this._tintCache[key]) return this._tintCache[key];
+    const frames = at.frames.map(fr=>{
+      const c = document.createElement('canvas'); c.width = at.W; c.height = at.H;
+      const cx = c.getContext('2d'); cx.imageSmoothingEnabled = false;
+      cx.drawImage(fr,0,0);
+      cx.globalAlpha = alpha; cx.globalCompositeOperation = 'source-atop';
+      cx.fillStyle = color; cx.fillRect(0,0,at.W,at.H);
+      return c;
+    });
+    return (this._tintCache[key] = { frames, W:at.W, H:at.H });
+  }
+
+  _applyMode(){
+    const winter = this.state.season === 'winter';
+    if(this.sheetImg){ const s = winter?'tree_spruce_winter.png':'tree_spruce.png'; const cur=this.sheetImg.getAttribute('src')||''; if(!cur.endsWith(s)) this.sheetImg.src = s; }
+    if(this.titleEl) this.titleEl.style.color = winter ? '#cddae2' : '#e0a24a';
+    if(this.ruleEl) this.ruleEl.style.background = winter
+      ? 'linear-gradient(90deg,#cddae2,#5d8462,transparent)'
+      : 'linear-gradient(90deg,#e0a24a,#7a3f2e,transparent)';
+    if(this.captionEl && this.captionEl.childNodes[0]) this.captionEl.childNodes[0].nodeValue = winter
+      ? 'snow-loaded boughs, colder dread, slower drift \u00b7 '
+      : 'dense backlit stand, dread sway, leaves & sticks shedding \u00b7 ';
+  }
+
+  _start(){
+    if(this._raf || !window.TreeGen) return;
+    const T = window.TreeGen;
+    const draw = (now)=>{
+      const winter = this.state.season === 'winter';
+      const fps = this.props.fps ?? 8;
+      const fr = Math.floor(now/(1000/fps));
+      const dt = Math.min(60, now - (this._lastT || now)); this._lastT = now;
+      this._drawGrove(T, fr, winter, now, dt);
+      this._drawHero(T, fr, winter);
+      this._raf = requestAnimationFrame(draw);
+    };
+    this._raf = requestAnimationFrame(draw);
+  }
+
+  _drawGrove(T, fr, winter, now, dt){
+    if(!this.grove) return;
+    const g = this.grove.getContext('2d'); g.imageSmoothingEnabled = false;
+    const W = this.grove.width, H = this.grove.height;
+    // backlit sunset sky (cooler in winter)
+    const sky = g.createLinearGradient(0,0,0,H);
+    if(winter){ sky.addColorStop(0,'#c9723f'); sky.addColorStop(0.30,'#8a5a68'); sky.addColorStop(0.60,'#3f4a63'); sky.addColorStop(1,'#161e2c'); }
+    else { sky.addColorStop(0,'#e8a24d'); sky.addColorStop(0.30,'#b56a4e'); sky.addColorStop(0.58,'#5c4a63'); sky.addColorStop(1,'#221b32'); }
+    g.fillStyle = sky; g.fillRect(0,0,W,H);
+    // low sun glow behind the trees
+    const sun = g.createRadialGradient(W*0.5,H*0.30,4,W*0.5,H*0.30,W*0.55);
+    sun.addColorStop(0, winter?'rgba(255,228,188,0.55)':'rgba(255,222,150,0.62)');
+    sun.addColorStop(1,'rgba(255,220,150,0)');
+    g.fillStyle = sun; g.fillRect(0,0,W,H);
+    // ground band
+    g.fillStyle = winter ? 'rgba(214,224,236,0.16)' : 'rgba(28,24,38,0.5)';
+    g.fillRect(0, H-40, W, 40);
+    // trees, back → front
+    for(const it of this.layers){
+      const at = this._atlas(T, it.sp, winter);
+      let use = at;
+      if(it.tint){
+        const col = it.tint.dark ? (winter?'#0e141e':'#191022') : (winter?'#9fb0c4':'#c98a68');
+        use = this._tinted(at, col, it.tint.a, it.sp+'|'+(winter?'w':'s')+'|'+col+'|'+it.tint.a);
+      }
+      const frame = use.frames[(fr + it.ph) % 12];
+      const w = Math.round(use.W*it.scale), h = Math.round(use.H*it.scale);
+      g.globalAlpha = it.a;
+      g.drawImage(frame, Math.round(it.x), Math.round(it.baseY - h), w, h);
+    }
+    g.globalAlpha = 1;
+    // atmospheric haze wash toward the floor
+    const haze = g.createLinearGradient(0,H*0.32,0,H);
+    haze.addColorStop(0, winter?'rgba(150,165,185,0.16)':'rgba(150,110,110,0.14)');
+    haze.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle = haze; g.fillRect(0,0,W,H);
+    // falling leaves + sticks, shed from the canopy (in front of the stand)
+    this._particles(g, W, H, winter, now, dt);
+  }
+
+  _particles(g, W, H, winter, now, dt){
+    const dts = dt/16.67;
+    if(Math.random() < 0.34) this.leaves.push(this._spawnLeaf(W, winter));
+    if(Math.random() < 0.11) this.sticks.push(this._spawnStick(W));
+    for(const p of this.leaves){
+      p.age += dt; p.vy += 0.006*dts;
+      p.x += (p.vx + Math.sin(p.age*0.006 + p.seed)*0.55)*dts;
+      p.y += p.vy*dts; p.spin += p.spinV*dts;
+    }
+    for(const p of this.sticks){
+      p.age += dt; p.vy += 0.010*dts; p.x += p.vx*dts; p.y += p.vy*dts; p.ang += p.angV*dts;
+    }
+    this.leaves = this.leaves.filter(p => p.y < H-4 && p.age < 11000);
+    this.sticks = this.sticks.filter(p => p.y < H-3 && p.age < 11000);
+    for(const p of this.leaves){
+      const fade = Math.min(1, (H - p.y)/34 + 0.25);
+      g.globalAlpha = Math.min(1, fade);
+      const w = Math.max(1, Math.round(p.size*Math.abs(Math.cos(p.spin)))), h = p.size;
+      const x = Math.round(p.x), y = Math.round(p.y);
+      g.fillStyle = p.color; g.fillRect(x, y, w, h);
+      if(p.size>2){ g.fillStyle = p.edge; g.fillRect(x, y, w, 1); }
+    }
+    for(const p of this.sticks){
+      g.globalAlpha = Math.min(1, (H - p.y)/34 + 0.3);
+      const ca = Math.cos(p.ang), sa = Math.sin(p.ang);
+      g.fillStyle = p.color;
+      for(let k=-p.len; k<=p.len; k++) g.fillRect(Math.round(p.x+ca*k), Math.round(p.y+sa*k), 1, 1);
+      g.fillStyle = p.dark; g.fillRect(Math.round(p.x+ca*p.len), Math.round(p.y+sa*p.len)-1, 1, 1);
+    }
+    g.globalAlpha = 1;
+  }
+
+  _spawnLeaf(W, winter){
+    const sum = ['#5d8a3a','#799f4a','#c9772f','#a85a2a','#d89a3e','#3f6a2e'];
+    const win = ['#8a6a3a','#b7a06a','#5d6a4a','#d8e0ea','#9a8858'];
+    const pal = winter ? win : sum;
+    return { x: 24 + Math.random()*(W-48), y: 24 + Math.random()*100,
+             vx:(Math.random()-0.62)*0.5, vy:0.14 + Math.random()*0.22,
+             spin:Math.random()*6.28, spinV:0.03 + Math.random()*0.06, seed:Math.random()*6.28,
+             age:0, size: 2 + ((Math.random()*2)|0), color: pal[(Math.random()*pal.length)|0], edge:'#00000040' };
+  }
+  _spawnStick(W){
+    return { x: 30 + Math.random()*(W-60), y: 30 + Math.random()*90,
+             vx:(Math.random()-0.62)*0.32, vy:0.24 + Math.random()*0.26,
+             ang:Math.random()*3.14, angV:(Math.random()-0.5)*0.05,
+             len: 2 + ((Math.random()*3)|0), color:'#6a4a2c', dark:'#3f2c1a', age:0 };
+  }
+
+  _drawHero(T, fr, winter){
+    if(!this.hero) return;
+    const at = this._atlas(T, 'spruce', winter);
+    const h = this.hero.getContext('2d'); h.imageSmoothingEnabled = false;
+    h.clearRect(0,0,this.hero.width,this.hero.height);
+    h.drawImage(at.frames[fr % 12], 0,0, at.W, at.H, 0,0, this.hero.width, this.hero.height);
+  }
+
+  componentWillUnmount(){ if(this._raf) cancelAnimationFrame(this._raf); }
+}
+</script>
+</body>
+</html>
