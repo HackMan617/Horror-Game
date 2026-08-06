@@ -84,7 +84,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 18
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -133,13 +133,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: winter0_0
+      name: winterIdle0_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 152
-        width: 80
-        height: 152
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,20 +148,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e7269dadaa8cebb88cac50cd0953092
-      internalID: -710541531
+      spriteID: 92b7adb6da6ffce2825835d8d8e245e7
+      internalID: -1033052739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter0_1
+      name: winterIdle0_1
       rect:
         serializedVersion: 2
-        x: 80
-        y: 152
-        width: 80
-        height: 152
+        x: 96
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,20 +170,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e3031fcb4eba8a9666b46a51f7e4687
-      internalID: -2099749970
+      spriteID: 7b60580974b2f46a71bc5a6eefd29f32
+      internalID: -1705016079
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter0_2
+      name: winterIdle0_2
       rect:
         serializedVersion: 2
-        x: 160
-        y: 152
-        width: 80
-        height: 152
+        x: 192
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +192,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bec03fe6bc85bea2bd6795ffcca28aab
-      internalID: 1562828559
+      spriteID: a1f99d83f953f98211709dc1a6a701f4
+      internalID: -1825759502
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter0_3
+      name: winterIdle0_3
       rect:
         serializedVersion: 2
-        x: 240
-        y: 152
-        width: 80
-        height: 152
+        x: 288
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d8ca4ab7b7b9cdee2759c7ce0c68326
-      internalID: -28307752
+      spriteID: 1e9809f3456f9a70567b258eae35624b
+      internalID: 1987137386
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter0_4
+      name: winterIdle0_4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 152
-        width: 80
-        height: 152
+        x: 384
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7bafe695150faa39804d1c27aa40341
-      internalID: -1237779487
+      spriteID: 080cc9fcc5d0b0b9272722640cd8bd10
+      internalID: 672899590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter0_5
+      name: winterIdle0_5
       rect:
         serializedVersion: 2
-        x: 400
-        y: 152
-        width: 80
-        height: 152
+        x: 480
+        y: 588
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,20 +258,284 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 680f339a5dd1c0851b3d9ea67fbefd52
-      internalID: 744599905
+      spriteID: fe6d40373e3b7d13dd0187fa3029d07a
+      internalID: 650229626
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter1_0
+      name: winterIdle1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecdbf1b9a09938b221841b88c732bca2
+      internalID: -75124294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterIdle1_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4b58b5107dee8e36344b8949d5af00b
+      internalID: -872009420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterIdle1_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35d35b924938f2a61db46da3fc5248c
+      internalID: -1896510883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterIdle1_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 695a1b4041c39c688088427fbf5119dd
+      internalID: -356546695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterIdle1_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 460029c12e9ef411f9b61bd1fcfeb4c0
+      internalID: 1194620706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterIdle1_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 392
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c8ab5003829587961c279d4b9fd7121
+      internalID: -1669985413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9371f4faca5fc8062a59f0ebd638606e
+      internalID: -571653946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway0_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0488b91a1325f1e72f89e89d90ff684e
+      internalID: -195837430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway0_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f371d90efe6438a5b0a6f20bc37a86a4
+      internalID: 156259271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway0_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b645c6361fa43b2fd224f3f228bb58ec
+      internalID: -718573651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway0_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b00a6f68cce44dd6c35792587d838ad8
+      internalID: 1908402632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway0_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 196
+        width: 96
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2c920a1b29ad2ac5397f1e4e0ac75ba
+      internalID: 927237618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: winterSway1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,20 +544,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a52f9b3cdf3f4bd38f30a1038f1e2cb2
-      internalID: 577861991
+      spriteID: dd42e2581c3af5ee869dadffd26f0429
+      internalID: -839787107
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter1_1
+      name: winterSway1_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 96
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,20 +566,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9158ca51f5415b799b69a579d2d9b1d
-      internalID: -1184745927
+      spriteID: 6778d4f4e324a962c215bc3ec80a5d9d
+      internalID: -1377744272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter1_2
+      name: winterSway1_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 192
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,20 +588,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35e2eeb133504463b352cdfa3a56d068
-      internalID: -279597472
+      spriteID: 1785fc023efec594c4b8e949b924c085
+      internalID: -2061870055
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter1_3
+      name: winterSway1_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 288
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,20 +610,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a498a3ece1dc58e4a9edc90530f2e48e
-      internalID: -671743939
+      spriteID: d696c69aef104a48faa9c179ed2343bd
+      internalID: -86379382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter1_4
+      name: winterSway1_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 384
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,20 +632,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26cd3e901ac7eef7c68022b71aef698f
-      internalID: -812636938
+      spriteID: 1349d25c93bf6b4fd22eca7f9c7b06d9
+      internalID: -1781597620
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: winter1_5
+      name: winterSway1_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 480
         y: 0
-        width: 80
-        height: 152
+        width: 96
+        height: 196
       alignment: 9
       pivot: {x: 0.5, y: 0.05}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,8 +654,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46441a37ba6e6931729b2257f6717314
-      internalID: -1573518229
+      spriteID: 331ef1c5ba7b7cda0d48b86bb1e3d9e7
+      internalID: 247558839
       vertices: []
       indices: 
       edges: []
@@ -410,18 +674,30 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      winter0_0: -710541531
-      winter0_1: -2099749970
-      winter0_2: 1562828559
-      winter0_3: -28307752
-      winter0_4: -1237779487
-      winter0_5: 744599905
-      winter1_0: 577861991
-      winter1_1: -1184745927
-      winter1_2: -279597472
-      winter1_3: -671743939
-      winter1_4: -812636938
-      winter1_5: -1573518229
+      winterIdle0_0: -1033052739
+      winterIdle0_1: -1705016079
+      winterIdle0_2: -1825759502
+      winterIdle0_3: 1987137386
+      winterIdle0_4: 672899590
+      winterIdle0_5: 650229626
+      winterIdle1_0: -75124294
+      winterIdle1_1: -872009420
+      winterIdle1_2: -1896510883
+      winterIdle1_3: -356546695
+      winterIdle1_4: 1194620706
+      winterIdle1_5: -1669985413
+      winterSway0_0: -571653946
+      winterSway0_1: -195837430
+      winterSway0_2: 156259271
+      winterSway0_3: -718573651
+      winterSway0_4: 1908402632
+      winterSway0_5: 927237618
+      winterSway1_0: -839787107
+      winterSway1_1: -1377744272
+      winterSway1_2: -2061870055
+      winterSway1_3: -86379382
+      winterSway1_4: -1781597620
+      winterSway1_5: 247558839
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
