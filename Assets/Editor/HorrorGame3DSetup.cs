@@ -1748,8 +1748,14 @@ public static class HorrorGame3DSetup
         var Kplank = Game.Houses.TileStripQuad.Kind.LoosePlank;    // row5 rattling board
 
         int decalN = 0;
-        void Decal(Game.Houses.TileStripQuad.Kind kind, int col, int row, Vector3 pos, float yRot, Vector2 size, bool preview)
+        // `proud` layers a decal out along the wall normal. Two quads at the SAME depth z-fight wherever
+        // they overlap, which is what made the boarded shell shimmer; giving each kind its own standoff
+        // means the layering stays stable even if a future edit slides two of them into each other.
+        void Decal(Game.Houses.TileStripQuad.Kind kind, int col, int row, Vector3 pos, float yRot, Vector2 size, bool preview, float proud)
         {
+            if (yRot == 0f) pos.z += Mathf.Sign(pos.z) * proud;   // front/back face the Z axis
+            else            pos.x += Mathf.Sign(pos.x) * proud;   // sides face the X axis
+
             var q = new GameObject("Boarded_" + (decalN++), typeof(MeshFilter), typeof(MeshRenderer), typeof(Game.Houses.TileStripQuad));
             q.transform.SetParent(houseB.transform, false);
             q.transform.localPosition = pos;
@@ -1773,31 +1779,37 @@ public static class HorrorGame3DSetup
             Undo.RegisterCreatedObjectUndo(q, "Board Up House B");
         }
 
-        // Footprint 7.7 (X) x 6.5 (Z): walls at x=±3.85, z=±3.25; decals sit ~0.03 proud of each face.
+        // Footprint 7.7 (X) x 6.5 (Z): walls at x=±3.85, z=±3.25; the base face sits 0.03 proud, and each
+        // KIND is layered a little further out again — windows against the siding, planks nailed over
+        // them, dead ivy creeping over the lot.
         const float FR = -3.28f, BK = 3.28f, LF = -3.88f, RT = 3.88f;
+        const float PrWin = 0f, PrPlank = 0.02f, PrIvy = 0.035f;
+        // Ivy is a narrow corner strip rather than a broad patch so it creeps the siding BESIDE each
+        // window instead of across it — the wide version overlapped Win_L/Win_R and the back windows.
         var win  = new Vector2(1.2f, 1.2f);
-        var tall = new Vector2(1.2f, 1.3f);
+        var tall = new Vector2(0.9f, 1.5f);
         var wide = new Vector2(1.35f, 1.0f);
-        // FRONT (z-) — keep dead ivy + a loose plank alongside the boarded windows/door already converted
-        Decal(Kivy,   0, 4, new Vector3(-2.9f, 0.95f, FR), 0f, tall, false);
-        Decal(Kivy,   0, 4, new Vector3( 2.9f, 1.35f, FR), 0f, tall, false);
-        Decal(Kplank, 0, 5, new Vector3(-1.15f, 2.6f, FR), 0f, wide, false);
+        // FRONT (z-) — keep dead ivy + a loose plank alongside the boarded windows/door already converted.
+        // The plank rides above the window band (y>2.4) so it clears Win_L and the door head.
+        Decal(Kivy,   0, 4, new Vector3(-3.35f, 0.85f, FR), 0f, tall, false, PrIvy);
+        Decal(Kivy,   0, 4, new Vector3( 3.35f, 1.05f, FR), 0f, tall, false, PrIvy);
+        Decal(Kplank, 0, 5, new Vector3(-1.45f, 2.90f, FR), 0f, wide, false, PrPlank);
         // BACK (z+)
-        Decal(Kbw,    7, 0, new Vector3(-2.0f, 1.7f, BK), 0f, win,  true);
-        Decal(Kbroke, 0, 2, new Vector3( 2.0f, 1.7f, BK), 0f, win,  false);
-        Decal(Kmoth,  0, 3, new Vector3( 0.0f, 3.5f, BK), 0f, win,  false);
-        Decal(Kivy,   0, 4, new Vector3(-3.0f, 0.9f, BK), 0f, tall, false);
-        Decal(Kplank, 0, 5, new Vector3( 1.0f, 2.7f, BK), 0f, wide, false);
+        Decal(Kbw,    7, 0, new Vector3(-2.0f, 1.7f, BK), 0f, win,  true,  PrWin);
+        Decal(Kbroke, 0, 2, new Vector3( 2.0f, 1.7f, BK), 0f, win,  false, PrWin);
+        Decal(Kmoth,  0, 3, new Vector3( 0.0f, 3.5f, BK), 0f, win,  false, PrWin);
+        Decal(Kivy,   0, 4, new Vector3(-3.35f, 0.85f, BK), 0f, tall, false, PrIvy);
+        Decal(Kplank, 0, 5, new Vector3( 1.45f, 2.95f, BK), 0f, wide, false, PrPlank);
         // LEFT (x-) — rotated into the ZY plane
-        Decal(Kbw,    7, 0, new Vector3(LF, 1.7f, -1.2f), 90f, win,  true);
-        Decal(Kbroke, 0, 2, new Vector3(LF, 1.7f,  1.4f), 90f, win,  false);
-        Decal(Kivy,   0, 4, new Vector3(LF, 0.9f,  0.1f), 90f, tall, false);
-        Decal(Kplank, 0, 5, new Vector3(LF, 2.9f, -1.6f), 90f, wide, false);
+        Decal(Kbw,    7, 0, new Vector3(LF, 1.7f,  -1.2f), 90f, win,  true,  PrWin);
+        Decal(Kbroke, 0, 2, new Vector3(LF, 1.7f,   1.4f), 90f, win,  false, PrWin);
+        Decal(Kivy,   0, 4, new Vector3(LF, 0.85f,  0.1f), 90f, tall, false, PrIvy);
+        Decal(Kplank, 0, 5, new Vector3(LF, 2.95f, -1.6f), 90f, wide, false, PrPlank);
         // RIGHT (x+)
-        Decal(Kbw,    7, 0, new Vector3(RT, 1.7f, -1.2f), 90f, win,  true);
-        Decal(Kmoth,  0, 3, new Vector3(RT, 3.4f,  1.0f), 90f, win,  false);
-        Decal(Kivy,   0, 4, new Vector3(RT, 1.0f,  1.7f), 90f, tall, false);
-        Decal(Kplank, 0, 5, new Vector3(RT, 2.6f, -1.7f), 90f, wide, false);
+        Decal(Kbw,    7, 0, new Vector3(RT, 1.7f,  -1.2f), 90f, win,  true,  PrWin);
+        Decal(Kmoth,  0, 3, new Vector3(RT, 3.4f,   1.0f), 90f, win,  false, PrWin);
+        Decal(Kivy,   0, 4, new Vector3(RT, 0.95f,  1.75f), 90f, tall, false, PrIvy);
+        Decal(Kplank, 0, 5, new Vector3(RT, 2.95f, -1.7f), 90f, wide, false, PrPlank);
 
         EditorSceneManager.MarkSceneDirty(houseB.scene);
         Debug.Log("[HorrorGame] House B boarded up — save the scene (Ctrl+S) to keep it. Restore via Tools > Horror Game > House B > Restore.");
