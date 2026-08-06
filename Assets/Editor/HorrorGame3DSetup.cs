@@ -2925,21 +2925,32 @@ public static class HorrorGame3DSetup
         public float s0, s1;      // scale range
         public float bright;      // baked daylight brightness
         public float winterMix;   // 0..1 share on the snow-loaded sheet
+        public float haze;        // 0..1 blend toward the mountain haze (atmospheric perspective)
         public bool collide;      // trunk colliders — only out to where the player actually walks
-        public ForestBand(float a, float b, int c, float x, float y, float br, float wm, bool col)
-        { r0 = a; r1 = b; count = c; s0 = x; s1 = y; bright = br; winterMix = wm; collide = col; }
+        public ForestBand(float a, float b, int c, float x, float y, float br, float wm, float hz, bool col)
+        { r0 = a; r1 = b; count = c; s0 = x; s1 = y; bright = br; winterMix = wm; haze = hz; collide = col; }
     }
+
+    // What the range backdrop reads as behind the trees. The outermost bands lift back toward it so the
+    // woods dissolve into the mountains instead of ending on a hard black cut-out at the horizon.
+    static readonly Color ForestHaze = new Color(0.47f, 0.43f, 0.56f);
 
     // Counts scale with each band's circumference, so the trees-per-arc-length stays high all the way
     // out — a far band spread at near-band counts leaves gaps you can see the mountains through.
+    //
+    // The brightness ramp inverts partway out. Near bands DARKEN with depth, because looking into woods
+    // means looking into shade; but past the murk the trees are far enough that real air is between you
+    // and them, so the outskirts lift back toward the range haze and dissolve into the mountains.
     static readonly ForestBand[] ForestBands =
-    {
-        new ForestBand(13.5f, 16.0f, 46, 1.00f, 1.30f, 0.84f, 0.00f, true),   // treeline
-        new ForestBand(16.0f, 19.5f, 56, 0.95f, 1.30f, 0.72f, 0.00f, true),   // near woods
-        new ForestBand(19.5f, 23.5f, 66, 0.92f, 1.25f, 0.60f, 0.20f, true),   // mid woods
-        new ForestBand(23.5f, 28.0f, 76, 0.88f, 1.22f, 0.48f, 0.55f, false),  // deep woods
-        new ForestBand(28.0f, 33.5f, 86, 0.84f, 1.18f, 0.37f, 0.85f, false),  // far woods
-        new ForestBand(33.5f, 40.0f, 96, 0.80f, 1.15f, 0.28f, 1.00f, false),  // the murk
+    {                                                                                //  bright haze
+        new ForestBand(13.5f, 16.0f, 46, 1.00f, 1.30f, 0.84f, 0.00f, 0.00f, true),   // treeline
+        new ForestBand(16.0f, 19.5f, 56, 0.95f, 1.30f, 0.72f, 0.00f, 0.00f, true),   // near woods
+        new ForestBand(19.5f, 23.5f, 66, 0.92f, 1.25f, 0.60f, 0.20f, 0.00f, true),   // mid woods
+        new ForestBand(23.5f, 28.0f, 76, 0.88f, 1.22f, 0.48f, 0.55f, 0.00f, false),  // deep woods
+        new ForestBand(28.0f, 33.5f, 86, 0.84f, 1.18f, 0.37f, 0.85f, 0.08f, false),  // far woods
+        new ForestBand(33.5f, 40.0f, 96, 0.80f, 1.15f, 0.28f, 1.00f, 0.22f, false),  // the murk
+        new ForestBand(40.0f, 44.0f, 88, 0.78f, 1.12f, 0.26f, 1.00f, 0.45f, false),  // outskirts
+        new ForestBand(44.0f, 48.0f, 96, 0.75f, 1.10f, 0.24f, 1.00f, 0.68f, false),  // far treeline
     };
 
     // Ground the woods must not close over, and whether a trail is kept open to it from the clearing.
@@ -2994,7 +3005,7 @@ public static class HorrorGame3DSetup
 
     /// <summary>
     /// Plants the whole stand under one "Forest" root driven by a single <see cref="ForestField"/>:
-    /// sentinel elders on the treeline, then five depth bands out to the murk, plus the canopy debris
+    /// sentinel elders on the treeline, then eight depth bands out to the far treeline, plus the debris
     /// emitter. Deterministic (Hash01 off the tree index), so a re-grow doesn't churn the scene.
     /// </summary>
     static ForestField GrowForest(SpruceKit kit, Material mat)
@@ -3016,7 +3027,7 @@ public static class HorrorGame3DSetup
         float rIn = ForestBands[0].r0, rOut = ForestBands[ForestBands.Length - 1].r1;
         var centreXZ = new Vector2(ForestCentre.x, ForestCentre.z);
 
-        void Plant(Vector3 pos, float scale, bool winter, float bright, bool collide, int seed)
+        void Plant(Vector3 pos, float scale, bool winter, float bright, float haze, bool collide, int seed)
         {
             var frames = winter ? kit.winterIdle : kit.summerIdle;
             if (frames == null || frames.Length == 0) frames = kit.summerIdle;
@@ -3030,7 +3041,8 @@ public static class HorrorGame3DSetup
             go.transform.rotation = Quaternion.Euler(0f, Mathf.Atan2(look.x, look.z) * Mathf.Rad2Deg, 0f);
 
             float depth01 = Mathf.InverseLerp(rIn, rOut, Vector2.Distance(new Vector2(pos.x, pos.z), centreXZ));
-            Color tint = DepthTint(bright + (Hash01(seed * 313 + 7) - 0.5f) * 0.12f);
+            Color tint = Color.Lerp(DepthTint(bright + (Hash01(seed * 313 + 7) - 0.5f) * 0.12f),
+                                    ForestHaze, Mathf.Clamp01(haze));
 
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = frames[Hash01(seed * 89 + 3) < 0.5f ? 0 : frames.Length / 2];   // stagger the resting pose
@@ -3073,7 +3085,7 @@ public static class HorrorGame3DSetup
             float r = 11.0f + Hash01(seedN * 419 + 7) * 2.5f;
             var pos = ForestCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
             if (ForestBlocked(pos)) continue;
-            Plant(pos, Mathf.Lerp(1.5f, 1.8f, Hash01(seedN * 433 + 11)), false, 0.24f, true, seedN);
+            Plant(pos, Mathf.Lerp(1.5f, 1.8f, Hash01(seedN * 433 + 11)), false, 0.24f, 0f, true, seedN);
         }
 
         for (int b = 0; b < ForestBands.Length; b++)
@@ -3089,7 +3101,7 @@ public static class HorrorGame3DSetup
                 Plant(pos,
                       Mathf.Lerp(band.s0, band.s1, Hash01(seedN * 251 + b * 13)),
                       Hash01(seedN * 173 + b * 31) < band.winterMix,
-                      band.bright, band.collide, seedN);
+                      band.bright, band.haze, band.collide, seedN);
             }
         }
 
@@ -3129,7 +3141,7 @@ public static class HorrorGame3DSetup
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         Debug.Log("[HorrorGame] Reforested the Exterior: cleared " + removed + " old tree object(s) and grew " +
-                  woods.trees.Length + " spruces in five depth bands + sentinels, all driven by one ForestField " +
+                  woods.trees.Length + " spruces in eight depth bands + sentinels, all driven by one ForestField " +
                   "(idle/sway flip-book, travelling gusts, dread + night tinting) with canopy debris.");
     }
 
