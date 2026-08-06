@@ -3121,6 +3121,119 @@ public static class HorrorGame3DSetup
                   "(idle/sway flip-book, travelling gusts, dread + night tinting) with canopy debris.");
     }
 
+    // -------------------------------------------------------------- choppable trees vs the roads
+    // Every paved cell in the scene as a world-space XZ square (centre + half-extent). Both tilers lay
+    // their mesh in local space on a `tileWorldSize` grid and let the GameObject transform place it, so
+    // a cell centre is transform.position + cell * tileWorldSize.
+    struct RoadCell { public Vector2 c; public float h; }
+
+    static List<RoadCell> CollectRoadCells()
+    {
+        var cells = new List<RoadCell>();
+        foreach (var pt in Object.FindObjectsByType<PathTiler>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (pt.cells == null) continue;
+            Vector3 o = pt.transform.position;
+            float h = pt.tileWorldSize * 0.5f;
+            foreach (var c in pt.cells)
+                cells.Add(new RoadCell { c = new Vector2(o.x + c.x * pt.tileWorldSize, o.z + c.y * pt.tileWorldSize), h = h });
+        }
+        foreach (var rt in Object.FindObjectsByType<RoadTiler>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            Vector3 o = rt.transform.position;
+            float h = rt.tileWorldSize * 0.5f;
+            for (int j = 0; j < rt.length; j++)
+            for (int i = 0; i < rt.width; i++)
+                cells.Add(new RoadCell
+                {
+                    c = new Vector2(o.x + (rt.originX + i) * rt.tileWorldSize, o.z + (rt.originZ + j) * rt.tileWorldSize),
+                    h = h,
+                });
+        }
+        return cells;
+    }
+
+    static bool OnRoad(List<RoadCell> cells, Vector3 p, float clearance)
+    {
+        foreach (var rc in cells)
+        {
+            float r = rc.h + clearance;
+            if (Mathf.Abs(p.x - rc.c.x) < r && Mathf.Abs(p.z - rc.c.y) < r) return true;
+        }
+        return false;
+    }
+
+    // The choppable trees are hand-placed, and a few ended up standing in the asphalt or with their
+    // trunk overhanging a cobble edge — a tree growing out of the road reads as a bug however good the
+    // forest behind it looks. Reads the ACTUAL paved footprint off the scene's tilers (rather than
+    // hard-coded rectangles that would drift the next time a road moves) and walks each offender out to
+    // the nearest ground that is clear of the road, the cabin, the other choppables and the forest
+    // trunks. Idempotent: a tree already standing clear is left exactly where it was hand-placed.
+    [MenuItem("Tools/Horror Game/Clear Choppable Trees Off Roads")]
+    public static void ClearChoppableTreesOffRoads()
+    {
+        const float Trunk = 0.8f;      // how far the trunk must clear the kerb
+        const float ApartTrees = 2.5f; // spacing from the other choppables
+        const float ApartWoods = 1.8f; // spacing from a ForestField trunk
+
+        var scene = EditorSceneManager.GetActiveScene();
+        if (scene.path != ExteriorSceneOut)
+            scene = EditorSceneManager.OpenScene(ExteriorSceneOut, OpenSceneMode.Single);
+
+        CollectPathCellsFromScene();   // InKeepClear leans on _pathCells, which only a full build fills
+        var road = CollectRoadCells();
+        var choppables = Object.FindObjectsByType<ChoppableTree>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        var woods = GameObject.Find("Forest")?.GetComponent<ForestField>();
+
+        bool Clear(Vector3 p, ChoppableTree self)
+        {
+            if (OnRoad(road, p, Trunk)) return false;
+            if (InKeepClear(p)) return false;
+            foreach (var o in choppables)
+                if (o != self && (o.transform.position - p).sqrMagnitude < ApartTrees * ApartTrees) return false;
+            if (woods != null && woods.trees != null)
+                foreach (var t in woods.trees)
+                    if (t.t != null && (t.t.position - p).sqrMagnitude < ApartWoods * ApartWoods) return false;
+            return true;
+        }
+
+        int moved = 0;
+        foreach (var ct in choppables)
+        {
+            Vector3 from = ct.transform.position;
+            if (!OnRoad(road, from, Trunk)) continue;
+
+            // Spiral outward and take the first clear spot, so a tree only shifts as far as it must.
+            Vector3 to = from;
+            bool found = false;
+            for (float r = 0.5f; r <= 9f && !found; r += 0.25f)
+            for (int k = 0; k < 24 && !found; k++)
+            {
+                float a = k / 24f * Mathf.PI * 2f;
+                var cand = new Vector3(from.x + Mathf.Cos(a) * r, from.y, from.z + Mathf.Sin(a) * r);
+                if (Clear(cand, ct)) { to = cand; found = true; }
+            }
+
+            if (!found)
+            {
+                Debug.LogWarning("[HorrorGame] ChoppableTree at " + from + " is on a road but no clear spot " +
+                                 "was found within 9 units — left in place, move it by hand.");
+                continue;
+            }
+
+            Undo.RecordObject(ct.transform, "Clear Choppable Trees Off Roads");
+            ct.transform.position = to;
+            EditorUtility.SetDirty(ct.transform);
+            moved++;
+            Debug.Log("[HorrorGame] Moved a ChoppableTree off the road: " + from.ToString("F2") + " -> " + to.ToString("F2") +
+                      " (" + Vector3.Distance(from, to).ToString("F2") + " units).");
+        }
+
+        if (moved > 0) EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
+        Debug.Log("[HorrorGame] Checked " + choppables.Length + " choppable tree(s) against " + road.Count +
+                  " paved cells; moved " + moved + " off the road.");
+    }
+
     // BuildPathway fills _pathCells as it lays the cobble; when the forest is re-grown in place the road
     // is already there, so read the footprint back off the scene's PathTiler instead.
     static void CollectPathCellsFromScene()
