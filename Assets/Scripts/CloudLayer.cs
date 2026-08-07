@@ -54,6 +54,14 @@ public class CloudLayer : MonoBehaviour
     public float farScale = 7f, midScale = 10f, nearScale = 14f;
     [Range(0f, 1f)] public float farAlpha = 0.56f, midAlpha = 0.84f, nearAlpha = 0.96f;
 
+    [Header("Sorting")]
+    [Tooltip("SpriteRenderer sortingOrder for every cloud. Kept NEGATIVE so the whole cloud backdrop always " +
+             "draws behind the world sprites (birds, trees, player — all order 0) instead of tying with them " +
+             "on raw camera distance and weaving through them near the horizon. Sits above the stars " +
+             "(SkyController star order) and below the sun/moon so the sky layers back-to-front: " +
+             "stars → clouds → sun/moon → world.")]
+    public int sortingOrder = -20;
+
     enum Band { Far, Mid, Near }
     class Cloud
     {
@@ -135,6 +143,7 @@ public class CloudLayer : MonoBehaviour
         var sr = go.AddComponent<SpriteRenderer>();
         sr.sprite = frames[0];
         sr.sharedMaterial = material;
+        sr.sortingOrder = sortingOrder;   // whole backdrop stays behind the world sprites (see field tooltip)
 
         var c = new Cloud
         {
