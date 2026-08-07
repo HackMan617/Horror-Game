@@ -68,6 +68,14 @@ public class SkyController : MonoBehaviour
     public Color dayAmbient = new Color(0.5f, 0.52f, 0.55f);
     public Color nightAmbient = new Color(0.06f, 0.07f, 0.12f);
 
+    [Header("Backdrop sorting")]
+    [Tooltip("SpriteRenderer sortingOrder for the sky sprites. All NEGATIVE so the whole sky draws behind the " +
+             "world sprites (birds/trees/player at order 0) rather than tying with them on raw camera distance " +
+             "and weaving through them near the horizon. Ordered back-to-front: stars → clouds (CloudLayer, " +
+             "between these two) → sun/moon.")]
+    public int starOrder = -30;
+    public int sunMoonOrder = -10;
+
     /// <summary>0 in daylight → 1 at full night. Fade star layers / night ambience with this.</summary>
     public float Darkness { get; private set; }
 
@@ -195,6 +203,7 @@ public class SkyController : MonoBehaviour
         go.transform.localScale = Vector3.one * worldSize;
         var sr = go.AddComponent<SpriteRenderer>();
         sr.sprite = sp;
+        sr.sortingOrder = sunMoonOrder;   // sun/moon/glow/shooting star — the front of the sky backdrop
         if (billboard) go.AddComponent<Billboard>();
         return sr;
     }
@@ -284,6 +293,7 @@ public class SkyController : MonoBehaviour
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = _dot;
             sr.color = new Color(1f, 1f, 1f, 0f);
+            sr.sortingOrder = starOrder;   // the very back of the sky backdrop (behind the clouds)
             go.AddComponent<Billboard>();
 
             _star[k] = go.transform;
