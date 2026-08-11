@@ -58,6 +58,39 @@ Only five views are authored; the west-facing three are **horizontal flips** (`s
 File = `truck_${view}.png` (append `_nightmare` for the corrupted realm). The `side` sheet
 faces **right**; flip it for the left-facing runs, exactly like the player.
 
+### `chase` — the third-person DRIVING view (`truck_chase.png`)
+
+A sixth sheet for driving in third person, the twin of the first-person cockpit. **High rear
+3/4** camera (slightly above & behind): near end = rear bumper (bottom, wide), far end = hood
+(top, narrow). **Cell 64 × 32, 12 frames → 768 × 32.** Unlike the 8-way sheets, this one encodes
+**steering × wheel-roll**, not door stages:
+
+| Frames | Steer pose |
+|---|---|
+| 0–3 | **straight** — 4-frame wheel-roll loop (front wheels tucked; not drawn) |
+| 4–7 | **steer left** — body banks left, front wheels pivot into view on the left |
+| 8–11 | **steer right** — body banks right, front wheels pivot into view on the right |
+
+```js
+// third-person driving frame:
+function chaseFrame(steer /* -1,0,1 */, elapsedMs, moving){
+  const group = steer < 0 ? 1 : steer > 0 ? 2 : 0;   // straight / left / right
+  const wheel = moving ? Math.floor(elapsedMs/80) % 4 : 0;
+  return group*4 + wheel;                             // 0..11
+}
+```
+
+In Unity (2D): one `SpriteRenderer` on the chase truck, sliced **Grid By Cell Count 12 × 1**,
+Point filter, no compression, PPU 16, pivot bottom-center. Drive it from a coroutine flip-book
+exactly like `TreeAnimator`, but pick the frame with `chaseFrame(...)`. Sell the turn the way the
+preview does: while a steer key is held, ease the truck's **lane offset** and a small **camera/road
+curve the opposite way**, and swap to the matching steer group — the pivoted wheels + banked body
+are baked into the frames, so no runtime rotation is needed. `truck_chase` is **home only** for now
+(no `_nightmare` twin yet). A ready-to-drop controller that does all of this —
+throttle, steer easing, lane drift, opposite road curve, and frame selection — ships beside this
+doc as **`ChaseTruckController.cs`**; drive your road/ground scroll from its `Distance`,
+`LaneOffset` and `RoadCurve` telemetry fields.
+
 ### Effects driven at PLAYBACK (not baked)
 
 Keep these in code so they read live and never shimmer in the atlas. Anchors are **local px in
@@ -80,6 +113,25 @@ const ANCH = {
 | **Exhaust puff** | spawn a soft grey circle at `pipe`; it rises (`-y ≈ 0.045 px/ms`), drifts opposite the facing, grows, and fades over ~1.5 s. Interval ~900 ms idle, ~230 ms rolling. Views with `pipe:null` (front) emit nothing. |
 | **Hazard / turn signal** | toggle a lamp at each `blink` point every ~430 ms — amber on the front/side lenses, red on the rear. |
 | **Headlights** | **home only.** Draw a hot core + a soft cone from each `head` point along `hdir`; the nightmare truck's lamps are dead. |
+
+### Master atlas — `truck_master.png` (+ `_nightmare`)
+
+Every facing and state on one sheet for reference/import: **9 cols × 8 rows, 576 × 32*8 =
+576 × 256 px.** Rows are the 8 facings top→bottom (**N, NE, E, SE, S, SW, W, NW** — the
+bottom three are the mirrored views, already flipped in the atlas). Cell = `(col*64, row*32,
+64, 32)`.
+
+| col | state |
+|---|---|
+| 0 | PARK (roll frame 0 / idle) |
+| 1–3 | ROLL (wheel loop) |
+| 4–6 | DOOR open 1→3 (reverse to close; rear rows drop the tailgate) |
+| 7 | HAZARD lamps lit (baked) |
+| 8 | HEADLIGHTS on (baked; nightmare lamps are dead) |
+
+The hazard + headlight columns bake the overlays purely so you can *see* them — in-game you
+still drive those live off the anchor table above (that way they blink/flicker). `truck_master_contact.png`
+is a labeled, blown-up read-out of the same grid.
 
 ### `_nightmare` twin
 

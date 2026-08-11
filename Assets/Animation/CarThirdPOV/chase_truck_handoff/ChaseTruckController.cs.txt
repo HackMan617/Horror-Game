@@ -1,0 +1,91 @@
+// ChaseTruckController.cs — third-person (high rear 3/4) driving view for the roadside truck.
+// Twin of the first-person cockpit: same truck, same road, W/S throttle, A/D steer.
+//
+// Sprite sheet: truck_chase.png — 12 frames, 64×32 each (768×32 total), home only.
+//   0–3  straight   (4-frame wheel-roll loop; front wheels tucked, not drawn)
+//   4–7  steer left (body banks left,  front wheels pivot into view on the left)
+//   8–11 steer right(body banks right, front wheels pivot into view on the right)
+//
+// Import settings: Sprite Mode Multiple · Grid By Cell Count 12 × 1 · Point (no filter) ·
+//   Compression None · PPU 16 · Pivot Bottom-Center.
+// Slicing yields truck_chase_0 .. truck_chase_11 in order — assign all 12 to `frames`.
+//
+// The pivoted wheels + banked body are BAKED into the frames, so no runtime rotation is
+// needed. This controller just picks the frame and sells the turn with a lane offset + an
+// opposite road/camera curve (drive your road/ground scroll from `Distance`, `LaneOffset`
+// and `RoadCurve`).
+
+using UnityEngine;
+
+[RequireComponent(typeof(SpriteRenderer))]
+public class ChaseTruckController : MonoBehaviour
+{
+    [Header("12 sliced frames: 0-3 straight, 4-7 left, 8-11 right")]
+    public Sprite[] frames = new Sprite[12];
+
+    [Header("Feel")]
+    public float rollFrameSeconds = 0.08f;   // wheel-roll cadence when moving (~80 ms)
+    public float steerEase        = 0.18f;    // how fast steer input ramps (per ~60fps step)
+    public float laneEase         = 0.10f;
+    public float curveEase        = 0.08f;
+    public float maxLaneOffset    = 1.4f;     // world units the truck drifts across the lane
+    public float speedAccel       = 0.05f;    // throttle ramp
+    public float brakeDecel       = 0.12f;
+
+    [Header("Read-only telemetry (drive your road scroll from these)")]
+    public float Speed;        // 0..1
+    public float Distance;     // accumulates with speed — use for dashed-line / ground scroll
+    public float Steer;        // smoothed -1..1
+    public float LaneOffset;   // world-units offset to slide the truck across the lane
+    public float RoadCurve;    // -1..1 — bend the road/camera the OPPOSITE way to sell the turn
+
+    SpriteRenderer _sr;
+    float _rollTimer;
+    int   _wheel;
+
+    void Awake() { _sr = GetComponent<SpriteRenderer>(); }
+
+    void Update()
+    {
+        float dt   = Time.deltaTime;
+        float step = dt * 60f;   // normalize eases to ~60fps
+
+        // ---- throttle ----
+        float gas   = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))   ? 1f : 0f;
+        float brake = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) ? 1f : 0f;
+        float target = brake > 0f ? 0f : (gas > 0f ? 1f : 0.12f);
+        Speed += (target - Speed) * Mathf.Clamp01(step * (brake > 0f ? brakeDecel : speedAccel));
+
+        // ---- steering input ----
+        float si = 0f;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  si -= 1f;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) si += 1f;
+        Steer += (si - Steer) * Mathf.Clamp01(step * steerEase);
+
+        // ---- integrate motion; lane + curve scale with speed so a parked truck won't slide ----
+        Distance   += Speed * dt * 0.9f;
+        float grip  = Mathf.Max(0.15f, Speed);
+        LaneOffset += (Steer * maxLaneOffset * grip - LaneOffset) * Mathf.Clamp01(step * laneEase);
+        RoadCurve  += (Steer * grip - RoadCurve) * Mathf.Clamp01(step * curveEase);
+
+        // ---- frame selection ----
+        int group = Steer < -0.33f ? 1 : Steer > 0.33f ? 2 : 0;   // straight / left / right
+        if (Speed > 0.02f)
+        {
+            _rollTimer += dt;
+            if (_rollTimer >= rollFrameSeconds) { _rollTimer = 0f; _wheel = (_wheel + 1) % 4; }
+        }
+        else _wheel = 0;
+
+        int fi = group * 4 + _wheel;                              // 0..11
+        if (frames != null && fi < frames.Length && frames[fi]) _sr.sprite = frames[fi];
+
+        // ---- drift the truck across the lane (banked pose is already in the sprite) ----
+        var p = transform.localPosition;
+        p.x = LaneOffset;
+        transform.localPosition = p;
+    }
+
+    // Convenience for a mobile HUD or AI driver: feed -1/0/1 instead of the keyboard.
+    public void SetSteerInput(float s) { Steer += (Mathf.Clamp(s, -1f, 1f) - Steer) * steerEase; }
+}

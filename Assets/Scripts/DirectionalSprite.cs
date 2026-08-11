@@ -45,6 +45,11 @@ public class DirectionalSprite : MonoBehaviour
     [Tooltip("Flip the direction the sheets rotate through, if the mirror handedness is reversed.")]
     public bool invertHanded = false;
 
+    [Tooltip("Keep picking the view (so " + nameof(CurrentSector) + " stays live for CarLights' lamp anchors) " +
+             "but stop writing the SpriteRenderer. Set while ChaseTruckController owns the sprite in the " +
+             "third-person driving view — two components assigning sprites would fight over the same renderer.")]
+    [System.NonSerialized] public bool suppressSprite = false;
+
     SpriteRenderer _sr;
     Transform _cam;
     int _lastSector = -1;
@@ -89,13 +94,17 @@ public class DirectionalSprite : MonoBehaviour
             case 6: fallback = side;    frames = sideFrames;    flip = true;  break;   // W
             default: fallback = back3q; frames = back3qFrames;  flip = true;  break;   // NW
         }
+        // The sector is recorded either way — CarLights reads it for the lamp anchors even when the chase
+        // controller is the one drawing the truck.
+        _lastSector = sector;
+        if (suppressSprite) return;
+
         // Prefer the selected frame from the full sheet; fall back to the single parked sprite.
         Sprite sp = (frames != null && frames.Length > 0)
             ? frames[Mathf.Clamp(frame, 0, frames.Length - 1)]
             : fallback;
         if (sp != null) _sr.sprite = sp;
         _sr.flipX = flip;
-        _lastSector = sector;
     }
 
     public int CurrentSector => _lastSector;

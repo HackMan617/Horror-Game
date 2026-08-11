@@ -45,6 +45,13 @@ public class TruckDriver : MonoBehaviour
     [Tooltip("Third-person: camera follow smoothing (seconds). Higher = a laggier trail so the truck leads " +
              "in-frame when it accelerates/turns (reads as motion); 0 = rigid lock to the truck.")]
     public float thirdPersonFollowLag = 0.14f;
+    [Tooltip("Third-person: extra world units the camera drops back at full throttle. The chase camera holds " +
+             "the truck at a fixed place in frame, so without a speed cue the drive reads the same at 5 mph " +
+             "as at 80 — falling back as you accelerate is what sells the pull-away.")]
+    public float thirdPersonSpeedPullback = 1.8f;
+    [Tooltip("Third-person: extra degrees of field of view at full throttle. The widening streaks the road " +
+             "and the trees past the edges of frame, which is most of what 'fast' looks like.")]
+    public float thirdPersonSpeedFov = 8f;
 
     [Header("Auto-drive (OutOfTown driver rig arrives already driving)")]
     public bool autoEnterOnStart = false;
@@ -73,10 +80,13 @@ public class TruckDriver : MonoBehaviour
     Transform _seat;
     Behaviour _playerCtrl, _camRig, _billboard, _dirSprite, _carLights;
     DirectionalSprite _dir;
+    ChaseTruckController _chase;   // purpose-drawn rear-3/4 driving pose, third person only
     Renderer _truckBody;
     CharacterController _playerCC;
     Vector3 _camVel;           // SmoothDamp velocity for the third-person chase follow
     Quaternion _playerRot0;    // player facing captured on enter, restored on exit
+    float _camFov0 = -1f;      // the borrowed camera's own FOV, restored whenever we stop widening it
+    float _speedCue;           // eased 0..1 speed the chase pull-back/FOV ride on
 
     void Awake()
     {
@@ -132,12 +142,15 @@ public class TruckDriver : MonoBehaviour
         {
             var ct = _mainCam.transform;
             _camReturnParent = ct.parent; _camReturnPos = ct.localPosition; _camReturnRot = ct.localRotation;
+            _camFov0 = _mainCam.fieldOfView;   // the chase view widens this with speed; always put it back
         }
+        _speedCue = 0f;
 
         // --- the truck's own body: hidden in first person, shown (as a 2.5D billboard) in third ---
         _truckBody = GetComponent<SpriteRenderer>();
         _billboard = Beh("Billboard"); _dirSprite = Beh("DirectionalSprite"); _carLights = Beh("CarLights");
         _dir = _dirSprite as DirectionalSprite;
+        _chase = GetComponent<ChaseTruckController>();
 
         // --- vehicle collider ---
         // Align the capsule bottom with the truck sprite's bottom edge so the grounded truck's billboard
@@ -179,15 +192,24 @@ public class TruckDriver : MonoBehaviour
     // person: show the truck body as a 2.5D billboard, hide the overlay, and drive the camera in world
     // space (LateUpdate) behind the heading — it can't be parented to the truck because the Billboard spins
     // the truck transform to face the camera, which would drag a parented camera with it.
+    //
+    // Which sprite the body draws in third person: the purpose-drawn chase sheet if this truck has one (a
+    // high rear 3/4 pose that also shows the wheels turning and the body banking into a steer — CAR.md
+    // "chase"), otherwise the ordinary 8-way DirectionalSprite. Only one of them may write the renderer, so
+    // when the chase controller takes over, DirectionalSprite keeps running but stops assigning sprites —
+    // its sector still feeds CarLights' lamp anchors.
     void ApplyView()
     {
         bool third = _thirdPerson;
+        bool chase = third && _chase != null && _chase.frames != null && _chase.frames.Length >= ChaseTruckController.Frames;
 
         if (third) _cockpit.Hide(); else _cockpit.Show();
         if (_truckBody != null) _truckBody.enabled = third;
         SetBeh(_billboard, third);
         SetBeh(_dirSprite, third);
         SetBeh(_carLights, third);
+        if (_dir != null) _dir.suppressSprite = chase;
+        SetBeh(_chase, chase);
         if (_rearCam != null) _rearCam.enabled = !third;   // mirror feed only matters in first person
 
         if (_mainCam == null) return;
@@ -196,6 +218,7 @@ public class TruckDriver : MonoBehaviour
         {
             ct.SetParent(null, true);                       // placed each frame in LateUpdate
             _camVel = Vector3.zero;                         // snap to the chase pose so it doesn't swing in
+            _speedCue = _rig != null ? _rig.speed : 0f;     // ...at the speed we're already doing, not from 0
             ct.position = ThirdPersonCamTarget();
             ct.rotation = Quaternion.LookRotation(ThirdPersonLookTarget() - ct.position, Vector3.up);
         }
@@ -204,6 +227,7 @@ public class TruckDriver : MonoBehaviour
             ct.SetParent(_seat, false);
             ct.localPosition = Vector3.zero;
             ct.localRotation = Quaternion.identity;
+            if (_camFov0 > 0f) _mainCam.fieldOfView = _camFov0;   // the cockpit view isn't speed-widened
         }
     }
 
@@ -224,7 +248,9 @@ public class TruckDriver : MonoBehaviour
             var ct = _mainCam.transform;
             ct.SetParent(_camReturnParent, false);
             ct.localPosition = _camReturnPos; ct.localRotation = _camReturnRot;
+            if (_camFov0 > 0f) _mainCam.fieldOfView = _camFov0;   // undo the third-person speed widening
         }
+        _speedCue = 0f;
         if (_seat != null) Destroy(_seat.gameObject);
         if (_rearCam != null) Destroy(_rearCam.gameObject);
         if (_rearRT != null) { _rearRT.Release(); Destroy(_rearRT); _rearRT = null; }
@@ -232,7 +258,8 @@ public class TruckDriver : MonoBehaviour
         // restore the truck body; the parked truck now points the way you left it
         if (_truckBody != null) _truckBody.enabled = true;
         SetBeh(_billboard, true); SetBeh(_dirSprite, true); SetBeh(_carLights, true);
-        if (_dir != null) _dir.noseYaw = _headingYaw;
+        SetBeh(_chase, false);                                 // parked: back to the 8-way body
+        if (_dir != null) { _dir.suppressSprite = false; _dir.noseYaw = _headingYaw; }
 
         // park: stop being a mover, then re-plant the billboard on the ground (undo the CharacterController's
         // drive-time Y drift so the parked truck's wheels sit on the road, not in it).
@@ -304,6 +331,13 @@ public class TruckDriver : MonoBehaviour
     void LateUpdate()
     {
         if (!IsDriving || !_thirdPerson || _mainCam == null) return;
+
+        // Ease the speed cue rather than reading the throttle raw, so the pull-back and the FOV swell in
+        // over the pull-away instead of snapping the moment you touch W.
+        float target = _rig != null ? Mathf.Clamp01(_rig.speed) : 0f;
+        _speedCue = Mathf.MoveTowards(_speedCue, target, Time.deltaTime * 1.2f);
+        if (_camFov0 > 0f) _mainCam.fieldOfView = _camFov0 + thirdPersonSpeedFov * _speedCue;
+
         var ct = _mainCam.transform;
         ct.position = thirdPersonFollowLag > 0f
             ? Vector3.SmoothDamp(ct.position, ThirdPersonCamTarget(), ref _camVel, thirdPersonFollowLag)
@@ -313,7 +347,8 @@ public class TruckDriver : MonoBehaviour
 
     Vector3 HeadingDir() => Quaternion.Euler(0f, _headingYaw, 0f) * Vector3.forward;
     Vector3 ThirdPersonCamTarget() =>
-        transform.position - HeadingDir() * thirdPersonDistance + Vector3.up * thirdPersonHeight;
+        transform.position - HeadingDir() * (thirdPersonDistance + thirdPersonSpeedPullback * _speedCue)
+                           + Vector3.up * thirdPersonHeight;
     Vector3 ThirdPersonLookTarget() =>
         transform.position + HeadingDir() * thirdPersonLookAhead + Vector3.up * thirdPersonLookHeight;
 

@@ -37,9 +37,9 @@ public class CarLights : MonoBehaviour
     DirectionalSprite _dir;
     Material _mat;
     Sprite _dot, _cone;
-    Vector3 _basePos;
     float _rumbleT;
-    Vector3 _rumbleOff;
+    Vector3 _rumbleOff;    // offset currently added to the transform (subtracted back off next frame)
+    Vector3 _lastRumble;   // the jitter being held until the interval refreshes it
 
     // pooled light children (max 2 headlights + 2 blink lamps per view)
     SpriteRenderer _core0, _core1, _halo0, _halo1, _cone0, _cone1, _blink0, _blink1;
@@ -56,7 +56,7 @@ public class CarLights : MonoBehaviour
         _truck = GetComponent<SpriteRenderer>();
         _dir = GetComponent<DirectionalSprite>();
         if (sky == null) sky = FindObjectOfType<SkyController>();
-        _basePos = transform.position;
+        _rumbleOff = Vector3.zero;   // nothing applied yet — don't subtract a stale offset on the first frame
 
         var stale = new System.Collections.Generic.List<GameObject>();
         foreach (Transform c in transform)
@@ -100,6 +100,13 @@ public class CarLights : MonoBehaviour
         bool on = engineRunning || dark >= nightThreshold;   // engine start wakes the truck up any time of day
 
         // --- idle rumble: jitter the whole sprite while the engine is "running" ---
+        // The jitter is an offset applied ON TOP of wherever the truck actually is, so the base has to be
+        // re-read every frame — undo last frame's offset, then re-apply this frame's. It used to be cached
+        // once in OnEnable and written back absolutely, which meant that the moment the truck started
+        // DRIVING this pinned it to that cached spot every LateUpdate: it shook in place and never covered
+        // any ground. (Only third person showed it — CarLights is disabled in the first-person cockpit.)
+        transform.position -= _rumbleOff;
+        _rumbleOff = Vector3.zero;
         if (on)
         {
             _rumbleT -= Time.deltaTime;
@@ -107,13 +114,10 @@ public class CarLights : MonoBehaviour
             {
                 _rumbleT = rumbleInterval;
                 float a = rumblePx / Mathf.Max(1f, _truck.sprite.pixelsPerUnit);
-                _rumbleOff = transform.right * Random.Range(-a, a) + Vector3.up * Random.Range(-a, a);
+                _lastRumble = transform.right * Random.Range(-a, a) + Vector3.up * Random.Range(-a, a);
             }
-            transform.position = _basePos + _rumbleOff;
-        }
-        else if (transform.position != _basePos)
-        {
-            transform.position = _basePos;
+            _rumbleOff = _lastRumble;
+            transform.position += _rumbleOff;
         }
 
         if (!on) { AllOff(); return; }
@@ -201,6 +205,10 @@ public class CarLights : MonoBehaviour
     void OnDisable()
     {
         if (_core0 != null) AllOff();
+        // Hand the transform back exactly as we found it: going first-person disables this component
+        // mid-jitter, and leaving that offset applied would nudge the truck a little on every toggle.
+        transform.position -= _rumbleOff;
+        _rumbleOff = Vector3.zero;
     }
 
     void AllOff()

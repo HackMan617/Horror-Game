@@ -84,8 +84,9 @@ public static class HorrorGame3DSetup
     const string OutOfTownSceneOut = "Assets/Scenes/OutOfTown.unity";
     const string CockpitDir = "Assets/Animation/Updated Car POV/cockpit_kit/sprites";
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
+    const string ChaseTruck = "Assets/Animation/Car/roadside_pack/truck_chase.png";   // third-person driving pose
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
-    const int DrivingSetupVersion = 10;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int DrivingSetupVersion = 11;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
 
     static int _renderer3DIndex = 1;
@@ -605,6 +606,7 @@ public static class HorrorGame3DSetup
         if (cockpit == null) cockpit = truck.AddComponent<CockpitController>();
         WireCockpit(cockpit);
         if (truck.GetComponent<TruckDriver>() == null) truck.AddComponent<TruckDriver>();
+        WireChaseTruck(truck);   // the third-person driving pose (V toggles to it mid-drive)
 
         // Walking on the asphalt road tiles plays the continuous "Walking on Asphalt" loop (matched by
         // name-contains "Road", covering both the cabin "Road" and this "DriveRoad"). Applied here — the
@@ -642,7 +644,8 @@ public static class HorrorGame3DSetup
 
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         AddSceneToBuild(OutOfTownSceneOut);
-        Debug.Log("[HorrorGame] Exterior driving set up: the truck is drivable; the road runs south to the OutOfTown trigger.");
+        Debug.Log("[HorrorGame] Exterior driving set up: the truck is drivable in first and third person " +
+                  "(V toggles; third person uses the truck_chase pose); the road runs south to the OutOfTown trigger.");
     }
 
     // A minimal drivable "out of town" stub: ground + sky + a straight road. You arrive already driving and
@@ -773,7 +776,38 @@ public static class HorrorGame3DSetup
         truck.AddComponent<DrivingRig>();
         WireCockpit(truck.AddComponent<CockpitController>());
         truck.AddComponent<TruckDriver>();
+        WireChaseTruck(truck);   // the third-person driving pose (V toggles to it mid-drive)
         return truck;
+    }
+
+    // The third-person driving pose (CAR.md "chase"): 12 frames of 64x32 — 0-3 straight, 4-7 steer left,
+    // 8-11 steer right, each group a 4-frame wheel roll.
+    //
+    // CAR.md asks for a bottom-centre pivot, which is right for a flat 2D road; here the truck is a
+    // CENTRE-pivoted billboard in the 3D map (the 8-way sheets are all alignment 0 / centre, and
+    // TruckDriver plants it by its rendered bounds). Matching that centre pivot is what keeps toggling
+    // to third person from popping the truck up by half its height as the sprite swaps.
+    static Sprite[] EnsureChaseTruckSprites()
+    {
+        SliceStrip(ChaseTruck, "truck_chase_", ChaseTruckController.Frames, 64, 32, 16f, 0.5f);
+        return LoadSheetSprites(ChaseTruck, "truck_chase_");
+    }
+
+    // Give a truck the third-person chase pose. Safe to re-run: adds the component if missing and
+    // re-assigns the frames. Left disabled — TruckDriver.ApplyView turns it on only in third person.
+    static void WireChaseTruck(GameObject truck)
+    {
+        var frames = EnsureChaseTruckSprites();
+        if (frames == null || frames.Length < ChaseTruckController.Frames)
+        {
+            Debug.LogWarning("[HorrorGame] truck_chase.png didn't slice into " + ChaseTruckController.Frames +
+                             " frames — is it the 768x32 sheet? Third person falls back to the 8-way body.");
+            return;
+        }
+        var chase = truck.GetComponent<ChaseTruckController>();
+        if (chase == null) chase = truck.AddComponent<ChaseTruckController>();
+        chase.frames = frames;
+        chase.enabled = false;
     }
 
     // Sliced world sprites for the roadside scenery (DRIVING.md §5b) + the TOWN sign (CAR.md §3).
@@ -1084,7 +1118,43 @@ public static class HorrorGame3DSetup
 
     static Sprite[] LoadSheetSprites(string path, string prefix) =>
         AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>()
-            .Where(s => s.name.StartsWith(prefix)).OrderBy(s => s.name).ToArray();
+            .Where(s => s.name.StartsWith(prefix))
+            .OrderBy(s => s.name, NaturalOrder).ToArray();
+
+    // Frame order is the sprite-name order, so it has to compare digit runs by VALUE, not by character:
+    // a plain string sort puts "truck_chase_10" between "_1" and "_2", which silently scrambles any sheet
+    // with more than ten frames (the 12-frame chase sheet was the first). Comparing runs numerically also
+    // leaves every ≤9-frame sheet in exactly the order it already had, and keeps multi-row names like
+    // "spruceIdle0_5" < "spruceIdle1_0" correct (earlier digit runs still win).
+    static readonly System.Collections.Generic.IComparer<string> NaturalOrder =
+        System.Collections.Generic.Comparer<string>.Create(NaturalCompare);
+
+    static int NaturalCompare(string a, string b)
+    {
+        int i = 0, j = 0;
+        while (i < a.Length && j < b.Length)
+        {
+            if (char.IsDigit(a[i]) && char.IsDigit(b[j]))
+            {
+                int i0 = i, j0 = j;
+                while (i < a.Length && char.IsDigit(a[i])) i++;
+                while (j < b.Length && char.IsDigit(b[j])) j++;
+                // Compare by length first (no leading zeros in our names), then digit by digit — avoids
+                // overflowing on a pathologically long run.
+                string da = a.Substring(i0, i - i0).TrimStart('0');
+                string db = b.Substring(j0, j - j0).TrimStart('0');
+                if (da.Length != db.Length) return da.Length - db.Length;
+                int c = string.CompareOrdinal(da, db);
+                if (c != 0) return c;
+            }
+            else
+            {
+                if (a[i] != b[j]) return a[i] - b[j];
+                i++; j++;
+            }
+        }
+        return (a.Length - i) - (b.Length - j);
+    }
 
     // props_autumn.png atlas (128x96, top-left origin). [x, topY, w, h] of frame 0; extra frames
     // run horizontally. See Assets/Animation/README.md.

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#14160f;}
+  .pix{image-rendering:pixelated;image-rendering:crisp-edges;}
+  a{color:#b6cf6a;} a:hover{color:#d3e88a;}
+</style>
+</helmet>
+<div style="min-height:100vh;background:radial-gradient(130% 90% at 50% -10%,#20241a 0%,#14160f 72%);color:#e7ecdf;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;padding:34px 40px 56px;box-sizing:border-box;">
+  <div style="display:flex;align-items:baseline;gap:15px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 style="font-family:'Press Start 2P',monospace;font-size:18px;line-height:1.5;margin:0;color:#b6cf6a;letter-spacing:.5px;">THIRD&#8209;PERSON&nbsp;DRIVE</h1>
+    <span style="font-size:12.5px;color:#8c9a78;">high rear 3/4 chase &middot; the truck you drive up the mountain &middot; <span style="color:#c9a05a;">wheels pivot &middot; body banks into the turn</span></span>
+  </div>
+  <div style="height:2px;background:linear-gradient(90deg,#b6cf6a,#5c8531,transparent);margin:13px 0 24px;max-width:640px;"></div>
+
+  <div style="display:flex;gap:34px;flex-wrap:wrap;align-items:flex-start;">
+    <div>
+      <div style="position:relative;border:1px solid #37432c;border-radius:8px;overflow:hidden;background:#0c0f0a;">
+        <canvas ref="{{ stageRef }}" width="520" height="360" class="pix" style="display:block;width:520px;height:360px;"></canvas>
+      </div>
+      <div style="font-size:11px;color:#7f8c68;margin-top:9px;text-align:center;width:520px;">{{ hint }}</div>
+    </div>
+
+    <div style="flex:1;min-width:250px;max-width:300px;display:flex;flex-direction:column;gap:17px;">
+      <div>
+        <div style="font-size:10px;letter-spacing:1px;color:#6f7c5c;margin-bottom:8px;">STEER</div>
+        <div style="display:flex;gap:8px;">
+          <button onMouseDown="{{ steerLeftDown }}" onMouseUp="{{ steerUp }}" onMouseLeave="{{ steerUp }}" onTouchStart="{{ steerLeftDown }}" onTouchEnd="{{ steerUp }}" style="{{ bSteer }}">&#8592; A</button>
+          <button onMouseDown="{{ steerRightDown }}" onMouseUp="{{ steerUp }}" onMouseLeave="{{ steerUp }}" onTouchStart="{{ steerRightDown }}" onTouchEnd="{{ steerUp }}" style="{{ bSteer }}">D &#8594;</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:1px;color:#6f7c5c;margin-bottom:8px;">THROTTLE</div>
+        <div style="display:flex;gap:8px;">
+          <button onMouseDown="{{ gasDown }}" onMouseUp="{{ gasUp }}" onMouseLeave="{{ gasUp }}" onTouchStart="{{ gasDown }}" onTouchEnd="{{ gasUp }}" style="{{ bGas }}">W gas</button>
+          <button onMouseDown="{{ brakeDown }}" onMouseUp="{{ brakeUp }}" onMouseLeave="{{ brakeUp }}" onTouchStart="{{ brakeDown }}" onTouchEnd="{{ brakeUp }}" style="{{ bBrake }}">S brake</button>
+        </div>
+      </div>
+      <div style="border-top:1px solid #2c3522;padding-top:15px;font-size:12px;line-height:1.85;color:#9aa886;">
+        <div style="color:#6f7c5c;font-size:10px;letter-spacing:1px;margin-bottom:8px;">INTERCHANGEABLE</div>
+        <div style="max-width:290px;">This chase camera is the third-person twin of the cockpit first-person view &mdash; same truck, same road, same controls. <span style="color:#cdd8bd;">W/S</span> throttle, <span style="color:#cdd8bd;">A/D</span> steer. Hold a steer key and the front wheels pivot while the body <span style="color:#c9a05a;">banks into the turn</span> and drifts across the lane; the road bends the other way to sell it.</div>
+      </div>
+      <div style="font-size:11px;color:#7f8c68;line-height:1.7;">Sheet: <span style="color:#9aa886;">truck_chase.png</span> &middot; 12f &middot; 64&times;32 &middot; straight / left / right &times; 4-frame wheel-roll.</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:10px;letter-spacing:1px;color:#6f7c5c;">SHEET &middot; <span style="color:#3f4a30;">truck_chase</span></div>
+      <div style="display:inline-block;border-radius:4px;padding:8px;background:#171a13;background-image:linear-gradient(45deg,#20241d 25%,transparent 25%),linear-gradient(-45deg,#20241d 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#20241d 75%),linear-gradient(-45deg,transparent 75%,#20241d 75%);background-size:14px 14px;">
+        <canvas ref="{{ sheetRef }}" width="768" height="32" class="pix" style="display:block;width:576px;height:24px;"></canvas>
+      </div>
+      <div style="font-size:11px;color:#7f8c68;max-width:576px;line-height:1.6;">0&ndash;3 straight &middot; 4&ndash;7 steer left &middot; 8&ndash;11 steer right. The live frame is boxed.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:600}}">
+class Component extends DCLogic {
+  imgCache={}; keys={}; sp=0; dist=0; steer=0; steerV=0; lane=0; curve=0; frameFI=0;
+  S=4; WW=130; WH=90;
+
+  componentDidMount(){
+    ['truck_chase.png','grass_tiles.png'].forEach(f=>this._img(f));
+    this._kd=(e)=>{ const k=e.key.toLowerCase(); this.keys[k]=true; if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(k)) e.preventDefault(); };
+    this._ku=(e)=>{ this.keys[e.key.toLowerCase()]=false; };
+    window.addEventListener('keydown',this._kd); window.addEventListener('keyup',this._ku);
+    this._last=performance.now();
+    this.timer=setInterval(()=>this._loop(performance.now()),33);
+  }
+  componentWillUnmount(){ if(this.timer) clearInterval(this.timer); window.removeEventListener('keydown',this._kd); window.removeEventListener('keyup',this._ku); }
+
+  _img(f){ if(this.imgCache[f]) return this.imgCache[f]; const im=new Image(); im.src=f; this.imgCache[f]=im; im.onload=()=>this._sheet(); return im; }
+
+  renderVals(){
+    const seg=(acc)=>`font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.5px;border:1px solid #37432c;border-radius:4px;padding:11px 13px;cursor:pointer;background:#1a1e14;color:${acc};user-select:none;touch-action:none;`;
+    return {
+      stageRef:(el)=>{ if(el) this.stage=el; },
+      sheetRef:(el)=>{ if(el){ this.sheetC=el; this._sheet(); } },
+      hint:'W/S throttle \u00b7 A/D steer \u2014 hold a steer key to bank into the turn',
+      steerLeftDown:()=>{ this.keys['a']=true; }, steerRightDown:()=>{ this.keys['d']=true; },
+      steerUp:()=>{ this.keys['a']=false; this.keys['d']=false; },
+      gasDown:()=>{ this.keys['w']=true; }, gasUp:()=>{ this.keys['w']=false; },
+      brakeDown:()=>{ this.keys['s']=true; }, brakeUp:()=>{ this.keys['s']=false; },
+      bSteer:seg('#dbe7bf'), bGas:seg('#b6cf6a'), bBrake:seg('#c9a05a'),
+    };
+  }
+
+  _loop(now){
+    const dt=Math.min(60,now-this._last)/16.67; this._last=now;
+    const K=this.keys;
+    const gas=(K['w']||K['arrowup'])?1:0, brake=(K['s']||K['arrowdown'])?1:0;
+    const target=brake?0:(gas?1:0.12);
+    this.sp += (target-this.sp)*Math.min(1,dt*(brake?0.12:0.05));
+    const si=((K['a']||K['arrowleft'])?-1:0)+((K['d']||K['arrowright'])?1:0);
+    this.steer += (si-this.steer)*Math.min(1,dt*0.18);
+    this.dist += this.sp*dt*0.9;
+    // lane drift + road curve (opposite) scale with speed so a parked wheel doesn't slide
+    this.lane += (this.steer*22*Math.max(0.15,this.sp) - this.lane)*Math.min(1,dt*0.1);
+    this.curve += (this.steer*Math.max(0.15,this.sp) - this.curve)*Math.min(1,dt*0.08);
+    // pose group from steer intent
+    const grp = this.steer<-0.33?1 : this.steer>0.33?2 : 0;
+    const wheel = this.sp>0.02 ? (Math.floor(this.dist*2.2)%4) : 0;
+    this.frameFI = grp*4+wheel;
+    this._scene(now);
+    this._sheet();
+  }
+
+  _scene(now){
+    const cv=this.stage; if(!cv) return; const ctx=cv.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    const S=this.S, W=cv.width, H=cv.height, WW=this.WW, WH=this.WH, horizon=34;
+    ctx.clearRect(0,0,W,H);
+    // sky
+    const sky=ctx.createLinearGradient(0,0,0,horizon*S);
+    sky.addColorStop(0,'#2c3a58'); sky.addColorStop(0.55,'#7c6f84'); sky.addColorStop(1,'#e8a45e');
+    ctx.fillStyle=sky; ctx.fillRect(0,0,W,horizon*S);
+    // moon
+    ctx.fillStyle='#f4eccf'; ctx.beginPath(); ctx.arc(96*S,12*S,5*S,0,7); ctx.fill();
+    // mountains
+    const ridge=(baseY,amp,freq,ph,col,snow)=>{ for(let x=0;x<WW;x++){ const h=Math.round(baseY-(Math.sin(x*freq+ph)*0.5+0.5)*amp-(Math.sin(x*freq*2.3+ph)*0.5+0.5)*amp*0.35); for(let y=h;y<horizon+2;y++){ ctx.fillStyle=(y<h+2)?snow:col; ctx.fillRect(x*S,y*S,S,S); } } };
+    ridge(horizon-1,12,0.11,1.3,'#514a66','#c8c1d6'); ridge(horizon+1,8,0.16,4.1,'#2f2e46','#8f8aa6');
+    // grass field
+    const grass=this.imgCache['grass_tiles.png'];
+    if(grass&&grass.complete&&grass.naturalWidth){ for(let gy=horizon-2;gy<WH;gy+=16) for(let gx=0;gx<WW;gx+=16) ctx.drawImage(grass,0,0,16,16,gx*S,gy*S,16*S,16*S); }
+    else { ctx.fillStyle='#4a6b28'; ctx.fillRect(0,(horizon-2)*S,W,H); }
+    this._road(ctx,S,WW,WH,horizon,now);
+    this._truck(ctx,S);
+    // dusk vignette
+    const g=ctx.createRadialGradient(W/2,H*0.42,H*0.2,W/2,H*0.5,H*0.9);
+    g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(20,10,0,0.36)');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  }
+
+  _road(ctx,S,WW,WH,horizon,now){
+    const asph=[74,77,78], asphDk=[53,56,58], line=[198,162,74], sh=[207,201,187];
+    const y0=horizon+2, y1=WH, VPx=WW/2;
+    const rnd=(a,b)=>{let h=((a|0)*374761393+(b|0)*668265263)>>>0;h=((h^(h>>>15))*2246822519)>>>0;return ((h^(h>>>13))>>>0)/4294967296;};
+    const bend=this.curve*46;
+    for(let y=y0;y<y1;y++){
+      const t=(y-y0)/(y1-y0);
+      const half=3+t*t*30;
+      const cx=VPx + bend*(1-t)*(1-t) - this.lane*t;   // road curves opposite the steer; lane offsets near end
+      ctx.globalAlpha=Math.min(1,t/0.12);
+      const L=Math.round(cx-half),R=Math.round(cx+half);
+      for(let x=L;x<=R;x++){ const n=rnd(x,y*3); let col=n>0.86?asphDk:(n<0.12?[asph[0]+8,asph[1]+8,asph[2]+8]:asph); if(Math.abs(x-cx)<half*0.22) col=[col[0]-6,col[1]-6,col[2]-6]; ctx.fillStyle=`rgb(${col[0]|0},${col[1]|0},${col[2]|0})`; ctx.fillRect(x*S,y*S,S,S); }
+      ctx.fillStyle=`rgb(${sh[0]},${sh[1]},${sh[2]})`; ctx.fillRect(L*S,y*S,Math.max(1,Math.round(S*0.6)),S); ctx.fillRect(R*S,y*S,Math.max(1,Math.round(S*0.6)),S);
+      const dash=Math.max(2,Math.round(2+t*6)); if(Math.floor((y+this.dist)/dash)%2===0){ const lw=Math.max(1,Math.round(t*3)); ctx.fillStyle=`rgb(${line[0]},${line[1]},${line[2]})`; ctx.fillRect(Math.round(cx*S-lw/2),y*S,lw,S); }
+    }
+    ctx.globalAlpha=1;
+  }
+
+  _truck(ctx,S){
+    const img=this.imgCache['truck_chase.png']; if(!img||!img.complete||!img.naturalWidth) return;
+    const fi=this.frameFI; const sc=S; const dw=64*sc, dh=32*sc;
+    const cx=260 + this.lane*S*0.6 + this.steer*6;      // sits low-centre, drifts with lane
+    const ty=214 + Math.abs(this.steer)*2;
+    // contact shadow
+    ctx.save(); ctx.fillStyle='rgba(20,14,6,0.42)'; ctx.beginPath(); ctx.ellipse(cx, ty+dh-6, 30*sc*0.5, 5*sc, 0,0,7); ctx.fill(); ctx.restore();
+    ctx.drawImage(img, fi*64,0,64,32, Math.round(cx-dw/2), ty, dw, dh);
+  }
+
+  _sheet(){
+    const cv=this.sheetC; if(!cv) return; const img=this.imgCache['truck_chase.png']; if(!img||!img.complete||!img.naturalWidth) return;
+    const ctx=cv.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,768,32);
+    ctx.globalAlpha=0.4; ctx.drawImage(img,0,0); ctx.globalAlpha=1;
+    const fi=this.frameFI; ctx.drawImage(img,fi*64,0,64,32,fi*64,0,64,32);
+    ctx.strokeStyle='#b6cf6a'; ctx.lineWidth=2; ctx.strokeRect(fi*64+1,1,62,30);
+  }
+}
+</script>
+</body>
+</html>
