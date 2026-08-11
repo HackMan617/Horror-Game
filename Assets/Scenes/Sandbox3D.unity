@@ -698,7 +698,7 @@ Sprite:
       height: 64
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 32, z: 16, w: 256}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -1336,7 +1336,7 @@ Sprite:
       height: 16
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 168, z: 16, w: 8}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -1439,6 +1439,58 @@ Sprite:
   m_Bones: []
   m_ScriptableObjects: []
   m_SpriteID: 
+--- !u!1 &326925144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 326925146}
+  - component: {fileID: 326925145}
+  m_Layer: 0
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &326925145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326925144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbeb1587f0b0dbc4186cc9e5d3d214dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
+  iconSprites:
+  - {fileID: 1480640482, guid: b5b3bafaa0f52474fbab164f5950734c, type: 3}
+  - {fileID: 822144920, guid: b5b3bafaa0f52474fbab164f5950734c, type: 3}
+  - {fileID: -672923773, guid: b5b3bafaa0f52474fbab164f5950734c, type: 3}
+  - {fileID: -333462986, guid: b5b3bafaa0f52474fbab164f5950734c, type: 3}
+  nightmare: 0
+  coldTint: {r: 0.6, g: 0.69, b: 0.63, a: 1}
+  seedPlaceholders: 1
+--- !u!4 &326925146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326925144}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &406666135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,7 +2458,7 @@ Sprite:
       height: 32
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 167, z: 16, w: 64}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -3076,7 +3128,7 @@ Sprite:
       height: 32
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 16, z: 16, w: 64}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -3817,7 +3869,7 @@ Sprite:
       height: 32
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 48, z: 16, w: 32}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -4037,7 +4089,7 @@ Sprite:
       height: 32
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 72, z: 16, w: 0}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -4377,7 +4429,7 @@ Sprite:
       height: 32
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 200, z: 16, w: 64}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -5934,7 +5986,7 @@ Sprite:
       height: 32
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 142, z: 16, w: 96}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -6366,7 +6418,7 @@ Sprite:
       height: 16
     textureRectOffset: {x: 0, y: 0}
     atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 0
+    settingsRaw: 3072
     uvTransform: {x: 16, y: 160, z: 16, w: 16}
     downscaleMultiplier: 1
   m_AtlasRD:
@@ -6610,3 +6662,4 @@ SceneRoots:
   - {fileID: 416224847}
   - {fileID: 215842315}
   - {fileID: 2073941281}
+  - {fileID: 326925146}

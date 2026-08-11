@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
         // Don't toggle pause on the same Escape that just closed the Settings panel (or while it's open).
         bool settingsBusy = SettingsManager.Instance != null &&
                             (SettingsManager.Instance.IsOpen || SettingsManager.Instance.ConsumedEscapeThisFrame);
+        // Same rule for the inventory modal: one Escape closes one thing, and closing it must not also
+        // drop the pause menu on top of what you just dismissed.
+        settingsBusy |= InventoryUI.IsOpen || InventoryUI.ConsumedEscapeThisFrame;
         if (kb != null && kb.escapeKey.wasPressedThisFrame && !settingsBusy &&
             SceneManager.GetActiveScene().name != MenuScene)
             SetPaused(!_paused);

@@ -144,7 +144,7 @@ public class Fireplace : MonoBehaviour
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(hasWood ? feedPrompt : needWoodPrompt);
         if (hasWood && EPressed())
         {
-            LogPickup.Wood--;
+            InventoryModel.RemoveOne(ItemType.Log);   // LogPickup.Wood is a read-through onto this now
             Reignite(1);
         }
     }

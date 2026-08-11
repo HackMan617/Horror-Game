@@ -1,0 +1,53 @@
+using System;
+using UnityEngine;
+
+[Serializable] public enum ItemType { None, Log, Axe, Note, Key }
+
+[Serializable]
+public struct ItemDef {
+    public ItemType type;
+    public string name;
+    [TextArea] public string description;
+    public int iconIndex;        // column in item_icons.png (0..3)
+    public bool locksInNightmare;
+}
+
+[Serializable] public struct Slot { public ItemType type; public int count; public bool Empty => type == ItemType.None || count <= 0; }
+
+public class InventoryModel : MonoBehaviour
+{
+    public const int SLOTS = 5;
+    public int maxStack = 12;
+
+    public ItemDef[] defs = new ItemDef[] {
+        new ItemDef{ type=ItemType.Log,  name="LOGS", iconIndex=0, locksInNightmare=false, description="Split pine, still cold from the truck bed. Fuel for the fire." },
+        new ItemDef{ type=ItemType.Axe,  name="AXE",  iconIndex=1, locksInNightmare=true,  description="Worn hickory haft, bitten edge. Chops wood — and more." },
+        new ItemDef{ type=ItemType.Note, name="NOTE", iconIndex=2, locksInNightmare=false, description="A scrap of paper, the ink run soft at the folds." },
+        new ItemDef{ type=ItemType.Key,  name="KEY",  iconIndex=3, locksInNightmare=true,  description="Rust-toothed and heavy. It opens something you have not found." },
+    };
+
+    public Slot[] slots = new Slot[SLOTS];
+    public event Action Changed;
+
+    public ItemDef Def(ItemType t) { foreach (var d in defs) if (d.type == t) return d; return default; }
+    public int UsedSlots { get { int n=0; foreach (var s in slots) if (!s.Empty) n++; return n; } }
+
+    /// Returns true if the pickup was (fully) accepted; message explains a refusal.
+    public bool TryAdd(ItemType t, out string message)
+    {
+        for (int i = 0; i < SLOTS; i++)                       // top up an existing stack
+            if (slots[i].type == t && slots[i].count < maxStack) { slots[i].count++; message = "picked up " + Def(t).name.ToLower(); Changed?.Invoke(); return true; }
+        for (int i = 0; i < SLOTS; i++)                       // else a free slot
+            if (slots[i].Empty) { slots[i] = new Slot{ type=t, count=1 }; message = "picked up " + Def(t).name.ToLower(); Changed?.Invoke(); return true; }
+        bool maxed = false; foreach (var s in slots) if (s.type == t) maxed = true;
+        message = maxed ? Def(t).name.ToLower() + " stack is full (" + maxStack + ")" : "inventory full — no free slot";
+        return false;
+    }
+
+    public void DropOne(int i)
+    {
+        if (i < 0 || i >= SLOTS || slots[i].Empty) return;
+        slots[i].count--; if (slots[i].count <= 0) slots[i] = new Slot();
+        Changed?.Invoke();
+    }
+}

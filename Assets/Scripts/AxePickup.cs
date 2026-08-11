@@ -140,6 +140,9 @@ public class AxePickup : MonoBehaviour
         if (chopper != null) chopper.EquipAxe();
         else CharacterStore.SetFlag(AxeChopper.AxeFlag, true);
 
+        // ...and it shows up in the inventory, where the nightmare will refuse to let you touch it.
+        if (InventoryModel.Count(ItemType.Axe) == 0) InventoryModel.TryAdd(ItemType.Axe, out _);
+
         if (DialogUI.Instance != null) DialogUI.Instance.ShowDialog(takeMessage, 2f);
     }
 
@@ -154,6 +157,8 @@ public class AxePickup : MonoBehaviour
         var chopper = FindAnyObjectByType<AxeChopper>();
         if (chopper != null) chopper.UnequipAxe();
         else CharacterStore.SetFlag(AxeChopper.AxeFlag, false);
+
+        InventoryModel.RemoveOne(ItemType.Axe);                    // it's back in the stump, not on you
 
         if (DialogUI.Instance != null) DialogUI.Instance.ShowDialog(returnMessage, 2f);
     }

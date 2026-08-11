@@ -18,10 +18,11 @@ public class LogPickup : MonoBehaviour
 
     /// <summary>
     /// Wood the player is carrying from felled logs, spent to feed the cabin <see cref="Fireplace"/>.
-    /// Static so it survives the walk from the woods into the cabin (a scene load) yet clears when the
-    /// game restarts — same session-scoped pattern as the felled-tree registry.
+    /// Now a read-through onto <see cref="InventoryModel"/> rather than a tally of its own — a log you
+    /// pick up is the same log you see in the inventory and the same one the hearth burns. Spend it with
+    /// <see cref="InventoryModel.RemoveOne"/>.
     /// </summary>
-    public static int Wood;
+    public static int Wood => InventoryModel.Count(ItemType.Log);
 
     Transform _player;
     SpriteRenderer _sr;
@@ -52,7 +53,15 @@ public class LogPickup : MonoBehaviour
         Vector3 b = _player.position; b.y = 0f;
         if ((a - b).sqrMagnitude <= pickupRadius * pickupRadius)
         {
-            Wood++;                                          // one log of wood, spendable at the hearth
+            // A full inventory leaves the log lying there rather than swallowing it — the refusal
+            // message says which it was (stack maxed vs no free slot), and you can come back for it.
+            if (!InventoryModel.TryAdd(ItemType.Log, out string why))
+            {
+                if (DialogUI.Instance != null) DialogUI.Instance.ShowDialog(why, 1.5f);
+                _arm = 0f;                                   // re-arm so it doesn't spam every frame
+                return;
+            }
+
             if (DialogUI.Instance != null) DialogUI.Instance.ShowDialog(pickupMessage, 1.5f);
             // Put the player into the hold-wood carry pose — they're now holding the log in-hand.
             var chopper = FindAnyObjectByType<AxeChopper>();

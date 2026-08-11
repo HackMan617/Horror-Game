@@ -1,0 +1,93 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InventoryUI : MonoBehaviour
+{
+    public InventoryModel model;
+    public GameObject panelRoot;         // the centered modal (dim bg + panel); toggled by E
+    public GameObject closedHint;        // "PRESS E — INVENTORY" shown when closed
+
+    [Header("Realm")]
+    public bool nightmare = false;
+
+    [Header("5 slot widgets, in order")]
+    public Button[]  slotButtons  = new Button[5];
+    public Image[]   slotIcons     = new Image[5];
+    public Text[]    slotCounts    = new Text[5];
+    public GameObject[] selectHighlights = new GameObject[5];   // the pulsing corner-highlight frame
+    public GameObject[] lockOverlays      = new GameObject[5];  // padlock badge
+
+    [Header("Icons sliced from item_icons.png (index 0..3)")]
+    public Sprite[] iconSprites = new Sprite[4];
+
+    [Header("Detail pane")]
+    public Text selName, selDesc;
+    public Button dropButton;
+
+    [Header("Corruption look")]
+    public Material glitchMaterial;      // optional: cold-tint + glitch shader for locked icons
+    public Color coldTint = new Color(0.60f, 0.69f, 0.63f);
+
+    int sel = 0;
+
+    void OnEnable()  { if (model != null) model.Changed += Refresh; }
+    void OnDisable() { if (model != null) model.Changed -= Refresh; }
+    void Start() {
+        for (int i = 0; i < 5; i++) { int c = i; if (slotButtons[i]) slotButtons[i].onClick.AddListener(() => Pick(c)); }
+        if (dropButton) dropButton.onClick.AddListener(DropSelected);
+        SetOpen(false); Refresh();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E)) { SetOpen(!panelRoot.activeSelf); return; }
+        if (!panelRoot.activeSelf) return;
+        if (Input.GetKeyDown(KeyCode.Escape)) { SetOpen(false); return; }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))  Move(-1);
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) Move(+1);
+        for (int n = 0; n < 5; n++) if (Input.GetKeyDown(KeyCode.Alpha1 + n)) Pick(n);
+        if (Input.GetKeyDown(KeyCode.Q)) DropSelected();
+    }
+
+    bool Locked(int i) {
+        var s = model.slots[i];
+        return !s.Empty && nightmare && model.Def(s.type).locksInNightmare;
+    }
+
+    public void SetOpen(bool open) {
+        panelRoot.SetActive(open);
+        if (closedHint) closedHint.SetActive(!open);
+        if (open && Locked(sel)) Move(+1);
+        Refresh();
+    }
+    public void SetNightmare(bool nm) { nightmare = nm; if (Locked(sel)) Move(+1); Refresh(); }
+
+    void Move(int dir) { for (int n = 0; n < 5; n++) { sel = (sel + dir + 5) % 5; if (!Locked(sel)) break; } Refresh(); }
+    void Pick(int i) { if (Locked(i)) { /* play reject flash/sfx */ return; } sel = i; Refresh(); }
+    void DropSelected() { if (!Locked(sel)) model.DropOne(sel); }
+
+    void Refresh()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            var s = model.slots[i]; bool locked = Locked(i);
+            if (slotIcons[i]) {
+                slotIcons[i].enabled = !s.Empty;
+                if (!s.Empty) { slotIcons[i].sprite = iconSprites[model.Def(s.type).iconIndex]; ApplyCorruption(slotIcons[i], locked); }
+            }
+            if (slotCounts[i]) { bool show = !s.Empty && s.count > 1; slotCounts[i].enabled = show; if (show) { slotCounts[i].text = s.count.ToString(); slotCounts[i].color = (s.count >= model.maxStack) ? new Color(0.91f,0.63f,0.18f) : Color.white; } }
+            if (selectHighlights[i]) selectHighlights[i].SetActive(i == sel);
+            if (lockOverlays[i]) lockOverlays[i].SetActive(locked);
+        }
+        var cur = model.slots[sel]; bool curLock = Locked(sel);
+        if (selName) selName.text = cur.Empty ? "— empty slot —" : (curLock ? model.Def(cur.type).name + "  ▮ LOCKED" : model.Def(cur.type).name);
+        if (selDesc) selDesc.text = cur.Empty ? "Nothing here yet. Pick something up." : (curLock ? "Corrupted in the nightmare. You cannot bring yourself to touch it." : model.Def(cur.type).description);
+        if (dropButton) dropButton.interactable = !cur.Empty && !curLock;
+    }
+
+    void ApplyCorruption(Image img, bool locked)
+    {
+        if (locked) { img.color = coldTint; if (glitchMaterial) img.material = glitchMaterial; }
+        else { img.color = nightmare ? Color.Lerp(Color.white, coldTint, 0.5f) : Color.white; img.material = null; }
+    }
+}
