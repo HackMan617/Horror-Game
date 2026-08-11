@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: b191b13f0599e0f4b95c9eece20f3f6b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4929848675284607502
+    second: tree_broadleaf_winter_0
+  - first:
+      213: 5233508061363624943
+    second: tree_broadleaf_winter_1
+  - first:
+      213: -609613427258527040
+    second: tree_broadleaf_winter_2
+  - first:
+      213: 6191417309629585927
+    second: tree_broadleaf_winter_3
+  - first:
+      213: 4729824902969272305
+    second: tree_broadleaf_winter_4
+  - first:
+      213: -1513633136943666927
+    second: tree_broadleaf_winter_5
+  - first:
+      213: 519522673497393944
+    second: tree_broadleaf_winter_6
+  - first:
+      213: 5072679265121416758
+    second: tree_broadleaf_winter_7
+  - first:
+      213: -315276434997623493
+    second: tree_broadleaf_winter_8
+  - first:
+      213: -529184791463893504
+    second: tree_broadleaf_winter_9
+  - first:
+      213: -801691542874425251
+    second: tree_broadleaf_winter_10
+  - first:
+      213: 8067329999605318334
+    second: tree_broadleaf_winter_11
+  - first:
+      213: 499410730939896381
+    second: tree_broadleaf_winter_12
+  - first:
+      213: 4905460488389775711
+    second: tree_broadleaf_winter_13
+  - first:
+      213: -2187866114957420166
+    second: tree_broadleaf_winter_14
+  - first:
+      213: -4687176250245944793
+    second: tree_broadleaf_winter_15
+  - first:
+      213: 424657045489160625
+    second: tree_broadleaf_winter_16
+  - first:
+      213: 6701205005754036263
+    second: tree_broadleaf_winter_17
+  - first:
+      213: 6077010904612549249
+    second: tree_broadleaf_winter_18
+  - first:
+      213: -72892283299153574
+    second: tree_broadleaf_winter_19
+  - first:
+      213: 8080514945851870223
+    second: tree_broadleaf_winter_20
+  - first:
+      213: -300524455938078900
+    second: tree_broadleaf_winter_21
+  - first:
+      213: -7830692769095785753
+    second: tree_broadleaf_winter_22
+  - first:
+      213: 2069539940106253389
+    second: tree_broadleaf_winter_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 20
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: broadleafWinterIdle0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed980ea01f03edfa8d7507aae701d011
+      internalID: -1038912503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle0_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2aa52e79459618f08fa64c4525e2bab
+      internalID: -2021610234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle0_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b940b89217f5f088781025bbbc16a4
+      internalID: 355763051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle0_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 871b46ddc10eadc28f5cc3f5f2c4802c
+      internalID: -287167373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle0_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 450f5fa68ca3fea879e8959c3f3899a2
+      internalID: 1158601084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle0_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5ac2544f5a10be7b06793e13a68dae6
+      internalID: 203999468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5609a2951401296a322ca8d29298bb18
+      internalID: 1911488974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle1_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9a7475d8dcd96748fa4478697160b7a
+      internalID: -489888590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle1_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d010103f171b1f10eec1b7c8da988c7
+      internalID: -1281815280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle1_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdb97e1a5f3bca4f2b9b65db02ddf921
+      internalID: -1553243541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle1_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d86d20afe38a6b3ecca51253cbc6315c
+      internalID: 123185799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterIdle1_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9373ab6da750a80b45fc090b89c53573
+      internalID: -43821181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9149c274809a8296f9855ff11d6be833
+      internalID: 585757743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway0_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8f03faf73480ac01a4bc4caf6f4fafe
+      internalID: 265910164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway0_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d08f18e55cf3a53431f043a48499cad
+      internalID: 738125917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway0_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c60dc4631f9d005c7863fab4d147ff3
+      internalID: 1746356902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway0_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4738b24fdc11f9d02e714945dc76d224
+      internalID: 576854598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway0_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0371535849353f124ab2b5c25435f1c
+      internalID: -1768862031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a345a2f4f3fe940347a445143758a93
+      internalID: -1500629858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway1_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1fe13319e7d9bf41c4267641dd35b69
+      internalID: 1485019563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway1_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 303aa1260adfc82ceb3e68d3b3c48f87
+      internalID: -58062950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway1_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3cce4956918711d8774a0806a3abc4d
+      internalID: 769203418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway1_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c02e4f02e7e88a8b86d917627b05122
+      internalID: -1363691421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafWinterSway1_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fe539aa070f5bba7c602910fb4ebee8
+      internalID: 890970766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8f4bd8c77ff7a4d40a1c7def11aa8e03
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      broadleafWinterIdle0_0: -1038912503
+      broadleafWinterIdle0_1: -2021610234
+      broadleafWinterIdle0_2: 355763051
+      broadleafWinterIdle0_3: -287167373
+      broadleafWinterIdle0_4: 1158601084
+      broadleafWinterIdle0_5: 203999468
+      broadleafWinterIdle1_0: 1911488974
+      broadleafWinterIdle1_1: -489888590
+      broadleafWinterIdle1_2: -1281815280
+      broadleafWinterIdle1_3: -1553243541
+      broadleafWinterIdle1_4: 123185799
+      broadleafWinterIdle1_5: -43821181
+      broadleafWinterSway0_0: 585757743
+      broadleafWinterSway0_1: 265910164
+      broadleafWinterSway0_2: 738125917
+      broadleafWinterSway0_3: 1746356902
+      broadleafWinterSway0_4: 576854598
+      broadleafWinterSway0_5: -1768862031
+      broadleafWinterSway1_0: -1500629858
+      broadleafWinterSway1_1: 1485019563
+      broadleafWinterSway1_2: -58062950
+      broadleafWinterSway1_3: 769203418
+      broadleafWinterSway1_4: -1363691421
+      broadleafWinterSway1_5: 890970766
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 51f3c63ed1fc1c44bb300d7ef28ee907
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1471836322157823403
+    second: tree_bigconifer_0
+  - first:
+      213: -5731800726547390343
+    second: tree_bigconifer_1
+  - first:
+      213: 1057292691266767464
+    second: tree_bigconifer_2
+  - first:
+      213: 7665880536096196463
+    second: tree_bigconifer_3
+  - first:
+      213: -3274951064301766061
+    second: tree_bigconifer_4
+  - first:
+      213: -8035328805437565903
+    second: tree_bigconifer_5
+  - first:
+      213: 146189806005586423
+    second: tree_bigconifer_6
+  - first:
+      213: 8089771737155628616
+    second: tree_bigconifer_7
+  - first:
+      213: -1502978468374158494
+    second: tree_bigconifer_8
+  - first:
+      213: 3851120403338329417
+    second: tree_bigconifer_9
+  - first:
+      213: -4917088975751456644
+    second: tree_bigconifer_10
+  - first:
+      213: -948585920272559229
+    second: tree_bigconifer_11
+  - first:
+      213: -4006773505066856671
+    second: tree_bigconifer_12
+  - first:
+      213: 8141613974409373589
+    second: tree_bigconifer_13
+  - first:
+      213: 2326092251762460561
+    second: tree_bigconifer_14
+  - first:
+      213: 232414997431938554
+    second: tree_bigconifer_15
+  - first:
+      213: -2384971884084843939
+    second: tree_bigconifer_16
+  - first:
+      213: 3658525405763999669
+    second: tree_bigconifer_17
+  - first:
+      213: 1929698636636991549
+    second: tree_bigconifer_18
+  - first:
+      213: 609730819163914615
+    second: tree_bigconifer_19
+  - first:
+      213: -7564933040567677813
+    second: tree_bigconifer_20
+  - first:
+      213: -7324317969578384017
+    second: tree_bigconifer_21
+  - first:
+      213: -2911455492236117521
+    second: tree_bigconifer_22
+  - first:
+      213: -5571536407232298656
+    second: tree_bigconifer_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 20
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bigconiferIdle0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 786
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5577f73281d92ac145dbf48a8fa4c8b5
+      internalID: 1680152853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle0_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 786
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6844fa4875e12ac6ff031444ff32c7a5
+      internalID: -1855447667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle0_2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 786
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe680e0131863c4ac11ee7b06a080cc0
+      internalID: -934407590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle0_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 786
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e323e6ce3570bb0466738392929d78f
+      internalID: 1684051254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle0_4
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 786
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8c21ccaa9f0bf7a2cf2fc9a57ebb863
+      internalID: -1382451479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle0_5
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 786
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc6ad11b6d0e5f96e7b3372a5be56301
+      internalID: 719427670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 524
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a7bc8aec322f85d6b067f5dd546cc87
+      internalID: -1068841417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle1_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 524
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d83b64b8bb344f278451f38276df878
+      internalID: 1198976500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle1_2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 524
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3eb331c1d67bbfcf65bc83dd72834c63
+      internalID: -1646398589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle1_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 524
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aba273f6b185e8200f363edf8195826f
+      internalID: -502383239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle1_4
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 524
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 199a0698cf35db6ea058f49f9ddfea37
+      internalID: 1895165346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferIdle1_5
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 524
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 330fcfdcd2a2293c3cea57fc24a37d9d
+      internalID: -113457729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 262
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 335ca6dc6276acc79de0fc17d666a15a
+      internalID: 1612777913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway0_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 262
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5ea8f3436c2431599bda6536189fca0
+      internalID: -772677436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway0_2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 262
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9364c28ca46a469dda488e9731f3874a
+      internalID: -1366938651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway0_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 262
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245bfe6f708f8dca43d5d8d69629a788
+      internalID: -531220416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway0_4
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 262
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a88cdb2bc4aac299001e2a6ebb18cdf
+      internalID: 456123589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway0_5
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 262
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 275491ed41e8484e5092e5b7045991df
+      internalID: -1499220825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d526afb19ef9c0f5a4e6b5349744c573
+      internalID: -841601173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway1_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ddb196731b62407f787b67c8a1fc878
+      internalID: -1287950026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway1_2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 0
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe93d4a1eb81a399130ca7e9f4353a7f
+      internalID: -1231451545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway1_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 0
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 667a2e27b82c7b6f714e91e2d4e5ca0b
+      internalID: 1133932851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway1_4
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 0
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4b5b0561736282c90f7a8959a4fdd2
+      internalID: 789778851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigconiferSway1_5
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 0
+        width: 130
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5426618f0a156cd1530b240d31f32095
+      internalID: 1412402091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: daba54272becdda42b885af493721396
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bigconiferIdle0_0: 1680152853
+      bigconiferIdle0_1: -1855447667
+      bigconiferIdle0_2: -934407590
+      bigconiferIdle0_3: 1684051254
+      bigconiferIdle0_4: -1382451479
+      bigconiferIdle0_5: 719427670
+      bigconiferIdle1_0: -1068841417
+      bigconiferIdle1_1: 1198976500
+      bigconiferIdle1_2: -1646398589
+      bigconiferIdle1_3: -502383239
+      bigconiferIdle1_4: 1895165346
+      bigconiferIdle1_5: -113457729
+      bigconiferSway0_0: 1612777913
+      bigconiferSway0_1: -772677436
+      bigconiferSway0_2: -1366938651
+      bigconiferSway0_3: -531220416
+      bigconiferSway0_4: 456123589
+      bigconiferSway0_5: -1499220825
+      bigconiferSway1_0: -841601173
+      bigconiferSway1_1: -1287950026
+      bigconiferSway1_2: -1231451545
+      bigconiferSway1_3: 1133932851
+      bigconiferSway1_4: 789778851
+      bigconiferSway1_5: 1412402091
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 1f061b431fe0d274b81edd577b911489
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2425624128048924649
+    second: tree_broadleaf_0
+  - first:
+      213: 7585153259437360946
+    second: tree_broadleaf_1
+  - first:
+      213: 395265916218395371
+    second: tree_broadleaf_2
+  - first:
+      213: 8381174223971783155
+    second: tree_broadleaf_3
+  - first:
+      213: 271241021804340599
+    second: tree_broadleaf_4
+  - first:
+      213: -3817556371828040118
+    second: tree_broadleaf_5
+  - first:
+      213: 8565343691704825364
+    second: tree_broadleaf_6
+  - first:
+      213: 6370657828950523088
+    second: tree_broadleaf_7
+  - first:
+      213: -3059557063027940694
+    second: tree_broadleaf_8
+  - first:
+      213: 772332032878065564
+    second: tree_broadleaf_9
+  - first:
+      213: -2929626215954653364
+    second: tree_broadleaf_10
+  - first:
+      213: -2075181407442788340
+    second: tree_broadleaf_11
+  - first:
+      213: 4378384953898191296
+    second: tree_broadleaf_12
+  - first:
+      213: 7877788945975034248
+    second: tree_broadleaf_13
+  - first:
+      213: 3311077130386184459
+    second: tree_broadleaf_14
+  - first:
+      213: -1160302732740594975
+    second: tree_broadleaf_15
+  - first:
+      213: -1503700850630130190
+    second: tree_broadleaf_16
+  - first:
+      213: 6605888228369454026
+    second: tree_broadleaf_17
+  - first:
+      213: 4178249595499056566
+    second: tree_broadleaf_18
+  - first:
+      213: -7605941232540504595
+    second: tree_broadleaf_19
+  - first:
+      213: 7872819536020712235
+    second: tree_broadleaf_20
+  - first:
+      213: -6530172263181358041
+    second: tree_broadleaf_21
+  - first:
+      213: 250294460555625509
+    second: tree_broadleaf_22
+  - first:
+      213: 3193496448058643734
+    second: tree_broadleaf_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 20
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: broadleafIdle0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62a05f36bf57561a48b812c92e55646c
+      internalID: 401650547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle0_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d499dd175061434caa8ad985ba5ecd20
+      internalID: -1579295371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle0_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 962b06f367d130b05bc984c18d63daf0
+      internalID: 1248651026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle0_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60e57cef235401ae3cf68033e2f72aa4
+      internalID: 1246583277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle0_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d82cd449a9aed1e11ed31baae433dda5
+      internalID: 760395312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle0_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 708
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a2efa9c1fdc0e6593b021fa77c6ca53
+      internalID: -1246490488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eefbf771cbf4f34e49f0419c71809918
+      internalID: -2075987799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle1_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d46b39e1b1c1cc2da509b5ca9a05b703
+      internalID: -2107383559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle1_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c474a263ce29c66baa24d53dba6fae3b
+      internalID: -1723025735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle1_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e09f9692cf55db91168c37518b2c77ef
+      internalID: -258082945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle1_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85a92137127efebfeb24e8fb74f698a6
+      internalID: -1142005320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafIdle1_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 472
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bfa467badf16b4e7858073fbe143aed
+      internalID: 1048885382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80e1b5b54ef9300fd875fdfeed25588f
+      internalID: 1942872835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway0_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e524bf95afb083710b81dabe5da11c42
+      internalID: -1368973735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway0_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46defb2856167635ee0e73ac34a56e5b
+      internalID: -702345868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway0_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9774831e7727f7d8d0e25749ec13dc31
+      internalID: -21693387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway0_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7de3e869eb964e07d66d42428a2b3d61
+      internalID: -669733468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway0_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 236
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c3bf7904ed3d7cef0093d84dd8c2634
+      internalID: -1429914610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50780a3854d1f04e482ebe041832d785
+      internalID: -2136104719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway1_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 917c92ff1d43428ee9419ea20e606faf
+      internalID: 452273202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway1_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6620d0a9cb61bd4cba25e97f1ec75b64
+      internalID: -42831444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway1_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5500962df416fd1b24dd046a3203bd36
+      internalID: -1642445993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway1_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c995ee729ba945a80faae395b00a98bd
+      internalID: 1497146406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: broadleafSway1_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 0
+        width: 190
+        height: 236
+      alignment: 9
+      pivot: {x: 0.5, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35c0d12ba39567a351a77a88ce6cd3d8
+      internalID: 2110854752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 298ba1263fbaf3c44a082d680c28dd69
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      broadleafIdle0_0: 401650547
+      broadleafIdle0_1: -1579295371
+      broadleafIdle0_2: 1248651026
+      broadleafIdle0_3: 1246583277
+      broadleafIdle0_4: 760395312
+      broadleafIdle0_5: -1246490488
+      broadleafIdle1_0: -2075987799
+      broadleafIdle1_1: -2107383559
+      broadleafIdle1_2: -1723025735
+      broadleafIdle1_3: -258082945
+      broadleafIdle1_4: -1142005320
+      broadleafIdle1_5: 1048885382
+      broadleafSway0_0: 1942872835
+      broadleafSway0_1: -1368973735
+      broadleafSway0_2: -702345868
+      broadleafSway0_3: -21693387
+      broadleafSway0_4: -669733468
+      broadleafSway0_5: -1429914610
+      broadleafSway1_0: -2136104719
+      broadleafSway1_1: 452273202
+      broadleafSway1_2: -42831444
+      broadleafSway1_3: -1642445993
+      broadleafSway1_4: 1497146406
+      broadleafSway1_5: 2110854752
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

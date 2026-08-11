@@ -44,6 +44,15 @@ public static class HorrorGame3DSetup
     const string HouseSideMirror = "Assets/Animation/house_side_mirror.png";
     const string GreenTree  = "Assets/Animation/tree_spruce.png";
     const string WinterTree = "Assets/Animation/tree_spruce_winter.png";
+    // The three landmark giants from the reworked handoff (Assets/Animation/TREES_UNITY.md). Same 6x4
+    // idle/sway grid as the spruce — only the cell is bigger — so one slice pass and one ForestField
+    // drive all four species.
+    const string BigConiferTree   = "Assets/Animation/tree_bigconifer.png";
+    const string BigConiferWinter = "Assets/Animation/tree_bigconifer_winter.png";
+    const string BroadleafTree    = "Assets/Animation/tree_broadleaf.png";
+    const string BroadleafWinter  = "Assets/Animation/tree_broadleaf_winter.png";
+    const string BareOakTree      = "Assets/Animation/tree_bareoak.png";
+    const string BareOakWinter    = "Assets/Animation/tree_bareoak_winter.png";
     const string GrassSheet = "Assets/Animation/grass_tufts.png";
     const string SmokePuffPng = "Assets/Animation/smoke_puff.png";
     const string PropsAutumn = "Assets/Animation/props_autumn.png";
@@ -77,7 +86,7 @@ public static class HorrorGame3DSetup
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
     const int DrivingSetupVersion = 10;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
-    const int ForestSetupVersion  = 1;   // bump to re-grow the Exterior woods in place (never wipes the scene)
+    const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
 
     static int _renderer3DIndex = 1;
 
@@ -485,7 +494,7 @@ public static class HorrorGame3DSetup
     public static void BuildExterior()
     {
         EnsureRenderer3D();
-        var spruce = EnsureSpruceSprites();   // reworked 6x4 sheets: 12-frame idle + 12-frame dread sway
+        var spruce = EnsureTreeSprites();     // reworked 6x4 sheets: 12-frame idle + 12-frame dread sway, per species
         SliceGrid(GrassSheet, 32f, 0f, 32, 32, 6, new[] { "grassa_", "grassb_", "grassc_" });
         var grass = LoadSheetSprites(GrassSheet, "grass");
 
@@ -2888,28 +2897,57 @@ public static class HorrorGame3DSetup
     }
 
     // -------------------------------------------------------------- the woods
-    // The reworked spruce sheets (Assets/Animation/TREES_UNITY.md): 6 cols x 4 rows of 96x196 cells —
-    // rows 0-1 are a 12-frame IDLE breath, rows 2-3 a 12-frame dread SWAY. Sliced bottom-pivoted so a
-    // tree stays planted whatever we scale it to.
-    const int TreeCellW = 96, TreeCellH = 196;
-    const float TreePpu = 20f;        // 196 px cell -> ~9.8 world units, so a grown spruce towers over the cabin
-    const float TreePivotY = 0.05f;   // the sheet bakes a ground shadow into the bottom ~8% of the cell
+    // The reworked tree sheets (Assets/Animation/TREES_UNITY.md): every species is 6 cols x 4 rows —
+    // rows 0-1 a 12-frame IDLE breath, rows 2-3 a 12-frame dread SWAY — and only the cell size differs.
+    // Sliced bottom-pivoted so a tree stays planted whatever we scale it to.
+    const float TreePpu = 20f;        // shared by every species, so the taller cells ARE taller trees
+    const float TreePivotY = 0.05f;   // the sheets bake a ground shadow into the bottom ~5% of the cell
 
-    class SpruceKit { public Sprite[] summerIdle, summerSway, winterIdle, winterSway; }
-
-    static SpruceKit EnsureSpruceSprites()
+    // One row per species. The PPU is deliberately NOT renormalised per sheet: at 20 PPU a 196 px spruce
+    // cell is ~9.8 world units and a 262 px bare-oak cell is ~13.1, which is exactly the size spread the
+    // art was drawn for. Summer/winter prefixes stay distinct per sheet so re-slicing keeps the existing
+    // sprite ids stable (StableGuid hashes the sheet path + frame name).
+    struct TreeSpecies
     {
-        SliceGrid(GreenTree, TreePpu, TreePivotY, TreeCellW, TreeCellH, 6,
-                  new[] { "spruceIdle0_", "spruceIdle1_", "spruceSway0_", "spruceSway1_" });
-        SliceGrid(WinterTree, TreePpu, TreePivotY, TreeCellW, TreeCellH, 6,
-                  new[] { "winterIdle0_", "winterIdle1_", "winterSway0_", "winterSway1_" });
-        return new SpruceKit
+        public string name;                    // ForestField.Species label
+        public string summerPath, winterPath;
+        public string summerKey, winterKey;    // sliced-sprite name prefixes
+        public int cellW, cellH;
+        public TreeSpecies(string n, string sp, string wp, string sk, string wk, int w, int h)
+        { name = n; summerPath = sp; winterPath = wp; summerKey = sk; winterKey = wk; cellW = w; cellH = h; }
+    }
+
+    static readonly TreeSpecies[] TreeSpeciesTable =
+    {
+        new TreeSpecies("spruce",     GreenTree,       WinterTree,        "spruce",     "winter",            96, 196),
+        new TreeSpecies("bigconifer", BigConiferTree,  BigConiferWinter,  "bigconifer", "bigconiferWinter", 130, 262),
+        new TreeSpecies("broadleaf",  BroadleafTree,   BroadleafWinter,   "broadleaf",  "broadleafWinter",  190, 236),
+        new TreeSpecies("bareoak",    BareOakTree,     BareOakWinter,     "bareoak",    "bareoakWinter",    170, 262),
+    };
+
+    // Index 0 is the spruce the whole wall is built from; 1.. are the landmark giants.
+    const int SpruceSpecies = 0, FirstGiantSpecies = 1;
+
+    static ForestField.Species[] EnsureTreeSprites()
+    {
+        var kit = new ForestField.Species[TreeSpeciesTable.Length];
+        for (int i = 0; i < TreeSpeciesTable.Length; i++)
         {
-            summerIdle = LoadSheetSprites(GreenTree, "spruceIdle"),
-            summerSway = LoadSheetSprites(GreenTree, "spruceSway"),
-            winterIdle = LoadSheetSprites(WinterTree, "winterIdle"),
-            winterSway = LoadSheetSprites(WinterTree, "winterSway"),
-        };
+            var s = TreeSpeciesTable[i];
+            SliceGrid(s.summerPath, TreePpu, TreePivotY, s.cellW, s.cellH, 6,
+                      new[] { s.summerKey + "Idle0_", s.summerKey + "Idle1_", s.summerKey + "Sway0_", s.summerKey + "Sway1_" });
+            SliceGrid(s.winterPath, TreePpu, TreePivotY, s.cellW, s.cellH, 6,
+                      new[] { s.winterKey + "Idle0_", s.winterKey + "Idle1_", s.winterKey + "Sway0_", s.winterKey + "Sway1_" });
+            kit[i] = new ForestField.Species
+            {
+                name = s.name,
+                summerIdle = LoadSheetSprites(s.summerPath, s.summerKey + "Idle"),
+                summerSway = LoadSheetSprites(s.summerPath, s.summerKey + "Sway"),
+                winterIdle = LoadSheetSprites(s.winterPath, s.winterKey + "Idle"),
+                winterSway = LoadSheetSprites(s.winterPath, s.winterKey + "Sway"),
+            };
+        }
+        return kit;
     }
 
     static readonly Vector3 ForestCentre = new Vector3(0f, 0f, 6f);
@@ -2952,6 +2990,52 @@ public static class HorrorGame3DSetup
         new ForestBand(40.0f, 44.0f, 88, 0.78f, 1.12f, 0.26f, 1.00f, 0.45f, false),  // outskirts
         new ForestBand(44.0f, 48.0f, 96, 0.75f, 1.10f, 0.24f, 1.00f, 0.68f, false),  // far treeline
     };
+
+    // Landmark giants standing IN the spruce wall. They get their own rings rather than a share of the
+    // band counts, so the wall stays exactly as dense as it was and the giants read as individuals
+    // looming out of it.
+    //
+    // Scale sits on top of the sheets' already-taller cells (see TreePpu). The sentinel spruces top out
+    // near 17 world units, so a giant only reads as a landmark past roughly 20 — below that it's just
+    // another big tree. Hence the 1.5-2.2x range (TREES_UNITY.md calls for 1.2-2.5x): a treeline bare
+    // oak finishes around 26 units, crown well off the top of frame, which is the whole point of it.
+    struct GiantRing
+    {
+        public float r0, r1;      // radius range from ForestCentre
+        public int count;         // attempted (ones landing on a road, a doorstep or a trail are dropped)
+        public float s0, s1;      // scale range
+        public float bright;      // baked daylight brightness — low is the backlit silhouette of TREES_UNITY.md §3
+        public float winterMix;   // 0..1 share on the snow-loaded sheet
+        public float haze;        // 0..1 blend toward the mountain haze
+        public bool collide;      // trunk collider — only where the player actually walks
+        public GiantRing(float a, float b, int c, float x, float y, float br, float wm, float hz, bool col)
+        { r0 = a; r1 = b; count = c; s0 = x; s1 = y; bright = br; winterMix = wm; haze = hz; collide = col; }
+    }
+
+    // Counts are attempts, not survivors: the near rings overlap the yard, both road corridors and the
+    // neighbours' clearings, so a good half of the inner ones are dropped for want of room to stand.
+    static readonly GiantRing[] GiantRings =
+    {                                                                          //   bright haze
+        new GiantRing(12.0f, 15.5f, 14, 1.85f, 2.20f, 0.20f, 0.00f, 0.00f, true),   // over the clearing — near-silhouette
+        new GiantRing(17.0f, 25.0f, 16, 1.65f, 2.00f, 0.34f, 0.25f, 0.00f, true),   // standing back in the near/mid woods
+        new GiantRing(30.0f, 42.0f, 16, 1.50f, 1.80f, 0.30f, 0.85f, 0.35f, false),  // far crowns breaking the ridge line
+    };
+
+    // Giants are wide (a broadleaf cell is 190 px across) and buttressed, so they need more room than a
+    // spruce: a wider berth off the roads and the doorsteps, or a crown ends up hanging over a porch.
+    static bool GiantBlocked(Vector3 p)
+    {
+        if (ForestBlocked(p)) return true;
+        if (NearPath(p, 4.0f)) return true;
+        if (p.x > -6.5f && p.x < 7.5f && p.z < 6f && p.z > -50f) return true;   // the drive road, south out of town
+        var xz = new Vector2(p.x, p.z);
+        foreach (var c in ForestClearings)
+        {
+            float r = c.radius + 2.5f;
+            if ((xz - c.xz).sqrMagnitude < r * r) return true;
+        }
+        return false;
+    }
 
     // Ground the woods must not close over, and whether a trail is kept open to it from the clearing.
     struct Clearing
@@ -3005,12 +3089,14 @@ public static class HorrorGame3DSetup
 
     /// <summary>
     /// Plants the whole stand under one "Forest" root driven by a single <see cref="ForestField"/>:
-    /// sentinel elders on the treeline, then eight depth bands out to the far treeline, plus the debris
-    /// emitter. Deterministic (Hash01 off the tree index), so a re-grow doesn't churn the scene.
+    /// the landmark giants first, then sentinel elders on the treeline, then eight depth bands of spruce
+    /// out to the far treeline, plus the debris emitter. Deterministic (Hash01 off the tree index), so a
+    /// re-grow doesn't churn the scene.
     /// </summary>
-    static ForestField GrowForest(SpruceKit kit, Material mat)
+    static ForestField GrowForest(ForestField.Species[] kit, Material mat)
     {
-        if (kit == null || kit.summerIdle == null || kit.summerIdle.Length < ForestField.Frames)
+        if (kit == null || kit.Length == 0 ||
+            kit[SpruceSpecies].summerIdle == null || kit[SpruceSpecies].summerIdle.Length < ForestField.Frames)
         {
             Debug.LogError("[HorrorGame] GrowForest: tree_spruce.png didn't slice into 12 idle frames — is it the 576x784 sheet?");
             return null;
@@ -3020,19 +3106,21 @@ public static class HorrorGame3DSetup
         root.transform.position = ForestCentre;
 
         var field = root.AddComponent<ForestField>();
-        field.summerIdle = kit.summerIdle; field.summerSway = kit.summerSway;
-        field.winterIdle = kit.winterIdle; field.winterSway = kit.winterSway;
+        field.species = kit;
 
         var planted = new List<ForestField.Tree>();
         float rIn = ForestBands[0].r0, rOut = ForestBands[ForestBands.Length - 1].r1;
         var centreXZ = new Vector2(ForestCentre.x, ForestCentre.z);
 
-        void Plant(Vector3 pos, float scale, bool winter, float bright, float haze, bool collide, int seed)
+        void Plant(int sp, Vector3 pos, float scale, bool winter, float bright, float haze, bool collide, int seed)
         {
-            var frames = winter ? kit.winterIdle : kit.summerIdle;
-            if (frames == null || frames.Length == 0) frames = kit.summerIdle;
+            if (sp < 0 || sp >= kit.Length) sp = SpruceSpecies;
+            var set = kit[sp];
+            var frames = winter && set.winterIdle != null && set.winterIdle.Length > 0 ? set.winterIdle : set.summerIdle;
+            if (frames == null || frames.Length == 0) { set = kit[SpruceSpecies]; sp = SpruceSpecies; frames = set.summerIdle; }
 
-            var go = new GameObject(winter ? "Spruce_Winter" : "Spruce");
+            string label = string.IsNullOrEmpty(set.name) ? "Tree" : char.ToUpper(set.name[0]) + set.name.Substring(1);
+            var go = new GameObject(winter ? label + "_Winter" : label);
             go.transform.SetParent(root.transform);
             go.transform.position = pos;
             go.transform.localScale = Vector3.one * scale;
@@ -3054,17 +3142,20 @@ public static class HorrorGame3DSetup
             if (collide)
             {
                 // Thin trunk collider: something for the third-person camera to pull in front of, and it
-                // stops you walking through a trunk. Slim so it doesn't snag movement.
+                // stops you walking through a trunk. Slim so it doesn't snag movement — except on the
+                // giants, whose buttressed trunks are visibly metres across and can't be a stick.
+                bool isGiant = sp >= FirstGiantSpecies;
                 var col = go.AddComponent<CapsuleCollider>();
-                col.radius = 0.34f;
-                col.height = 5f;
-                col.center = new Vector3(0f, 2.5f, 0f);
+                col.radius = isGiant ? 0.62f : 0.34f;
+                col.height = isGiant ? 7f : 5f;
+                col.center = new Vector3(0f, col.height * 0.5f, 0f);
             }
 
             planted.Add(new ForestField.Tree
             {
                 t = go.transform,
                 sr = sr,
+                species = (byte)sp,
                 winter = winter,
                 phase = (byte)Mathf.Min(ForestField.Frames - 1, (int)(Hash01(seed * 211 + 5) * ForestField.Frames)),
                 depth01 = depth01,
@@ -3075,6 +3166,53 @@ public static class HorrorGame3DSetup
 
         int seedN = 0;
 
+        // ---- landmark giants first, so the spruce can be told to leave room around their trunks ----
+        int giantCount = kit.Length - FirstGiantSpecies;
+        var giantXZ = new List<Vector2>();
+        // Crowns are meant to overlap — that's the canopy — but a trunk is another matter: scaled past 2x
+        // a bare oak's base is metres across, so a spruce any closer than this is standing INSIDE it, and
+        // two giants that close are one silhouette with a seam down it.
+        const float SpruceOffGiant = 3.2f;   // spruce keep-out from a giant trunk
+        const float GiantsApart    = 6.5f;   // giant-to-giant
+
+        bool TooCloseToGiant(Vector3 p, float clearance)
+        {
+            foreach (var g in giantXZ)
+            {
+                float dx = p.x - g.x, dz = p.z - g.y;
+                if (dx * dx + dz * dz < clearance * clearance) return true;
+            }
+            return false;
+        }
+
+        if (giantCount > 0)
+        {
+            // Species rotate on the trees that actually GO IN, not on the attempts — hashing the species
+            // off the attempt index lets the dropped ones skew the mix, and with only a dozen giants in
+            // the whole wood a skew means a species the player never meets.
+            int giantTurn = 0;
+
+            for (int g = 0; g < GiantRings.Length; g++)
+            {
+                var ring = GiantRings[g];
+                float step = Mathf.PI * 2f / ring.count;
+                for (int i = 0; i < ring.count; i++, seedN++)
+                {
+                    float a = (i + 0.5f) * step + (Hash01(seedN * 601 + g * 23) - 0.5f) * step * 0.7f;
+                    float r = Mathf.Lerp(ring.r0, ring.r1, Hash01(seedN * 617 + g * 37));
+                    var pos = ForestCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+                    if (GiantBlocked(pos) || TooCloseToGiant(pos, GiantsApart)) continue;
+
+                    int sp = FirstGiantSpecies + (giantTurn++ % giantCount);
+                    Plant(sp, pos,
+                          Mathf.Lerp(ring.s0, ring.s1, Hash01(seedN * 643 + g * 43)),
+                          Hash01(seedN * 653 + g * 47) < ring.winterMix,
+                          ring.bright, ring.haze, ring.collide, seedN);
+                    giantXZ.Add(new Vector2(pos.x, pos.z));
+                }
+            }
+        }
+
         // Sentinels: a ring of elders standing right on the treeline, half again the height of the stand
         // and tinted almost to silhouette, so the clearing is fenced by things that loom over it.
         // Attempted generously: the ring overlaps the cabin yard and both road corridors, so roughly
@@ -3084,8 +3222,8 @@ public static class HorrorGame3DSetup
             float a = (i + 0.5f) / 14f * Mathf.PI * 2f + (Hash01(seedN * 401 + 3) - 0.5f) * 0.4f;
             float r = 11.0f + Hash01(seedN * 419 + 7) * 2.5f;
             var pos = ForestCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
-            if (ForestBlocked(pos)) continue;
-            Plant(pos, Mathf.Lerp(1.5f, 1.8f, Hash01(seedN * 433 + 11)), false, 0.24f, 0f, true, seedN);
+            if (ForestBlocked(pos) || TooCloseToGiant(pos, SpruceOffGiant)) continue;
+            Plant(SpruceSpecies, pos, Mathf.Lerp(1.5f, 1.8f, Hash01(seedN * 433 + 11)), false, 0.24f, 0f, true, seedN);
         }
 
         for (int b = 0; b < ForestBands.Length; b++)
@@ -3097,8 +3235,8 @@ public static class HorrorGame3DSetup
                 float a = (i + 0.5f) * step + (Hash01(seedN * 131 + b * 17) - 0.5f) * step * 0.85f;
                 float r = Mathf.Lerp(band.r0, band.r1, Hash01(seedN * 197 + b * 29));
                 var pos = ForestCentre + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
-                if (ForestBlocked(pos)) continue;
-                Plant(pos,
+                if (ForestBlocked(pos) || TooCloseToGiant(pos, SpruceOffGiant)) continue;
+                Plant(SpruceSpecies, pos,
                       Mathf.Lerp(band.s0, band.s1, Hash01(seedN * 251 + b * 13)),
                       Hash01(seedN * 173 + b * 31) < band.winterMix,
                       band.bright, band.haze, band.collide, seedN);
@@ -3127,7 +3265,7 @@ public static class HorrorGame3DSetup
     [MenuItem("Tools/Horror Game/Reforest Exterior (Dense Woods)")]
     public static void ReforestExterior()
     {
-        var kit = EnsureSpruceSprites();
+        var kit = EnsureTreeSprites();
         var scene = EditorSceneManager.OpenScene(ExteriorSceneOut, OpenSceneMode.Single);
 
         int removed = 0;
@@ -3139,10 +3277,14 @@ public static class HorrorGame3DSetup
         if (woods == null) return;
         woods.sky = GameObject.Find("Sky")?.GetComponent<SkyController>();
 
+        int giants = 0;
+        foreach (var t in woods.trees) if (t.species >= FirstGiantSpecies) giants++;
+
         EditorSceneManager.SaveScene(scene, ExteriorSceneOut);
         Debug.Log("[HorrorGame] Reforested the Exterior: cleared " + removed + " old tree object(s) and grew " +
-                  woods.trees.Length + " spruces in eight depth bands + sentinels, all driven by one ForestField " +
-                  "(idle/sway flip-book, travelling gusts, dread + night tinting) with canopy debris.");
+                  (woods.trees.Length - giants) + " spruces in eight depth bands + sentinels, with " + giants +
+                  " landmark giants (bigconifer / broadleaf / bareoak) standing in them — all driven by one " +
+                  "ForestField (idle/sway flip-book, travelling gusts, dread + night tinting) with canopy debris.");
     }
 
     // -------------------------------------------------------------- choppable trees vs the roads

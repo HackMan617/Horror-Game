@@ -16,6 +16,41 @@ Play rate   8–12 fps  (10 is the sweet spot)
 Pine / snag / ridge share the same 6×4 / idle-sway layout if you export them the same way; the
 depth code below treats them all identically — only the `Sprite[]` you feed in differs.
 
+### Species & cell sizes
+
+Each species exports on the same 6×4 idle/sway grid; only the **cell size** differs, so slice each
+sheet with Grid **By Cell Count 6 × 4** and the frame map above still holds.
+
+| Species | Cell (px) | Role |
+|---|---|---|
+| `spruce` | 96 × 196 | standard dark spire |
+| `pine` | 108 × 184 | rounder, open boughs |
+| `snag` | 84 × 184 | dead bare trunk (accent) |
+| `ridge` | 44 × 70 | tiny distant silhouette |
+| `bigconifer` | 130 × 262 | **giant** overgrown conifer, moss-hung |
+| `broadleaf` | 190 × 236 | **giant** overgrown leaf-dome, vines |
+| `bareoak` | 170 × 262 | **gargantuan** bare oak — buttressed furrowed trunk, fractal crown |
+
+The three giants are landmarks: place a few, scale them **1.2–2.5×** so crowns run off the top of
+frame, and darken them into backlit silhouettes (see `ForestDepth.giant`). `bareoak` has no leaves
+and a massive trunk; `broadleaf`/`bigconifer` are heavily overgrown. Their sway is **slower and
+heavier** — a deep low creak instead of a fast flutter — baked into the sway frames via a per-species
+mass term, so you get it for free at the same 10 fps. Mix small trees and these giants in one stand
+for the intimidating size spread.
+
+Exported sheets (each summer + snow-loaded winter, all 6×4 = 24 frames):
+
+| Sheet | Cell | Sheet px |
+|---|---|---|
+| `tree_spruce[_winter].png` | 96 × 196 | 576 × 784 |
+| `tree_bigconifer[_winter].png` | 130 × 262 | 780 × 1048 |
+| `tree_broadleaf[_winter].png` | 190 × 236 | 1140 × 944 |
+| `tree_bareoak[_winter].png` | 170 × 262 | 1020 × 1048 |
+
+Import each exactly as §1 (Point filter, no compression, Sprite Mode Multiple, bottom-center pivot),
+sliced **Grid By Cell Count 6 × 4**. PPU: keep the giants at the **same 196 PPU as spruce** so their
+real cell height makes them tower — don't renormalize per sheet.
+
 ---
 
 ## 1 · Import settings (per sheet)
@@ -179,30 +214,40 @@ public class ForestField : MonoBehaviour
 {
     public TreeAnimator treePrefab;          // prefab with TreeAnimator + ForestDepth + SpriteRenderer
     public Sprite[] spruceSummer, spruceWinter, pineSummer, pineWinter;
+    public Sprite[] bigconiferSummer, bigconiferWinter;   // 130×262 giant conifer
+    public Sprite[] broadleafSummer,  broadleafWinter;    // 190×236 giant leaf-dome
+    public Sprite[] bareoakSummer,    bareoakWinter;      // 170×262 gargantuan bare oak
     public int midCount = 10, nearCount = 6, ridgeCount = 14;
     public float fieldWidth = 24f;           // world units across
-    public bool winter = false;
+    [SerializeField] bool winter_ = false;   // backing field; call SetWinter to change
 
     readonly List<ForestDepth> _depths = new();
 
     void Start()
     {
         // horizon ridge silhouettes (heavy haze, tiny)
-        for (int i = 0; i < ridgeCount; i++) Spawn(depth: Random.Range(0.02f, 0.12f), giant: false, sort: -200);
+        for (int i = 0; i < ridgeCount; i++) Spawn(spruceSummer, spruceWinter, depth: Random.Range(0.02f, 0.12f), giant: false, sort: -200);
         // mid stand
-        for (int i = 0; i < midCount; i++)  Spawn(depth: Random.Range(0.30f, 0.55f), giant: false, sort: 0);
+        for (int i = 0; i < midCount; i++)  Spawn(spruceSummer, spruceWinter, depth: Random.Range(0.30f, 0.55f), giant: false, sort: 0);
         // near, full-detail trees
-        for (int i = 0; i < nearCount; i++) Spawn(depth: Random.Range(0.70f, 0.92f), giant: false, sort: 200);
-        // two framing giants at the edges
-        Spawn(depth: 1.0f, giant: true, sort: 900, xNorm: 0.04f);
-        Spawn(depth: 1.0f, giant: true, sort: 900, xNorm: 0.96f);
+        for (int i = 0; i < nearCount; i++) Spawn(spruceSummer, spruceWinter, depth: Random.Range(0.70f, 0.92f), giant: false, sort: 200);
+
+        // ---- GARGANTUAN landmarks: mix small trees with these towering figures ----
+        // a towering overgrown conifer standing behind the near stand (full detail, slight haze)
+        Spawn(bigconiferSummer, bigconiferWinter, depth: 0.62f, giant: false, sort: 150, xNorm: 0.50f, extraScale: 1.6f);
+        // bare oak framing the left edge — darkened backlit silhouette, crown off the top
+        Spawn(bareoakSummer, bareoakWinter, depth: 1.0f, giant: true, sort: 900, xNorm: 0.06f, extraScale: 1.8f);
+        // overgrown broadleaf framing the right edge
+        Spawn(broadleafSummer, broadleafWinter, depth: 1.0f, giant: true, sort: 900, xNorm: 0.94f, extraScale: 1.7f);
+        // a distant hazed bare-oak on the ridge line (part of the size spread)
+        Spawn(bareoakSummer, bareoakWinter, depth: 0.20f, giant: false, sort: -100, xNorm: 0.62f, extraScale: 1.1f);
     }
 
-    void Spawn(float depth, bool giant, int sort, float xNorm = -1f)
+    void Spawn(Sprite[] summer, Sprite[] winter, float depth, bool giant, int sort, float xNorm = -1f, float extraScale = 1f)
     {
         var t = Instantiate(treePrefab, transform);
-        t.summerFrames = spruceSummer; t.winterFrames = spruceWinter;   // swap in pine for variety
-        t.winter = winter;
+        t.summerFrames = summer; t.winterFrames = winter;
+        t.winter = winter_;
         t.mode = TreeAnimator.Mode.Sway;
         t.phaseOffset = Random.Range(0, 12);
         t.fps = 10f;
@@ -214,15 +259,16 @@ public class ForestField : MonoBehaviour
         var d = t.GetComponent<ForestDepth>();
         d.depth01 = depth;
         d.giant = giant;
+        d.nearScale *= extraScale;      // giants tower — crowns run off the top of frame
         d.baseSortingOrder = sort;
-        d.hazeColor = winter ? new Color(0.62f, 0.69f, 0.77f) : new Color(0.79f, 0.54f, 0.41f);
+        d.hazeColor = winter_ ? new Color(0.62f, 0.69f, 0.77f) : new Color(0.79f, 0.54f, 0.41f);
         d.Apply();
         _depths.Add(d);
     }
 
     public void SetWinter(bool w)
     {
-        winter = w;
+        winter_ = w;
         foreach (var d in _depths)
         {
             d.hazeColor = w ? new Color(0.62f, 0.69f, 0.77f) : new Color(0.79f, 0.54f, 0.41f);

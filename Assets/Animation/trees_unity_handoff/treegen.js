@@ -60,40 +60,57 @@ window.TreeGen = (function(){
       const droop = droop0 + (droop1-droop0)*fr;
       tiers.push({y, w, thick, droop, fr});
     }
-    return {W,H,cx,top,base,ground:H-8,tiers,gap:!!gap,pine:!!pine,kind:'conifer'};
+    return {W,H,cx,top,base,ground:H-8,tiers,gap:!!gap,pine:!!pine,kind:'conifer',mass:opts.mass||0,overgrown:!!opts.overgrown};
   }
 
   const SPECS = {
     spruce: conifer({W:96,H:196,cx:48,top:12,base:158,N:12,wMax:41,wPow:1.18,
-                     thick0:5,thick1:15,droop0:5,droop1:11}),
+                     thick0:5,thick1:15,droop0:5,droop1:11,mass:0.12}),
     pine:   conifer({W:108,H:184,cx:54,top:12,base:150,N:9,wMax:44,round:true,
-                     thick0:6,thick1:13,droop0:10,droop1:19,gap:true,pine:true}),
+                     thick0:6,thick1:13,droop0:10,droop1:19,gap:true,pine:true,mass:0.18}),
+    // overgrown giant conifer — huge, many tiers, boughs sag heavy, hung with moss
+    bigconifer: conifer({W:130,H:262,cx:65,top:14,base:226,N:16,wMax:56,wPow:1.22,
+                     thick0:6,thick1:21,droop0:10,droop1:26,mass:0.8,overgrown:true}),
     snag:   {W:84,H:184,cx:42,top:10,base:150,ground:176,kind:'snag',
              stubs:[{y:44,dir:1,len:22,drop:9},{y:62,dir:-1,len:26,drop:12},
                     {y:82,dir:1,len:18,drop:8},{y:96,dir:-1,len:20,drop:14},
-                    {y:118,dir:1,len:14,drop:10}]},
-    ridge:  {W:44,H:70,cx:22,top:6,base:56,ground:62,kind:'ridge',N:9,wMax:17},
+                    {y:118,dir:1,len:14,drop:10}],mass:0.4},
+    ridge:  {W:44,H:70,cx:22,top:6,base:56,ground:62,kind:'ridge',N:9,wMax:17,mass:0},
+    // GARGANTUAN bare oak — wide fractal branching, no leaves, massive buttressed furrowed trunk
+    bareoak: {W:170,H:262,cx:85,ground:254,kind:'bare',mass:1,
+              splitY:126,baseHW:16,topHW:6,
+              mains:[{a:-1.02,len:80,th:8},{a:-0.42,len:98,th:9},{a:0.32,len:94,th:9},
+                     {a:1.05,len:74,th:7},{a:-0.06,len:76,th:6}]},
+    // overgrown broadleaf — massive dark sagging leaf-dome, hung with vines/moss
+    broadleaf: {W:190,H:236,cx:95,ground:228,kind:'broadleaf',mass:0.85,
+                trunkTop:132,trunkHW:10,crownCY:86,crownRX:84,crownRY:70},
   };
 
   // ---------------------------------------------------------------- motion
   // returns horizontal shift (logical px) for a tier at height-fraction hf (0 top..1 base)
-  function motion(mode, f, hf, seed){
+  function motion(mode, f, hf, seed, mass){
+    mass = mass||0;
     const ph = 2*Math.PI*f/FRAMES;
+    const light = 1 - mass;                                       // how much quick, sharp detail survives
     if(mode==='sway'){
       // DREAD gust — builds slow, then surges; the crown whips and shudders, and the whole
       // tree lurches one way at the peak like something is leaning on it. Seamless over 12f.
+      // GIANTS (high mass) move slower & heavier: the fast tremor/whip is damped and a deep,
+      // low creak (the fundamental) takes over — a huge groaning mass, not a fluttering twig.
       const raw  = 0.5 - 0.5*Math.cos(ph);
-      const gust = Math.pow(raw, 1.7);                            // lingers still, then convulses
-      const lag  = hf*2.15;                                       // boughs trail hard up the crown
-      const whip   = (5.2*(1-hf*0.12))*Math.sin(ph - lag + seed*0.6)*gust;
-      const twist  = 1.7*gust*Math.sin(2*ph + seed*1.3);          // asymmetric second-harmonic twist
-      const tremor = 0.75*gust*(1-hf*0.35)*Math.sin(6*ph + seed*3);// high-freq shudder
-      const lurch  = 0.95*gust*(0.5+hf*0.5);                       // biased lean toward one side
-      return whip + twist + tremor + lurch;
+      const gust = Math.pow(raw, 1.7 + mass*1.2);                  // heavier = lingers still far longer
+      const lag  = hf*2.15;
+      const whip   = (5.2*(1-hf*0.12))*Math.sin(ph - lag + seed*0.6)*gust*(0.4+0.6*light);
+      const twist  = 1.7*gust*Math.sin(2*ph + seed*1.3)*light;
+      const tremor = 0.75*gust*(1-hf*0.35)*Math.sin(6*ph + seed*3)*light*light;
+      const lurch  = 0.95*gust*(0.5+hf*0.5)*(0.6+0.4*light);
+      const creak  = mass*3.6*(0.3+hf*0.7)*Math.sin(ph + seed*0.4)*Math.pow(raw,0.85); // slow deep groan
+      return whip + twist + tremor + lurch + creak;
     }
-    // idle: uneasy breathing shimmer with an occasional micro-twitch (not quite at rest)
-    return 0.9*(0.4+hf*0.6)*Math.sin(ph + hf*2.1 + seed)
-         + 0.34*hf*Math.sin(3*ph + seed*2.0);
+    // idle: uneasy breathing shimmer with a micro-twitch; giants add a slow heavy settle
+    return 0.9*(0.4+hf*0.6)*Math.sin(ph + hf*2.1 + seed)*(0.5+0.5*light)
+         + 0.34*hf*Math.sin(3*ph + seed*2.0)*light
+         + mass*0.8*(0.3+hf*0.7)*Math.sin(ph + seed*0.3);
   }
 
   // ---------------------------------------------------------------- pixel put
@@ -203,11 +220,163 @@ window.TreeGen = (function(){
     // top → bottom so lower boughs overlap the ones above
     for(let i=0;i<S.tiers.length;i++){
       const t=S.tiers[i];
-      const dx=motion(mode,f,1-t.fr,i*0.7);
+      const dx=motion(mode,f,1-t.fr,i*0.7,S.mass);
       // crisp leader spike at the very top
       if(i===0){ const spike={...t,w:Math.max(1,Math.round(t.w*0.5)),thick:t.thick+3}; drawBough(px,cx,spike,dx,f,T,i,snow); }
       else drawBough(px,cx,t,dx,f,T,i,snow);
     }
+    // overgrown: shaggy moss/vine strands dangling off the mid boughs, swaying at the tips
+    if(S.overgrown){
+      for(let i=0;i<9;i++){
+        const tt=S.tiers[4 + (i*2)%(S.tiers.length-5)]; if(!tt) continue;
+        const side=(i%2)?1:-1;
+        const x=cx+side*Math.round(tt.w*0.72);
+        const y=Math.round(tt.y+tt.droop*0.6);
+        const vl=6+Math.round(hash(i,4)*16);
+        const vs=motion(mode,f,1,i*1.3,S.mass)*0.4;
+        for(let k=0;k<vl;k++){
+          const c = k>vl-3 ? T.rimSoft : mix(T.needleShadow,T.trunkDark,0.35);
+          px(Math.round(x+vs*(k/vl)), y+k, c);
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- recursive bare branch
+  function drawBranch(px,x0,y0,ang,len,th,depth,T,f,mode,mass){
+    const steps=Math.max(2,Math.round(len));
+    const bend = motion(mode,f,Math.min(1,0.35+depth*0.18),depth*1.7,mass)*0.02*(depth+1);
+    let x=x0,y=y0;
+    for(let k=0;k<steps;k++){
+      const kfr=k/steps;
+      const a = ang + bend*kfr;                    // tips whip; base stays planted
+      x += Math.sin(a); y -= Math.cos(a);
+      const thK = Math.max(0.6, th*(1-kfr*0.82));
+      const pr = Math.max(0, Math.round(thK));
+      const cxp=Math.cos(a), cyp=Math.sin(a);      // perpendicular across the limb
+      for(let o=-pr;o<=pr;o++){
+        const bx=Math.round(x+cxp*o), by=Math.round(y+cyp*o);
+        const lit=(cxp*o)<0;                       // toward the sun (left)
+        const edge=Math.abs(o)>=pr;
+        let c = depth<=1 ? (lit?T.trunkMid:T.trunkDark) : (lit?T.snagMid:T.trunkDark);
+        if(edge && lit && thK>1.2) c=T.trunkHi;
+        if(edge && !lit) c=T.trunkDark;
+        px(bx,by,c);
+      }
+      if(thK>1.6 && hash(k,depth)>0.5) px(Math.round(x-Math.abs(cxp)*pr), by(y), T.rimSoft, 0.6);
+    }
+    function by(v){ return Math.round(v); }
+    if(depth<4 && th>1.6){
+      const n = depth<2?3:2;
+      for(let i=0;i<n;i++){
+        const h=hash(x0*1.3+depth*7+i*3, y0*0.9+i*2);
+        const spread=(i-(n-1)/2)*(0.55+0.12*depth)+(h-0.5)*0.4;
+        drawBranch(px,x,y,ang+bend+spread,len*(0.62+h*0.14),th*0.6,depth+1,T,f,mode,mass);
+      }
+    } else {
+      // clawing bare twigs at the tip
+      const n=3+Math.round(hash(x,y)*2);
+      for(let i=0;i<n;i++){
+        const h=hash(x*2+i,y*2+depth);
+        const tang=ang+bend+(i-(n-1)/2)*0.5+(h-0.5)*0.45;
+        let tx=x,ty=y; const tl=5+Math.round(h*7);
+        for(let k=0;k<tl;k++){ tx+=Math.sin(tang); ty-=Math.cos(tang);
+          const lit=Math.sin(tang)<0;
+          px(Math.round(tx),Math.round(ty), k>tl-2?T.rimSoft:(lit?T.snagMid:T.trunkDark)); }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- GARGANTUAN bare oak
+  function drawBareOak(px,S,f,T,mode,snow){
+    const cx=S.cx, gy=S.ground, splitY=S.splitY, baseHW=S.baseHW, topHW=S.topHW, rootZone=36;
+    drawGround(px,cx,gy,T,Math.round(baseHW*2.6));
+    const hwAt=(y)=>{ const fr=(gy-y)/(gy-splitY); let hw=topHW+(baseHW-topHW)*Math.pow(1-fr,1.5);
+      if(y>gy-rootZone){ const rz=(y-(gy-rootZone))/rootZone; hw+=rz*rz*11; } return hw; };
+    const leanAt=(y)=>{ const fr=Math.max(0,(gy-y)/(gy-splitY)); return Math.round(motion(mode,f,fr,2,S.mass)*0.45*fr); };
+    // buttress roots first (behind trunk)
+    for(const dir of [-1,-0.5,0.5,1]){
+      const rl=15+Math.round(hash(dir*7,0)*9);
+      const rx0=cx+dir*baseHW*0.5, ry0=gy-rootZone+8;
+      for(let k=0;k<rl;k++){ const kf=k/rl, w=Math.max(1,Math.round(4.5*(1-kf)));
+        const xx=rx0+dir*k*1.15, yy=ry0+k*1.5;
+        for(let o=-w;o<=w;o++){ const t=(o+w)/(2*w||1); px(Math.round(xx+o),Math.round(yy), t<0.4?T.trunkMid:T.trunkDark); }
+      }
+    }
+    // massive furrowed trunk
+    for(let y=gy-1;y>=splitY;y--){
+      const hw=Math.max(1,Math.round(hwAt(y))), lean=leanAt(y);
+      for(let x=-hw;x<=hw;x++){
+        const t=(x+hw)/(2*hw||1);
+        let c=t<0.3?T.trunkHi:t<0.62?T.trunkMid:T.trunkDark;
+        const groove=Math.sin(x*1.5+Math.sin(y*0.05))*Math.sin(x*0.6);   // deep vertical furrows
+        if(groove>0.55) c=T.trunkDark;
+        const n=hash(x*3.1,y*1.3); if(n>0.9)c=T.trunkDark; else if(n<0.08)c=T.trunkHi;
+        px(cx+x+lean,y,c);
+      }
+      if(hash(0,y)>0.84) px(cx-hw+lean,y,T.rimSoft);                      // lit spine catches
+    }
+    // knots & a hollow scar
+    for(let i=0;i<3;i++){ const ky=splitY+28+i*38, kx=cx+(i%2?5:-5);
+      for(let a=0;a<6.28;a+=0.4) px(Math.round(kx+Math.cos(a)*3),Math.round(ky+Math.sin(a)*2.4),T.trunkDark);
+      px(kx,ky-3,T.trunkHi); px(kx,ky,T.trunkDark); }
+    const sy=splitY+66; for(let y=sy;y<sy+24;y++){ const w=Math.round(3*Math.sin((y-sy)/24*Math.PI));
+      for(let x=-w;x<=w;x++) px(cx+x-4,y,T.trunkDark); if(w>0) px(cx-4-w,y,T.trunkHi); }
+    // fractal bare crown
+    const bx=cx+leanAt(splitY);
+    for(const m of S.mains) drawBranch(px,bx,splitY,m.a,m.len,m.th,1,T,f,mode,S.mass);
+    // snow settles along the upper limbs
+    if(snow){ for(let i=0;i<60;i++){ const a=hash(i,3)*6.28, r=hash(i,7)*82;
+      const x=cx+Math.cos(a)*r, y=splitY-6-Math.abs(Math.sin(a))*80*hash(i,9);
+      if(y>4) px(Math.round(x),Math.round(y), hash(i,11)>0.5?SNOW.mid:SNOW.low); } }
+  }
+
+  // ---------------------------------------------------------------- overgrown broadleaf
+  function drawBroadleaf(px,S,f,T,mode,snow){
+    const cx=S.cx, gy=S.ground;
+    drawGround(px,cx,gy,T,Math.round(S.crownRX*0.9));
+    const shift=Math.round(motion(mode,f,1,0,S.mass)*0.7);
+    // stout trunk
+    for(let y=gy-1;y>=S.trunkTop;y--){
+      const fr=(gy-y)/(gy-S.trunkTop);
+      let hw=Math.max(1,Math.round(S.trunkHW*(1-fr*0.42) + (y>gy-22?((y-(gy-22))/22)*5:0)));
+      for(let x=-hw;x<=hw;x++){ const t=(x+hw)/(2*hw||1);
+        let c=t<0.3?T.trunkHi:t<0.62?T.trunkMid:T.trunkDark;
+        const n=hash(x*3.1,y*1.3); if(n>0.88)c=T.trunkDark; else if(n<0.09)c=T.trunkHi;
+        px(cx+x,y,c); }
+    }
+    for(const m of [{a:-0.55,len:44,th:4},{a:0.32,len:48,th:4},{a:-0.05,len:40,th:4}])
+      drawBranch(px,cx,S.trunkTop,m.a,m.len,m.th,2,T,f,mode,S.mass);
+    // sagging dome of leaf clumps
+    const clumps=[];
+    for(let v=-1;v<=1.02;v+=0.15) for(let u=-1;u<=1.02;u+=0.13){
+      if(u*u+v*v>1) continue; if(hash(u*13.3+7,v*11.1+3)<0.30) continue;
+      clumps.push({x:cx+u*S.crownRX+shift, y:S.crownCY+v*S.crownRY+(v>0?v*v*12:0), u, v, r:5+hash(u*3,v*3)*4});
+    }
+    clumps.sort((a,b)=>a.y-b.y);                                          // paint top clumps first
+    for(const cl of clumps){
+      const r=cl.r;
+      for(let dy=-r;dy<=r;dy++) for(let dx=-r;dx<=r;dx++){
+        if(dx*dx+dy*dy>r*r) continue;
+        const ny=dy/r;
+        let c = ny<-0.2 ? (cl.u<0?T.needleHi:T.needleLight) : ny>0.45 ? T.needleDark : T.needleMid;
+        const n=hash((cl.x+dx)*1.7,(cl.y+dy)*1.3);
+        if(n>0.86)c=mix(c,T.needleHi,0.4); else if(n<0.12)c=mix(c,T.needleDark,0.5);
+        px(Math.round(cl.x+dx),Math.round(cl.y+dy),c);
+      }
+      if(cl.v<-0.2) px(Math.round(cl.x-r*0.6),Math.round(cl.y-r*0.7),T.rim);
+    }
+    // backlit rim along the whole crown top
+    for(let a=-1;a<=1;a+=0.045){ const x=cx+a*S.crownRX*0.92+shift, y=S.crownCY-Math.sqrt(Math.max(0,1-a*a))*S.crownRY;
+      if(hash(x*1.1,y)>0.32) px(Math.round(x),Math.round(y-1),T.rim); }
+    // vines / moss dangling from the underside, swaying at the tips
+    for(let i=0;i<8;i++){ const a=hash(i,2)*2-1; const x=cx+a*S.crownRX*0.72+shift;
+      let y=S.crownCY+Math.sqrt(Math.max(0,1-a*a))*S.crownRY*0.9;
+      const vl=8+Math.round(hash(i,5)*18), vs=motion(mode,f,1,i,S.mass)*0.5;
+      for(let k=0;k<vl;k++) px(Math.round(x+vs*(k/vl)), Math.round(y+k), k>vl-3?T.rimSoft:mix(T.needleShadow,T.trunkDark,0.4)); }
+    // snow caps on the up-facing clumps
+    if(snow){ for(const cl of clumps){ if(cl.v<-0.1){ for(let dx=-cl.r;dx<=cl.r;dx++){
+      if(hash(cl.x+dx,cl.y)>0.5) px(Math.round(cl.x+dx),Math.round(cl.y-cl.r*0.8),cl.u<0?SNOW.hi:SNOW.mid); } } } }
   }
 
   function drawSnagTree(px,S,f,T,mode,snow){
@@ -216,7 +385,7 @@ window.TreeGen = (function(){
     // leaning dead trunk
     for(let y=S.top;y<=S.ground-1;y++){
       const fr=(y-S.top)/(S.ground-S.top);
-      const lean=Math.round(motion(mode,f,1-fr,3)*0.5 + Math.sin(fr*3)*1.5*(1-fr));
+      const lean=Math.round(motion(mode,f,1-fr,3,S.mass)*0.5 + Math.sin(fr*3)*1.5*(1-fr));
       const w=Math.round(1+fr*1.8);
       for(let x=-w;x<=w;x++){
         const t=(x+w)/(2*w||1);
@@ -229,7 +398,7 @@ window.TreeGen = (function(){
     }
     // broken branch stubs
     for(const st of S.stubs){
-      const swayx=Math.round(motion(mode,f,1-(st.y-S.top)/(S.ground-S.top),st.y)*0.6);
+      const swayx=Math.round(motion(mode,f,1-(st.y-S.top)/(S.ground-S.top),st.y,S.mass)*0.6);
       for(let k=0;k<st.len;k++){
         const x=cx+st.dir*(2+k)+swayx;
         const y=Math.round(st.y + st.drop*Math.pow(k/st.len,1.6));
@@ -242,7 +411,7 @@ window.TreeGen = (function(){
     // snow clings to the up-facing sides of the dead limbs + a cap on the broken top
     if(snow){
       for(const st of S.stubs){
-        const swayx=Math.round(motion(mode,f,1-(st.y-S.top)/(S.ground-S.top),st.y)*0.6);
+        const swayx=Math.round(motion(mode,f,1-(st.y-S.top)/(S.ground-S.top),st.y,S.mass)*0.6);
         for(let k=1;k<st.len;k+=2){ const x=cx+st.dir*(2+k)+swayx; const y=Math.round(st.y + st.drop*Math.pow(k/st.len,1.6)); if(hash(x,y)>0.4) px(x,y-1, SNOW.mid); }
       }
       for(let x=-2;x<=2;x++){ const yy=S.top+(2-Math.abs(x)); px(cx+x,yy, Math.abs(x)<2?SNOW.hi:SNOW.low); }
@@ -254,7 +423,7 @@ window.TreeGen = (function(){
     const core=window.TreeGen.mix(T.needleDark,T.hazeDeep,0.35);   // dark silhouette
     const body=window.TreeGen.mix(core,T.haze,0.22);
     const lit=window.TreeGen.mix(core,T.rim,0.18);
-    const dx=motion(mode,f,1,0)*0.5;
+    const dx=motion(mode,f,1,0,S.mass)*0.5;
     // SOLID filled conifer silhouette (no gaps) — a soft dark shape against the far sky
     let prevW=0;
     for(let y=S.top;y<=S.base;y++){
@@ -283,6 +452,8 @@ window.TreeGen = (function(){
     const snow=!!opts.snow;
     if(S.kind==='snag') drawSnagTree(px,S,f,T,mode,snow);
     else if(S.kind==='ridge') drawRidgeTree(px,S,f,T,mode,snow);
+    else if(S.kind==='bare') drawBareOak(px,S,f,T,mode,snow);
+    else if(S.kind==='broadleaf') drawBroadleaf(px,S,f,T,mode,snow);
     else drawConiferTree(px,S,f,T,mode,snow);
   }
 

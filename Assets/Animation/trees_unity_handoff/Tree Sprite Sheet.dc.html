@@ -130,13 +130,17 @@ class Component extends DCLogic {
     const mid = [['spruce',0.52],['pine',0.5],['spruce',0.6],['pine',0.55],['spruce',0.5],['snag',0.5],['spruce',0.62],['pine',0.52],['spruce',0.56],['pine',0.5]];
     mid.forEach((m,i)=> inst.push({ sp:m[0], x: -20 + i*60, baseY: H-56 + (i%2)*5, scale:m[1],
                   a: 0.66 + (i%3)*0.05, ph:(i*7)%12, tint:{a:0.30} }));
-    // band 2 — near, full-detail trees
+    // a distant bare-oak landmark on the ridge line, heavily hazed (part of the size spread)
+    inst.push({ sp:'bareoak', x: 300, baseY:H-50, scale:0.42, a:0.72, ph:2, tint:{a:0.36} });
+    // a towering overgrown conifer standing behind the near stand
+    inst.push({ sp:'bigconifer', x: 198, baseY:H+8, scale:1.0, a:1, ph:9, tint:{a:0.12} });
+    // band 2 — near, full-detail trees (overlap the giant's base)
     const near = [['spruce',0.98],['pine',0.92],['spruce',1.08],['snag',0.92],['pine',1.02],['spruce',0.95]];
     near.forEach((m,i)=> inst.push({ sp:m[0], x: -30 + i*104, baseY: H-14 + (i%2)*6, scale:m[1],
                   a:1, ph:(i*11)%12 }));
-    // band 3 — foreground giants (partly off-canvas, darkened backlit silhouettes framing the view)
-    inst.push({ sp:'spruce', x:-58, baseY:H+64, scale:2.15, a:1, ph:3, tint:{a:0.46, dark:true} });
-    inst.push({ sp:'pine',   x:452, baseY:H+80, scale:2.35, a:1, ph:8, tint:{a:0.5,  dark:true} });
+    // band 3 — GARGANTUAN framing giants: crowns run off the top, darkened backlit silhouettes
+    inst.push({ sp:'bareoak',   x:-40, baseY:H+72, scale:1.24, a:1, ph:3, tint:{a:0.32, dark:true} });
+    inst.push({ sp:'broadleaf', x:352, baseY:H+60, scale:1.18, a:1, ph:7, tint:{a:0.36, dark:true} });
     return inst;
   }
 
@@ -164,8 +168,8 @@ class Component extends DCLogic {
       ? 'linear-gradient(90deg,#cddae2,#5d8462,transparent)'
       : 'linear-gradient(90deg,#e0a24a,#7a3f2e,transparent)';
     if(this.captionEl && this.captionEl.childNodes[0]) this.captionEl.childNodes[0].nodeValue = winter
-      ? 'snow-loaded boughs, colder dread, slower drift \u00b7 '
-      : 'dense backlit stand, dread sway, leaves & sticks shedding \u00b7 ';
+      ? 'gargantuan bare, broadleaf & conifer giants tower over a snow-loaded stand \u00b7 '
+      : 'gargantuan bare oak, overgrown broadleaf & conifer giants tower over the stand \u00b7 ';
   }
 
   _start(){

@@ -5,11 +5,16 @@ using UnityEngine;
 /// <see cref="LoopSpriteAnimator"/> pair on every trunk — the stand is a few hundred trees now, so
 /// per-tree MonoBehaviours would be a few hundred Update calls a frame for no gain.
 ///
-/// Sheets are the reworked <c>tree_spruce(_winter).png</c> (Assets/Animation/TREES_UNITY.md): 6x4 of
-/// 96x196 cells, rows 0-1 = a 12-frame IDLE breath, rows 2-3 = a 12-frame dread SWAY (whip + twist +
-/// shudder + lurch). Each tree carries its own phase offset so the stand never pulses in lockstep.
+/// Sheets are the reworked tree sheets (Assets/Animation/TREES_UNITY.md): every species exports on the
+/// same 6x4 grid — rows 0-1 = a 12-frame IDLE breath, rows 2-3 = a 12-frame dread SWAY (whip + twist +
+/// shudder + lurch) — and only the cell size differs, so one flip-book clock drives the whole stand no
+/// matter which species a tree is. Each tree carries its own phase offset so it never pulses in lockstep.
 ///
 /// What makes the woods feel alive/wrong:
+///   * <b>Size spread</b> — the stand is mostly spruce with landmark giants (bigconifer, broadleaf,
+///     bareoak) mixed in, so the woods read as trees of wildly different ages rather than one
+///     silhouette stamped three hundred times. The giants' heavier, slower creak is baked into their
+///     sway frames, so they cost nothing extra to play.
 ///   * <b>Gusts</b> — a wave front sweeps across the stand on a random heading; trees flip to SWAY as
 ///     it passes and settle back to IDLE behind it, so the wind visibly travels through the trees.
 ///   * <b>Dread</b> — as <see cref="DreadDirector"/> climbs, gusts come more often, the sway plays
@@ -24,12 +29,25 @@ using UnityEngine;
 public class ForestField : MonoBehaviour
 {
     public const int Frames = 12;      // frames per loop; idle is 0-11, sway 12-23 on the sheet
+    const int SheetsPerSpecies = 4;    // summer idle/sway + winter idle/sway
+
+    /// <summary>
+    /// One species' four sliced sheets. Species differ only in cell size and silhouette — the frame
+    /// layout is identical, so adding one is a matter of handing the field another set of arrays.
+    /// </summary>
+    [System.Serializable]
+    public struct Species
+    {
+        public string name;            // "spruce", "bareoak", ... — labelling only
+        public Sprite[] summerIdle, summerSway, winterIdle, winterSway;
+    }
 
     [System.Serializable]
     public struct Tree
     {
         public Transform t;
         public SpriteRenderer sr;
+        public byte species;           // index into <see cref="species"/>; 0 is the spruce the wall is built from
         public bool winter;            // snow-loaded sheet (used deeper in the woods)
         public byte phase;             // 0..11 flip-book offset — no two neighbours breathe together
         public float depth01;          // 0 = clearing edge .. 1 = deepest murk
@@ -37,8 +55,8 @@ public class ForestField : MonoBehaviour
         public Color tint;             // baked daylight/calm depth tint (night + dread multiply into it)
     }
 
-    [Header("Sliced frames — 12 idle + 12 sway per sheet")]
-    public Sprite[] summerIdle, summerSway, winterIdle, winterSway;
+    [Header("Species — each a 6x4 sheet sliced into 12 idle + 12 sway frames")]
+    public Species[] species;
 
     [Header("The stand")]
     public Tree[] trees;
@@ -67,8 +85,8 @@ public class ForestField : MonoBehaviour
     /// <summary>0..1 — how hard the stand is being shaken right now. <see cref="ForestDebris"/> sheds off this.</summary>
     public float Shake01 { get; private set; }
 
-    Sprite[][] _sheets;      // [summerIdle, summerSway, winterIdle, winterSway]
-    byte[] _shown;           // last sheet*12+frame assigned per tree, so we only touch changed renderers
+    Sprite[][] _sheets;      // flattened species x [summerIdle, summerSway, winterIdle, winterSway]
+    ushort[] _shown;         // last sheet*12+frame assigned per tree, so we only touch changed renderers
     Transform _cam;
     Vector3 _lastCamPos = new Vector3(float.MaxValue, 0f, 0f);
     float _idleF, _swayF;
@@ -79,9 +97,21 @@ public class ForestField : MonoBehaviour
 
     void Awake()
     {
-        _sheets = new[] { summerIdle, summerSway, winterIdle, winterSway };
-        _shown = new byte[trees != null ? trees.Length : 0];
-        for (int i = 0; i < _shown.Length; i++) _shown[i] = 255;
+        // Flatten the species table once. A species with no winter sheet falls back to its summer one,
+        // so a half-exported species shows the wrong season rather than blinking out of the woods.
+        int n = species != null ? species.Length : 0;
+        _sheets = new Sprite[n * SheetsPerSpecies][];
+        for (int s = 0; s < n; s++)
+        {
+            var sp = species[s];
+            _sheets[s * SheetsPerSpecies + 0] = sp.summerIdle;
+            _sheets[s * SheetsPerSpecies + 1] = sp.summerSway;
+            _sheets[s * SheetsPerSpecies + 2] = Filled(sp.winterIdle) ? sp.winterIdle : sp.summerIdle;
+            _sheets[s * SheetsPerSpecies + 3] = Filled(sp.winterSway) ? sp.winterSway : sp.summerSway;
+        }
+
+        _shown = new ushort[trees != null ? trees.Length : 0];
+        for (int i = 0; i < _shown.Length; i++) _shown[i] = ushort.MaxValue;
 
         // How far the stand reaches, so a gust front can start clear of it and sweep all the way through.
         Vector3 c = transform.position;
@@ -94,6 +124,8 @@ public class ForestField : MonoBehaviour
         }
         _gustTimer = Random.Range(2f, gustInterval);
     }
+
+    static bool Filled(Sprite[] a) => a != null && a.Length > 0;
 
     void Update()
     {
@@ -137,11 +169,12 @@ public class ForestField : MonoBehaviour
                 sway = Mathf.Abs(proj - _gustPos) < gustWidth;
             }
 
-            int sheet = (tr.winter ? 2 : 0) + (sway ? 1 : 0);
+            int sheet = tr.species * SheetsPerSpecies + (tr.winter ? 2 : 0) + (sway ? 1 : 0);
+            if (sheet >= _sheets.Length) continue;
             var frames = _sheets[sheet];
             if (frames == null || frames.Length == 0) continue;
             int k = ((sway ? fs : fi) + tr.phase) % Frames;
-            byte slot = (byte)(sheet * Frames + k);
+            ushort slot = (ushort)(sheet * Frames + k);
             if (_shown[i] != slot)
             {
                 _shown[i] = slot;
