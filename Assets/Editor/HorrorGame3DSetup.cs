@@ -86,7 +86,7 @@ public static class HorrorGame3DSetup
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const string ChaseTruck = "Assets/Animation/Car/roadside_pack/truck_chase.png";   // third-person driving pose
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
-    const int DrivingSetupVersion = 11;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int DrivingSetupVersion = 12;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
 
     static int _renderer3DIndex = 1;
@@ -683,9 +683,19 @@ public static class HorrorGame3DSetup
 
         var spriteMat = SpriteMaterial();
 
-        // A long straight asphalt road down the middle. z −86 (far end) .. 46 (town end); you start near
-        // the town end and drive away south. Reaching the far end wraps you back to the start (DriveLoopTrigger).
-        const float zStart = 38f, zHome = 44f, zSignZ = 32f, zFar = -82f, zNorth = 46f, zSouth = -86f;
+        // A long straight asphalt road down the middle. z −96 (far end) .. 46 (town end); you start near
+        // the town end and drive away south. Rolling over the wrap line teleports you back to the start.
+        //
+        // The wrap used to sit at the very end of the road, so you spent the approach driving at the visible
+        // edge of the world — road, trees and all simply stopped ahead of you — and then cut to a dense
+        // start. Now the line sits one LOOP SPAN south of the start with the road and scenery continuing
+        // well past it, so there is always a full horizon of road ahead on both sides of the jump.
+        //
+        // OutOfTownLoopSpan is a multiple of BOTH scatter steps below (7 roadside, 9 forest) and the
+        // scatters index off world z folded into it — so the stretch you wrap INTO is the same stretch you
+        // wrapped OUT of, prop for prop, and the seam doesn't exist to be seen.
+        const float zStart = 38f, zHome = 44f, zSignZ = 32f, zNorth = 46f, zSouth = -96f;
+        const float zWrap = zStart - OutOfTownLoopSpan;   // −25
         var roadGo = new GameObject("DriveRoad", typeof(MeshFilter), typeof(MeshRenderer));
         var rt = roadGo.AddComponent<RoadTiler>();
         rt.material = RoadAtlasMaterial();
@@ -704,9 +714,11 @@ public static class HorrorGame3DSetup
         // Town sign + roadside scenery (dead trees, stop signs, debris, crows) down both shoulders.
         var road = EnsureRoadsideSprites();
         MakeTownSign(new Vector3(3.1f, 0f, zSignZ), road, spriteMat);
-        ScatterRoadside(road, spriteMat, zFrom: zFar + 6f, zTo: zStart - 6f);
+        // Scenery runs the WHOLE road, not just to the old wrap line: the stretch south of the wrap is what
+        // fills the horizon at the moment you jump, so it has to be as dressed as the start you land on.
+        ScatterRoadside(road, spriteMat, zFrom: zSouth + 4f, zTo: zStart - 6f, loopSpan: OutOfTownLoopSpan);
         // Dense giant-redwood forest walling both sides behind the roadside scenery.
-        ScatterForest(EnsureForestSprites(), spriteMat, zFrom: zFar + 4f, zTo: zStart - 2f);
+        ScatterForest(EnsureForestSprites(), spriteMat, zFrom: zSouth + 4f, zTo: zStart - 2f, loopSpan: OutOfTownLoopSpan);
         // Home in the distance: the log cabin standing at the head of the road (north/town end), a plain
         // world-anchored billboard so ordinary perspective looms it larger as you drive home and shrinks it
         // as you head out of town — you can always see the cabin far off up the road.
@@ -721,10 +733,12 @@ public static class HorrorGame3DSetup
         var td = truck.GetComponent<TruckDriver>();
         td.autoEnterOnStart = true; td.startHeadingYaw = 180f;
 
-        // Loop wrap: rolling onto the far (south) end teleports the truck back to the start by the sign,
-        // so continuing to drive endlessly returns you to the town sign.
+        // Loop wrap: crossing the line one loop span south of the start teleports the truck back to the
+        // start, so the road runs on forever. Road and scenery carry on well past the line, so the world
+        // never visibly ends ahead of you — and because the jump is exactly one span, what you see after it
+        // is what you were already looking at.
         var loop = new GameObject("LoopWrap").AddComponent<DriveLoopTrigger>();
-        loop.transform.position = new Vector3(0f, 0f, zFar);
+        loop.transform.position = new Vector3(0f, 0f, zWrap);
         loop.halfExtents = new Vector2(6f, 3f);
         loop.returnPosition = new Vector3(0f, 0.84f, zStart);
 
@@ -904,19 +918,24 @@ public static class HorrorGame3DSetup
     // A dense stand of giant redwoods walling both sides of the road (3 depth rows per side, staggered down
     // the length) for a thick forest. Big + far, so they're frozen while driving (OnFootProximityProp) and
     // only sway when you park and walk in among them.
-    static void ScatterForest(Sprite[][] forest, Material mat, float zFrom, float zTo)
+    static void ScatterForest(Sprite[][] forest, Material mat, float zFrom, float zTo, float loopSpan = 0f)
     {
         if (forest.Length == 0 || forest[0] == null || forest[0].Length == 0) return;
         float[] rowX = { 9f, 18f, 28f };
         int idx = 0;
         for (int side = -1; side <= 1; side += 2)
             for (int r = 0; r < rowX.Length; r++)
-                for (float z = zFrom; z <= zTo; z += 9f, idx++)
+                for (float z = zFrom; z <= zTo; z += ForestStep, idx++)
                 {
-                    var frames = forest[System.Math.Abs(idx * 7 + r) % forest.Length];
+                    // Variant and jitter key off the LOOPED position (plus which row/side this is), so the
+                    // same trunk stands in the same place a loop later.
+                    int key = LoopSlot(z, ForestStep, loopSpan, idx) * 7 + r * 2 + (side > 0 ? 1 : 0);
+                    var frames = forest[System.Math.Abs(key * 7 + r) % forest.Length];
                     if (frames == null || frames.Length == 0) continue;
-                    float jx = ((idx * 5) % 5 - 2) * 1.2f;
-                    float jz = ((idx * 13) % 7 - 3) * 0.8f;
+                    // (key * 5) % 5 is always 0 — the old jitter was a constant −2.4 offset on every trunk,
+                    // which is why the rows read as three ruler-straight lines. Keyed properly it staggers.
+                    float jx = (key % 5 - 2) * 1.2f;
+                    float jz = ((key * 13) % 7 - 3) * 0.8f;
                     float x = side * (rowX[r] + jx);
                     // Sink the base slightly below the ground plane so the trunk beds INTO the grass instead
                     // of appearing to hover above its own contact shadow (the billboard depth-bias otherwise
@@ -926,15 +945,32 @@ public static class HorrorGame3DSetup
                 }
     }
 
+    // How far the OutOfTown drive teleports when it wraps. Every scatter step below divides it, so the
+    // scenery pattern repeats with exactly that period and the wrap has nothing to give itself away with.
+    const float OutOfTownLoopSpan = 63f;   // 9 roadside steps of 7 = 7 forest steps of 9
+    const float RoadsideStep = 7f, ForestStep = 9f;
+
+    // Fold a world position onto the loop, in whole scatter steps. Indexing the pattern off THIS instead of
+    // a running counter is what makes two stretches one loop apart identical: the counter depends on where
+    // the scatter started, this depends only on where you are.
+    static int LoopSlot(float z, float step, float loopSpan, int fallback)
+    {
+        if (loopSpan <= 0f) return fallback;
+        int period = Mathf.Max(1, Mathf.RoundToInt(loopSpan / step));
+        int n = Mathf.RoundToInt(z / step) % period;
+        return n < 0 ? n + period : n;
+    }
+
     // Scatter roadside scenery down both shoulders between zFrom and zTo: mostly bare dead trees, some
     // leaning stop signs, the odd blowing debris, and a handful of crows flapping over the road.
-    static void ScatterRoadside(RoadsideKit kit, Material mat, float zFrom, float zTo)
+    static void ScatterRoadside(RoadsideKit kit, Material mat, float zFrom, float zTo, float loopSpan = 0f)
     {
         int i = 0;
-        for (float z = zFrom; z <= zTo; z += 7f, i++)
+        for (float z = zFrom; z <= zTo; z += RoadsideStep, i++)
         {
-            PlaceShoulderProp(kit, mat, i,     z,        side: -1);
-            PlaceShoulderProp(kit, mat, i + 5, z + 3.5f, side: +1);
+            int slot = LoopSlot(z, RoadsideStep, loopSpan, i);
+            PlaceShoulderProp(kit, mat, slot,     z,        side: -1);
+            PlaceShoulderProp(kit, mat, slot + 5, z + 3.5f, side: +1);
         }
         for (int c = 0; c < 7; c++)
         {

@@ -40,6 +40,8 @@ public class CarLights : MonoBehaviour
     float _rumbleT;
     Vector3 _rumbleOff;    // offset currently added to the transform (subtracted back off next frame)
     Vector3 _lastRumble;   // the jitter being held until the interval refreshes it
+    TruckDriver _driver;   // null on parked scenery trucks
+    bool _lookedForDriver;
 
     // pooled light children (max 2 headlights + 2 blink lamps per view)
     SpriteRenderer _core0, _core1, _halo0, _halo1, _cone0, _cone1, _blink0, _blink1;
@@ -83,6 +85,13 @@ public class CarLights : MonoBehaviour
         AllOff();
     }
 
+    // Is this truck under way? Looked up lazily — most CarLights (parked scenery trucks) have no driver.
+    bool Driving()
+    {
+        if (!_lookedForDriver) { _driver = GetComponent<TruckDriver>(); _lookedForDriver = true; }
+        return _driver != null && _driver.IsDriving;
+    }
+
     SpriteRenderer Child(string n, Sprite s)
     {
         var go = new GameObject(n);
@@ -107,7 +116,13 @@ public class CarLights : MonoBehaviour
         // any ground. (Only third person showed it — CarLights is disabled in the first-person cockpit.)
         transform.position -= _rumbleOff;
         _rumbleOff = Vector3.zero;
-        if (on)
+
+        // ...and it stops entirely once you're actually driving. This is an IDLE cue — it exists to make a
+        // parked, running truck feel alive. Under way it does two bad things: it writes the transform every
+        // frame behind the CharacterController's back, and (third person only, since the cockpit disables
+        // this component) the chase camera follows the truck, so a deliberate 0.8–1.3 px shake on the truck
+        // becomes a shake of the entire view. The drive supplies its own motion; it doesn't need help.
+        if (on && !Driving())
         {
             _rumbleT -= Time.deltaTime;
             if (_rumbleT <= 0f)

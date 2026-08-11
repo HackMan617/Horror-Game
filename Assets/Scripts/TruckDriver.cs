@@ -65,6 +65,14 @@ public class TruckDriver : MonoBehaviour
 
     public bool IsDriving { get; private set; }
 
+    /// <summary>
+    /// The view the player last chose with V, remembered across trucks and across scene loads. Driving from
+    /// the Exterior road into OutOfTown swaps in a different truck in a different scene, and without this
+    /// its <see cref="startThirdPerson"/> put you straight back in the cockpit mid-drive — the view snapping
+    /// back on you at the boundary read as the drive resetting itself.
+    /// </summary>
+    static bool? _preferredThirdPerson;
+
     DrivingRig _rig;
     CockpitController _cockpit;
     AudioSource _driveLoop;
@@ -87,6 +95,8 @@ public class TruckDriver : MonoBehaviour
     Quaternion _playerRot0;    // player facing captured on enter, restored on exit
     float _camFov0 = -1f;      // the borrowed camera's own FOV, restored whenever we stop widening it
     float _speedCue;           // eased 0..1 speed the chase pull-back/FOV ride on
+    Vector3 _drivePos;         // where the drive left the truck, before any cosmetic nudge to the transform
+    float _camY;               // eased vertical follow — ground-contact micro-bounce must not shake the view
 
     void Awake()
     {
@@ -118,7 +128,7 @@ public class TruckDriver : MonoBehaviour
         IsDriving = true;
         _headingYaw = startHeadingYaw;
         _enterCooldown = 0.4f;
-        _thirdPerson = startThirdPerson;
+        _thirdPerson = _preferredThirdPerson ?? startThirdPerson;   // keep the view you were driving in
 
         // --- hide the walking player, borrow its camera ---
         var pgo = GameObject.Find("Player");
@@ -163,6 +173,8 @@ public class TruckDriver : MonoBehaviour
         _cc.center = new Vector3(0f, 1.0f - bottomBelowOrigin, 0f);   // capsule bottom = origin - bottomBelowOrigin = sprite bottom
         _cc.enabled = true;
         transform.rotation = Quaternion.Euler(0f, _headingYaw, 0f);
+        _drivePos = transform.position;
+        _camY = _drivePos.y;
 
         // --- driver seat (first-person eye point in the cab) ---
         _seat = new GameObject("DriverSeat").transform;
@@ -290,7 +302,7 @@ public class TruckDriver : MonoBehaviour
         if (_enterCooldown > 0f) _enterCooldown -= Time.deltaTime;
 
         // V flips first/third person mid-drive, exactly like the on-foot camera.
-        if (ToggleViewPressed()) { _thirdPerson = !_thirdPerson; ApplyView(); }
+        if (ToggleViewPressed()) { _thirdPerson = !_thirdPerson; _preferredThirdPerson = _thirdPerson; ApplyView(); }
 
         // get out once eased to a near-stop (small cooldown so the enter-press doesn't instantly exit)
         if (_enterCooldown <= 0f && _rig.speed < 0.06f && GetOutPressed())
@@ -319,9 +331,17 @@ public class TruckDriver : MonoBehaviour
         if (_driveLoop != null && _driveLoop.isPlaying) _driveLoop.pitch = drivingBasePitch + 0.4f * _rig.speed;
 
         Vector3 move = transform.forward * (_rig.speed * maxSpeed);
-        if (_cc.isGrounded && _vSpeed < 0f) _vSpeed = -2f;
+        // Just enough downward bias to stay grounded. At -2 the truck was driven ~0.03 units into the road
+        // every frame and shoved back out again — a half-pixel vertical buzz at 16 ppu that the chase camera
+        // followed faithfully, so the whole view shimmered while driving.
+        if (_cc.isGrounded && _vSpeed < 0f) _vSpeed = -1f;
         _vSpeed += gravity * dt;
         _cc.Move((move + Vector3.up * _vSpeed) * dt);
+
+        // The position the DRIVE put us at. The chase camera follows this rather than the live transform,
+        // which cosmetic effects (CarLights' rumble, anything added later) are free to nudge afterwards —
+        // and which they do from LateUpdate, in an order Unity does not define relative to ours.
+        _drivePos = transform.position;
     }
 
     // Place the third-person chase camera in world space behind the heading (not parented — the Billboard
@@ -338,6 +358,10 @@ public class TruckDriver : MonoBehaviour
         _speedCue = Mathf.MoveTowards(_speedCue, target, Time.deltaTime * 1.2f);
         if (_camFov0 > 0f) _mainCam.fieldOfView = _camFov0 + thirdPersonSpeedFov * _speedCue;
 
+        // Ease the height separately from the ground plane's exact contact height. Frame-rate independent,
+        // and quick enough to keep up with a real slope while ignoring per-frame contact noise.
+        _camY = Mathf.Lerp(_camY, _drivePos.y, 1f - Mathf.Exp(-12f * Time.deltaTime));
+
         var ct = _mainCam.transform;
         ct.position = thirdPersonFollowLag > 0f
             ? Vector3.SmoothDamp(ct.position, ThirdPersonCamTarget(), ref _camVel, thirdPersonFollowLag)
@@ -346,21 +370,41 @@ public class TruckDriver : MonoBehaviour
     }
 
     Vector3 HeadingDir() => Quaternion.Euler(0f, _headingYaw, 0f) * Vector3.forward;
+
+    // What the chase camera frames: the driven position with the smoothed height, never the live transform.
+    Vector3 FollowPoint() => new Vector3(_drivePos.x, _camY, _drivePos.z);
+
     Vector3 ThirdPersonCamTarget() =>
-        transform.position - HeadingDir() * (thirdPersonDistance + thirdPersonSpeedPullback * _speedCue)
-                           + Vector3.up * thirdPersonHeight;
+        FollowPoint() - HeadingDir() * (thirdPersonDistance + thirdPersonSpeedPullback * _speedCue)
+                      + Vector3.up * thirdPersonHeight;
     Vector3 ThirdPersonLookTarget() =>
-        transform.position + HeadingDir() * thirdPersonLookAhead + Vector3.up * thirdPersonLookHeight;
+        FollowPoint() + HeadingDir() * thirdPersonLookAhead + Vector3.up * thirdPersonLookHeight;
 
     /// <summary>Seamlessly move the driving truck to a new spot (keeps heading/speed) — the road-loop wrap.</summary>
     public void TeleportTo(Vector3 worldPos)
     {
+        Vector3 from = transform.position;
+
         bool ccWas = _cc != null && _cc.enabled;
         if (_cc != null) _cc.enabled = false;      // CC would fight a direct position write
         transform.position = worldPos;
         PlantOnGround();
         _vSpeed = 0f;
         if (_cc != null) _cc.enabled = ccWas;
+        _drivePos = transform.position;
+        _camY = _drivePos.y;      // don't ease across the jump — that would sink the view in over a second
+
+        // Carry the chase camera by the same delta. In first person it is parented to the seat and rides
+        // along for free, but in third person it lives in world space and is eased toward the truck — so a
+        // wrap left it a hundred-odd units behind and SmoothDamp then FLEW it across the whole map to catch
+        // up, which is what read as the drive "resetting" after a long run. Moving it by the same delta
+        // keeps its exact relative pose, so the wrap is invisible; the velocity is cleared so the ease
+        // doesn't carry the old chase across the jump.
+        if (IsDriving && _thirdPerson && _mainCam != null)
+        {
+            _mainCam.transform.position += transform.position - from;
+            _camVel = Vector3.zero;
+        }
     }
 
     // Raise/lower the truck so its sprite's bottom edge (the wheels) rests on the ground under it, plus a
