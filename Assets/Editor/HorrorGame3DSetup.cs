@@ -60,6 +60,7 @@ public static class HorrorGame3DSetup
     const string RobertPropsNight = "Assets/Animation/props_robert_nightmare.png";
     const string BirdsPng    = "Assets/Animation/birds_flock.png";
     const string NoteSignPng = "Assets/Animation/note_sign.png";
+    const string ItemIcons   = "Assets/Animation/item_icons.png";   // 64x16: LOGS, AXE, NOTE, KEY
     const string PathCobble  = "Assets/Animation/path_cobble.png";
     const string RangeBackdrop = "Assets/Animation/range_backdrop.png";
     const string SunPng     = "Assets/Animation/sun.png";
@@ -86,8 +87,9 @@ public static class HorrorGame3DSetup
     const string RoadTiles  = "Assets/Animation/Car/roadside_pack/road_tiles.png";
     const string ChaseTruck = "Assets/Animation/Car/roadside_pack/truck_chase.png";   // third-person driving pose
     const int SetupVersion  = 33;  // bump to force the auto-run to rebuild the scenes
-    const int DrivingSetupVersion = 12;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
+    const int DrivingSetupVersion = 13;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
+    const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
 
     static int _renderer3DIndex = 1;
 
@@ -125,6 +127,15 @@ public static class HorrorGame3DSetup
                 EditorPrefs.SetInt("HG3D_ForestSetup", ForestSetupVersion);
                 try { ReforestExterior(); }
                 catch (System.Exception e) { Debug.LogError("[HorrorGame] Forest setup failed: " + e); }
+            }
+
+            // The inventory modal drops into the already-built scenes the same safe way — it adds one
+            // object and touches nothing else, so it can never cost us the hand-placed truck.
+            if (EditorPrefs.GetInt("HG3D_InventorySetup", 0) < InventorySetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_InventorySetup", InventorySetupVersion);
+                try { InstallInventory(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Inventory setup failed: " + e); }
             }
         };
     }
@@ -188,6 +199,7 @@ public static class HorrorGame3DSetup
         nightmare.sun = sun;
 
         new GameObject("DialogUI").AddComponent<DialogUI>();   // shared interaction prompt + dialog
+        MakeInventory();                                       // the I-key inventory modal
 
         var bed = new GameObject("Bed");
         bed.transform.position = new Vector3(5f, 0f, 8.2f);    // across the room, head to the north wall
@@ -540,6 +552,7 @@ public static class HorrorGame3DSetup
         if (exteriorRig != null) exteriorRig.minPitch = -88f;   // ~straight up (negative pitch = looking up)
 
         new GameObject("DialogUI").AddComponent<DialogUI>();
+        MakeInventory();
 
         // Cobble road first, so the forest can open up a corridor for it (trees skip the road cells).
         BuildPathway();                  // double-wide route to the door, branching out to neighbouring plots
@@ -710,6 +723,7 @@ public static class HorrorGame3DSetup
         BuildMountainRings().AddComponent<BackdropFollow>();
         BuildSkySystem(sun, 260f);
         new GameObject("DialogUI").AddComponent<DialogUI>();
+        MakeInventory();
 
         // Town sign + roadside scenery (dead trees, stop signs, debris, crows) down both shoulders.
         var road = EnsureRoadsideSprites();
@@ -717,8 +731,13 @@ public static class HorrorGame3DSetup
         // Scenery runs the WHOLE road, not just to the old wrap line: the stretch south of the wrap is what
         // fills the horizon at the moment you jump, so it has to be as dressed as the start you land on.
         ScatterRoadside(road, spriteMat, zFrom: zSouth + 4f, zTo: zStart - 6f, loopSpan: OutOfTownLoopSpan);
-        // Dense giant-redwood forest walling both sides behind the roadside scenery.
+        // Giant redwoods still punctuate both shoulders (two rows now, not three)...
         ScatterForest(EnsureForestSprites(), spriteMat, zFrom: zSouth + 4f, zTo: zStart - 2f, loopSpan: OutOfTownLoopSpan);
+        // ...and the gaps between and behind them fill with the dense multi-species stand, so the drive
+        // runs through real woods rather than past a colonnade you can see straight through.
+        var roadWoods = GrowRoadForest(EnsureTreeSprites(), spriteMat,
+                                       zFrom: zSouth + 4f, zTo: zStart - 2f, loopSpan: OutOfTownLoopSpan);
+        if (roadWoods != null) roadWoods.sky = GameObject.Find("Sky")?.GetComponent<SkyController>();
         // Home in the distance: the log cabin standing at the head of the road (north/town end), a plain
         // world-anchored billboard so ordinary perspective looms it larger as you drive home and shrinks it
         // as you head out of town — you can always see the cabin far off up the road.
@@ -792,6 +811,145 @@ public static class HorrorGame3DSetup
         truck.AddComponent<TruckDriver>();
         WireChaseTruck(truck);   // the third-person driving pose (V toggles to it mid-drive)
         return truck;
+    }
+
+    // -------------------------------------------------------------- the woods along the drive
+    // Depth rows either side of the road, near to far. Same shape as the Exterior's ForestBands and the
+    // same brightness trick: rows darken as they go back (you're looking into shade), then the outermost
+    // lift toward the mountain haze so the wall dissolves into the range instead of ending on a hard cut.
+    // Distances dodge the redwood rows (9 and 28) so trunks don't grow through each other.
+    struct RoadForestRow
+    {
+        public float x;            // distance from the road centre
+        public float s0, s1;       // scale range
+        public float bright;       // baked daylight brightness
+        public float winterMix;    // 0..1 share on the snow-loaded sheet
+        public float haze;         // 0..1 blend toward the mountain haze
+        public float giantChance;  // share of this row that is a landmark giant instead of a spruce
+        public RoadForestRow(float x_, float a, float b, float br, float wm, float hz, float g)
+        { x = x_; s0 = a; s1 = b; bright = br; winterMix = wm; haze = hz; giantChance = g; }
+    }
+
+    static readonly RoadForestRow[] RoadForestRows =
+    {                                                        //  bright  winter  haze  giants
+        new RoadForestRow( 6.0f, 0.80f, 1.10f, 0.70f, 0.00f, 0.00f, 0.00f),  // right at the verge — kept
+        new RoadForestRow(12.5f, 0.95f, 1.30f, 0.56f, 0.05f, 0.00f, 0.18f),  //   small so it frames the
+        new RoadForestRow(15.5f, 0.95f, 1.30f, 0.47f, 0.15f, 0.00f, 0.16f),  //   road rather than roofing it
+        new RoadForestRow(21.0f, 0.90f, 1.25f, 0.39f, 0.40f, 0.00f, 0.14f),
+        new RoadForestRow(24.5f, 0.90f, 1.25f, 0.32f, 0.65f, 0.06f, 0.12f),
+        new RoadForestRow(32.0f, 0.85f, 1.20f, 0.27f, 0.90f, 0.20f, 0.10f),
+        new RoadForestRow(39.0f, 0.80f, 1.15f, 0.24f, 1.00f, 0.42f, 0.08f),
+    };
+
+    // Spacing along the road. MUST divide OutOfTownLoopSpan (63 / 4.5 = 14) — every tree's species, scale
+    // and jitter is keyed off the position folded into the loop, so the wrap stays seamless.
+    const float RoadTreeStep = 4.5f;
+
+    /// <summary>
+    /// The dense woods walling the drive: one <see cref="ForestField"/> driving several hundred spruces
+    /// with the landmark giants (bigconifer, broadleaf, bareoak) mixed through them — the same stand that
+    /// rings the cabin, laid out along a road corridor instead of around a clearing. Driven as ONE
+    /// component for the same reason it is at home: this many per-tree MonoBehaviours would be hundreds
+    /// of Update calls a frame for nothing.
+    /// </summary>
+    static ForestField GrowRoadForest(ForestField.Species[] kit, Material mat, float zFrom, float zTo, float loopSpan)
+    {
+        if (kit == null || kit.Length == 0 ||
+            kit[SpruceSpecies].summerIdle == null || kit[SpruceSpecies].summerIdle.Length < ForestField.Frames)
+        {
+            Debug.LogError("[HorrorGame] GrowRoadForest: the tree sheets didn't slice — no roadside stand.");
+            return null;
+        }
+
+        var root = new GameObject("RoadForest");
+        var field = root.AddComponent<ForestField>();
+        field.species = kit;
+        // Gusts run the length of the road rather than across a clearing, so they sweep wider and faster.
+        field.gustWidth = 24f;
+        field.gustSpeed = 30f;
+
+        int giantCount = kit.Length - FirstGiantSpecies;
+        var planted = new List<ForestField.Tree>();
+        float xNear = RoadForestRows[0].x, xFar = RoadForestRows[RoadForestRows.Length - 1].x;
+
+        for (int side = -1; side <= 1; side += 2)
+            for (int r = 0; r < RoadForestRows.Length; r++)
+            {
+                var row = RoadForestRows[r];
+                for (float z = zFrom; z <= zTo; z += RoadTreeStep)
+                {
+                    // Everything about this tree hangs off where it stands IN THE LOOP, never a running
+                    // counter — that is what lets the wrap teleport land on an identical stretch of woods.
+                    int slot = LoopSlot(z, RoadTreeStep, loopSpan, 0);
+                    int key = slot * 53 + r * 11 + (side > 0 ? 7 : 0);
+
+                    bool giant = giantCount > 0 && Hash01(key * 17 + 3) < row.giantChance;
+                    // Which giant cycles off the key rather than a hash: a hash over only a few dozen
+                    // giants lands lopsided (one species barely appears), and it can't be a running
+                    // counter or the same spot would draw a different tree after a wrap.
+                    int sp = giant ? FirstGiantSpecies + key % giantCount : SpruceSpecies;
+
+                    float scale = Mathf.Lerp(row.s0, row.s1, Hash01(key * 29 + 7));
+                    if (giant) scale *= Mathf.Lerp(1.35f, 1.75f, Hash01(key * 31 + 11));
+
+                    bool winter = Hash01(key * 37 + 13) < row.winterMix;
+                    float jx = (Hash01(key * 41 + 17) - 0.5f) * 2.4f;
+                    float jz = (Hash01(key * 43 + 19) - 0.5f) * 3.2f;
+                    var pos = new Vector3(side * (row.x + jx), 0f, z + jz);
+
+                    var set = kit[sp];
+                    var frames = winter && set.winterIdle != null && set.winterIdle.Length > 0
+                               ? set.winterIdle : set.summerIdle;
+                    if (frames == null || frames.Length == 0) continue;
+
+                    string label = string.IsNullOrEmpty(set.name) ? "Tree"
+                                 : char.ToUpper(set.name[0]) + set.name.Substring(1);
+                    var go = new GameObject(winter ? label + "_Winter" : label);
+                    go.transform.SetParent(root.transform);
+                    go.transform.position = pos;
+                    go.transform.localScale = Vector3.one * scale;
+                    // Bake a facing toward the road so the Scene view reads before ForestField takes over.
+                    go.transform.rotation = Quaternion.Euler(0f, side > 0 ? -90f : 90f, 0f);
+
+                    Color tint = Color.Lerp(DepthTint(row.bright + (Hash01(key * 47 + 23) - 0.5f) * 0.12f),
+                                            ForestHaze, Mathf.Clamp01(row.haze));
+
+                    var sr = go.AddComponent<SpriteRenderer>();
+                    sr.sprite = frames[Hash01(key * 59 + 29) < 0.5f ? 0 : frames.Length / 2];
+                    sr.sharedMaterial = mat;
+                    sr.color = tint;
+                    sr.flipX = Hash01(key * 61 + 31) < 0.5f;
+
+                    planted.Add(new ForestField.Tree
+                    {
+                        t = go.transform,
+                        sr = sr,
+                        species = (byte)sp,
+                        winter = winter,
+                        phase = (byte)Mathf.Min(ForestField.Frames - 1,
+                                    (int)(Hash01(key * 67 + 37) * ForestField.Frames)),
+                        depth01 = Mathf.InverseLerp(xNear, xFar, row.x),
+                        swayBias = Hash01(key * 71 + 41),
+                        tint = tint,
+                    });
+                }
+            }
+
+        field.trees = planted.ToArray();
+        return field;
+    }
+
+    // The inventory screen (Assets/Animation/INVENTORY.md). Icons are 16x16, one row of four in the order
+    // the ItemDef table expects (LOGS, AXE, NOTE, KEY); the modal builds its own canvas, so this only has
+    // to hand it the sprites. Centre pivot — these are UI icons, not things standing on the ground.
+    static InventoryUI MakeInventory()
+    {
+        SliceStrip(ItemIcons, "item_", 4, 16, 16, 16f, 0.5f);
+        var ui = new GameObject("Inventory").AddComponent<InventoryUI>();
+        ui.iconSprites = LoadSheetSprites(ItemIcons, "item_");
+        if (ui.iconSprites.Length < 4)
+            Debug.LogWarning("[HorrorGame] item_icons.png didn't slice into 4 icons — is it the 64x16 sheet?");
+        return ui;
     }
 
     // The third-person driving pose (CAR.md "chase"): 12 frames of 64x32 — 0-3 straight, 4-7 steer left,
@@ -921,7 +1079,14 @@ public static class HorrorGame3DSetup
     static void ScatterForest(Sprite[][] forest, Material mat, float zFrom, float zTo, float loopSpan = 0f)
     {
         if (forest.Length == 0 || forest[0] == null || forest[0].Length == 0) return;
-        float[] rowX = { 9f, 18f, 28f };
+        // Two rows, not three. The redwoods still punctuate the drive — they're the biggest things out
+        // there — but the middle band is handed to the dense ForestField stand (GrowRoadForest) so the
+        // wall between them is made of hundreds of trees instead of a countable row of the same three.
+        float[] rowX = { 9f, 28f };
+        // ...and on the same depth ramp as that stand. Left at full white they blazed out of woods that
+        // recede into shade behind them, so the corridor read as bright scenery rather than deep forest.
+        float[] rowBright = { 0.66f, 0.34f };
+        float[] rowHaze = { 0f, 0.15f };
         int idx = 0;
         for (int side = -1; side <= 1; side += 2)
             for (int r = 0; r < rowX.Length; r++)
@@ -940,8 +1105,15 @@ public static class HorrorGame3DSetup
                     // Sink the base slightly below the ground plane so the trunk beds INTO the grass instead
                     // of appearing to hover above its own contact shadow (the billboard depth-bias otherwise
                     // lifts the visible base off the ground when seen from the driving camera).
-                    MakeAnimProp("Redwood", new Vector3(x, -0.4f, z + jz), frames, mat, 8f,
-                                 randomPhase: true, gateOnFoot: true, hideWhenAway: false);
+                    var tree = MakeAnimProp("Redwood", new Vector3(x, -0.4f, z + jz), frames, mat, 8f,
+                                            randomPhase: true, gateOnFoot: true, hideWhenAway: false);
+                    if (tree != null)
+                    {
+                        var rsr = tree.GetComponent<SpriteRenderer>();
+                        if (rsr != null)
+                            rsr.color = Color.Lerp(DepthTint(rowBright[r] + (Hash01(key * 83 + 7) - 0.5f) * 0.10f),
+                                                   ForestHaze, rowHaze[r]);
+                    }
                 }
     }
 
@@ -3362,6 +3534,30 @@ public static class HorrorGame3DSetup
         debris.clearingRadius = ForestBands[0].r0 - 3f;
 
         return field;
+    }
+
+    // Drops the inventory modal into every gameplay scene IN PLACE — one object added, nothing else in the
+    // scene touched, so (unlike a SetupVersion rebuild) the hand-placed truck and the rest of the
+    // hand-tended dressing survive. Idempotent: an existing one is replaced, which also re-wires the icons
+    // after the sheet is re-sliced.
+    [MenuItem("Tools/Horror Game/Install Inventory")]
+    public static void InstallInventory()
+    {
+        string[] scenes = { ExteriorSceneOut, SceneOut, OutOfTownSceneOut };
+        int done = 0;
+        foreach (var path in scenes)
+        {
+            if (!System.IO.File.Exists(path)) continue;
+            var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+            var old = Object.FindAnyObjectByType<InventoryUI>();
+            if (old != null) Object.DestroyImmediate(old.gameObject);
+            MakeInventory();
+            EditorSceneManager.SaveScene(scene, path);
+            done++;
+        }
+        Debug.Log("[HorrorGame] Inventory installed in " + done + " scene(s): press I for the 5-slot modal " +
+                  "(A/D move, 1-5 jump, Q drop, Esc close). Logs and the axe feed it from the real pickups; " +
+                  "the note and key are seeded placeholders.");
     }
 
     // Re-grows the woods IN PLACE in the already-built Exterior: the old sparse tree rings come out, the
