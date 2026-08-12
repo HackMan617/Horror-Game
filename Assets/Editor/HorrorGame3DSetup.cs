@@ -90,6 +90,7 @@ public static class HorrorGame3DSetup
     const int DrivingSetupVersion = 13;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
     const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
+    const int InteriorSetupVersion  = 1; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
 
     static int _renderer3DIndex = 1;
 
@@ -136,6 +137,16 @@ public static class HorrorGame3DSetup
                 EditorPrefs.SetInt("HG3D_InventorySetup", InventorySetupVersion);
                 try { InstallInventory(); }
                 catch (System.Exception e) { Debug.LogError("[HorrorGame] Inventory setup failed: " + e); }
+            }
+
+            // The cabin grows its second storey the same safe way. Sandbox3D carries hand-placed
+            // dressing (the Fireplace on the north wall) that a SetupVersion bump would erase, so the
+            // two-storey shell, the staircase and the bedroom install IN PLACE on their own pref.
+            if (EditorPrefs.GetInt("HG3D_InteriorSetup", 0) < InteriorSetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_InteriorSetup", InteriorSetupVersion);
+                try { InstallCabinInterior(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Interior setup failed: " + e); }
             }
         };
     }
@@ -229,6 +240,9 @@ public static class HorrorGame3DSetup
 
         // ---- exit door back out to the yard, on the south wall behind the spawn ----
         BuildInteriorExitDoor(player.transform);
+
+        // ---- the second storey: stairwell, staircase, landing and the primary bedroom (takes the bed) ----
+        BuildCabinInterior();
 
         EditorSceneManager.SaveScene(scene, SceneOut);
         AddSceneToBuild(SceneOut);
@@ -345,13 +359,15 @@ public static class HorrorGame3DSetup
     }
 
     // A soft dark ellipse laid flat on the floor under a billboarded piece, so it reads as planted
-    // rather than floating (the piece's own base is already at y=0; this just gives it ground contact).
-    // Fixed, not billboarded; drawn just above the floor and beneath the furniture.
+    // rather than floating (the piece's own base is already on the floor line; this just gives it
+    // ground contact). Fixed, not billboarded; drawn just above the floor and beneath the furniture.
+    // The height comes from the piece itself, so upstairs pieces get their shadow on the bedroom
+    // floor rather than on the living-room boards a storey below.
     static void AddFurnitureShadow(Transform parent, Vector3 pos, float width, Material mat)
     {
         var sh = new GameObject("Shadow");
         sh.transform.SetParent(parent, false);
-        sh.transform.position = new Vector3(pos.x, 0.02f, pos.z);
+        sh.transform.position = new Vector3(pos.x, pos.y + 0.02f, pos.z);
         sh.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         const float baseSize = 0.64f;              // SmokePuff sprite ≈ 64 px @ 100 ppu
         sh.transform.localScale = new Vector3(width * 1.25f / baseSize, width * 0.55f / baseSize, 1f);
@@ -3795,6 +3811,559 @@ public static class HorrorGame3DSetup
         pc.girlSmile = girlSmile;
         pc.boySpeak = boySpeak;
         pc.girlSpeak = girlSpeak;
+    }
+
+    // ================================================================ the two-storey cabin interior
+    // Turns the bare one-room box into the cabin the handoff describes (Assets/Animation/Interior Atlas/
+    // cabin_interior_handoff/INTERIOR.md): a dressed GROUND FLOOR (the living room, the hearth, the
+    // front door) and, up a real walkable staircase in the south-east corner, an UPSTAIRS LANDING and
+    // the enclosed PRIMARY BEDROOM that now holds the bed — the seam through to the nightmare realm.
+    //
+    // Everything is built into whatever scene is currently open and is fully idempotent: the shell's
+    // roots are destroyed and rebuilt, the bed is moved rather than recreated (so its BedPortal wiring
+    // survives), and nothing else in the scene is touched. That matters because Sandbox3D carries
+    // hand-placed dressing — the Fireplace on the north wall — that a full BuildSandbox3D would erase.
+    //
+    //     y = 0.00           ground floor
+    //     y = 2.95 .. 3.05   the ceiling below / the joists
+    //     y = 3.10 .. 3.20   the second-floor slab (3.20 is the upstairs walking surface)
+    //     y = 6.40           the upstairs ceiling
+    //
+    // The stairwell is the SE block x[6.1,10] z[-10,-1]: open all the way down, railed along its west
+    // edge, with the flight climbing north out of it.
+
+    const string HandoffDir = "Assets/Animation/Interior Atlas/cabin_interior_handoff/";
+    const string CdWall     = HandoffDir + "interior_colddusk_wall.png";
+    const string CdFloor    = HandoffDir + "interior_colddusk_floor.png";
+    const string CdCeiling  = HandoffDir + "interior_colddusk_ceiling.png";
+    const string CdWindow   = HandoffDir + "interior_colddusk_window.png";
+    const string CdWallNM   = HandoffDir + "interior_colddusk_nightmare_wall.png";
+    const string CdFloorNM  = HandoffDir + "interior_colddusk_nightmare_floor.png";
+    const string CdCeilNM   = HandoffDir + "interior_colddusk_nightmare_ceiling.png";
+    const string CdWindowNM = HandoffDir + "interior_colddusk_nightmare_window.png";
+    const string StructureDusk      = "Assets/Animation/interior_structure_dusk.png";
+    const string StructureNightmare = "Assets/Animation/interior_structure_nightmare.png";
+
+    // ---- room dimensions (the existing shell is a 20x20 box with 3m walls; we build up from it) ----
+    const float RoomHalf   = 10f;     // walls centred at +/-10, 0.5 thick -> inner faces at +/-9.75
+    const float Inner      = 9.75f;
+    const float GroundTop  = 3f;      // the existing walls stop here
+    const float SlabTop    = 3.2f;    // the upstairs walking surface
+    const float UpperTop   = 6.4f;    // the upstairs ceiling
+    const float LogCourse  = 0.5f;    // chinked log band height -> wall tiling
+    // the stairwell block, cut out of the second floor
+    const float WellW      = 6.1f;    // its west edge
+    const float WellN      = -1f;     // its north edge
+    // the flight itself
+    const float StairFootZ = -7.8f, StairHeadZ = -1f;
+    const float StairEastX = 9.75f;
+    const int   StairSteps = 16;
+
+    [MenuItem("Tools/Horror Game/Build Cabin Interior (Two Storeys + Bedroom)")]
+    public static void InstallCabinInterior()
+    {
+        if (!File.Exists(SceneOut)) { Debug.LogWarning("[HorrorGame] no interior scene at " + SceneOut); return; }
+        var scene = EditorSceneManager.OpenScene(SceneOut, OpenSceneMode.Single);
+        BuildCabinInterior();
+        EditorSceneManager.SaveScene(scene, SceneOut);
+        Debug.Log("[HorrorGame] Cabin interior rebuilt in place: a second storey over the living room, a " +
+                  "walkable staircase up the south-east stairwell, and the primary bedroom (bed, nightstand, " +
+                  "lamp, dresser, desk, rug, two moonlit windows, mirror) behind its door on the landing. " +
+                  "Sleep in the bed upstairs to cross over; '[' / ']' rot the whole house.");
+    }
+
+    static void BuildCabinInterior()
+    {
+        // ---- assets ----
+        foreach (var t in new[] { CdWall, CdFloor, CdCeiling, CdWallNM, CdFloorNM, CdCeilNM }) EnsureTileTexture(t);
+        var structDay   = EnsureFurnitureAtlas(StructureDusk);
+        var structNight = EnsureFurnitureAtlas(StructureNightmare);
+        var furnDay     = EnsureFurnitureAtlas(FurnitureDusk);
+        var furnNight   = EnsureFurnitureAtlas(FurnitureNightmare);
+        var windowDay   = EnsureInteriorSprite(CdWindow);
+        var windowNight = EnsureInteriorSprite(CdWindowNM);
+        var spriteMat = SpriteMaterial();
+
+        Texture2D Tex(string p) => AssetDatabase.LoadAssetAtPath<Texture2D>(p);
+        var wallMat = LitMaterial("CabinWallMat", Color.white, CdWall, Vector2.one, repeat: true);
+        var floorMat = LitMaterial("CabinFloorMat", Color.white, CdFloor, Vector2.one, repeat: true);
+        var ceilMat = LitMaterial("CabinCeilMat", Color.white, CdCeiling, Vector2.one, repeat: true);
+
+        // ---- clear anything a previous run built, so this is safe to re-run ----
+        foreach (var n in new[] { "Upstairs", "Staircase", "CabinInterior", "InteriorLights", "WallDecor", "WarpFX" })
+        {
+            var old = GameObject.Find(n);
+            if (old != null) Object.DestroyImmediate(old);
+        }
+
+        var room = new GameObject("CabinInterior").AddComponent<CabinInterior>();
+        room.wallDay = Tex(CdWall);      room.wallNight    = Tex(CdWallNM);
+        room.floorDay = Tex(CdFloor);    room.floorNight   = Tex(CdFloorNM);
+        room.ceilingDay = Tex(CdCeiling); room.ceilingNight = Tex(CdCeilNM);
+        room.nightmare = Object.FindAnyObjectByType<NightmareController>();
+
+        var upstairs = new GameObject("Upstairs"); upstairs.transform.SetParent(room.transform, false);
+        var stairs   = new GameObject("Staircase"); stairs.transform.SetParent(room.transform, false);
+        var decor    = new GameObject("WallDecor"); decor.transform.SetParent(room.transform, false);
+        var lights   = new GameObject("InteriorLights"); lights.transform.SetParent(room.transform, false);
+
+        // ---- re-skin the existing shell in the Cold Dusk grade, and register it for the realm swap ----
+        var floorGo = GameObject.Find("Floor");
+        if (floorGo != null && floorGo.TryGetComponent<MeshRenderer>(out var floorMr))
+        {
+            floorMr.sharedMaterial = floorMat;
+            room.Register(floorMr, CabinInterior.Surface.Floor, new Vector2(20f, 20f));   // the plane is 20x20 -> 1m boards
+        }
+        foreach (var n in new[] { "Wall_N", "Wall_S", "Wall_E", "Wall_W" })
+        {
+            var w = GameObject.Find(n);
+            if (w == null || !w.TryGetComponent<MeshRenderer>(out var mr)) continue;
+            mr.sharedMaterial = wallMat;
+            room.Register(mr, CabinInterior.Surface.Wall, new Vector2(2f * RoomHalf / LogCourse, GroundTop / LogCourse));
+        }
+
+        // ---- second storey: the joists you see from below, the slab you walk on, both cut round the well ----
+        var slabs = new[]
+        {
+            new Rect(-RoomHalf, -RoomHalf, WellW + RoomHalf, 2f * RoomHalf),   // everything west of the stairwell
+            new Rect(WellW, WellN, RoomHalf - WellW, RoomHalf - WellN),        // the strip north of it
+        };
+        foreach (var r in slabs)
+        {
+            var c = new Vector3(r.center.x, 3f, r.center.y);
+            var below = MakeShellBox(upstairs.transform, "Joists", c, new Vector3(r.width, 0.1f, r.height), ceilMat);
+            room.Register(below, CabinInterior.Surface.Ceiling, new Vector2(r.width, r.height));
+            var above = MakeShellBox(upstairs.transform, "Floor2F", new Vector3(c.x, 3.15f, c.z),
+                                     new Vector3(r.width, 0.1f, r.height), floorMat);
+            room.Register(above, CabinInterior.Surface.Floor, new Vector2(r.width, r.height));
+        }
+
+        // ---- the upstairs shell: outer walls carried up off the ground-floor course, then the ceiling ----
+        float upH = 6.45f - GroundTop, upY = (GroundTop + 6.45f) * 0.5f;
+        var upperWalls = new (string n, Vector3 c, Vector3 s)[]
+        {
+            ("Wall_N_2F", new Vector3(0f, upY,  RoomHalf), new Vector3(2f * RoomHalf, upH, 0.5f)),
+            ("Wall_S_2F", new Vector3(0f, upY, -RoomHalf), new Vector3(2f * RoomHalf, upH, 0.5f)),
+            ("Wall_E_2F", new Vector3( RoomHalf, upY, 0f), new Vector3(0.5f, upH, 2f * RoomHalf)),
+            ("Wall_W_2F", new Vector3(-RoomHalf, upY, 0f), new Vector3(0.5f, upH, 2f * RoomHalf)),
+        };
+        foreach (var w in upperWalls)
+            room.Register(MakeShellBox(upstairs.transform, w.n, w.c, w.s, wallMat),
+                          CabinInterior.Surface.Wall, new Vector2(2f * RoomHalf / LogCourse, upH / LogCourse));
+
+        room.Register(MakeShellBox(upstairs.transform, "Ceiling2F", new Vector3(0f, UpperTop + 0.1f, 0f),
+                                   new Vector3(2f * RoomHalf, 0.2f, 2f * RoomHalf), ceilMat),
+                      CabinInterior.Surface.Ceiling, new Vector2(2f * RoomHalf, 2f * RoomHalf));
+
+        // ---- the bedroom's own walls: a solid south side, and an east side you come through ----
+        float pH = UpperTop - SlabTop, pY = (SlabTop + UpperTop) * 0.5f;
+        const float DoorX = 1f, DoorS = 3f, DoorN = 5.4f, DoorHead = 5.6f;
+        var partitions = new (string n, Vector3 c, Vector3 s)[]
+        {
+            ("Bedroom_S",    new Vector3(-4.5f, pY, 2f), new Vector3(11f, pH, 0.3f)),
+            ("Bedroom_E_a",  new Vector3(DoorX, pY, (2f + DoorS) * 0.5f), new Vector3(0.3f, pH, DoorS - 2f)),
+            ("Bedroom_E_b",  new Vector3(DoorX, pY, (DoorN + RoomHalf) * 0.5f), new Vector3(0.3f, pH, RoomHalf - DoorN)),
+            ("Bedroom_Door_Head", new Vector3(DoorX, (DoorHead + UpperTop) * 0.5f, (DoorS + DoorN) * 0.5f),
+                                  new Vector3(0.3f, UpperTop - DoorHead, DoorN - DoorS)),
+        };
+        foreach (var p in partitions)
+            room.Register(MakeShellBox(upstairs.transform, p.n, p.c, p.s, wallMat),
+                          CabinInterior.Surface.Wall, new Vector2(Mathf.Max(p.s.x, p.s.z) / LogCourse, p.s.y / LogCourse));
+
+        // ---- the staircase ----
+        BuildStaircase(stairs.transform, room, floorMat, wallMat);
+
+        // ---- the bedroom + the landing ----
+        var bed = DressBedroom(room, furnDay, furnNight, structDay, structNight,
+                               windowDay, windowNight, spriteMat, decor.transform);
+        DressLanding(structDay, structNight, spriteMat, decor.transform);
+        DressGroundFloor(structDay, structNight, spriteMat, decor.transform);
+
+        // ---- light: cool shafts through the bedroom windows, warm pools at the lamp and the hearth ----
+        var moonA = MakeRoomLight(lights.transform, "MoonShaft_N", LightType.Spot,
+                                  new Vector3(-8f, 6.8f, 11.4f), new Vector3(-7f, SlabTop, 6.4f),
+                                  new Color(0.59f, 0.70f, 0.88f), 4.2f, 17f, 58f);
+        var moonB = MakeRoomLight(lights.transform, "MoonShaft_W", LightType.Spot,
+                                  new Vector3(-11.4f, 6.8f, 5.5f), new Vector3(-6.4f, SlabTop, 5.5f),
+                                  new Color(0.59f, 0.70f, 0.88f), 3.4f, 16f, 55f);
+        var lamp = MakeRoomLight(lights.transform, "BedsideLamp", LightType.Point,
+                                 new Vector3(-1.9f, SlabTop + 1.25f, 8.9f), Vector3.zero,
+                                 new Color(1f, 0.69f, 0.34f), 2.2f, 8f, 0f);
+        var hearth = MakeRoomLight(lights.transform, "HearthGlow", LightType.Point,
+                                   new Vector3(0f, 1.15f, 8.9f), Vector3.zero,
+                                   new Color(1f, 0.62f, 0.28f), 2.6f, 10f, 0f);
+        MakeRoomLight(lights.transform, "UpstairsFill", LightType.Point,
+                      new Vector3(-4f, 5.8f, 6f), Vector3.zero, new Color(0.42f, 0.5f, 0.68f), 0.8f, 18f, 0f);
+        room.moonLights = new[] { moonA, moonB };
+        room.warmLights = new[] { lamp, hearth };
+
+        // dust drifting in the moonlight, and the rot that only exists on the other side
+        var dustMat = DustMaterial();
+        MakeDustMotes(lights.transform, "DustMotes", new Vector3(-6.5f, SlabTop + 1.4f, 7f),
+                      new Vector3(5f, 2.6f, 5f), new Color(0.78f, 0.85f, 1f, 0.5f), 9f, dustMat);
+        var warp = new GameObject("WarpFX"); warp.transform.SetParent(room.transform, false);
+        MakeDustMotes(warp.transform, "CeilingDrip", new Vector3(-4f, UpperTop - 0.4f, 6f),
+                      new Vector3(9f, 0.2f, 7f), new Color(0.55f, 0.09f, 0.08f, 0.85f), 14f, dustMat, fall: true);
+        MakeDustMotes(warp.transform, "CeilingDrip_1F", new Vector3(-3f, GroundTop - 0.35f, 5f),
+                      new Vector3(12f, 0.2f, 9f), new Color(0.55f, 0.09f, 0.08f, 0.85f), 14f, dustMat, fall: true);
+        warp.SetActive(false);
+        room.warpFX = warp;
+
+        Debug.Log("[HorrorGame] Cabin interior: two storeys, " + room.surfaces.Count + " structural surfaces on the " +
+                  "realm swap, a " + StairSteps + "-tread staircase, and the bedroom at " +
+                  (bed != null ? bed.transform.position.ToString() : "(bed missing)") + ".");
+    }
+
+    // The flight out of the stairwell. The treads are for the eye only — their colliders come off and a
+    // single hidden ramp carries the CharacterController, which climbs and descends a smooth slope
+    // instead of juddering up sixteen separate ledges. The ramp runs on past the bottom tread and
+    // under the floor so stepping onto it is seamless.
+    static void BuildStaircase(Transform parent, CabinInterior room, Material floorMat, Material wallMat)
+    {
+        float run = StairHeadZ - StairFootZ, rise = SlabTop;
+        float width = StairEastX - WellW, midX = (WellW + StairEastX) * 0.5f;
+        float tread = run / StairSteps, riser = rise / StairSteps;
+
+        for (int i = 0; i < StairSteps; i++)
+        {
+            float top = (i + 1) * riser;
+            var step = MakeShellBox(parent, "Tread_" + i,
+                                    new Vector3(midX, top * 0.5f, StairFootZ + (i + 0.5f) * tread),
+                                    new Vector3(width, top, tread), floorMat);
+            room.Register(step, CabinInterior.Surface.Floor, new Vector2(width, 1f));
+            var col = step.GetComponent<Collider>();
+            if (col != null) Object.DestroyImmediate(col);
+        }
+
+        // the ramp: same slope as the treads, extended a tread below the floor at the foot
+        float slope = rise / run;
+        float z0 = StairFootZ - 0.6f, z1 = StairHeadZ;
+        float y0 = (z0 - StairFootZ) * slope, y1 = rise;
+        var a = new Vector3(midX, y0, z0);
+        var b = new Vector3(midX, y1, z1);
+        var rot = Quaternion.LookRotation((b - a).normalized, Vector3.up);
+        var ramp = MakeShellBox(parent, "StairRamp", (a + b) * 0.5f - rot * Vector3.up * 0.15f,
+                                new Vector3(width, 0.3f, Vector3.Distance(a, b)), floorMat);
+        ramp.transform.rotation = rot;
+        ramp.enabled = false;                                   // invisible: the treads are what you see
+
+        // banister down the open west side of the flight, and the rail round the stairwell above it
+        var rail = MakeShellBox(parent, "StairRail",
+                                (a + b) * 0.5f + rot * Vector3.up * 0.95f + Vector3.right * (WellW + 0.06f - midX),
+                                new Vector3(0.12f, 0.12f, Vector3.Distance(a, b)), wallMat);
+        rail.transform.rotation = rot;
+        room.Register(rail, CabinInterior.Surface.Wall, new Vector2(8f, 1f));
+
+        var wellRail = MakeShellBox(parent, "WellRail",
+                                    new Vector3(WellW, SlabTop + 0.5f, (-RoomHalf + WellN) * 0.5f),
+                                    new Vector3(0.12f, 1f, WellN + RoomHalf), wallMat);
+        room.Register(wellRail, CabinInterior.Surface.Wall, new Vector2(18f, 2f));
+
+        // NB: the structure kit's own stair art (stairSideWood) is deliberately NOT laid against the open
+        // side here. It is drawn as a fixed ~45 degree oblique flight in a 48x48 cell; stretched to this
+        // staircase's real 6.8m x 3.2m run it smears into a featureless brown slab that hides the treads
+        // behind it. The built geometry — treads, stringer and banister — reads far better on its own.
+    }
+
+    // The primary bedroom, through the door off the landing: the bed under the north wall (moved up from
+    // the old ground-floor corner, wiring intact), its nightstand and lamp, a dresser and a small desk,
+    // the rug, two windows onto the night, and the mirror.
+    static GameObject DressBedroom(CabinInterior room, Texture2D furnDay, Texture2D furnNight,
+                                   Texture2D structDay, Texture2D structNight,
+                                   Sprite windowDay, Sprite windowNight, Material spriteMat, Transform decor)
+    {
+        var set = new GameObject("Bedroom");
+        set.transform.SetParent(room.transform, false);
+
+        var bed = GameObject.Find("Bed");
+        if (bed != null)
+        {
+            bed.transform.position = new Vector3(-5f, SlabTop, 8.4f);
+            var b = bed.GetComponent<Bed>();
+            if (b != null) b.homeForward = new Vector3(0f, 0f, -1f);   // headboard to the north wall, foot into the room
+        }
+
+        MakeRug(set.transform, new Vector3(-5f, SlabTop + 0.03f, 6.2f), new Vector3(1.6f, 1.6f, 1f),
+                furnDay, furnNight, spriteMat);
+
+        var stand = new Vector3(-2.7f, SlabTop, 8.6f);
+        MakeFurniture(set.transform, "Nightstand", InteriorObject.Piece.CoffeeTable,
+                      stand, new Vector3(stand.x, 0f, stand.z - 4f), furnDay, furnNight, spriteMat);
+        var lampPos = new Vector3(-1.9f, SlabTop, 8.9f);
+        MakeFurniture(set.transform, "BedsideLamp", InteriorObject.Piece.FloorLamp,
+                      lampPos, new Vector3(lampPos.x, 0f, lampPos.z - 4f), furnDay, furnNight, spriteMat, startsOn: true);
+        var dresser = new Vector3(-9.1f, SlabTop, 7.6f);
+        MakeFurniture(set.transform, "Dresser", InteriorObject.Piece.Bookshelf,
+                      dresser, new Vector3(-5f, 0f, 7.6f), furnDay, furnNight, spriteMat);     // front turned into the room
+        var desk = new Vector3(-9f, SlabTop, 3.4f);
+        MakeFurniture(set.transform, "Desk", InteriorObject.Piece.CoffeeTable,
+                      desk, new Vector3(-5f, 0f, 3.4f), furnDay, furnNight, spriteMat);
+        var chair = new Vector3(-7.5f, SlabTop, 3.4f);
+        MakeFurniture(set.transform, "DeskChair", InteriorObject.Piece.Armchair,
+                      chair, desk, furnDay, furnNight, spriteMat);
+
+        // two windows onto the night — the moonlight shafts outside them are what light the room
+        MakeInteriorWindow(set.transform, "Window_N", new Vector3(-8f, 5f, Inner - 0.05f),
+                           Quaternion.Euler(0f, 180f, 0f), windowDay, windowNight, spriteMat);
+        MakeInteriorWindow(set.transform, "Window_W", new Vector3(-Inner + 0.05f, 5f, 5.5f),
+                           Quaternion.Euler(0f, 90f, 0f), windowDay, windowNight, spriteMat);
+
+        // decor: the portrait whose eyes follow you, sconces flanking the bed, the mirror by the dresser
+        var wall = Quaternion.Euler(0f, 180f, 0f);
+        MakeStructureProp(decor, "Bedroom_Portrait", InteriorProp.Piece.FramedPortrait,
+                          new Vector3(-2.2f, 5f, Inner - 0.05f), wall, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Bedroom_Sconce_L", InteriorProp.Piece.WallSconce,
+                          new Vector3(-6.6f, 4.9f, Inner - 0.05f), wall, structDay, structNight, spriteMat, on: true);
+        MakeStructureProp(decor, "Bedroom_Sconce_R", InteriorProp.Piece.WallSconce,
+                          new Vector3(-3.4f, 4.9f, Inner - 0.05f), wall, structDay, structNight, spriteMat, on: true);
+        MakeStructureProp(decor, "Bedroom_Mirror", InteriorProp.Piece.Mirror,
+                          new Vector3(-Inner + 0.05f, 4.6f, 8.8f), Quaternion.Euler(0f, 90f, 0f),
+                          structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Bedroom_Landscape", InteriorProp.Piece.FramedLandscape,
+                          new Vector3(0.82f, 4.9f, 7f), Quaternion.Euler(0f, -90f, 0f),
+                          structDay, structNight, spriteMat);
+        return bed;
+    }
+
+    // The landing you step onto at the top of the flight, on the way to the bedroom door.
+    static void DressLanding(Texture2D structDay, Texture2D structNight, Material spriteMat, Transform decor)
+    {
+        var east = Quaternion.Euler(0f, -90f, 0f);
+        MakeStructureProp(decor, "Landing_DeerHead", InteriorProp.Piece.DeerHead,
+                          new Vector3(Inner - 0.05f, 4.9f, 5f), east, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Landing_Shelf", InteriorProp.Piece.MountedShelf,
+                          new Vector3(Inner - 0.05f, 4.5f, 7.5f), east, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Landing_Clock", InteriorProp.Piece.WallClock,
+                          new Vector3(1.18f, 4.9f, 6f), Quaternion.Euler(0f, 90f, 0f),
+                          structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Landing_Portrait", InteriorProp.Piece.FramedPortrait,
+                          new Vector3(-2f, 4.9f, 1.82f), Quaternion.Euler(0f, 180f, 0f),
+                          structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Landing_Sconce", InteriorProp.Piece.WallSconce,
+                          new Vector3(3.5f, 4.9f, 1.82f), Quaternion.Euler(0f, 180f, 0f),
+                          structDay, structNight, spriteMat, on: true);
+    }
+
+    // The ground floor keeps its living room and its hearth; it gains the entry dressing it never had,
+    // plus the posts that now visibly carry the floor above.
+    static void DressGroundFloor(Texture2D structDay, Texture2D structNight, Material spriteMat, Transform decor)
+    {
+        var north = Quaternion.Euler(0f, 180f, 0f);
+        var east  = Quaternion.Euler(0f, -90f, 0f);
+        var west  = Quaternion.Euler(0f, 90f, 0f);
+
+        MakeStructureProp(decor, "Entry_CoatHooks", InteriorProp.Piece.CoatHooks,
+                          new Vector3(2.4f, 1.9f, -Inner + 0.05f), Quaternion.identity, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Entry_Mirror", InteriorProp.Piece.Mirror,
+                          new Vector3(-2.4f, 1.7f, -Inner + 0.05f), Quaternion.identity, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hall_Clock", InteriorProp.Piece.WallClock,
+                          new Vector3(-Inner + 0.05f, 2.1f, -3f), west, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hall_Calendar", InteriorProp.Piece.Calendar,
+                          new Vector3(-Inner + 0.05f, 1.9f, -6f), west, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hall_Portrait", InteriorProp.Piece.FramedPortrait,
+                          new Vector3(Inner - 0.05f, 2f, -3f), east, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hall_Landscape", InteriorProp.Piece.FramedLandscape,
+                          new Vector3(Inner - 0.05f, 2f, 1f), east, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hall_Shelf", InteriorProp.Piece.MountedShelf,
+                          new Vector3(Inner - 0.05f, 1.7f, 4f), east, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hearth_DeerHead", InteriorProp.Piece.DeerHead,
+                          new Vector3(-4.2f, 2.3f, Inner - 0.05f), north, structDay, structNight, spriteMat);
+        MakeStructureProp(decor, "Hearth_Sconce_L", InteriorProp.Piece.WallSconce,
+                          new Vector3(-2.8f, 2f, Inner - 0.05f), north, structDay, structNight, spriteMat, on: true);
+        MakeStructureProp(decor, "Hearth_Sconce_R", InteriorProp.Piece.WallSconce,
+                          new Vector3(2.8f, 2f, Inner - 0.05f), north, structDay, structNight, spriteMat, on: true);
+
+        // the posts under the new floor above — billboarded, so they read as round timber from anywhere
+        foreach (var z in new[] { 3f, -4f })
+            MakeStructureProp(decor, "SupportPost", InteriorProp.Piece.SupportPost,
+                              new Vector3(3.6f, 0f, z), Quaternion.identity, structDay, structNight, spriteMat,
+                              pivot: new Vector2(0.5f, 0f), billboard: true);
+    }
+
+    // -------------------------------------------------------------- interior building blocks
+    static MeshRenderer MakeShellBox(Transform parent, string name, Vector3 centre, Vector3 size, Material mat)
+    {
+        var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        go.name = name;
+        go.transform.SetParent(parent, false);
+        go.transform.position = centre;
+        go.transform.localScale = size;
+        var mr = go.GetComponent<MeshRenderer>();
+        mr.sharedMaterial = mat;
+        return mr;
+    }
+
+    // One piece of the structure kit, hung flat on a wall (the default) or standing and billboarded.
+    static GameObject MakeStructureProp(Transform parent, string name, InteriorProp.Piece piece,
+                                        Vector3 pos, Quaternion rot, Texture2D day, Texture2D night,
+                                        Material mat, bool on = false, Vector2? pivot = null, bool billboard = false)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        go.transform.rotation = rot;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sharedMaterial = mat;
+        var p = go.AddComponent<InteriorProp>();
+        p.piece = piece;
+        p.dayAtlas = day;
+        p.nightmareAtlas = night;
+        p.pixelsPerUnit = 16f;
+        p.pivot = pivot ?? new Vector2(0.5f, 0.5f);   // hung decor pivots on its centre
+        p.startsOn = on;
+        p.billboard = billboard;
+        return go;
+    }
+
+    // A window onto the night, flat on the wall. Its nightmare twin rides along as a second renderer
+    // that the realm swap reveals, so the glass turns with the rest of the house.
+    static void MakeInteriorWindow(Transform parent, string name, Vector3 pos, Quaternion rot,
+                                   Sprite day, Sprite night, Material mat)
+    {
+        if (day == null) return;
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        go.transform.rotation = rot;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = day;
+        sr.sharedMaterial = mat;
+        if (night != null)
+        {
+            var twin = new GameObject(name + "_Nightmare");
+            twin.transform.SetParent(go.transform, false);
+            var tsr = twin.AddComponent<SpriteRenderer>();
+            tsr.sprite = night;
+            tsr.sharedMaterial = mat;
+            tsr.sortingOrder = 1;
+            twin.AddComponent<NightmareWindow>();          // fades itself in with the dread flag
+        }
+    }
+
+    static Light MakeRoomLight(Transform parent, string name, LightType type, Vector3 pos, Vector3 lookAt,
+                               Color color, float intensity, float range, float spotAngle)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        if (type == LightType.Spot) go.transform.rotation = Quaternion.LookRotation((lookAt - pos).normalized, Vector3.up);
+        var l = go.AddComponent<Light>();
+        l.type = type;
+        l.color = color;
+        l.intensity = intensity;
+        l.range = range;
+        if (type == LightType.Spot) { l.spotAngle = spotAngle; l.innerSpotAngle = spotAngle * 0.4f; }
+        l.shadows = LightShadows.None;    // the shell is thin boxes; shadows here only produce acne
+        return l;
+    }
+
+    // Motes hanging in the moonlight (drifting up) or the rot dripping from the ceiling (falling).
+    static void MakeDustMotes(Transform parent, string name, Vector3 pos, Vector3 volume, Color tint,
+                              float rate, Material mat, bool fall = false)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        var ps = go.AddComponent<ParticleSystem>();
+
+        var main = ps.main;
+        main.startLifetime = fall ? 2.6f : 9f;
+        main.startSpeed = fall ? 0.4f : 0.1f;
+        main.startSize = fall ? 0.07f : 0.05f;
+        main.startColor = tint;
+        main.maxParticles = 140;
+        main.gravityModifier = fall ? 0.35f : -0.012f;
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+        main.playOnAwake = true;
+
+        var em = ps.emission; em.rateOverTime = rate;
+        var shape = ps.shape;
+        shape.shapeType = ParticleSystemShapeType.Box;
+        shape.scale = volume;
+
+        var fade = ps.colorOverLifetime;
+        fade.enabled = true;
+        var grad = new Gradient();
+        grad.SetKeys(new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+                     new[] { new GradientAlphaKey(0f, 0f), new GradientAlphaKey(1f, 0.2f),
+                             new GradientAlphaKey(1f, 0.7f), new GradientAlphaKey(0f, 1f) });
+        fade.color = new ParticleSystem.MinMaxGradient(grad);
+
+        var r = go.GetComponent<ParticleSystemRenderer>();
+        r.sharedMaterial = mat;
+        r.renderMode = ParticleSystemRenderMode.Billboard;
+        r.sortingOrder = 5;
+    }
+
+    static Material DustMaterial()
+    {
+        EnsureFolder(MatDir);
+        string path = MatDir + "/InteriorDust.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+        if (mat == null)
+        {
+            mat = new Material(Shader.Find("Sprites/Default"));
+            AssetDatabase.CreateAsset(mat, path);
+        }
+        var puff = SmokePuffSprite();
+        if (puff != null) mat.mainTexture = puff.texture;
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    // A repeating structural tile: raw texture (not a sprite), point filtered, wrapping.
+    // Mipmaps ON, unlike the sprite atlases: these surfaces run 20m away from the eye and the ceiling is
+    // seen almost edge-on, where an unmipped 32px tile repeated twenty times aliases into rolling moire
+    // bands. Anisotropic filtering then has to come with them — mips alone fix the shimmer by collapsing
+    // those grazing surfaces to a flat average, and the aniso taps put the plank and log detail back.
+    // Point filtering keeps everything crisp underfoot.
+    static void EnsureTileTexture(string path)
+    {
+        if (AssetImporter.GetAtPath(path) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Default ||
+                         imp.filterMode != FilterMode.Point || imp.wrapMode != TextureWrapMode.Repeat ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         !imp.mipmapEnabled || imp.anisoLevel != 8;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Default;
+                imp.filterMode = FilterMode.Point;
+                imp.wrapMode = TextureWrapMode.Repeat;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = true;
+                imp.anisoLevel = 8;
+                imp.SaveAndReimport();
+            }
+        }
+    }
+
+    // The window art, as a clamped sprite (24 ppu -> the 48x40 cell reads as a 2m x 1.7m sash).
+    static Sprite EnsureInteriorSprite(string path)
+    {
+        if (AssetImporter.GetAtPath(path) is TextureImporter imp)
+        {
+            bool dirty = imp.textureType != TextureImporterType.Sprite ||
+                         imp.spriteImportMode != SpriteImportMode.Single ||
+                         imp.filterMode != FilterMode.Point || imp.wrapMode != TextureWrapMode.Clamp ||
+                         imp.spritePixelsPerUnit != 24f ||
+                         imp.textureCompression != TextureImporterCompression.Uncompressed ||
+                         imp.mipmapEnabled || !imp.alphaIsTransparency;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Sprite;
+                imp.spriteImportMode = SpriteImportMode.Single;
+                imp.filterMode = FilterMode.Point;
+                imp.wrapMode = TextureWrapMode.Clamp;
+                imp.spritePixelsPerUnit = 24f;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.mipmapEnabled = false;
+                imp.alphaSource = TextureImporterAlphaSource.FromInput;
+                imp.alphaIsTransparency = true;
+                imp.SaveAndReimport();
+            }
+        }
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
     static Sprite LoadSprite(string path, string name) =>

@@ -1,0 +1,74 @@
+// RoomFurnisher.cs — positions props from the fx/depth tables and swaps living/bedroom.
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RoomFurnisher : MonoBehaviour
+{
+    public InteriorRoom room;
+    public Transform camTransform;                 // billboards face this
+    public enum Mount { Floor, FloorFlat, Wall }
+    public enum Wall  { Back, Left, Right }
+
+    [System.Serializable] public class Prop {
+        public string name; public Sprite sprite;
+        public float fx, depth;                     // floor pieces
+        public Mount mount = Mount.Floor;
+        public Wall wall = Wall.Back; public Vector2 wallUV;   // wall pieces (u across, v up)
+        public float scale = 1f;
+    }
+
+    [Header("Living room set")] public List<Prop> living = new();
+    [Header("Bedroom set")]     public List<Prop> bedroom = new();
+
+    readonly List<GameObject> _spawned = new();
+
+    public void ShowLiving() { Spawn(living); }
+    public void ShowBedroom(){ Spawn(bedroom); }
+
+    void Spawn(List<Prop> set)
+    {
+        foreach (var g in _spawned) Destroy(g); _spawned.Clear();
+        float W = room.roomW, H = room.roomH, D = room.roomD;
+        foreach (var p in set)
+        {
+            var go = new GameObject(p.name);
+            go.transform.SetParent(transform, false);
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = p.sprite; sr.sharedMaterial = null;
+
+            if (p.mount == Mount.Wall)
+            {
+                Vector3 pos; Quaternion rot;
+                float u = (p.wallUV.x - 0.5f);
+                float v = p.wallUV.y * H;
+                switch (p.wall) {
+                    case Wall.Back:  pos = new Vector3(u*W, v, D - 0.02f);         rot = Quaternion.identity; break;
+                    case Wall.Left:  pos = new Vector3(-W/2 + 0.02f, v, u*D + D/2); rot = Quaternion.Euler(0, 90,0); break;
+                    default:         pos = new Vector3( W/2 - 0.02f, v, u*D + D/2); rot = Quaternion.Euler(0,-90,0); break;
+                }
+                go.transform.localPosition = pos; go.transform.localRotation = rot;
+            }
+            else
+            {
+                float x = (p.fx - 0.5f) * W;
+                float z = D * (1f - p.depth);
+                go.transform.localPosition = new Vector3(x, 0.01f, z);
+                if (p.mount == Mount.FloorFlat) go.transform.localRotation = Quaternion.Euler(90,0,0);  // rug
+                else BillboardTo(go.transform);                                                          // faces camera
+                sr.sortingOrder = Mathf.RoundToInt((D - z) * 100);                                       // nearer draws on top
+            }
+            go.transform.localScale = Vector3.one * p.scale;
+            _spawned.Add(go);
+        }
+    }
+
+    void BillboardTo(Transform t)
+    {
+        if (!camTransform) return;
+        var dir = t.position - camTransform.position; dir.y = 0;
+        t.rotation = Quaternion.LookRotation(dir);
+    }
+
+    // keep billboards facing the camera if it moves
+    void LateUpdate() { foreach (var g in _spawned) if (g && g.transform.localRotation.eulerAngles.x < 45f) BillboardTo(g.transform); }
+}

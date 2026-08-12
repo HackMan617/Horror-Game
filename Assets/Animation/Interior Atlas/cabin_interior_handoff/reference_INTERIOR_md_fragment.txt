@@ -1,0 +1,41 @@
+OR.md — Cabin interior (Cold Dusk) · orientation & positioning (Unity 2.5D)
+
+The enclosed two-floor cabin the player stands inside: **ground-floor living room** and **upstairs
+primary bedroom**, lit by the **Cold Dusk** grade (blue moonlight, warm hearth/lamp accents). The
+room is fully closed — chinked log walls on three sides, a flat plaster ceiling, a plank floor, and a
+window to the night — so nothing shows through to the sky. Preview + tuning live in
+`Cabin Interior.dc.html`.
+
+Everything below matches that preview 1:1, so Unity reproduces the same framing.
+
+---
+
+## 1 · Sprite manifest
+
+### Structural tiles (baked here, Cold Dusk + Nightmare)
+
+| Sprite | Size | Tiling | Notes |
+|---|---|---|---|
+| `interior_colddusk_wall.png` | 32×32 | **tile X & Y** | chinked horizontal logs, grain + knots, cylindrical shading |
+| `interior_colddusk_ceiling.png` | 32×32 | **tile X & Y** | cool plaster, faint speckle |
+| `interior_colddusk_floor.png` | 32×32 | **tile X & Y** | offset plank courses, grain |
+| `interior_colddusk_window.png` | 48×40 | single | night sky + moon + ridge + muntins + curtains |
+| `interior_colddusk_nightmare_*` | same | same | warped twin — swap on the dread flag |
+
+Import (all): **Point (no filter) · Compression None · PPU 32 · Wrap = Repeat** for the three tiles,
+**Clamp** for the window. Pivot Center.
+
+### Furniture / props
+
+Reuse the existing **`interior_furniture_*`** kit sprites (sofa, bookshelf, coffee table, fireplace,
+bed, nightstand+lamp, desk, rug, framed photo, stairs). They are placed as **billboards** on the
+floor or mounted on a wall; the Cold Dusk / Nightmare mood comes from the room lighting + a material
+tint (§4), not from re-drawn art. Pivot **Bottom-Center** for floor pieces, **Center** for
+wall-mounted pieces. PPU 32.
+
+---
+
+## 2 · Room geometry (world units)
+
+Build a real box and let a perspective camera do the foreshortening — do **not** fake the perspective
+in 2D. One unit = 1 m.

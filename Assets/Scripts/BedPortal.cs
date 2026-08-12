@@ -13,6 +13,9 @@ public class BedPortal : MonoBehaviour
     public Transform player;
     public NightmareController nightmare;
     public float range = 2.5f;
+    [Tooltip("How far above/below the bed still counts. The bed lives upstairs now, so a flat XZ test " +
+             "would offer 'press E to sleep' to a player standing in the living room directly beneath it.")]
+    public float verticalRange = 2.2f;
     public string prompt = "Press E to sleep";
 
     bool _inRange;
@@ -24,7 +27,8 @@ public class BedPortal : MonoBehaviour
 
         Vector3 a = player.position; a.y = 0f;
         Vector3 b = transform.position; b.y = 0f;
-        _inRange = Vector3.Distance(a, b) <= range;
+        _inRange = Vector3.Distance(a, b) <= range &&
+                   Mathf.Abs(player.position.y - transform.position.y) <= verticalRange;
         if (!_inRange) return;
 
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(prompt);
