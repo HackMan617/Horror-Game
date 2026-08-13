@@ -90,7 +90,7 @@ public static class HorrorGame3DSetup
     const int DrivingSetupVersion = 13;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
     const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
-    const int InteriorSetupVersion  = 1; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
+    const int InteriorSetupVersion  = 2; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
 
     static int _renderer3DIndex = 1;
 
@@ -3978,6 +3978,7 @@ public static class HorrorGame3DSetup
                                windowDay, windowNight, spriteMat, decor.transform);
         DressLanding(structDay, structNight, spriteMat, decor.transform);
         DressGroundFloor(structDay, structNight, spriteMat, decor.transform);
+        AuditWallDecor(decor.transform);      // nothing hung may hang on nothing
 
         // ---- light: cool shafts through the bedroom windows, warm pools at the lamp and the hearth ----
         var moonA = MakeRoomLight(lights.transform, "MoonShaft_N", LightType.Spot,
@@ -4047,17 +4048,50 @@ public static class HorrorGame3DSetup
         ramp.transform.rotation = rot;
         ramp.enabled = false;                                   // invisible: the treads are what you see
 
-        // banister down the open west side of the flight, and the rail round the stairwell above it
+        // ---- the banister down the open west side of the flight ----
+        // Built as a solid sloped KNEE WALL capped by the handrail, not as a bare rail. A lone rail
+        // hanging 0.95m over the treads had open air under its whole length, so it read as a stick
+        // floating alongside the staircase; the knee wall buries its foot in the tread mass and carries
+        // the rail up the slope, and the newel posts tie it to the floor below and the stairwell rail above.
+        float railH = 0.95f;                                     // handrail height, measured up off the tread line
+        float railX = WellW + 0.06f - midX;                      // sits just inside the open (west) edge
+        float span  = Vector3.Distance(a, b);
+        var knee = MakeShellBox(parent, "StairKneeWall",
+                                (a + b) * 0.5f + rot * Vector3.up * (railH * 0.5f - 0.1f) + Vector3.right * railX,
+                                new Vector3(0.14f, railH + 0.2f, span), wallMat);
+        knee.transform.rotation = rot;                            // spans the tread line to the rail: no gap under it
+        room.Register(knee, CabinInterior.Surface.Wall, new Vector2(span / LogCourse, (railH + 0.2f) / LogCourse));
+
         var rail = MakeShellBox(parent, "StairRail",
-                                (a + b) * 0.5f + rot * Vector3.up * 0.95f + Vector3.right * (WellW + 0.06f - midX),
-                                new Vector3(0.12f, 0.12f, Vector3.Distance(a, b)), wallMat);
+                                (a + b) * 0.5f + rot * Vector3.up * railH + Vector3.right * railX,
+                                new Vector3(0.2f, 0.12f, span), wallMat);   // wider than the wall -> reads as a cap
         rail.transform.rotation = rot;
         room.Register(rail, CabinInterior.Surface.Wall, new Vector2(8f, 1f));
 
+        // the rail round the open stairwell above, with its own cap so the two runs read as one guard
+        float wellTop = SlabTop + 1f;
         var wellRail = MakeShellBox(parent, "WellRail",
                                     new Vector3(WellW, SlabTop + 0.5f, (-RoomHalf + WellN) * 0.5f),
                                     new Vector3(0.12f, 1f, WellN + RoomHalf), wallMat);
         room.Register(wellRail, CabinInterior.Surface.Wall, new Vector2(18f, 2f));
+        var wellCap = MakeShellBox(parent, "WellRailCap",
+                                   new Vector3(WellW, wellTop, (-RoomHalf + WellN) * 0.5f),
+                                   new Vector3(0.24f, 0.12f, WellN + RoomHalf), wallMat);
+        room.Register(wellCap, CabinInterior.Surface.Wall, new Vector2(18f, 1f));
+
+        // newel posts: the flight's rail grows out of the floor at the foot and meets the well rail at
+        // the head, so neither end of the banister stops in mid-air.
+        float cos = run / Mathf.Sqrt(run * run + rise * rise);    // the slope's vertical foreshortening
+        float footTop = railH * cos + 0.12f;                      // stands a little proud of the rail
+        room.Register(MakeShellBox(parent, "StairNewel_Foot",
+                                   new Vector3(WellW + 0.06f, footTop * 0.5f, StairFootZ - 0.05f),
+                                   new Vector3(0.22f, footTop, 0.22f), wallMat),
+                      CabinInterior.Surface.Wall, new Vector2(1f, 2f));
+        float headTop = wellTop + 0.12f;
+        room.Register(MakeShellBox(parent, "StairNewel_Head",
+                                   new Vector3(WellW + 0.06f, (SlabTop + headTop) * 0.5f, StairHeadZ - 0.05f),
+                                   new Vector3(0.22f, headTop - SlabTop, 0.22f), wallMat),
+                      CabinInterior.Surface.Wall, new Vector2(1f, 2f));
 
         // NB: the structure kit's own stair art (stairSideWood) is deliberately NOT laid against the open
         // side here. It is drawn as a fixed ~45 degree oblique flight in a 48x48 cell; stretched to this
@@ -4139,8 +4173,12 @@ public static class HorrorGame3DSetup
         MakeStructureProp(decor, "Landing_Portrait", InteriorProp.Piece.FramedPortrait,
                           new Vector3(-2f, 4.9f, 1.82f), Quaternion.Euler(0f, 180f, 0f),
                           structDay, structNight, spriteMat);
+        // The sconce lighting the bedroom door. It used to hang at x=3.5 — out in the middle of the
+        // landing, where the bedroom's south wall has long since stopped (it ends at x=1) — so it
+        // guttered away in mid-air. It now mounts on the door jamb stub (the Bedroom_E_a section,
+        // z=[2,3]), facing east down the landing the player walks in from.
         MakeStructureProp(decor, "Landing_Sconce", InteriorProp.Piece.WallSconce,
-                          new Vector3(3.5f, 4.9f, 1.82f), Quaternion.Euler(0f, 180f, 0f),
+                          new Vector3(1.18f, 4.9f, 2.5f), Quaternion.Euler(0f, 90f, 0f),
                           structDay, structNight, spriteMat, on: true);
     }
 
@@ -4160,8 +4198,13 @@ public static class HorrorGame3DSetup
                           new Vector3(-Inner + 0.05f, 2.1f, -3f), west, structDay, structNight, spriteMat);
         MakeStructureProp(decor, "Hall_Calendar", InteriorProp.Piece.Calendar,
                           new Vector3(-Inner + 0.05f, 1.9f, -6f), west, structDay, structNight, spriteMat);
-        MakeStructureProp(decor, "Hall_Portrait", InteriorProp.Piece.FramedPortrait,
-                          new Vector3(Inner - 0.05f, 2f, -3f), east, structDay, structNight, spriteMat);
+        // The stairwell portrait. At y=2 it sat on the east wall BEHIND the flight — the treads climb
+        // right past that spot, so it was half-buried in the staircase. The stairwell is open all the
+        // way to the upper ceiling, so it now hangs ABOVE the climb instead, at eye height for whoever
+        // is on the stairs, which is where a picture up a staircase wall belongs.
+        MakeStructureProp(decor, "Stairwell_Portrait", InteriorProp.Piece.FramedPortrait,
+                          new Vector3(Inner - 0.05f, StairLineY(-3.4f) + 1.5f, -3.4f), east,
+                          structDay, structNight, spriteMat);
         MakeStructureProp(decor, "Hall_Landscape", InteriorProp.Piece.FramedLandscape,
                           new Vector3(Inner - 0.05f, 2f, 1f), east, structDay, structNight, spriteMat);
         MakeStructureProp(decor, "Hall_Shelf", InteriorProp.Piece.MountedShelf,
@@ -4178,6 +4221,35 @@ public static class HorrorGame3DSetup
             MakeStructureProp(decor, "SupportPost", InteriorProp.Piece.SupportPost,
                               new Vector3(3.6f, 0f, z), Quaternion.identity, structDay, structNight, spriteMat,
                               pivot: new Vector2(0.5f, 0f), billboard: true);
+    }
+
+    // How high the flight's tread line runs at a given z — flat floor below the foot, the slab above the
+    // head. Stairwell decor hangs off this so it always sits a fixed distance ABOVE the climb.
+    static float StairLineY(float z) =>
+        Mathf.Clamp((z - StairFootZ) * (SlabTop / (StairHeadZ - StairFootZ)), 0f, SlabTop);
+
+    // Every hung piece needs a wall right behind it. One stray coordinate leaves a sprite guttering in
+    // mid-air and it is invisible while building, because these props only slice their art at runtime —
+    // the editor shows an empty transform. So after the dressing is placed: cast back along each piece's
+    // own facing, snap it flush against whatever wall it finds, and name in the console anything that
+    // finds nothing at all.
+    static void AuditWallDecor(Transform decor)
+    {
+        Physics.SyncTransforms();          // the shell went up this frame; push it to the physics scene first
+        var floating = new List<string>();
+        foreach (var prop in decor.GetComponentsInChildren<InteriorProp>(true))
+        {
+            if (prop.billboard) continue;                       // free-standing pieces stand on the floor instead
+            Vector3 fwd = prop.transform.forward;               // hung decor faces OUT of its wall
+            if (Physics.Raycast(prop.transform.position + fwd * 0.35f, -fwd, out var hit, 0.8f,
+                                ~0, QueryTriggerInteraction.Ignore))
+                prop.transform.position = hit.point + hit.normal * 0.05f;   // flush: never floating, never sunk
+            else
+                floating.Add(prop.name + " " + prop.transform.position);
+        }
+        if (floating.Count > 0)
+            Debug.LogWarning("[HorrorGame] interior decor with no wall behind it (floating in mid-air): " +
+                             string.Join(", ", floating));
     }
 
     // -------------------------------------------------------------- interior building blocks

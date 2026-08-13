@@ -21,6 +21,9 @@ public class PartnerController : MonoBehaviour
     public Sprite[] girlSpeak;
     public float smileDuration = 3f;
     public float talkRange = 2.6f;
+    [Tooltip("How far above/below the partner still counts. The cabin has two storeys now, so a flat XZ " +
+             "test would offer 'press E to talk' to a player up in the bedroom directly above them.")]
+    public float verticalRange = 2.2f;
     public float lineDuration = 4f;
     [TextArea]
     public string[] lines =
@@ -67,6 +70,7 @@ public class PartnerController : MonoBehaviour
         Vector3 a = player.position; a.y = 0f;
         Vector3 b = transform.position; b.y = 0f;
         if (Vector3.Distance(a, b) > talkRange) return;
+        if (Mathf.Abs(player.position.y - transform.position.y) > verticalRange) return;   // a storey apart
 
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt("Press E to talk");
         if (TalkPressed()) Talk();

@@ -43,6 +43,9 @@ public class Fireplace : MonoBehaviour
 
     [Header("Interaction")]
     public float reach = 3f;
+    [Tooltip("How far above/below the hearth still counts. The cabin has two storeys now, so a flat XZ " +
+             "test would offer 'press E to feed the fire' to a player up in the bedroom above it.")]
+    public float verticalReach = 2.2f;
     public string feedPrompt = "Press E to feed the fire";
     public string needWoodPrompt = "Need wood - chop a tree";
 
@@ -138,6 +141,7 @@ public class Fireplace : MonoBehaviour
         Vector3 a = transform.position; a.y = 0f;
         Vector3 b = _player.position;   b.y = 0f;
         if ((a - b).sqrMagnitude > reach * reach) return;
+        if (Mathf.Abs(_player.position.y - transform.position.y) > verticalReach) return;   // a storey apart
 
         // Near the hearth: one press feeds one wood — relighting a dead fire or extending a live one.
         bool hasWood = LogPickup.Wood > 0;

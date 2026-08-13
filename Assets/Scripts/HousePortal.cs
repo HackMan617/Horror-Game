@@ -20,6 +20,9 @@ public class HousePortal : MonoBehaviour
     public Transform player;
     public string interiorScene = "Sandbox3D";
     public float range = 3.5f;
+    [Tooltip("How far above/below the door still counts. The cabin has two storeys now, so a flat XZ " +
+             "test would offer the interior exit door to a player up on the landing directly above it.")]
+    public float verticalRange = 2.5f;
     public float fadeDuration = 0.7f;
     public AudioClip openSound;         // played as the door swings open
     [Tooltip("On approach + activate prompt text.")]
@@ -95,7 +98,8 @@ public class HousePortal : MonoBehaviour
         Vector3 b = transform.position; b.y = 0f;
         bool onFrontSide = approachFromNegativeZ ? player.position.z < transform.position.z
                                                  : player.position.z > transform.position.z;
-        bool inFront = Vector3.Distance(a, b) <= range && onFrontSide;
+        bool inFront = Vector3.Distance(a, b) <= range && onFrontSide &&
+                       Mathf.Abs(player.position.y - transform.position.y) <= verticalRange;
         if (!inFront) return;
 
         if (DialogUI.Instance != null) DialogUI.Instance.ShowPrompt(promptText);
