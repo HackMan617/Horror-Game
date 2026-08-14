@@ -90,7 +90,7 @@ public static class HorrorGame3DSetup
     const int DrivingSetupVersion = 13;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
     const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
-    const int InteriorSetupVersion  = 2; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
+    const int InteriorSetupVersion  = 3; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
 
     static int _renderer3DIndex = 1;
 
@@ -4010,10 +4010,119 @@ public static class HorrorGame3DSetup
         warp.SetActive(false);
         room.warpFX = warp;
 
+        // ---- the dog's run of the house: the waypoints it wanders and climbs between ----
+        int waypoints = BuildDogNav();
+
         Debug.Log("[HorrorGame] Cabin interior: two storeys, " + room.surfaces.Count + " structural surfaces on the " +
-                  "realm swap, a " + StairSteps + "-tread staircase, and the bedroom at " +
-                  (bed != null ? bed.transform.position.ToString() : "(bed missing)") + ".");
+                  "realm swap, a " + StairSteps + "-tread staircase, the bedroom at " +
+                  (bed != null ? bed.transform.position.ToString() : "(bed missing)") + ", and " + waypoints +
+                  " dog waypoints across both floors.");
     }
+
+    // The dog's run of the house.
+    //
+    // The dog cannot feel its way round the furniture — every piece indoors is a billboarded sprite with
+    // no collider, so a baked NavMesh would see one empty 20x20 box per storey and route it straight
+    // through the sofa. It walks a hand-laid waypoint graph instead, plotted from the very constants the
+    // shell above is built from: a loop of the ground floor that keeps clear of the living-room group and
+    // of the stair mass, the flight up the south-east stairwell, the landing, and the bedroom through its
+    // door. DogHouseNav interpolates the dog's height along whichever edge it is on, so the two stair
+    // edges — one straight, constant-slope run — sit it exactly on the tread line with no raycasting.
+    //
+    // The one rule when moving a waypoint: an edge is a straight line the dog will walk down, so both
+    // ends being clear is not enough. Select the Dog to see the whole graph drawn in the Scene view.
+    static int BuildDogNav()
+    {
+        var dog = Object.FindAnyObjectByType<DogCompanion>();
+        if (dog == null)
+        {
+            Debug.LogWarning("[HorrorGame] no Dog in this scene — interior roaming not installed.");
+            return 0;
+        }
+        // Replaced rather than patched, like the shell roots above: a component left over from an earlier
+        // run keeps the tuning that was serialised onto it at the time, so re-running this would rebuild
+        // the waypoints but silently leave the old behaviour values behind.
+        var stale = dog.GetComponent<DogHouseNav>();
+        if (stale != null) Object.DestroyImmediate(stale);
+        var nav = dog.gameObject.AddComponent<DogHouseNav>();
+
+        var nodes = new List<DogNavNode>();
+        int Node(string name, float x, float y, float z, bool onStairs = false)
+        {
+            nodes.Add(new DogNavNode { name = name, position = new Vector3(x, y, z), onStairs = onStairs });
+            return nodes.Count - 1;
+        }
+
+        // ---- ground floor (y = 0) ----
+        // The living-room group (rug, sofa, coffee table, chairs, TV) fills x[-9,0.5] z[4,9.5] and the
+        // loveseat sits at (0.3, 5.2) right in the gap between the hearth and the room's middle — so the
+        // hearth is reached round the east side, and the west arc runs south of the armchair.
+        int entry     = Node("Entry",      0.0f, 0f, -8.6f);   // inside the front door
+        int hall      = Node("Hall",       2.8f, 0f, -4.0f);
+        int eastHall  = Node("EastHall",   7.5f, 0f,  1.5f);   // clear floor east of the furniture
+        int hearth    = Node("Hearth",     1.2f, 0f,  8.4f);   // in front of the fireplace
+        int midRoom   = Node("LivingRoom",-1.4f, 0f,  5.2f);   // the gap between the loveseat and the coffee table
+        int rugEdge   = Node("RugEdge",   -1.6f, 0f,  3.6f);   // south-east fringe of the rug
+        int westWall  = Node("WestWall",  -8.8f, 0f,  0.5f);
+        int southWest = Node("SouthWest", -5.5f, 0f, -6.5f);
+        // Hugs the south wall to the foot of the flight. The banister's knee wall runs the whole length
+        // of the ramp at x = 6.16 and its foot reaches past the bottom tread, so the approach has to
+        // pass SOUTH of it — cut the corner and the dog walks through the bottom of the banister.
+        int stairFoot = Node("StairFoot",  StairMidX, 0f, -9.15f);
+        int stairBase = Node("StairBase",  StairMidX, 0f, StairFootZ);
+
+        // ---- the flight (the only waypoint the dog is allowed to be mid-climb on) ----
+        int stairMid  = Node("StairMid",   StairMidX, SlabTop * 0.5f, (StairFootZ + StairHeadZ) * 0.5f, onStairs: true);
+
+        // ---- upstairs landing (y = 3.2) ----
+        // The slab is everything west of the stairwell plus the strip north of it; the well itself
+        // (x[6.1,10] z[-10,-1]) is open air, railed along x = 6.1, so nothing may cross that line south
+        // of the stair head.
+        int stairHead = Node("StairHead",  StairMidX, SlabTop, StairHeadZ);   // the true top of the flight
+        int landEast  = Node("LandingEast",   7.6f, SlabTop,  3.5f);
+        int landNorth = Node("LandingNorth",  4.2f, SlabTop,  7.0f);
+        int doorOut   = Node("DoorOutside",   2.0f, SlabTop,  4.2f);   // on the landing side of the jamb
+        int landMid   = Node("LandingMid",    3.5f, SlabTop,  0.0f);
+        int landSouth = Node("LandingSouth", -2.0f, SlabTop, -4.5f);
+        int landWest  = Node("LandingWest",  -8.0f, SlabTop, -1.5f);
+
+        // ---- the bedroom, through the door in its east wall (the opening is z[3,5.4] at x = 1) ----
+        int doorway   = Node("Doorway",       1.0f, SlabTop,  4.2f);
+        int bedroomIn = Node("BedroomIn",    -0.6f, SlabTop,  4.4f);
+        int bedFoot   = Node("BedFoot",      -4.6f, SlabTop,  5.6f);   // on the rug at the foot of the bed
+        int bedside   = Node("Bedside",      -2.6f, SlabTop,  6.8f);
+        int bedWest   = Node("BedroomWest",  -8.4f, SlabTop,  5.6f);   // between the desk and the dresser
+
+        var edges = new (int a, int b)[]
+        {
+            // ground floor: an east arc to the hearth, a west arc round the back of the furniture,
+            // and the run along the south wall to the foot of the stairs
+            (entry, hall), (entry, rugEdge), (entry, southWest), (entry, stairFoot),
+            (hall, eastHall), (eastHall, hearth), (hearth, midRoom), (midRoom, rugEdge),
+            (rugEdge, westWall), (rugEdge, southWest), (westWall, southWest),
+            // the climb
+            (stairFoot, stairBase), (stairBase, stairMid), (stairMid, stairHead),
+            // the landing, round the bedroom's south-east corner to its door
+            (stairHead, landEast), (landEast, landNorth), (landEast, landMid),
+            (landNorth, doorOut), (doorOut, landMid), (landMid, landSouth), (landSouth, landWest),
+            // and inside
+            (doorOut, doorway), (doorway, bedroomIn),
+            (bedroomIn, bedFoot), (bedroomIn, bedside), (bedFoot, bedside), (bedFoot, bedWest),
+        };
+
+        var wired = new List<int>[nodes.Count];
+        for (int i = 0; i < wired.Length; i++) wired[i] = new List<int>();
+        foreach (var e in edges) { wired[e.a].Add(e.b); wired[e.b].Add(e.a); }
+        for (int i = 0; i < nodes.Count; i++) nodes[i].links = wired[i].ToArray();
+
+        nav.nodes = nodes;
+        EditorUtility.SetDirty(nav);
+        return nodes.Count;
+    }
+
+    // The flight's centre line: the treads run the full width of the stairwell, so the dog climbs up
+    // the middle of them rather than scraping the banister.
+    const float StairMidX = (WellW + StairEastX) * 0.5f;
 
     // The flight out of the stairwell. The treads are for the eye only — their colliders come off and a
     // single hidden ramp carries the CharacterController, which climbs and descends a smooth slope
@@ -4022,7 +4131,7 @@ public static class HorrorGame3DSetup
     static void BuildStaircase(Transform parent, CabinInterior room, Material floorMat, Material wallMat)
     {
         float run = StairHeadZ - StairFootZ, rise = SlabTop;
-        float width = StairEastX - WellW, midX = (WellW + StairEastX) * 0.5f;
+        float width = StairEastX - WellW, midX = StairMidX;   // shared with the dog's climb waypoints
         float tread = run / StairSteps, riser = rise / StairSteps;
 
         for (int i = 0; i < StairSteps; i++)

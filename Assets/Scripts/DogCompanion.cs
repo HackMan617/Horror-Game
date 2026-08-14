@@ -4,11 +4,15 @@ using UnityEngine.InputSystem;
 #endif
 
 /// <summary>
-/// Apricot dog companion for the overworld. Trails the player on the XZ plane,
-/// stopping a short distance away so it stays on-screen, plays a walk cycle while
-/// moving and a sitting idle loop while stopped. Hidden during the nightmare.
-/// Press P while near the dog to pet it: the dog plays its hearts reaction (and sits
-/// still) while the partner smiles, then both return to normal.
+/// The dog companion. Plays a walk cycle while moving and a sitting idle loop while stopped, pants
+/// intermittently while on the move, and is hidden during the nightmare. Press P while near it to pet
+/// it: the dog plays its hearts reaction (and sits still) while the partner smiles, then both return
+/// to normal.
+///
+/// <para>Where it goes is decided by <see cref="DogHouseNav"/> if one is attached: indoors the dog has
+/// the run of the two-storey cabin, wandering the house and using the stairs on its own and only
+/// coming to find the player every so often. With no nav attached it falls back to the plain
+/// behaviour it has always had — trail the player on the XZ plane and stop a short distance away.</para>
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public class DogCompanion : MonoBehaviour
@@ -26,6 +30,10 @@ public class DogCompanion : MonoBehaviour
     public float followDistance = 2.5f;     // stop this far from the player (stays visible)
     public float speed = 4.5f;              // a little faster than the walk so it can keep up
     public float petRange = 3.5f;           // press P within this distance to pet
+    // Height difference under which the dog counts as being in the same room as you rather than a
+    // storey away. Without it a dog on the landing is 0m from you in plan, and you could reach up
+    // through the ceiling to pet it.
+    public float reachHeight = 1.2f;
     public float petDuration = 3f;          // how long the hearts reaction plays
 
     [Header("Panting audio (intermittent — not a constant loop)")]
@@ -34,9 +42,13 @@ public class DogCompanion : MonoBehaviour
     public float pantMaxGap = 7f;           // longest wait between pants while trotting
     [Range(0f, 1f)] public float petPantChance = 0.4f;   // an occasional happy pant when petted
     [Range(0f, 1f)] public float pantVolume = 0.7f;
+    // The pant is a 2D source, so it plays at your ear wherever the dog is. Once the dog roams the
+    // house that would mean panting in your face from another storey, so it only carries this far.
+    public float pantRange = 9f;
 
     SpriteRenderer _sr;
     AudioSource _audio;
+    DogHouseNav _nav;
     float _t;
     bool _hidden;
     float _petTimer;
@@ -49,6 +61,7 @@ public class DogCompanion : MonoBehaviour
     {
         _sr = GetComponent<SpriteRenderer>();
         _audio = GetComponent<AudioSource>();
+        _nav = GetComponent<DogHouseNav>();     // indoors: the run of the house. Absent: the flat follow.
         ApplyChosenBreed();
     }
 
@@ -82,29 +95,43 @@ public class DogCompanion : MonoBehaviour
         bool petting = _petTimer > 0f;
 
         Vector3 to = player.position - transform.position;
+        float rise = to.y;
         to.y = 0f;
         float dist = to.magnitude;
 
-        // Follow on the ground plane, but sit still while being petted.
-        bool walking = !petting && dist > followDistance;
-        if (walking)
+        bool walking;
+        if (_nav != null && _nav.Ready)
         {
-            float move = Mathf.Min(speed * Time.deltaTime, dist - followDistance);
-            transform.position += (to / dist) * move;
+            // Indoors: the nav owns where it goes and how high it is, so it can take the stairs.
+            walking = _nav.Step(player, Time.deltaTime, followDistance, speed, petting);
+        }
+        else
+        {
+            // One storey of open floor: beeline on the ground plane, sitting still while petted.
+            walking = !petting && dist > followDistance;
+            if (walking)
+            {
+                float move = Mathf.Min(speed * Time.deltaTime, dist - followDistance);
+                transform.position += (to / dist) * move;
+            }
         }
 
-        // Intermittent panting while trotting toward the player: a short delay when it starts moving,
-        // then a random gap between each pant so it never becomes a constant drone. Silent when sitting.
-        if (walking)
+        bool sameRoom = Mathf.Abs(rise) <= reachHeight;
+
+        // Intermittent panting while on the move: a short delay when it starts moving, then a random
+        // gap between each pant so it never becomes a constant drone. Silent when sitting, and silent
+        // when it is off wandering somewhere you would not hear it from.
+        bool audible = walking && sameRoom && dist <= pantRange;
+        if (audible)
         {
             if (!_wasWalking) _pantTimer = Random.Range(0.3f, pantMinGap);   // pant soon after setting off
             _pantTimer -= Time.deltaTime;
             if (_pantTimer <= 0f) { PlayPant(); _pantTimer = Random.Range(pantMinGap, pantMaxGap); }
         }
-        _wasWalking = walking;
+        _wasWalking = audible;
 
-        // Pet the dog (P) when the player is close.
-        if (dist <= petRange && PetPressed()) Pet();
+        // Pet the dog (P) when the player is close — and actually beside it, not a storey below.
+        if (sameRoom && dist <= petRange && PetPressed()) Pet();
 
         // Hearts while petting, otherwise the walk cycle / sitting idle.
         Sprite[] frames = (petting && heartFrames != null && heartFrames.Length > 0)
