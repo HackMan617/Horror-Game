@@ -1,0 +1,975 @@
+fileFormatVersion: 2
+guid: 0730b0eb8e03f9849a85dffb784e5956
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6890471267950469446
+    second: partner_boy_action_0
+  - first:
+      213: -4270477964263522924
+    second: partner_boy_action_1
+  - first:
+      213: -9181281288965377838
+    second: partner_boy_action_2
+  - first:
+      213: 3569014456975014913
+    second: partner_boy_action_3
+  - first:
+      213: 1252474490896866240
+    second: partner_boy_action_4
+  - first:
+      213: -3695518681130191279
+    second: partner_boy_action_5
+  - first:
+      213: -4201560298454344346
+    second: partner_boy_action_6
+  - first:
+      213: 443741274744845940
+    second: partner_boy_action_7
+  - first:
+      213: 8105848427456865771
+    second: partner_boy_action_8
+  - first:
+      213: -7363300434054155879
+    second: partner_boy_action_9
+  - first:
+      213: 9081183212000023273
+    second: partner_boy_action_10
+  - first:
+      213: -7055737322957009291
+    second: partner_boy_action_11
+  - first:
+      213: 1607651029842001479
+    second: partner_boy_action_12
+  - first:
+      213: -6559733428976546463
+    second: partner_boy_action_13
+  - first:
+      213: -960928442346583198
+    second: partner_boy_action_14
+  - first:
+      213: 4755753235678688190
+    second: partner_boy_action_15
+  - first:
+      213: 3102271495466364365
+    second: partner_boy_action_16
+  - first:
+      213: -4164172489197018654
+    second: partner_boy_action_17
+  - first:
+      213: -7958565664794214161
+    second: partner_boy_action_18
+  - first:
+      213: 4791190258771754498
+    second: partner_boy_action_19
+  - first:
+      213: -7549517558348780341
+    second: partner_boy_action_20
+  - first:
+      213: 2056470928515194941
+    second: partner_boy_action_21
+  - first:
+      213: 2435077596893274993
+    second: partner_boy_action_22
+  - first:
+      213: -4651445294114955358
+    second: partner_boy_action_23
+  - first:
+      213: -3269523613647061280
+    second: partner_boy_action_24
+  - first:
+      213: -312264983613521923
+    second: partner_boy_action_25
+  - first:
+      213: -1777032659192672130
+    second: partner_boy_action_26
+  - first:
+      213: 7313679750851254193
+    second: partner_boy_action_27
+  - first:
+      213: 7336396512441074820
+    second: partner_boy_action_28
+  - first:
+      213: -8319658196373239162
+    second: partner_boy_action_29
+  - first:
+      213: -7914003338820440297
+    second: partner_boy_action_30
+  - first:
+      213: -9114457762571041020
+    second: partner_boy_action_31
+  - first:
+      213: -7025152982564465845
+    second: partner_boy_action_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: partner_boy_action_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 97
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64129356c1fdf9f50800000000000000
+      internalID: 6890471267950469446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_1
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 97
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49d70fedae63cb4c0800000000000000
+      internalID: -4270477964263522924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_2
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 97
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d0374cef49859080800000000000000
+      internalID: -9181281288965377838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 97
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10cba3a3dbfa78130800000000000000
+      internalID: 3569014456975014913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_4
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 97
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cb5520e9eea16110800000000000000
+      internalID: 1252474490896866240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_5
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 97
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1563a66d651e6bcc0800000000000000
+      internalID: -3695518681130191279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_6
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 62
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66d9e3c5b2f01b5c0800000000000000
+      internalID: -4201560298454344346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_7
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 60
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 476785d965c782600800000000000000
+      internalID: 443741274744845940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_8
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 62
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be5a9b9b232cd7070800000000000000
+      internalID: 8105848427456865771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_9
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 60
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 991f8b5844d40d990800000000000000
+      internalID: -7363300434054155879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 62
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e290836408d60e70800000000000000
+      internalID: 9081183212000023273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_11
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 60
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57e8ea4a94cf41e90800000000000000
+      internalID: -7055737322957009291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_12
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 62
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74ef58c08168f4610800000000000000
+      internalID: 1607651029842001479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_13
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 60
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d0998833527f4a0800000000000000
+      internalID: -6559733428976546463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_14
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 62
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26bcc534ca81aa2f0800000000000000
+      internalID: -960928442346583198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_15
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 60
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb3fa0cee54dff140800000000000000
+      internalID: 4755753235678688190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_16
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 62
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcda7141d7b7d0b20800000000000000
+      internalID: 3102271495466364365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_17
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 60
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e125fd0f23e536c0800000000000000
+      internalID: -4164172489197018654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_18
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 33
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe00254b1be7d8190800000000000000
+      internalID: -7958565664794214161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_19
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 33
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20ef661d72abd7240800000000000000
+      internalID: 4791190258771754498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_20
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 33
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcceb0d97c9ba3790800000000000000
+      internalID: -7549517558348780341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_21
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 33
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d30e011f96d0a8c10800000000000000
+      internalID: 2056470928515194941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_22
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 33
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 173e55b3c222bc120800000000000000
+      internalID: 2435077596893274993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_23
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 33
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2af9d10462fb27fb0800000000000000
+      internalID: -4651445294114955358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_24
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 0
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eeb0d7989150a2d0800000000000000
+      internalID: -3269523613647061280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_25
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 0
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dff3cefd6ac9aabf0800000000000000
+      internalID: -312264983613521923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_26
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e709d8a2636b657e0800000000000000
+      internalID: -1777032659192672130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_27
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 0
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b7d47edbf86f7560800000000000000
+      internalID: 7313679750851254193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_28
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 484077712cd10d560800000000000000
+      internalID: 7336396512441074820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_29
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68a818823f2aa8c80800000000000000
+      internalID: -8319658196373239162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_30
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 0
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71f2a5eb4efcb2290800000000000000
+      internalID: -7914003338820440297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_31
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 0
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407c6a594f0f28180800000000000000
+      internalID: -9114457762571041020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_action_32
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b43187d4594a18e90800000000000000
+      internalID: -7025152982564465845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      partner_boy_action_0: 6890471267950469446
+      partner_boy_action_1: -4270477964263522924
+      partner_boy_action_10: 9081183212000023273
+      partner_boy_action_11: -7055737322957009291
+      partner_boy_action_12: 1607651029842001479
+      partner_boy_action_13: -6559733428976546463
+      partner_boy_action_14: -960928442346583198
+      partner_boy_action_15: 4755753235678688190
+      partner_boy_action_16: 3102271495466364365
+      partner_boy_action_17: -4164172489197018654
+      partner_boy_action_18: -7958565664794214161
+      partner_boy_action_19: 4791190258771754498
+      partner_boy_action_2: -9181281288965377838
+      partner_boy_action_20: -7549517558348780341
+      partner_boy_action_21: 2056470928515194941
+      partner_boy_action_22: 2435077596893274993
+      partner_boy_action_23: -4651445294114955358
+      partner_boy_action_24: -3269523613647061280
+      partner_boy_action_25: -312264983613521923
+      partner_boy_action_26: -1777032659192672130
+      partner_boy_action_27: 7313679750851254193
+      partner_boy_action_28: 7336396512441074820
+      partner_boy_action_29: -8319658196373239162
+      partner_boy_action_3: 3569014456975014913
+      partner_boy_action_30: -7914003338820440297
+      partner_boy_action_31: -9114457762571041020
+      partner_boy_action_32: -7025152982564465845
+      partner_boy_action_4: 1252474490896866240
+      partner_boy_action_5: -3695518681130191279
+      partner_boy_action_6: -4201560298454344346
+      partner_boy_action_7: 443741274744845940
+      partner_boy_action_8: 8105848427456865771
+      partner_boy_action_9: -7363300434054155879
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

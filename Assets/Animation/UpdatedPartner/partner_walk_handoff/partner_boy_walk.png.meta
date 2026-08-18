@@ -1,0 +1,4277 @@
+fileFormatVersion: 2
+guid: c7340d33078aa5245b0ebc43977459bf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4810900296567420071
+    second: partner_boy_walk_0
+  - first:
+      213: 2510779630410466243
+    second: partner_boy_walk_1
+  - first:
+      213: -7389541781398366757
+    second: partner_boy_walk_2
+  - first:
+      213: 4138535640587095069
+    second: partner_boy_walk_3
+  - first:
+      213: -2616012428358755407
+    second: partner_boy_walk_4
+  - first:
+      213: 1255192282921483230
+    second: partner_boy_walk_5
+  - first:
+      213: -3052050144701835197
+    second: partner_boy_walk_6
+  - first:
+      213: -1378622054973749083
+    second: partner_boy_walk_7
+  - first:
+      213: 4630658540116279116
+    second: partner_boy_walk_8
+  - first:
+      213: -5708819366690636037
+    second: partner_boy_walk_9
+  - first:
+      213: -4198589981381300066
+    second: partner_boy_walk_10
+  - first:
+      213: 6950958166678808940
+    second: partner_boy_walk_11
+  - first:
+      213: -3652925767238157868
+    second: partner_boy_walk_12
+  - first:
+      213: -5147665035954981635
+    second: partner_boy_walk_13
+  - first:
+      213: -1465721543197585827
+    second: partner_boy_walk_14
+  - first:
+      213: -2011598352750722489
+    second: partner_boy_walk_15
+  - first:
+      213: 2286852025376860495
+    second: partner_boy_walk_16
+  - first:
+      213: -2700597005960941859
+    second: partner_boy_walk_17
+  - first:
+      213: 8009311671696632847
+    second: partner_boy_walk_18
+  - first:
+      213: -5313165149582461833
+    second: partner_boy_walk_19
+  - first:
+      213: -5136133597285128114
+    second: partner_boy_walk_20
+  - first:
+      213: -2032118941589667132
+    second: partner_boy_walk_21
+  - first:
+      213: -8465353805290772780
+    second: partner_boy_walk_22
+  - first:
+      213: 2423835293278393627
+    second: partner_boy_walk_23
+  - first:
+      213: -2500085034205552113
+    second: partner_boy_walk_24
+  - first:
+      213: -6686776592870255574
+    second: partner_boy_walk_25
+  - first:
+      213: 5499529557649929548
+    second: partner_boy_walk_26
+  - first:
+      213: 8940798259135678192
+    second: partner_boy_walk_27
+  - first:
+      213: -3229300246380686842
+    second: partner_boy_walk_28
+  - first:
+      213: 4505289271390732157
+    second: partner_boy_walk_29
+  - first:
+      213: 7158120087317077641
+    second: partner_boy_walk_30
+  - first:
+      213: -7833987369214443034
+    second: partner_boy_walk_31
+  - first:
+      213: -7012823525573353112
+    second: partner_boy_walk_32
+  - first:
+      213: 1462855406683269132
+    second: partner_boy_walk_33
+  - first:
+      213: -2392894298692216859
+    second: partner_boy_walk_34
+  - first:
+      213: 1100889710678950259
+    second: partner_boy_walk_35
+  - first:
+      213: 3813049925521556643
+    second: partner_boy_walk_36
+  - first:
+      213: -169290571543727627
+    second: partner_boy_walk_37
+  - first:
+      213: 5958023032913623344
+    second: partner_boy_walk_38
+  - first:
+      213: 6574928848427652898
+    second: partner_boy_walk_39
+  - first:
+      213: 204378236700669323
+    second: partner_boy_walk_40
+  - first:
+      213: 7740866648469767404
+    second: partner_boy_walk_41
+  - first:
+      213: 8294301006210558401
+    second: partner_boy_walk_42
+  - first:
+      213: 7288839639007464366
+    second: partner_boy_walk_43
+  - first:
+      213: -188598329745180433
+    second: partner_boy_walk_44
+  - first:
+      213: 1981254922023287500
+    second: partner_boy_walk_45
+  - first:
+      213: -8206222715703591410
+    second: partner_boy_walk_46
+  - first:
+      213: -2722597820498299788
+    second: partner_boy_walk_47
+  - first:
+      213: 5506713950533592706
+    second: partner_boy_walk_48
+  - first:
+      213: 7439269071785235876
+    second: partner_boy_walk_49
+  - first:
+      213: -5873483198764809434
+    second: partner_boy_walk_50
+  - first:
+      213: 3514223821583587726
+    second: partner_boy_walk_51
+  - first:
+      213: 5011127125067586492
+    second: partner_boy_walk_52
+  - first:
+      213: -6390943274023318125
+    second: partner_boy_walk_53
+  - first:
+      213: 1015371291989405621
+    second: partner_boy_walk_54
+  - first:
+      213: -7908562156151562959
+    second: partner_boy_walk_55
+  - first:
+      213: 7704738831058335838
+    second: partner_boy_walk_56
+  - first:
+      213: 7044206532801749315
+    second: partner_boy_walk_57
+  - first:
+      213: -4026066655231433054
+    second: partner_boy_walk_58
+  - first:
+      213: -3538718731894964920
+    second: partner_boy_walk_59
+  - first:
+      213: 1371787689934173772
+    second: partner_boy_walk_60
+  - first:
+      213: 4557768996475996371
+    second: partner_boy_walk_61
+  - first:
+      213: -5119126069586712879
+    second: partner_boy_walk_62
+  - first:
+      213: 106709224015236091
+    second: partner_boy_walk_63
+  - first:
+      213: -6690021453375412848
+    second: partner_boy_walk_64
+  - first:
+      213: -3684858959641495367
+    second: partner_boy_walk_65
+  - first:
+      213: -1851481089362205089
+    second: partner_boy_walk_66
+  - first:
+      213: 6936465479823399145
+    second: partner_boy_walk_67
+  - first:
+      213: 710615866478301728
+    second: partner_boy_walk_68
+  - first:
+      213: -5242304554309691882
+    second: partner_boy_walk_69
+  - first:
+      213: 7056648759663522123
+    second: partner_boy_walk_70
+  - first:
+      213: -5047650302070960504
+    second: partner_boy_walk_71
+  - first:
+      213: -6469037608539405376
+    second: partner_boy_walk_72
+  - first:
+      213: -4681121578219553763
+    second: partner_boy_walk_73
+  - first:
+      213: -7650870175783446346
+    second: partner_boy_walk_74
+  - first:
+      213: -14576854577692521
+    second: partner_boy_walk_75
+  - first:
+      213: 7707356633887720871
+    second: partner_boy_walk_76
+  - first:
+      213: -3006332463784208329
+    second: partner_boy_walk_77
+  - first:
+      213: -7854922848298817574
+    second: partner_boy_walk_78
+  - first:
+      213: -2085515437105208586
+    second: partner_boy_walk_79
+  - first:
+      213: -147227643340961726
+    second: partner_boy_walk_80
+  - first:
+      213: -1939835252302574661
+    second: partner_boy_walk_81
+  - first:
+      213: -3383203572021179014
+    second: partner_boy_walk_82
+  - first:
+      213: 4186049885107586467
+    second: partner_boy_walk_83
+  - first:
+      213: 2464928625034046454
+    second: partner_boy_walk_84
+  - first:
+      213: 3329802461514964468
+    second: partner_boy_walk_85
+  - first:
+      213: -4000305810858523492
+    second: partner_boy_walk_86
+  - first:
+      213: 8269285207232465710
+    second: partner_boy_walk_87
+  - first:
+      213: 1792485553638695529
+    second: partner_boy_walk_88
+  - first:
+      213: -5188558726152061202
+    second: partner_boy_walk_89
+  - first:
+      213: -2127833818409561998
+    second: partner_boy_walk_90
+  - first:
+      213: -2537494426136576922
+    second: partner_boy_walk_91
+  - first:
+      213: 3034420128445288825
+    second: partner_boy_walk_92
+  - first:
+      213: -988056659783420134
+    second: partner_boy_walk_93
+  - first:
+      213: -5032121818903310122
+    second: partner_boy_walk_94
+  - first:
+      213: 2726748785283015417
+    second: partner_boy_walk_95
+  - first:
+      213: -7078316482552906675
+    second: partner_boy_walk_96
+  - first:
+      213: -6598002914697810645
+    second: partner_boy_walk_97
+  - first:
+      213: 767679910690851895
+    second: partner_boy_walk_98
+  - first:
+      213: -3587341227347300557
+    second: partner_boy_walk_99
+  - first:
+      213: 2620779325486090609
+    second: partner_boy_walk_100
+  - first:
+      213: -9163702202327463793
+    second: partner_boy_walk_101
+  - first:
+      213: 7978961099620184803
+    second: partner_boy_walk_102
+  - first:
+      213: 1533348233429167674
+    second: partner_boy_walk_103
+  - first:
+      213: -3245208075874257428
+    second: partner_boy_walk_104
+  - first:
+      213: 7415464479754424465
+    second: partner_boy_walk_105
+  - first:
+      213: 3618247687572920757
+    second: partner_boy_walk_106
+  - first:
+      213: -8342642992992900585
+    second: partner_boy_walk_107
+  - first:
+      213: -3299883416281198500
+    second: partner_boy_walk_108
+  - first:
+      213: 7757272376920959028
+    second: partner_boy_walk_109
+  - first:
+      213: -6907757780862910003
+    second: partner_boy_walk_110
+  - first:
+      213: -6110385396917040980
+    second: partner_boy_walk_111
+  - first:
+      213: 1284987722479766187
+    second: partner_boy_walk_112
+  - first:
+      213: 4846969233409920908
+    second: partner_boy_walk_113
+  - first:
+      213: 4530929132367306575
+    second: partner_boy_walk_114
+  - first:
+      213: -1019884051012860565
+    second: partner_boy_walk_115
+  - first:
+      213: 1589521482441925947
+    second: partner_boy_walk_116
+  - first:
+      213: -4097928749931606945
+    second: partner_boy_walk_117
+  - first:
+      213: 2663663375572344306
+    second: partner_boy_walk_118
+  - first:
+      213: -6348036831150358692
+    second: partner_boy_walk_119
+  - first:
+      213: 6294363735397743159
+    second: partner_boy_walk_120
+  - first:
+      213: 1848961464139652217
+    second: partner_boy_walk_121
+  - first:
+      213: -2771478305903145385
+    second: partner_boy_walk_122
+  - first:
+      213: -8967638645455933504
+    second: partner_boy_walk_123
+  - first:
+      213: -6678618730655710527
+    second: partner_boy_walk_124
+  - first:
+      213: 6939439542927288999
+    second: partner_boy_walk_125
+  - first:
+      213: -2616988957352404341
+    second: partner_boy_walk_126
+  - first:
+      213: 7615797355361872653
+    second: partner_boy_walk_127
+  - first:
+      213: 7200844903791557590
+    second: partner_boy_walk_128
+  - first:
+      213: -8509532534198482706
+    second: partner_boy_walk_129
+  - first:
+      213: -8211247672318234529
+    second: partner_boy_walk_130
+  - first:
+      213: -2818021144785290077
+    second: partner_boy_walk_131
+  - first:
+      213: -3666201218587701788
+    second: partner_boy_walk_132
+  - first:
+      213: 8488884104420035359
+    second: partner_boy_walk_133
+  - first:
+      213: 8698185510308800032
+    second: partner_boy_walk_134
+  - first:
+      213: -7735770773780068810
+    second: partner_boy_walk_135
+  - first:
+      213: 1997610962258454826
+    second: partner_boy_walk_136
+  - first:
+      213: 2071220830892735892
+    second: partner_boy_walk_137
+  - first:
+      213: 8769976360207426427
+    second: partner_boy_walk_138
+  - first:
+      213: -6174256241798938812
+    second: partner_boy_walk_139
+  - first:
+      213: -3069138106566894982
+    second: partner_boy_walk_140
+  - first:
+      213: -7982933344140677360
+    second: partner_boy_walk_141
+  - first:
+      213: -2768354288340004381
+    second: partner_boy_walk_142
+  - first:
+      213: -7832287057529568136
+    second: partner_boy_walk_143
+  - first:
+      213: 1112185158736103969
+    second: partner_boy_walk_144
+  - first:
+      213: -4918208999547828735
+    second: partner_boy_walk_145
+  - first:
+      213: -187696716820797953
+    second: partner_boy_walk_146
+  - first:
+      213: -4375193910315772881
+    second: partner_boy_walk_147
+  - first:
+      213: -6901308996985774142
+    second: partner_boy_walk_148
+  - first:
+      213: -6962651977609830075
+    second: partner_boy_walk_149
+  - first:
+      213: -7703754044689013316
+    second: partner_boy_walk_150
+  - first:
+      213: 5222082155964266965
+    second: partner_boy_walk_151
+  - first:
+      213: 5611304120845824339
+    second: partner_boy_walk_152
+  - first:
+      213: -6434596660497531106
+    second: partner_boy_walk_153
+  - first:
+      213: 5446920872737138104
+    second: partner_boy_walk_154
+  - first:
+      213: 641199845343826210
+    second: partner_boy_walk_155
+  - first:
+      213: -5809431413605490223
+    second: partner_boy_walk_156
+  - first:
+      213: -6861074620294922895
+    second: partner_boy_walk_157
+  - first:
+      213: -6198838174182371783
+    second: partner_boy_walk_158
+  - first:
+      213: 2968340745237101343
+    second: partner_boy_walk_159
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: partner_boy_walk_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 231
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95b07456baf3c3db0800000000000000
+      internalID: -4810900296567420071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_1
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 231
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c307eb65c418d220800000000000000
+      internalID: 2510779630410466243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 242
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5d7dab6e2137990800000000000000
+      internalID: -7389541781398366757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_3
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 231
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1ccc7bfc380f6930800000000000000
+      internalID: 4138535640587095069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_4
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 242
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bb5baf7e8e02bbd0800000000000000
+      internalID: -2616012428358755407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_5
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 231
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edbb8542bb65b6110800000000000000
+      internalID: 1255192282921483230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_6
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 231
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3481e585090f4a5d0800000000000000
+      internalID: -3052050144701835197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_7
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 242
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a845c59b862edce0800000000000000
+      internalID: -1378622054973749083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_8
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 231
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4f72cf6867634040800000000000000
+      internalID: 4630658540116279116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_9
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 242
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfeb889580336c0b0800000000000000
+      internalID: -5708819366690636037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_10
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 223
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90f04238ac9bb5c0800000000000000
+      internalID: -4198589981381300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_11
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 223
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c69ad75ff93c67060800000000000000
+      internalID: 6950958166678808940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_12
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 223
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d9f5e46e533e4dc0800000000000000
+      internalID: -3652925767238157868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_13
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 223
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df4743d5ce1df88b0800000000000000
+      internalID: -5147665035954981635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_14
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 224
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5e021ea506b8abe0800000000000000
+      internalID: -1465721543197585827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_15
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 223
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7424881c4fd5514e0800000000000000
+      internalID: -2011598352750722489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_16
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 223
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4968720dc78cbf10800000000000000
+      internalID: 2286852025376860495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_17
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 224
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddee63ad45d858ad0800000000000000
+      internalID: -2700597005960941859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_18
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 223
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0c2edeb78ac62f60800000000000000
+      internalID: 8009311671696632847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_19
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 224
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 774f6226278d346b0800000000000000
+      internalID: -5313165149582461833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_20
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 199
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e48eed6a4b9c8b8b0800000000000000
+      internalID: -5136133597285128114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_21
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 199
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c28439d6967cc3e0800000000000000
+      internalID: -2032118941589667132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_22
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 210
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d664a1c095058a80800000000000000
+      internalID: -8465353805290772780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_23
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 199
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b15d9e17b5133a120800000000000000
+      internalID: 2423835293278393627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_24
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 210
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0268eb48e9ed4dd0800000000000000
+      internalID: -2500085034205552113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_25
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 199
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a245299ed1cc333a0800000000000000
+      internalID: -6686776592870255574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_26
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 199
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c453c73bef0425c40800000000000000
+      internalID: 5499529557649929548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_27
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 210
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f6863475a8141c70800000000000000
+      internalID: 8940798259135678192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_28
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 199
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 602d56519883f23d0800000000000000
+      internalID: -3229300246380686842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_29
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 210
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f7f97e8b0068e30800000000000000
+      internalID: 4505289271390732157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_30
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 191
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e5f184b40c65360800000000000000
+      internalID: 7158120087317077641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_31
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 191
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e183137ef5184390800000000000000
+      internalID: -7833987369214443034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_32
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 191
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 861a2b5b8227dae90800000000000000
+      internalID: -7012823525573353112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_33
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 191
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c08ad19ed3b1d4410800000000000000
+      internalID: 1462855406683269132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_34
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 192
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e7946d305bbaced0800000000000000
+      internalID: -2392894298692216859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_35
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 191
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 371c6edeb55274f00800000000000000
+      internalID: 1100889710678950259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_36
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 191
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a4ca8174bcaae430800000000000000
+      internalID: 3813049925521556643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_37
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 192
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f130534f1f86adf0800000000000000
+      internalID: -169290571543727627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_38
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 191
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0397968a1662fa250800000000000000
+      internalID: 5958023032913623344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_39
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 192
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2279ff1c3f6de3b50800000000000000
+      internalID: 6574928848427652898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_40
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 167
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b853d566ce816d200800000000000000
+      internalID: 204378236700669323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_41
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 167
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce485b334351d6b60800000000000000
+      internalID: 7740866648469767404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_42
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 178
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c9685fe1d64b1370800000000000000
+      internalID: 8294301006210558401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_43
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 167
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eab83d3a809272560800000000000000
+      internalID: 7288839639007464366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_44
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 178
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe87e4e71d6f16df0800000000000000
+      internalID: -188598329745180433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_45
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 167
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cca31bcbad4de7b10800000000000000
+      internalID: 1981254922023287500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_46
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 167
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0efeb22be3ad1e80800000000000000
+      internalID: -8206222715703591410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_47
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 178
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47432fa05b3673ad0800000000000000
+      internalID: -2722597820498299788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_48
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 167
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2862e358927cb6c40800000000000000
+      internalID: 5506713950533592706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_49
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 178
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a51f4c4ec79d3760800000000000000
+      internalID: 7439269071785235876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_50
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 159
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 623066756223d7ea0800000000000000
+      internalID: -5873483198764809434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_51
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 159
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8994b252f705c030800000000000000
+      internalID: 3514223821583587726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_52
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 159
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbb5af5f1991b8540800000000000000
+      internalID: 5011127125067586492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_53
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 159
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39d0b24f3fece47a0800000000000000
+      internalID: -6390943274023318125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_54
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 160
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf68267fc2571e00800000000000000
+      internalID: 1015371291989405621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_55
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 159
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13d1d7ece942f3290800000000000000
+      internalID: -7908562156151562959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_56
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 159
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e58f368352bbcea60800000000000000
+      internalID: 7704738831058335838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_57
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 160
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3416220158c02c160800000000000000
+      internalID: 7044206532801749315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_58
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 159
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a6a2e445b98028c0800000000000000
+      internalID: -4026066655231433054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_59
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 160
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84d3161ff02f3eec0800000000000000
+      internalID: -3538718731894964920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_60
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 135
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c46b7cdc2a1990310800000000000000
+      internalID: 1371787689934173772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_61
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 135
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d88d3311c2704f30800000000000000
+      internalID: 4557768996475996371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_62
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 146
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6a7d546f535f8b0800000000000000
+      internalID: -5119126069586712879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_63
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 135
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfb8faf497b1b7100800000000000000
+      internalID: 106709224015236091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_64
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 146
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 095e0d3fee44823a0800000000000000
+      internalID: -6690021453375412848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_65
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 135
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b83727ac40ccdcc0800000000000000
+      internalID: -3684858959641495367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_66
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 135
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f56663042c73e46e0800000000000000
+      internalID: -1851481089362205089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_67
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 146
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e812a95a96434060800000000000000
+      internalID: 6936465479823399145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_68
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 135
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02212359d5d9cd900800000000000000
+      internalID: 710615866478301728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_69
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 146
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61655f368c79f37b0800000000000000
+      internalID: -5242304554309691882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_70
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 127
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b41f170c8a04ee160800000000000000
+      internalID: 7056648759663522123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_71
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 127
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ecaaa3bc423f9b0800000000000000
+      internalID: -5047650302070960504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_72
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 127
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c3cd58c19c5936a0800000000000000
+      internalID: -6469037608539405376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_73
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 127
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1cbecbe9b0590fb0800000000000000
+      internalID: -4681121578219553763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_74
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 128
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b81cc57c16a2d590800000000000000
+      internalID: -7650870175783446346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_75
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 127
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79044f09d663ccff0800000000000000
+      internalID: -14576854577692521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_76
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 127
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a5c020f50806fa60800000000000000
+      internalID: 7707356633887720871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_77
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 738da6b6d8c5746d0800000000000000
+      internalID: -3006332463784208329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_78
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 127
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad7ac016945bdf290800000000000000
+      internalID: -7854922848298817574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_79
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 128
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f220cd62c2ce03e0800000000000000
+      internalID: -2085515437105208586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_80
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 103
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2484b890d31f4fdf0800000000000000
+      internalID: -147227643340961726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_81
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 103
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbb89bf9d125415e0800000000000000
+      internalID: -1939835252302574661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_82
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 114
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7d48d6b6427c01d0800000000000000
+      internalID: -3383203572021179014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_83
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 103
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a507ed1136d71a30800000000000000
+      internalID: 4186049885107586467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_84
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 114
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fba8d3568f253220800000000000000
+      internalID: 2464928625034046454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_85
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 103
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd12da52b5d53e20800000000000000
+      internalID: 3329802461514964468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_86
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 103
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c94c8de3f0f0c78c0800000000000000
+      internalID: -4000305810858523492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_87
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 114
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2bcb7b551762c270800000000000000
+      internalID: 8269285207232465710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_88
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 103
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96267a13d1030e810800000000000000
+      internalID: 1792485553638695529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_89
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 114
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeef37724598ef7b0800000000000000
+      internalID: -5188558726152061202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_90
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 95
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27092a87a6a6872e0800000000000000
+      internalID: -2127833818409561998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_91
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 95
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66c789e734209ccd0800000000000000
+      internalID: -2537494426136576922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_92
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 95
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 971d64f970d6c1a20800000000000000
+      internalID: 3034420128445288825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_93
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 95
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1776afe3b7b942f0800000000000000
+      internalID: -988056659783420134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_94
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 96
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d096c5fddf4a2ab0800000000000000
+      internalID: -5032121818903310122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_95
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 95
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f2a582c29b57d520800000000000000
+      internalID: 2726748785283015417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_96
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 95
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c34a169a4c4cd90800000000000000
+      internalID: -7078316482552906675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_97
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 96
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2de17a8e4f2f64a0800000000000000
+      internalID: -6598002914697810645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_98
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 95
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73c8ee9bfc857aa00800000000000000
+      internalID: 767679910690851895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_99
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 96
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33fa9d70924373ec0800000000000000
+      internalID: -3587341227347300557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_100
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 71
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 179494a39e0ee5420800000000000000
+      internalID: 2620779325486090609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_101
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 71
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f888ecaf56df3d080800000000000000
+      internalID: -9163702202327463793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_102
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 82
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e2758388d6fabe60800000000000000
+      internalID: 7978961099620184803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_103
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 71
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3ea482281c874510800000000000000
+      internalID: 1533348233429167674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_104
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 82
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce53947e274b6f2d0800000000000000
+      internalID: -3245208075874257428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_105
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 71
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1901a40d7a509e660800000000000000
+      internalID: 7415464479754424465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_106
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 71
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b9992ff919963230800000000000000
+      internalID: 3618247687572920757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_107
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 82
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71aa1ca266af83c80800000000000000
+      internalID: -8342642992992900585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_108
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 71
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c505b5434857432d0800000000000000
+      internalID: -3299883416281198500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_109
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 82
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 438e254802e57ab60800000000000000
+      internalID: 7757272376920959028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_110
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 63
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc1c93da5e6b220a0800000000000000
+      internalID: -6907757780862910003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_111
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 63
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca886001bdc833ba0800000000000000
+      internalID: -6110385396917040980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_112
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 63
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baa0523868135d110800000000000000
+      internalID: 1284987722479766187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_113
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 63
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8f45a266d4e34340800000000000000
+      internalID: 4846969233409920908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_114
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 63
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4fd83d3a0811ee30800000000000000
+      internalID: 4530929132367306575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_115
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b65ca43fbd4a8d1f0800000000000000
+      internalID: -1019884051012860565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_116
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 64
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b35adcbdd5d1f0610800000000000000
+      internalID: 1589521482441925947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_117
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 63
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5c4771838b3127c0800000000000000
+      internalID: -4097928749931606945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_118
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 64
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fd15363abb37f420800000000000000
+      internalID: 2663663375572344306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_119
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 63
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5fbf2aa22e37e7a0800000000000000
+      internalID: -6348036831150358692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_120
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 39
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73abb77e7721a5750800000000000000
+      internalID: 6294363735397743159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_121
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 39
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97c1e69c7a4d8a910800000000000000
+      internalID: 1848961464139652217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_122
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 50
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75e01f92a2bb989d0800000000000000
+      internalID: -2771478305903145385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_123
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 39
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cfa88f1a2c8c8380800000000000000
+      internalID: -8967638645455933504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_124
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 50
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c20ff836a7c053a0800000000000000
+      internalID: -6678618730655710527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_125
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 39
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aaea706f77dd4060800000000000000
+      internalID: 6939439542927288999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_126
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 39
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8ad3ef98669eabd0800000000000000
+      internalID: -2616988957352404341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_127
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 50
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b24bf285fb0b960800000000000000
+      internalID: 7615797355361872653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_128
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 39
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6db7d2dc94a8ee360800000000000000
+      internalID: 7200844903791557590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_129
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 50
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee8487ede3118e980800000000000000
+      internalID: -8509532534198482706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_130
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 31
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f50f7b04fb9cb0e80800000000000000
+      internalID: -8211247672318234529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_131
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 31
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac788703b064e8d0800000000000000
+      internalID: -2818021144785290077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_132
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 31
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4edc9f28a690f1dc0800000000000000
+      internalID: -3666201218587701788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_133
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 31
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1b8a6fed139ec570800000000000000
+      internalID: 8488884104420035359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_134
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 31
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 026e76cf2a926b870800000000000000
+      internalID: 8698185510308800032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_135
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6368df4977505a490800000000000000
+      internalID: -7735770773780068810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_136
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 32
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2967dc1690f8bb10800000000000000
+      internalID: 1997610962258454826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_137
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 31
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49d30c43f547ebc10800000000000000
+      internalID: 2071220830892735892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_138
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 32
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b73acb6c80735b970800000000000000
+      internalID: 8769976360207426427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_139
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 31
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44ff55329a2a05aa0800000000000000
+      internalID: -6174256241798938812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_140
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 7
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a177f272b3865d0800000000000000
+      internalID: -3069138106566894982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_141
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 7
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01fafdc3b6ce63190800000000000000
+      internalID: -7982933344140677360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_142
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e1901f2174d499d0800000000000000
+      internalID: -2768354288340004381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_143
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 7
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8748f0d1b602e4390800000000000000
+      internalID: -7832287057529568136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_144
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12a4dee52864f6f00800000000000000
+      internalID: 1112185158736103969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_145
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 7
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10682d209f20fbbb0800000000000000
+      internalID: -4918208999547828735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_146
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 7
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff5a36c94da256df0800000000000000
+      internalID: -187696716820797953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_147
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f241d20c1503843c0800000000000000
+      internalID: -4375193910315772881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_148
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 7
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cf947d2800a930a0800000000000000
+      internalID: -6901308996985774142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_149
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 18
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54125e38ae0bf5f90800000000000000
+      internalID: -6962651977609830075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_150
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb525593384c61590800000000000000
+      internalID: -7703754044689013316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_151
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d9f7269d00987840800000000000000
+      internalID: 5222082155964266965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_152
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 0
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35173b13e5b5fdd40800000000000000
+      internalID: 5611304120845824339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_153
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 0
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1f3122ed68b3b6a0800000000000000
+      internalID: -6434596660497531106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_154
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b5682bbca9579b40800000000000000
+      internalID: 5446920872737138104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_155
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22111c3bcdff5e800800000000000000
+      internalID: 641199845343826210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_156
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d1ac05b8e0c06fa0800000000000000
+      internalID: -5809431413605490223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_157
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d7fdffbf098c0a0800000000000000
+      internalID: -6861074620294922895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_158
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e8abff58d49f9a0800000000000000
+      internalID: -6198838174182371783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: partner_boy_walk_159
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1bfc2c4e2aa13920800000000000000
+      internalID: 2968340745237101343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      partner_boy_walk_0: -4810900296567420071
+      partner_boy_walk_1: 2510779630410466243
+      partner_boy_walk_10: -4198589981381300066
+      partner_boy_walk_100: 2620779325486090609
+      partner_boy_walk_101: -9163702202327463793
+      partner_boy_walk_102: 7978961099620184803
+      partner_boy_walk_103: 1533348233429167674
+      partner_boy_walk_104: -3245208075874257428
+      partner_boy_walk_105: 7415464479754424465
+      partner_boy_walk_106: 3618247687572920757
+      partner_boy_walk_107: -8342642992992900585
+      partner_boy_walk_108: -3299883416281198500
+      partner_boy_walk_109: 7757272376920959028
+      partner_boy_walk_11: 6950958166678808940
+      partner_boy_walk_110: -6907757780862910003
+      partner_boy_walk_111: -6110385396917040980
+      partner_boy_walk_112: 1284987722479766187
+      partner_boy_walk_113: 4846969233409920908
+      partner_boy_walk_114: 4530929132367306575
+      partner_boy_walk_115: -1019884051012860565
+      partner_boy_walk_116: 1589521482441925947
+      partner_boy_walk_117: -4097928749931606945
+      partner_boy_walk_118: 2663663375572344306
+      partner_boy_walk_119: -6348036831150358692
+      partner_boy_walk_12: -3652925767238157868
+      partner_boy_walk_120: 6294363735397743159
+      partner_boy_walk_121: 1848961464139652217
+      partner_boy_walk_122: -2771478305903145385
+      partner_boy_walk_123: -8967638645455933504
+      partner_boy_walk_124: -6678618730655710527
+      partner_boy_walk_125: 6939439542927288999
+      partner_boy_walk_126: -2616988957352404341
+      partner_boy_walk_127: 7615797355361872653
+      partner_boy_walk_128: 7200844903791557590
+      partner_boy_walk_129: -8509532534198482706
+      partner_boy_walk_13: -5147665035954981635
+      partner_boy_walk_130: -8211247672318234529
+      partner_boy_walk_131: -2818021144785290077
+      partner_boy_walk_132: -3666201218587701788
+      partner_boy_walk_133: 8488884104420035359
+      partner_boy_walk_134: 8698185510308800032
+      partner_boy_walk_135: -7735770773780068810
+      partner_boy_walk_136: 1997610962258454826
+      partner_boy_walk_137: 2071220830892735892
+      partner_boy_walk_138: 8769976360207426427
+      partner_boy_walk_139: -6174256241798938812
+      partner_boy_walk_14: -1465721543197585827
+      partner_boy_walk_140: -3069138106566894982
+      partner_boy_walk_141: -7982933344140677360
+      partner_boy_walk_142: -2768354288340004381
+      partner_boy_walk_143: -7832287057529568136
+      partner_boy_walk_144: 1112185158736103969
+      partner_boy_walk_145: -4918208999547828735
+      partner_boy_walk_146: -187696716820797953
+      partner_boy_walk_147: -4375193910315772881
+      partner_boy_walk_148: -6901308996985774142
+      partner_boy_walk_149: -6962651977609830075
+      partner_boy_walk_15: -2011598352750722489
+      partner_boy_walk_150: -7703754044689013316
+      partner_boy_walk_151: 5222082155964266965
+      partner_boy_walk_152: 5611304120845824339
+      partner_boy_walk_153: -6434596660497531106
+      partner_boy_walk_154: 5446920872737138104
+      partner_boy_walk_155: 641199845343826210
+      partner_boy_walk_156: -5809431413605490223
+      partner_boy_walk_157: -6861074620294922895
+      partner_boy_walk_158: -6198838174182371783
+      partner_boy_walk_159: 2968340745237101343
+      partner_boy_walk_16: 2286852025376860495
+      partner_boy_walk_17: -2700597005960941859
+      partner_boy_walk_18: 8009311671696632847
+      partner_boy_walk_19: -5313165149582461833
+      partner_boy_walk_2: -7389541781398366757
+      partner_boy_walk_20: -5136133597285128114
+      partner_boy_walk_21: -2032118941589667132
+      partner_boy_walk_22: -8465353805290772780
+      partner_boy_walk_23: 2423835293278393627
+      partner_boy_walk_24: -2500085034205552113
+      partner_boy_walk_25: -6686776592870255574
+      partner_boy_walk_26: 5499529557649929548
+      partner_boy_walk_27: 8940798259135678192
+      partner_boy_walk_28: -3229300246380686842
+      partner_boy_walk_29: 4505289271390732157
+      partner_boy_walk_3: 4138535640587095069
+      partner_boy_walk_30: 7158120087317077641
+      partner_boy_walk_31: -7833987369214443034
+      partner_boy_walk_32: -7012823525573353112
+      partner_boy_walk_33: 1462855406683269132
+      partner_boy_walk_34: -2392894298692216859
+      partner_boy_walk_35: 1100889710678950259
+      partner_boy_walk_36: 3813049925521556643
+      partner_boy_walk_37: -169290571543727627
+      partner_boy_walk_38: 5958023032913623344
+      partner_boy_walk_39: 6574928848427652898
+      partner_boy_walk_4: -2616012428358755407
+      partner_boy_walk_40: 204378236700669323
+      partner_boy_walk_41: 7740866648469767404
+      partner_boy_walk_42: 8294301006210558401
+      partner_boy_walk_43: 7288839639007464366
+      partner_boy_walk_44: -188598329745180433
+      partner_boy_walk_45: 1981254922023287500
+      partner_boy_walk_46: -8206222715703591410
+      partner_boy_walk_47: -2722597820498299788
+      partner_boy_walk_48: 5506713950533592706
+      partner_boy_walk_49: 7439269071785235876
+      partner_boy_walk_5: 1255192282921483230
+      partner_boy_walk_50: -5873483198764809434
+      partner_boy_walk_51: 3514223821583587726
+      partner_boy_walk_52: 5011127125067586492
+      partner_boy_walk_53: -6390943274023318125
+      partner_boy_walk_54: 1015371291989405621
+      partner_boy_walk_55: -7908562156151562959
+      partner_boy_walk_56: 7704738831058335838
+      partner_boy_walk_57: 7044206532801749315
+      partner_boy_walk_58: -4026066655231433054
+      partner_boy_walk_59: -3538718731894964920
+      partner_boy_walk_6: -3052050144701835197
+      partner_boy_walk_60: 1371787689934173772
+      partner_boy_walk_61: 4557768996475996371
+      partner_boy_walk_62: -5119126069586712879
+      partner_boy_walk_63: 106709224015236091
+      partner_boy_walk_64: -6690021453375412848
+      partner_boy_walk_65: -3684858959641495367
+      partner_boy_walk_66: -1851481089362205089
+      partner_boy_walk_67: 6936465479823399145
+      partner_boy_walk_68: 710615866478301728
+      partner_boy_walk_69: -5242304554309691882
+      partner_boy_walk_7: -1378622054973749083
+      partner_boy_walk_70: 7056648759663522123
+      partner_boy_walk_71: -5047650302070960504
+      partner_boy_walk_72: -6469037608539405376
+      partner_boy_walk_73: -4681121578219553763
+      partner_boy_walk_74: -7650870175783446346
+      partner_boy_walk_75: -14576854577692521
+      partner_boy_walk_76: 7707356633887720871
+      partner_boy_walk_77: -3006332463784208329
+      partner_boy_walk_78: -7854922848298817574
+      partner_boy_walk_79: -2085515437105208586
+      partner_boy_walk_8: 4630658540116279116
+      partner_boy_walk_80: -147227643340961726
+      partner_boy_walk_81: -1939835252302574661
+      partner_boy_walk_82: -3383203572021179014
+      partner_boy_walk_83: 4186049885107586467
+      partner_boy_walk_84: 2464928625034046454
+      partner_boy_walk_85: 3329802461514964468
+      partner_boy_walk_86: -4000305810858523492
+      partner_boy_walk_87: 8269285207232465710
+      partner_boy_walk_88: 1792485553638695529
+      partner_boy_walk_89: -5188558726152061202
+      partner_boy_walk_9: -5708819366690636037
+      partner_boy_walk_90: -2127833818409561998
+      partner_boy_walk_91: -2537494426136576922
+      partner_boy_walk_92: 3034420128445288825
+      partner_boy_walk_93: -988056659783420134
+      partner_boy_walk_94: -5032121818903310122
+      partner_boy_walk_95: 2726748785283015417
+      partner_boy_walk_96: -7078316482552906675
+      partner_boy_walk_97: -6598002914697810645
+      partner_boy_walk_98: 767679910690851895
+      partner_boy_walk_99: -3587341227347300557
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
