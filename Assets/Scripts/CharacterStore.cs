@@ -49,6 +49,17 @@ public static class CharacterStore
     public static int LoadPartner() =>
         Mathf.Clamp(PlayerPrefs.GetInt(Key + "partner", 0), 0, PartnerNames.Length - 1);
 
+    // ---- the partner's hoodie colour (a row of HoodieRecolor.Palette), rolled at character creation ----
+    // Kept rather than re-rolled per scene so their jumper doesn't change colour every time you walk
+    // through a door. Unset (-1) means "whatever the sheets were drawn in".
+    public static void SaveHoodie(int hoodie)
+    {
+        PlayerPrefs.SetInt(Key + "hoodie", hoodie);
+        PlayerPrefs.Save();
+    }
+
+    public static int LoadHoodie() => PlayerPrefs.GetInt(Key + "hoodie", -1);
+
     // ---- dog companion breed (apricot / chocolate / cream), randomised at character creation ----
     public static readonly string[] DogNames = { "Apricot", "Chocolate", "Cream" };
 

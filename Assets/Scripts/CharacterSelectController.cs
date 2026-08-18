@@ -129,6 +129,7 @@ public class CharacterSelectController : MonoBehaviour
         CharacterStore.Save(_look);
         CharacterStore.SavePartner(_partner);
         CharacterStore.SaveDog(Random.Range(0, CharacterStore.DogNames.Length));   // random dog breed for this playthrough
+        CharacterStore.SaveHoodie(Random.Range(0, HoodieRecolor.Palette.Length));  // and the colour they're wearing
         SceneManager.LoadScene(gameScene);
     }
 
