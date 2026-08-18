@@ -38,6 +38,14 @@ public static class HorrorGame3DSetup
     };
     const string PartnerBoy = "Assets/Animation/partner_boy.png";
     const string PartnerGirl = "Assets/Animation/partner_girl.png";
+    // The reworked partner animation (Assets/Animation/UpdatedPartner/partner_walk_handoff/PARTNER_WALK.md):
+    // an 8-direction walk cycle and a sheet of household actions, both drawn on the same 32x32 cell,
+    // body and palette as the face sheets above, so they sit flush beside them.
+    const string PartnerHandoff    = "Assets/Animation/UpdatedPartner/partner_walk_handoff/";
+    const string PartnerBoyWalk    = "Assets/Animation/partner_boy_walk.png";
+    const string PartnerGirlWalk   = "Assets/Animation/partner_girl_walk.png";
+    const string PartnerBoyAction  = "Assets/Animation/partner_boy_action.png";
+    const string PartnerGirlAction = "Assets/Animation/partner_girl_action.png";
     const string HouseSheet = "Assets/Animation/house.png";
     const string HouseBack  = "Assets/Animation/house_back.png";
     const string HouseSide  = "Assets/Animation/house_side.png";
@@ -91,6 +99,7 @@ public static class HorrorGame3DSetup
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
     const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
     const int InteriorSetupVersion  = 3; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
+    const int PartnerSetupVersion   = 1; // bump to re-install the partner's walk/action animation in place
 
     static int _renderer3DIndex = 1;
 
@@ -148,6 +157,17 @@ public static class HorrorGame3DSetup
                 try { InstallCabinInterior(); }
                 catch (System.Exception e) { Debug.LogError("[HorrorGame] Interior setup failed: " + e); }
             }
+
+            // The partner learns to walk the house the same safe way — it re-fits the one Partner
+            // object in the already-built interior and re-lays the shared waypoint graph, so the
+            // hand-placed dressing that a SetupVersion bump would erase is never at risk. Runs after
+            // the interior install because it wants that scene's staircase and bedroom to route round.
+            if (EditorPrefs.GetInt("HG3D_PartnerSetup", 0) < PartnerSetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_PartnerSetup", PartnerSetupVersion);
+                try { InstallPartnerAnimation(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Partner setup failed: " + e); }
+            }
         };
     }
 
@@ -158,18 +178,12 @@ public static class HorrorGame3DSetup
         SliceStrip(BackSheet, "back_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(FrontSheet, "front_", 5, 32, 32, 16f, 0.09f);
         SliceStrip(BedSheet, "bed_", 6, 64, 32, 32f, 0.08f);
-        SliceGrid(PartnerBoy, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
-        SliceGrid(PartnerGirl, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
         var backSprites = LoadSheetSprites(BackSheet, "back_");
         var frontSprites = LoadSheetSprites(FrontSheet, "front_");
         var bedSprites = LoadSheetSprites(BedSheet, "bed_");
         var dogBreeds = BuildDogBreeds();      // apricot / chocolate / cream, one chosen at runtime
-        var boyIdle = LoadSheetSprites(PartnerBoy, "idle_");
-        var girlIdle = LoadSheetSprites(PartnerGirl, "idle_");
-        var boySmile = LoadSheetSprites(PartnerBoy, "smile_");
-        var girlSmile = LoadSheetSprites(PartnerGirl, "smile_");
-        var boySpeak = LoadSheetSprites(PartnerBoy, "speak_");
-        var girlSpeak = LoadSheetSprites(PartnerGirl, "speak_");
+        var boy = BuildPartnerSheets(0);       // face + 8-way walk + household actions
+        var girl = BuildPartnerSheets(1);
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         RenderSettings.ambientMode = AmbientMode.Flat;
@@ -203,7 +217,7 @@ public static class HorrorGame3DSetup
         AttachWoodFloorFootsteps(player);   // wooden interior floor: looping wood footfalls instead of grass steps
 
         // the dog + partner companions fill the two former blob slots
-        MakePartner(new Vector3(-4f, 0f, 3f), player.transform, boyIdle, girlIdle, boySmile, girlSmile, boySpeak, girlSpeak, spriteMat);
+        MakePartner(new Vector3(-4f, 0f, 3f), player.transform, boy, girl);
 
         // ---- nightmare transition + the bed that triggers it ----
         var nightmare = new GameObject("Nightmare").AddComponent<NightmareController>();
@@ -249,7 +263,7 @@ public static class HorrorGame3DSetup
         Debug.Log("[HorrorGame] 3D Sandbox built at " + SceneOut + " with the character (back " +
                   backSprites.Length + "/front " + frontSprites.Length + "), the bed (" + bedSprites.Length +
                   "), the dog (" + dogBreeds.Length + " breeds, randomised on character select" +
-                  "), and the partner (boy idle " + boyIdle.Length + "/girl idle " + girlIdle.Length + "). " +
+                  "), and the partner (boy walk " + boy.walk.Length + "/girl walk " + girl.walk.Length + "). " +
                   "Walk to the bed + press E to enter the nightmare (the dog hides). " +
                   "Play: WASD + mouse, V = first/third, hold C = look behind.");
     }
@@ -3791,26 +3805,218 @@ public static class HorrorGame3DSetup
         dog.pantClip = AssetDatabase.LoadAssetAtPath<AudioClip>(DogPantWav);
     }
 
-    static void MakePartner(Vector3 pos, Transform player, Sprite[] boyIdle, Sprite[] girlIdle,
-                            Sprite[] boySmile, Sprite[] girlSmile, Sprite[] boySpeak, Sprite[] girlSpeak, Material mat)
+    // ================================================================ the partner
+    // The partner keeps house: they walk the same waypoint graph the dog does (stairs included), stop
+    // to stand about, and settle in at the hearth to cook. Three sheets feed that — the original face
+    // sheet, the 8-direction walk cycle and the household actions — all sliced on the same 32x32 cell
+    // at the same pixels-per-unit and pivot, so a walk frame is exactly as tall as an idle one.
+    // See Assets/Animation/UpdatedPartner/partner_walk_handoff/PARTNER_WALK.md.
+
+    static void MakePartner(Vector3 pos, Transform player,
+                            PartnerController.Sheets boy, PartnerController.Sheets girl)
     {
         var go = new GameObject("Partner");
         go.transform.position = pos;
-        var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = boyIdle.Length > 0 ? boyIdle[0] : null;
-        sr.sharedMaterial = mat;
+        go.AddComponent<SpriteRenderer>();
         go.AddComponent<Billboard>();
-        var anim = go.AddComponent<LoopSpriteAnimator>();
-        anim.frames = boyIdle;                 // overridden at runtime by the chosen partner
-        anim.fps = 6f;
-        var pc = go.AddComponent<PartnerController>();
+        FitPartner(go, player, boy, girl);
+    }
+
+    // Everything that turns a bare Partner object into the walking one. Split out because the in-place
+    // installer re-fits the Partner already standing in the saved interior rather than making a new one.
+    static void FitPartner(GameObject go, Transform player,
+                           PartnerController.Sheets boy, PartnerController.Sheets girl)
+    {
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = go.AddComponent<SpriteRenderer>();
+        sr.sharedMaterial = PartnerMaterial();          // depth-biased sprite + the hoodie colour swap
+        if (boy.idle != null && boy.idle.Length > 0) sr.sprite = boy.idle[0];   // editor-time default
+        if (go.GetComponent<Billboard>() == null) go.AddComponent<Billboard>();
+
+        // PartnerController now owns every frame the partner shows, chosen from what they are doing.
+        // The old always-on looper would fight it for the SpriteRenderer.
+        var looper = go.GetComponent<LoopSpriteAnimator>();
+        if (looper != null) Object.DestroyImmediate(looper);
+
+        // The PartnerHouseRoam that walks them round is added by BuildHouseNav, which is the one place
+        // that knows the waypoints — it fits the dog's walker the same way.
+        var pc = go.GetComponent<PartnerController>();
+        if (pc == null) pc = go.AddComponent<PartnerController>();
         pc.player = player;
-        pc.boyIdle = boyIdle;
-        pc.girlIdle = girlIdle;
-        pc.boySmile = boySmile;
-        pc.girlSmile = girlSmile;
-        pc.boySpeak = boySpeak;
-        pc.girlSpeak = girlSpeak;
+        pc.boy = boy;
+        pc.girl = girl;
+
+        // The jumper's colour, rolled with the dog's breed at character creation and kept from then on.
+        if (go.GetComponent<HoodieRecolor>() == null) go.AddComponent<HoodieRecolor>();
+        EditorUtility.SetDirty(go);
+    }
+
+    // Slice all three of one partner's sheets and bundle the rows PartnerController plays. The walk
+    // array is laid out row-major in the sheet's own compass order (S,SE,E,NE,N,NW,W,SW), which is the
+    // order PartnerController indexes it in.
+    static PartnerController.Sheets BuildPartnerSheets(int partner)
+    {
+        bool girl = partner == 1;
+        string face   = girl ? PartnerGirl : PartnerBoy;
+        string walk   = girl ? PartnerGirlWalk : PartnerBoyWalk;
+        string action = girl ? PartnerGirlAction : PartnerBoyAction;
+
+        EnsurePartnerSheets();
+        // Same 16 ppu and 0.09 pivot as the face sheet — the handoff's own 32 ppu would drop the new
+        // frames to half the height of the partner already standing in the scene.
+        SliceGrid(face, 16f, 0.09f, 32, 32, 6, new[] { "idle_", "speak_", "wave_", "talk_", "smile_" });
+        SliceGrid(walk, 16f, 0.09f, 32, 32, 6, WalkRowPrefixes);
+        SliceGrid(action, 16f, 0.09f, 32, 32, 6, ActionRowPrefixes);
+
+        var frames = new List<Sprite>();
+        foreach (var prefix in WalkRowPrefixes) frames.AddRange(LoadSheetSprites(walk, prefix));
+
+        return new PartnerController.Sheets
+        {
+            name  = CharacterStore.PartnerNames[partner],
+            idle  = LoadSheetSprites(face, "idle_"),
+            speak = LoadSheetSprites(face, "speak_"),
+            smile = LoadSheetSprites(face, "smile_"),
+            walk  = frames.ToArray(),
+            cook  = LoadSheetSprites(action, "cook_"),
+            rest  = LoadSheetSprites(action, "idledog_"),
+        };
+    }
+
+    // Walk sheet: 6 frames a row, one row per compass direction. Rows 5/6/7 are mirrors of 1/2/0 that
+    // the handoff ships outright, so nothing has to be flipped in engine.
+    static readonly string[] WalkRowPrefixes =
+        { "walk_s_", "walk_se_", "walk_e_", "walk_ne_", "walk_n_", "walk_nw_", "walk_w_", "walk_sw_" };
+
+    // Action sheet: cook, pet the dog, sit, and the resting stance. Only cook and the resting stance
+    // are played — sitting and petting are sliced and waiting for something to trigger them.
+    static readonly string[] ActionRowPrefixes = { "cook_", "pet_", "sit_", "idledog_" };
+
+    // The two new sheets live beside the face sheets they extend, the way partner_boy.png itself was
+    // copied out of its own kit. Copying rather than pointing at the handoff folder is what lets the
+    // resting row be cleaned up on the way in (see StripDrawnDog).
+    static void EnsurePartnerSheets()
+    {
+        CopyPartnerSheet(PartnerHandoff + "partner_boy_walk.png",    PartnerBoyWalk,    stripDog: false);
+        CopyPartnerSheet(PartnerHandoff + "partner_girl_walk.png",   PartnerGirlWalk,   stripDog: false);
+        CopyPartnerSheet(PartnerHandoff + "partner_boy_action.png",  PartnerBoyAction,  stripDog: true);
+        CopyPartnerSheet(PartnerHandoff + "partner_girl_action.png", PartnerGirlAction, stripDog: true);
+    }
+
+    static void CopyPartnerSheet(string src, string dst, bool stripDog)
+    {
+        if (!File.Exists(src)) { Debug.LogWarning("[HorrorGame] partner sheet missing: " + src); return; }
+
+        // Decoded with ImageConversion rather than loaded as an asset, so the source keeps whatever
+        // import settings it has and this never depends on it being marked readable.
+        var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        if (!tex.LoadImage(File.ReadAllBytes(src)))
+        {
+            Object.DestroyImmediate(tex);
+            Debug.LogWarning("[HorrorGame] could not decode partner sheet: " + src);
+            return;
+        }
+        if (stripDog) StripDrawnDog(tex);
+        var bytes = tex.EncodeToPNG();
+        Object.DestroyImmediate(tex);
+
+        if (File.Exists(dst) && File.ReadAllBytes(dst).SequenceEqual(bytes)) return;   // already current
+        File.WriteAllBytes(dst, bytes);
+        AssetDatabase.ImportAsset(dst, ImportAssetOptions.ForceUpdate);
+    }
+
+    // The handoff draws a dog into the resting row for the preview, and says so: "in Unity place the
+    // real dog GameObject at the partner's feet and use these rows as the pose reference". This game
+    // HAS a real dog — one that roams the house on its own and comes in three breeds at nearly three
+    // times the size of the drawn one — so shipping the drawn one would put two dogs at their feet.
+    // It comes out here, on the copy, leaving the handoff's original untouched.
+    //
+    // It lifts out cleanly because it is drawn in six tones nothing else on the sheet uses, and it sits
+    // in the bottom-right corner of its cell (x >= 19, the lowest six rows) while the partner's legs
+    // stop at x = 20 in their own greys. Both tests are applied: colour, and that corner.
+    static void StripDrawnDog(Texture2D tex)
+    {
+        const int Cell = 32, Rows = 4, RestRowFromTop = 3;
+        const int DogLeft = 18, DogBand = 8;          // cell-local x, and how many rows up from the floor
+
+        var px = tex.GetPixels32();                   // row-major from the BOTTOM of the texture
+        int w = tex.width;
+        int rowBottom = (Rows - 1 - RestRowFromTop) * Cell;    // the resting row's bottom edge in texture y
+        int cleared = 0;
+
+        for (int y = rowBottom; y < rowBottom + DogBand && y < tex.height; y++)
+            for (int x = 0; x < w; x++)
+            {
+                if (x % Cell < DogLeft) continue;
+                int i = y * w + x;
+                if (!IsDrawnDogTone(px[i])) continue;
+                px[i] = new Color32(0, 0, 0, 0);
+                cleared++;
+            }
+
+        if (cleared == 0) { Debug.LogWarning("[HorrorGame] partner resting row: no drawn dog found to strip."); return; }
+        tex.SetPixels32(px);
+        tex.Apply();
+    }
+
+    // The drawn dog's four coat tones plus the two darks of its outline. None of them appear anywhere
+    // in the walk sheet or in the cooking row, so a colour test is enough to tell it from the partner.
+    static bool IsDrawnDogTone(Color32 c)
+    {
+        if (c.a == 0) return false;
+        int rgb = (c.r << 16) | (c.g << 8) | c.b;
+        return rgb == 0xc98a4e || rgb == 0xe0a566 || rgb == 0x8f5b2c
+            || rgb == 0xa86e39 || rgb == 0x241c14 || rgb == 0x2a2020;
+    }
+
+    // The partner's own material: the wall-clipping depth bias every billboard here uses, plus the
+    // three-key hoodie swap HoodieRecolor drives. Falls back to the shared sprite material if the
+    // shader is missing, so a build never breaks over a recolour.
+    static Material PartnerMaterial()
+    {
+        var shader = Shader.Find("Sprites/PartnerHoodieSwap");
+        if (shader == null) { Debug.LogWarning("[HorrorGame] PartnerHoodieSwap shader missing."); return SpriteMaterial(); }
+
+        EnsureFolder(MatDir);
+        string path = MatDir + "/PartnerHoodie3D.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+        if (mat == null)
+        {
+            mat = new Material(shader);
+            AssetDatabase.CreateAsset(mat, path);
+        }
+        if (mat.shader != shader) mat.shader = shader;
+        mat.SetFloat("_DepthBias", 0.8f);            // matched to SpriteBillboard3D
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    // Re-fit the partner in the interior that is already built, and re-lay the waypoint graph both
+    // companions walk. In place, like the other installers: nothing else in the scene is touched.
+    [MenuItem("Tools/Horror Game/Install Partner Animation (Walk + Cook)")]
+    public static void InstallPartnerAnimation()
+    {
+        if (!File.Exists(SceneOut)) { Debug.LogWarning("[HorrorGame] no interior scene at " + SceneOut); return; }
+        var scene = EditorSceneManager.OpenScene(SceneOut, OpenSceneMode.Single);
+
+        var boy = BuildPartnerSheets(0);
+        var girl = BuildPartnerSheets(1);
+
+        var pc = Object.FindAnyObjectByType<PartnerController>();
+        var player = Object.FindAnyObjectByType<PlayerController3D>();
+        if (pc == null)
+        {
+            Debug.LogWarning("[HorrorGame] no Partner in " + SceneOut + " — nothing to re-fit.");
+            return;
+        }
+        FitPartner(pc.gameObject, player != null ? player.transform : pc.player, boy, girl);
+
+        int waypoints = BuildHouseNav();
+        EditorSceneManager.SaveScene(scene, SceneOut);
+        Debug.Log("[HorrorGame] Partner animation installed: an 8-direction walk (" + boy.walk.Length +
+                  " boy / " + girl.walk.Length + " girl frames), the cooking loop at the hearth and the " +
+                  "resting stance, over " + waypoints + " shared waypoints. Their hoodie takes one of " +
+                  HoodieRecolor.Palette.Length + " colours, rolled at character select.");
     }
 
     // ================================================================ the two-storey cabin interior
@@ -4010,46 +4216,34 @@ public static class HorrorGame3DSetup
         warp.SetActive(false);
         room.warpFX = warp;
 
-        // ---- the dog's run of the house: the waypoints it wanders and climbs between ----
-        int waypoints = BuildDogNav();
+        // ---- the companions' run of the house: the waypoints they wander and climb between ----
+        int waypoints = BuildHouseNav();
 
         Debug.Log("[HorrorGame] Cabin interior: two storeys, " + room.surfaces.Count + " structural surfaces on the " +
                   "realm swap, a " + StairSteps + "-tread staircase, the bedroom at " +
                   (bed != null ? bed.transform.position.ToString() : "(bed missing)") + ", and " + waypoints +
-                  " dog waypoints across both floors.");
+                  " shared waypoints across both floors.");
     }
 
-    // The dog's run of the house.
+    // The companions' run of the house — the dog's, and now the partner's too.
     //
-    // The dog cannot feel its way round the furniture — every piece indoors is a billboarded sprite with
-    // no collider, so a baked NavMesh would see one empty 20x20 box per storey and route it straight
-    // through the sofa. It walks a hand-laid waypoint graph instead, plotted from the very constants the
+    // Neither can feel its way round the furniture: every piece indoors is a billboarded sprite with no
+    // collider, so a baked NavMesh would see one empty 20x20 box per storey and route them straight
+    // through the sofa. They walk a hand-laid waypoint graph instead, plotted from the very constants the
     // shell above is built from: a loop of the ground floor that keeps clear of the living-room group and
     // of the stair mass, the flight up the south-east stairwell, the landing, and the bedroom through its
-    // door. DogHouseNav interpolates the dog's height along whichever edge it is on, so the two stair
-    // edges — one straight, constant-slope run — sit it exactly on the tread line with no raycasting.
+    // door. HouseNavWalker interpolates height along whichever edge is being walked, so the two stair
+    // edges — one straight, constant-slope run — sit them exactly on the tread line with no raycasting.
     //
-    // The one rule when moving a waypoint: an edge is a straight line the dog will walk down, so both
-    // ends being clear is not enough. Select the Dog to see the whole graph drawn in the Scene view.
-    static int BuildDogNav()
+    // The one rule when moving a waypoint: an edge is a straight line someone will walk down, so both
+    // ends being clear is not enough. And it is now TWO characters walking it, one of them human-sized —
+    // select the Dog or the Partner to see the whole graph drawn in the Scene view.
+    static int BuildHouseNav()
     {
-        var dog = Object.FindAnyObjectByType<DogCompanion>();
-        if (dog == null)
-        {
-            Debug.LogWarning("[HorrorGame] no Dog in this scene — interior roaming not installed.");
-            return 0;
-        }
-        // Replaced rather than patched, like the shell roots above: a component left over from an earlier
-        // run keeps the tuning that was serialised onto it at the time, so re-running this would rebuild
-        // the waypoints but silently leave the old behaviour values behind.
-        var stale = dog.GetComponent<DogHouseNav>();
-        if (stale != null) Object.DestroyImmediate(stale);
-        var nav = dog.gameObject.AddComponent<DogHouseNav>();
-
-        var nodes = new List<DogNavNode>();
+        var nodes = new List<HouseNavNode>();
         int Node(string name, float x, float y, float z, bool onStairs = false)
         {
-            nodes.Add(new DogNavNode { name = name, position = new Vector3(x, y, z), onStairs = onStairs });
+            nodes.Add(new HouseNavNode { name = name, position = new Vector3(x, y, z), onStairs = onStairs });
             return nodes.Count - 1;
         }
 
@@ -4115,9 +4309,30 @@ public static class HorrorGame3DSetup
         foreach (var e in edges) { wired[e.a].Add(e.b); wired[e.b].Add(e.a); }
         for (int i = 0; i < nodes.Count; i++) nodes[i].links = wired[i].ToArray();
 
-        nav.nodes = nodes;
+        // One graph, laid on whoever is in the scene to walk it. Each walker is replaced rather than
+        // patched: a component left over from an earlier run keeps the tuning that was serialised onto
+        // it at the time, so re-running would rebuild the waypoints but silently leave the old
+        // behaviour values behind.
+        int walkers = 0;
+        var dog = Object.FindAnyObjectByType<DogCompanion>();
+        if (dog != null) { Fit<DogHouseNav>(dog.gameObject, nodes); walkers++; }
+        else Debug.LogWarning("[HorrorGame] no Dog in this scene — interior roaming not installed for it.");
+
+        var partner = Object.FindAnyObjectByType<PartnerController>();
+        if (partner != null) { Fit<PartnerHouseRoam>(partner.gameObject, nodes); walkers++; }
+        else Debug.LogWarning("[HorrorGame] no Partner in this scene — interior roaming not installed for it.");
+
+        return walkers > 0 ? nodes.Count : 0;
+    }
+
+    // Give one companion the graph, on a freshly-added walker.
+    static void Fit<T>(GameObject go, List<HouseNavNode> nodes) where T : HouseNavWalker
+    {
+        var stale = go.GetComponent<T>();
+        if (stale != null) Object.DestroyImmediate(stale);
+        var nav = go.AddComponent<T>();
+        nav.nodes = new List<HouseNavNode>(nodes);      // its own List; Unity serialises the nodes by value
         EditorUtility.SetDirty(nav);
-        return nodes.Count;
     }
 
     // The flight's centre line: the treads run the full width of the stairwell, so the dog climbs up
