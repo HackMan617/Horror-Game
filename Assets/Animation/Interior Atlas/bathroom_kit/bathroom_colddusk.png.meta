@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: e19a405b91d555248ba8a963298b39a5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2499139546025550745
+    second: bathroom_colddusk_0
+  - first:
+      213: -7022145862999878814
+    second: bathroom_colddusk_1
+  - first:
+      213: -7194593120234218261
+    second: bathroom_colddusk_2
+  - first:
+      213: -4596184152318644590
+    second: bathroom_colddusk_3
+  - first:
+      213: -5560867580870884488
+    second: bathroom_colddusk_4
+  - first:
+      213: 7837030636317483496
+    second: bathroom_colddusk_5
+  - first:
+      213: -5173419506024080454
+    second: bathroom_colddusk_6
+  - first:
+      213: -2704715141796709344
+    second: bathroom_colddusk_7
+  - first:
+      213: 5849991494433031417
+    second: bathroom_colddusk_8
+  - first:
+      213: 1593151494139899865
+    second: bathroom_colddusk_9
+  - first:
+      213: 3626002012538247688
+    second: bathroom_colddusk_10
+  - first:
+      213: -3658496157976187351
+    second: bathroom_colddusk_11
+  - first:
+      213: -8053757754029671685
+    second: bathroom_colddusk_12
+  - first:
+      213: -3727138870477915201
+    second: bathroom_colddusk_13
+  - first:
+      213: 3772916455904398745
+    second: bathroom_colddusk_14
+  - first:
+      213: 1894512395895937650
+    second: bathroom_colddusk_15
+  - first:
+      213: -1992524583700559071
+    second: bathroom_colddusk_16
+  - first:
+      213: -8852997181814648482
+    second: bathroom_colddusk_17
+  - first:
+      213: 1048224520277554912
+    second: bathroom_colddusk_18
+  - first:
+      213: 5315186537909961882
+    second: bathroom_colddusk_19
+  - first:
+      213: 1519375711044024739
+    second: bathroom_colddusk_20
+  - first:
+      213: 8434311449973706104
+    second: bathroom_colddusk_21
+  - first:
+      213: 5188212815631122937
+    second: bathroom_colddusk_22
+  - first:
+      213: -4402785832582843695
+    second: bathroom_colddusk_23
+  - first:
+      213: -1498474563423870586
+    second: bathroom_colddusk_24
+  - first:
+      213: 5698384388497324067
+    second: bathroom_colddusk_25
+  - first:
+      213: 7768535801810333166
+    second: bathroom_colddusk_26
+  - first:
+      213: 7531614477654247388
+    second: bathroom_colddusk_27
+  - first:
+      213: 2293745063003193225
+    second: bathroom_colddusk_28
+  - first:
+      213: 867782709355091944
+    second: bathroom_colddusk_29
+  - first:
+      213: -5607320357220548297
+    second: bathroom_colddusk_30
+  - first:
+      213: 1099840906232417196
+    second: bathroom_colddusk_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bathroom_colddusk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 98
+        width: 99
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76c140be2d5415dd0800000000000000
+      internalID: -2499139546025550745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_1
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 178
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 263d9e2ea835c8e90800000000000000
+      internalID: -7022145862999878814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_2
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 175
+        width: 50
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec58fcfcaba72c90800000000000000
+      internalID: -7194593120234218261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_3
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 175
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29e64c67dd21730c0800000000000000
+      internalID: -4596184152318644590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_4
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 175
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 873843fd564d3d2b0800000000000000
+      internalID: -5560867580870884488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_5
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 177
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1ae8367d9b2cc60800000000000000
+      internalID: 7837030636317483496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_6
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 177
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abb9b558e525438b0800000000000000
+      internalID: -5173419506024080454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_7
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 154
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c3692a8ebe67ad0800000000000000
+      internalID: -2704715141796709344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_8
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 160
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f4ccb405485f2150800000000000000
+      internalID: 5849991494433031417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_9
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 160
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9df6791d7d20c1610800000000000000
+      internalID: 1593151494139899865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_10
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 167
+        width: 51
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80a91387e95225230800000000000000
+      internalID: 3626002012538247688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_11
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 145
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92ea2bbb0296a3dc0800000000000000
+      internalID: -3658496157976187351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_12
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 143
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfa730c4efd4b3090800000000000000
+      internalID: -8053757754029671685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_13
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 145
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbbfc9cc1fa864cc0800000000000000
+      internalID: -3727138870477915201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_14
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 152
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99d4861e6871c5430800000000000000
+      internalID: 3772916455904398745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_15
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a93fb8cf8aa4a10800000000000000
+      internalID: 1894512395895937650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_16
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 154
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12b8b4ea2712954e0800000000000000
+      internalID: -1992524583700559071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_17
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 127
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e515764e7f5d32580800000000000000
+      internalID: -8852997181814648482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e67fffb5aa0c8e00800000000000000
+      internalID: 1048224520277554912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_19
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 136
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a94cf03cef553c940800000000000000
+      internalID: 5315186537909961882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_20
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 134
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a9b221c828e51510800000000000000
+      internalID: 1519375711044024739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_21
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87d41bca391bc0570800000000000000
+      internalID: 8434311449973706104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_22
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 124
+        width: 7
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f182d6411c300840800000000000000
+      internalID: 5188212815631122937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_23
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 129
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d2f6cabc9926e2c0800000000000000
+      internalID: -4402785832582843695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_24
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 98
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6816926e259543be0800000000000000
+      internalID: -1498474563423870586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_25
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 98
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 328b306f86ab41f40800000000000000
+      internalID: 5698384388497324067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_26
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 47
+        width: 25
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eed2fcbf6226fcb60800000000000000
+      internalID: 7768535801810333166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_27
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 100
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd745c5967ba58860800000000000000
+      internalID: 7531614477654247388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_28
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 100
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98f7c956bf405df10800000000000000
+      internalID: 2293745063003193225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 47
+        width: 82
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e71655c6cbfa0c00800000000000000
+      internalID: 867782709355091944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_30
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 47
+        width: 25
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7318d0e08dbce22b0800000000000000
+      internalID: -5607320357220548297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bathroom_colddusk_31
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 47
+        width: 162
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cab4d6d1a7b634f00800000000000000
+      internalID: 1099840906232417196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bathroom_colddusk_0: -2499139546025550745
+      bathroom_colddusk_1: -7022145862999878814
+      bathroom_colddusk_10: 3626002012538247688
+      bathroom_colddusk_11: -3658496157976187351
+      bathroom_colddusk_12: -8053757754029671685
+      bathroom_colddusk_13: -3727138870477915201
+      bathroom_colddusk_14: 3772916455904398745
+      bathroom_colddusk_15: 1894512395895937650
+      bathroom_colddusk_16: -1992524583700559071
+      bathroom_colddusk_17: -8852997181814648482
+      bathroom_colddusk_18: 1048224520277554912
+      bathroom_colddusk_19: 5315186537909961882
+      bathroom_colddusk_2: -7194593120234218261
+      bathroom_colddusk_20: 1519375711044024739
+      bathroom_colddusk_21: 8434311449973706104
+      bathroom_colddusk_22: 5188212815631122937
+      bathroom_colddusk_23: -4402785832582843695
+      bathroom_colddusk_24: -1498474563423870586
+      bathroom_colddusk_25: 5698384388497324067
+      bathroom_colddusk_26: 7768535801810333166
+      bathroom_colddusk_27: 7531614477654247388
+      bathroom_colddusk_28: 2293745063003193225
+      bathroom_colddusk_29: 867782709355091944
+      bathroom_colddusk_3: -4596184152318644590
+      bathroom_colddusk_30: -5607320357220548297
+      bathroom_colddusk_31: 1099840906232417196
+      bathroom_colddusk_4: -5560867580870884488
+      bathroom_colddusk_5: 7837030636317483496
+      bathroom_colddusk_6: -5173419506024080454
+      bathroom_colddusk_7: -2704715141796709344
+      bathroom_colddusk_8: 5849991494433031417
+      bathroom_colddusk_9: 1593151494139899865
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

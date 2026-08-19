@@ -129,21 +129,34 @@ public class CameraRig : MonoBehaviour
         Vector3 dir = transform.rotation * Vector3.back;   // world direction of the -Z camera arm (respects pitch + look-behind)
 
         float dist = thirdPersonDistance;
+        bool blocked = false;
         var hits = Physics.SphereCastAll(pivotPos, cameraCollisionRadius, dir, thirdPersonDistance,
                                          obstructionMask, QueryTriggerInteraction.Ignore);
         for (int i = 0; i < hits.Length; i++)
         {
             if (_playerRoot != null && hits[i].transform.root == _playerRoot) continue;   // ignore ourselves
-            if (hits[i].distance < dist) dist = hits[i].distance;
+            if (hits[i].distance < dist) { dist = hits[i].distance; blocked = true; }
         }
-        dist = Mathf.Max(minDistance, dist);
+
+        // Geometry beats the comfort floor. minDistance exists so a camera with nothing behind it
+        // doesn't jam onto the pivot — but applying it to a HIT clamps the arm straight back out
+        // through the very surface the cast just found. That is how standing in the shower stall
+        // (0.65m of clearance behind you) put the lens on the far side of the bathroom wall and let
+        // you see the house through it. When something is in the way, the only floor is the near
+        // clip plane, and the avatar hiding below takes care of the rest.
+        dist = blocked ? Mathf.Max(cam.nearClipPlane + 0.05f, dist)
+                       : Mathf.Max(minDistance, dist);
 
         cam.transform.localPosition = new Vector3(0f, 0f, -dist);
         cam.transform.localRotation = Quaternion.identity;
 
         if (playerSprite != null)
         {
-            float toSprite = Vector3.Distance(cam.transform.position, playerSprite.transform.position);
+            // Measured to the billboard's CENTRE, not its transform: the sprite pivots at its FEET,
+            // so a head-height camera reads a good half-metre further from it than it really is —
+            // enough that a camera pulled right in against the player still counted as far away and
+            // left the avatar filling the frame.
+            float toSprite = Vector3.Distance(cam.transform.position, playerSprite.bounds.center);
             playerSprite.enabled = toSprite > hideSpriteWithinDistance;
         }
     }

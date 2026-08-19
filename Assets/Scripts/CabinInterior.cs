@@ -67,6 +67,7 @@ public class CabinInterior : MonoBehaviour
     MaterialPropertyBlock _mpb;
     InteriorObject[] _furniture;
     InteriorProp[] _props;
+    BathroomFixture[] _fixtures;
     Bed[] _beds;
     bool _nm, _applied;
 
@@ -87,6 +88,7 @@ public class CabinInterior : MonoBehaviour
     {
         _furniture = FindObjectsByType<InteriorObject>(FindObjectsInactive.Include);
         _props     = FindObjectsByType<InteriorProp>(FindObjectsInactive.Include);
+        _fixtures  = FindObjectsByType<BathroomFixture>(FindObjectsInactive.Include);
         _beds      = FindObjectsByType<Bed>(FindObjectsInactive.Include);
     }
 
@@ -105,6 +107,7 @@ public class CabinInterior : MonoBehaviour
         {
             if (_furniture != null) foreach (var f in _furniture) if (f != null) f.DreadProgress = dread;
             if (_props != null)     foreach (var p in _props)     if (p != null) p.DreadProgress = dread;
+            if (_fixtures != null)  foreach (var f in _fixtures)  if (f != null) f.DreadProgress = dread;
             if (_beds != null)      foreach (var b in _beds)      if (b != null) b.DreadProgress = dread;
         }
 

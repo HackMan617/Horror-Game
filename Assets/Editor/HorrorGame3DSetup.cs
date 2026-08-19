@@ -100,6 +100,7 @@ public static class HorrorGame3DSetup
     const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
     const int InteriorSetupVersion  = 3; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
     const int PartnerSetupVersion   = 1; // bump to re-install the partner's walk/action animation in place
+    const int BathroomSetupVersion  = 9; // bump to re-install the upstairs bathroom in place (never wipes a scene)
 
     static int _renderer3DIndex = 1;
 
@@ -167,6 +168,17 @@ public static class HorrorGame3DSetup
                 EditorPrefs.SetInt("HG3D_PartnerSetup", PartnerSetupVersion);
                 try { InstallPartnerAnimation(); }
                 catch (System.Exception e) { Debug.LogError("[HorrorGame] Partner setup failed: " + e); }
+            }
+
+            // The bathroom fills the upper storey's empty south-west quarter the same safe way: its own
+            // pref, its own root object, nothing else touched. Runs after the interior install because
+            // it builds INTO that scene's CabinInterior and re-lays the shared waypoint graph round its
+            // new walls.
+            if (EditorPrefs.GetInt("HG3D_BathroomSetup", 0) < BathroomSetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_BathroomSetup", BathroomSetupVersion);
+                try { InstallCabinBathroom(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Bathroom setup failed: " + e); }
             }
         };
     }
@@ -4216,6 +4228,9 @@ public static class HorrorGame3DSetup
         warp.SetActive(false);
         room.warpFX = warp;
 
+        // ---- the washroom off the landing, in the storey's empty south-west quarter ----
+        BuildCabinBathroom(room);
+
         // ---- the companions' run of the house: the waypoints they wander and climb between ----
         int waypoints = BuildHouseNav();
 
@@ -4280,6 +4295,14 @@ public static class HorrorGame3DSetup
         int landSouth = Node("LandingSouth", -2.0f, SlabTop, -4.5f);
         int landWest  = Node("LandingWest",  -8.0f, SlabTop, -1.5f);
 
+        // ---- the bathroom, through the door in its north wall (the opening is x[-7.5,-5.5] at z = -4.6) ----
+        // Reached from LandingWest only. The run in from LandingSouth would cut the corner where the
+        // washroom's east partition ends, and a straight edge there clips the jamb.
+        int bathOut    = Node("BathDoorOutside", -6.5f, SlabTop, -3.9f);
+        int bathIn     = Node("BathDoorInside",  -6.5f, SlabTop, -5.5f);
+        int bathMid    = Node("BathroomMid",     -6.5f, SlabTop, -7.2f);
+        int bathCorner = Node("BathroomCorner",  -8.6f, SlabTop, -5.6f);   // north of the stall, clear of it
+
         // ---- the bedroom, through the door in its east wall (the opening is z[3,5.4] at x = 1) ----
         int doorway   = Node("Doorway",       1.0f, SlabTop,  4.2f);
         int bedroomIn = Node("BedroomIn",    -0.6f, SlabTop,  4.4f);
@@ -4302,6 +4325,9 @@ public static class HorrorGame3DSetup
             // and inside
             (doorOut, doorway), (doorway, bedroomIn),
             (bedroomIn, bedFoot), (bedroomIn, bedside), (bedFoot, bedside), (bedFoot, bedWest),
+            // and down the landing's west end into the washroom
+            (landWest, bathOut), (bathOut, bathIn),
+            (bathIn, bathMid), (bathIn, bathCorner), (bathMid, bathCorner),
         };
 
         var wired = new List<int>[nodes.Count];
@@ -4764,6 +4790,498 @@ public static class HorrorGame3DSetup
 
     static Sprite LoadSprite(string path, string name) =>
         AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault(s => s.name == name);
+
+    // ================================================================ the cabin bathroom
+    //
+    // The upper storey went in with a bedroom filling its north-west quarter and a landing wrapping
+    // round the stairwell — which left the whole SOUTH-WEST quarter as bare slab you could walk
+    // across and nothing else. The washroom goes there. Two of its four walls are already standing
+    // (the cabin's own south and west outer walls), so it costs two partitions and a doorway.
+    //
+    //   footprint  x[-9.75, -4.15]  z[-9.75, -4.75]   5.6m x 5.0m of floor at SlabTop
+    //   height     3.2m, which is exactly what the kit's art is drawn for: the stall's concrete
+    //              back wall, its curtain and the door are all 48px = 3 cells = 3m
+    //   door       a 2m opening in the north wall, onto the landing the stairs come up to
+    //
+    // Everything in it comes off ONE atlas (bathroom_colddusk.png — see the kit's SHOWER.md). The
+    // five TILEABLE cells in that atlas are cut out to standalone repeat-wrapped textures, because
+    // a floor is a tiled surface in this engine and not four hundred hand-placed 16px sprites —
+    // which is the one thing the kit's own BathroomRoomBuilder did that does not survive the move
+    // into 3D. Everything else stays a sprite, sliced at runtime by BathroomFixture.
+    //
+    // The washroom is its own grade, so its surfaces are registered with BathroomShell rather than
+    // CabinInterior: the room component repaints everything it owns with the chinked-log texture,
+    // and a log-walled bathroom is not the room. The partitions themselves ARE registered with it,
+    // because their far side is the landing and the landing is log.
+
+    const string BathAtlasPng = "Assets/Animation/Interior Atlas/bathroom_kit/bathroom_colddusk.png";
+    const string BathWatchPng = "Assets/Animation/Interior Atlas/bathroom_kit/bathroom_window_watch.png";
+    const string BathTileDir  = "Assets/Animation/Interior Atlas/bathroom_kit/tiles";
+
+    const float BathE  = -4.0f;                       // the east partition's centre line
+    const float BathN  = -4.6f;                       // the north partition's centre line
+    const float BathT  = 0.3f;                        // partition thickness (the bedroom's)
+    const float BathInE = BathE - BathT * 0.5f;       // -4.15 — its inner face
+    const float BathInN = BathN - BathT * 0.5f;       // -4.75
+    const float BathDoorW = -7.5f, BathDoorE = -5.5f; // the 2m opening in the north wall
+    const float BathDoorHead = 6.2f;                  // 3m clear: the door art is 48px tall
+    const float BathWainTop = 4.0f;                   // beadboard to here...
+    const float BathRailTop = 4.35f;                  // ...then the cap rail, 1.15m off the floor
+    const float BathSkin = 0.04f;                     // how proud of the wall a surface skin stands
+
+    // The faces a fitting actually hangs on. NOT the structural wall — the surface skin laid over it
+    // stands 4cm proud of that, so anything placed off the structure ends up sunk in its own wainscot
+    // (which is exactly how the plank shelf spent its first run buried in the north wall).
+    const float BathFaceS = -Inner + BathSkin;        // -9.71, the south (outside) wall
+    const float BathFaceW = -Inner + BathSkin;        // -9.71, the west (outside) wall
+    const float BathFaceE = BathInE - BathSkin;       // -4.19, the east partition
+    const float BathFaceN = BathInN - BathSkin;       // -4.79, the north partition
+    // How far a fitting stands off its face. Which SIGN takes you into the room differs per wall:
+    // + on the south and west faces, - on the east and north ones, because the room lies on the
+    // negative side of those two.
+    const float BathStand = 0.06f;
+
+    // the walk-in shower, against the west wall: a 3m opening, 1.3m deep, 3m tall
+    const float StallZ0 = -9.7f, StallZ1 = -6.7f;
+    const float StallFrontX = -8.45f, StallTop = 6.2f;
+
+    [MenuItem("Tools/Horror Game/Install Cabin Bathroom")]
+    public static void InstallCabinBathroom()
+    {
+        if (!File.Exists(SceneOut)) { Debug.LogWarning("[HorrorGame] no interior scene at " + SceneOut); return; }
+        var scene = EditorSceneManager.OpenScene(SceneOut, OpenSceneMode.Single);
+        var room = Object.FindAnyObjectByType<CabinInterior>();
+        if (room == null)
+        {
+            Debug.LogWarning("[HorrorGame] no CabinInterior in " + SceneOut + " — build the two-storey " +
+                             "interior first (Tools > Horror Game > Build 3D Sandbox).");
+            return;
+        }
+        BuildCabinBathroom(room);
+        BuildHouseNav();                     // the companions' graph now runs through the washroom door
+        EditorSceneManager.SaveScene(scene, SceneOut);
+        Debug.Log("[HorrorGame] Cabin bathroom installed off the upstairs landing: hex penny tile and " +
+                  "plank wainscot, a walk-in shower on the west wall (curtain on iron rings, exposed " +
+                  "riser, valve, steam, floor going slick), vanity and mirror under the south window, " +
+                  "toilet and towels opposite, and a latched plank door. Walk into the stall, press E " +
+                  "for the water. The window's watcher is installed but NOT hooked up.");
+    }
+
+    static void BuildCabinBathroom(CabinInterior room)
+    {
+        // ---- assets ----
+        var atlas = EnsureFurnitureAtlas(BathAtlasPng);      // readable, point, uncompressed — as the kit asks
+        var watch = EnsureFurnitureAtlas(BathWatchPng);
+        if (atlas == null) { Debug.LogWarning("[HorrorGame] bathroom atlas missing at " + BathAtlasPng); return; }
+        var spriteMat = SpriteMaterial();
+
+        var hex     = ExtractBathTile(atlas, "hexFloor");
+        var worn    = ExtractBathTile(atlas, "hexFloorWorn");
+        var wains   = ExtractBathTile(atlas, "wainscotWall");
+        var cap     = ExtractBathTile(atlas, "wainscotCap");
+        var plaster = ExtractBathTile(atlas, "plasterWall");
+        // One material for every surface in here — the tile and the repeat count ride in a property
+        // block per renderer (BathroomShell), so a 5.6m plaster band and a 35cm cap rail share it.
+        var surfMat = LitMaterial("BathroomSurfaceMat", Color.white, BathTilePath("hexFloor"), Vector2.one, repeat: true);
+        var wallMat = LitMaterial("CabinWallMat", Color.white, CdWall, Vector2.one, repeat: true);
+
+        // ---- clear anything a previous run built, so this is safe to re-run ----
+        var stale = GameObject.Find("CabinBathroom");
+        if (stale != null) Object.DestroyImmediate(stale);
+        room.surfaces.RemoveAll(s => s == null || s.renderer == null);   // drop what that just orphaned
+
+        var bath   = new GameObject("CabinBathroom");
+        bath.transform.SetParent(room.transform, false);
+        var shell  = bath.AddComponent<BathroomShell>();
+        var frames = Sub(bath.transform, "Partitions");
+        var skins  = Sub(bath.transform, "Surfaces");
+        var fit    = Sub(bath.transform, "Fittings");
+        var lights = Sub(bath.transform, "BathroomLights");
+
+        // ---------------------------------------------------------------- the walls that close it off
+        // Chinked log, and registered with the room so they rot with the house — the landing looks at
+        // their far side, and the landing is log. The washroom's own grade goes on as a skin inside.
+        float pH = UpperTop - SlabTop, pY = (SlabTop + UpperTop) * 0.5f;
+        var partitions = new (string n, Vector3 c, Vector3 s)[]
+        {
+            ("Bathroom_N_w",    new Vector3((-RoomHalf + BathDoorW) * 0.5f, pY, BathN),
+                                new Vector3(BathDoorW + RoomHalf, pH, BathT)),
+            ("Bathroom_N_e",    new Vector3((BathDoorE + BathE) * 0.5f, pY, BathN),
+                                new Vector3(BathE - BathDoorE, pH, BathT)),
+            ("Bathroom_N_head", new Vector3((BathDoorW + BathDoorE) * 0.5f, (BathDoorHead + UpperTop) * 0.5f, BathN),
+                                new Vector3(BathDoorE - BathDoorW, UpperTop - BathDoorHead, BathT)),
+            ("Bathroom_E",      new Vector3(BathE, pY, (-RoomHalf + BathN) * 0.5f),
+                                new Vector3(BathT, pH, BathN + RoomHalf)),
+        };
+        foreach (var p in partitions)
+            room.Register(MakeShellBox(frames.transform, p.n, p.c, p.s, wallMat),
+                          CabinInterior.Surface.Wall,
+                          new Vector2(Mathf.Max(p.s.x, p.s.z) / LogCourse, p.s.y / LogCourse));
+
+        // ---------------------------------------------------------------- hex tile, wainscot, plaster
+        // Every skin is a wafer laid on the inside face of a wall. The tile is 16px = one metre, so
+        // the repeat count is just the face's size in metres and no pixel is ever stretched.
+        // `cells` is the repeat count on the face you actually look at, and it is passed in rather than
+        // derived from the box: a wall band's is (length, height), but a floor slab's is (width, DEPTH)
+        // and its thinnest axis is the one Y happens to be.
+        MeshRenderer Skin(string name, Vector3 centre, Vector3 size, Texture2D tile, Vector2 cells, Vector2 offset)
+        {
+            var mr = MakeShellBox(skins.transform, name, centre, size, surfMat);
+            var col = mr.GetComponent<Collider>();
+            if (col != null) Object.DestroyImmediate(col);         // the wall behind it already stops you
+            shell.Register(mr, tile, cells, offset);
+            return mr;
+        }
+
+        // One vertical run of washroom wall: beadboard, the cap rail, damp plaster. The rail is the
+        // reason the offset exists — the wainscotCap cell carries it in the cell's TOP band over more
+        // beadboard, so the rail strip shows that top slice instead of squashing the whole cell.
+        void Bands(string name, float at, bool alongZ, float centre, float length)
+        {
+            Vector3 At(float y) => alongZ ? new Vector3(at, y, centre) : new Vector3(centre, y, at);
+            Vector3 Size(float h) => alongZ ? new Vector3(BathSkin, h, length) : new Vector3(length, h, BathSkin);
+            float wh = BathWainTop - SlabTop, ch = BathRailTop - BathWainTop, ph = UpperTop - BathRailTop;
+            Skin(name + "_Wainscot", At(SlabTop + wh * 0.5f), Size(wh), wains, new Vector2(length, wh), Vector2.zero);
+            Skin(name + "_CapRail",  At(BathWainTop + ch * 0.5f), Size(ch), cap, new Vector2(length, ch), new Vector2(0f, 1f - ch));
+            Skin(name + "_Plaster",  At(BathRailTop + ph * 0.5f), Size(ph), plaster, new Vector2(length, ph), Vector2.zero);
+        }
+
+        float roomW = BathInE + Inner, roomD = BathInN + Inner;    // 5.6 x 5.0
+        Bands("Bath_W", -Inner + BathSkin * 0.5f,  true,  (-Inner + BathInN) * 0.5f, roomD);
+        Bands("Bath_E", BathInE - BathSkin * 0.5f, true,  (-Inner + BathInN) * 0.5f, roomD);
+        Bands("Bath_S", -Inner + BathSkin * 0.5f,  false, (-Inner + BathInE) * 0.5f, roomW);
+        // the north wall opens: a run either side of the doorway, and a plaster header over it
+        Bands("Bath_N_w", BathInN - BathSkin * 0.5f, false, (-Inner + BathDoorW) * 0.5f, BathDoorW + Inner);
+        Bands("Bath_N_e", BathInN - BathSkin * 0.5f, false, (BathDoorE + BathInE) * 0.5f, BathInE - BathDoorE);
+        Skin("Bath_N_Header",
+             new Vector3((BathDoorW + BathDoorE) * 0.5f, (BathDoorHead + UpperTop) * 0.5f, BathInN - BathSkin * 0.5f),
+             new Vector3(BathDoorE - BathDoorW, UpperTop - BathDoorHead, BathSkin), plaster,
+             new Vector2(BathDoorE - BathDoorW, UpperTop - BathDoorHead), Vector2.zero);
+
+        // the floor, and a scatter of worn cells over it — a tile grid that repeats perfectly across
+        // five metres reads as wallpaper, so SHOWER.md asks for staining sprinkled through it
+        Skin("Bath_Floor", new Vector3((-Inner + BathInE) * 0.5f, SlabTop + 0.01f, (-Inner + BathInN) * 0.5f),
+             new Vector3(roomW, 0.02f, roomD), hex, new Vector2(roomW, roomD), Vector2.zero);
+        var wornAt = new[]
+        {
+            new Vector2(-8.4f, -5.6f), new Vector2(-6.2f, -6.4f), new Vector2(-5.1f, -8.7f),
+            new Vector2(-9.2f, -7.4f), new Vector2(-7.1f, -5.2f), new Vector2(-4.9f, -6.3f),
+            new Vector2(-6.9f, -8.4f), new Vector2(-8.1f, -6.6f),
+        };
+        for (int i = 0; i < wornAt.Length; i++)
+            Skin("Bath_FloorWorn_" + i, new Vector3(wornAt[i].x, SlabTop + 0.028f, wornAt[i].y),
+                 new Vector3(1f, 0.012f, 1f), worn, Vector2.one, Vector2.zero);
+
+        // ---------------------------------------------------------------- the walk-in shower
+        var stallGo = Sub(bath.transform, "ShowerStall");
+        var stall = stallGo.AddComponent<ShowerStall>();
+        var vol = stallGo.AddComponent<BoxCollider>();
+        vol.isTrigger = true;                                       // you walk into it; it never blocks you
+        vol.center = new Vector3((-Inner + StallFrontX) * 0.5f, SlabTop + 1f, (StallZ0 + StallZ1) * 0.5f);
+        vol.size = new Vector3(StallFrontX + Inner, 2f, StallZ1 - StallZ0);
+        stall.stallVolume = vol;
+
+        // which wall a piece is flat on. `north` means it faces north, i.e. it is mounted on a south
+        // wall — the same convention the rest of the interior is dressed with.
+        var north = Quaternion.identity;
+        var south = Quaternion.Euler(0f, 180f, 0f);
+        var east  = Quaternion.Euler(0f, 90f, 0f);                  // mounted on the WEST wall
+        var west  = Quaternion.Euler(0f, -90f, 0f);                 // mounted on the EAST wall
+        var top = new Vector2(0.5f, 1f);                            // hangs from its rod
+        var mid = new Vector2(0.5f, 0.5f);                          // laid flat on the floor
+        var flat = Quaternion.LookRotation(Vector3.down, Vector3.right);   // face up, long axis onto Z
+
+        // The stall's concrete is ARCHITECTURE, not a prop, so it is built the way the cabin's own
+        // walls and front door are: alpha-clipped quads that WRITE DEPTH. That one decision is what
+        // keeps the whole room honest.
+        //
+        // As sprites it could not work. The sprite shader is ZWrite Off, so a sprite occludes nothing
+        // — it can only be ordered against other sprites — and sprites sort back-to-front by the
+        // distance to their own CENTRE, so a 2m-wide wall panel's centre sits nearer the camera than
+        // the riser standing 2cm in front of it and the wall paints over its own pipework. Ordering
+        // round that costs more than it fixes: push the shell DOWN and it vanishes altogether (a
+        // negative order in this project falls behind the world — it is the band the sky backdrop
+        // lives in), push the plumbing UP and the pipes paint over the player standing in front of
+        // them, and the curtain above those paints over the player too.
+        //
+        // Depth settles all of it, and every sprite in the stall goes back to sorting order 0 and
+        // plain distance sorting — which then gives the right answer everywhere, including the one
+        // SHOWER.md calls out: seen from the room a drawn curtain is nearer than the player behind
+        // it and covers them, and seen from inside the stall the player is nearer and covers it.
+        var opaque = BathroomOpaqueMaterial();
+        float stallH = StallTop - SlabTop;                 // 3m, the full height of the concrete
+        float stallD = StallFrontX + Inner;                // 1.3m, back wall to curtain
+        float backX  = BathFaceW + 0.04f;
+        float midY   = SlabTop + stallH * 0.5f;            // quads are built about their centre
+
+        // 3m of back wall out of a 2m cell: one whole panel and one half, BUTTED rather than
+        // overlapped — two coplanar opaque quads sharing a metre would z-fight down the overlap.
+        MakeBathQuad(stallGo.transform, "BackWall_S", new Vector3(backX, midY, StallZ0 + 1f),
+                     east, 2f, stallH, BathUV("showerBackWall"), opaque);
+        MakeBathQuad(stallGo.transform, "BackWall_N", new Vector3(backX, midY, StallZ0 + 2.5f),
+                     east, 1f, stallH, BathUV("showerBackWall", uTo: 0.5f), opaque);
+        // ...and the same concrete turned in at each end, so the stall is a box you stand inside
+        // rather than a slab with plaster where its sides should be. Taking 65% of the cell rather
+        // than squeezing the whole of it keeps the form-board seams at their drawn scale.
+        MakeBathQuad(stallGo.transform, "Return_S", new Vector3((-Inner + StallFrontX) * 0.5f, midY, BathFaceS + 0.03f),
+                     north, stallD, stallH, BathUV("showerBackWall", uTo: stallD / 2f), opaque, solid: true);
+        MakeBathQuad(stallGo.transform, "Return_N", new Vector3((-Inner + StallFrontX) * 0.5f, midY, StallZ1 - 0.02f),
+                     south, stallD, stallH, BathUV("showerBackWall", uTo: stallD / 2f), opaque, solid: true);
+
+        // the pan, laid on the floor with its long axis up the stall
+        Fix(stallGo.transform, "ShowerPan", BathroomFixture.Piece.ShowerPan,
+            new Vector3((-Inner + StallFrontX) * 0.5f, SlabTop + 0.035f, (StallZ0 + StallZ1) * 0.5f),
+            flat, atlas, spriteMat, mid,
+            scale: new Vector3((StallZ1 - StallZ0) / 2f, StallFrontX + Inner, 1f));
+
+        Fix(stallGo.transform, "CurtainRail", BathroomFixture.Piece.CurtainRail,
+            new Vector3(StallFrontX, StallTop, (StallZ0 + StallZ1) * 0.5f), east, atlas, spriteMat, top);
+        var curtain = Fix(stallGo.transform, "Curtain", BathroomFixture.Piece.Curtain,
+                          new Vector3(StallFrontX + 0.03f, StallTop, (StallZ0 + StallZ1) * 0.5f), east, atlas,
+                          spriteMat, top);
+
+        // half a metre in from the stall's south end, so the 1m-wide pieces sit flush inside it
+        float plumbZ = StallZ0 + 0.5f;
+        Fix(stallGo.transform, "PipeRiser", BathroomFixture.Piece.PipeRiser,
+            new Vector3(BathFaceW + 0.09f, SlabTop, plumbZ), east, atlas, spriteMat);
+        var head = Fix(stallGo.transform, "ShowerHead", BathroomFixture.Piece.ShowerHead,
+                       new Vector3(BathFaceW + 0.11f, SlabTop + 2f, plumbZ), east, atlas, spriteMat);
+        var valve = Fix(stallGo.transform, "ValveHandle", BathroomFixture.Piece.ValveHandle,
+                        new Vector3(BathFaceW + 0.11f, SlabTop + 0.8f, plumbZ), east, atlas, spriteMat);
+        var water = Fix(stallGo.transform, "WaterStream", BathroomFixture.Piece.WaterStream,
+                        new Vector3(BathFaceW + 0.20f, SlabTop + 2.15f, plumbZ), east, atlas, spriteMat, top,
+                        scale: new Vector3(1f, 1.1f, 1f));
+        water.autoLoop = true; water.loopFps = 12f;
+
+        // steam: three emitters round the stall, each starting a couple of frames along so they do
+        // not puff in lockstep. These billboard — a wisp is the one thing in here with no wall to be on.
+        var steam = new BathroomFixture[3];
+        for (int i = 0; i < 3; i++)
+        {
+            steam[i] = Fix(stallGo.transform, "Steam_" + i, BathroomFixture.Piece.Steam,
+                           new Vector3(BathFaceW + 0.7f, SlabTop + 0.2f + 0.35f * i, StallZ0 + 0.8f + i * 0.7f),
+                           east, atlas, spriteMat, scale: new Vector3(0.7f, 0.9f, 1f));
+            steam[i].autoLoop = true; steam[i].loopFps = 6f; steam[i].loopOffset = i * 2;
+            steam[i].billboard = true;
+        }
+
+        // the sheen that creeps out of the stall while it runs, and the puddle it feeds
+        var wet = new BathroomFixture[3];
+        for (int i = 0; i < 3; i++)
+        {
+            wet[i] = Fix(stallGo.transform, "WetFloor_" + i, BathroomFixture.Piece.WetFloor,
+                         new Vector3(StallFrontX + 0.65f, SlabTop + 0.022f, StallZ0 + 0.9f + i * 1.1f),
+                         flat, atlas, spriteMat, mid, scale: new Vector3(1.4f, 1.4f, 1f));
+            var c = wet[i].Renderer.color; c.a = 0f; wet[i].Renderer.color = c;    // dry until the valve turns
+        }
+        var puddle = Fix(stallGo.transform, "Puddle", BathroomFixture.Piece.Puddle,
+                         new Vector3(StallFrontX + 0.5f, SlabTop + 0.03f, StallZ0 + 2.1f),
+                         flat, atlas, spriteMat, mid);
+        puddle.autoLoop = true; puddle.loopFps = 3f;
+
+        // ---------------------------------------------------------------- what the room is furnished with
+        // The kit ships two basin options; the room takes the vanity (basin AND storage in one piece,
+        // which is what a cabin washroom with one wet wall actually has). pedestalSink stays unplaced.
+        Fix(fit.transform, "Vanity", BathroomFixture.Piece.Vanity,
+            new Vector3(-7.2f, SlabTop, BathFaceS + BathStand), north, atlas, spriteMat);
+        var mirror = Fix(fit.transform, "Mirror", BathroomFixture.Piece.Mirror,
+                         new Vector3(-7.2f, SlabTop + 2.1f, BathFaceS + BathStand + 0.02f), north, atlas, spriteMat);
+        Fix(fit.transform, "SoapClutter", BathroomFixture.Piece.SoapClutter,
+            new Vector3(-6.5f, SlabTop + 1.78f, BathFaceS + BathStand + 0.04f), north, atlas, spriteMat);
+
+        // the window, on the outside wall — this is the one the eyes come to
+        var window = Fix(fit.transform, "Window", BathroomFixture.Piece.Window,
+                         new Vector3(-5.2f, SlabTop + 1.1f, BathFaceS + BathStand), north, atlas, spriteMat);
+
+        Fix(fit.transform, "Toilet", BathroomFixture.Piece.Toilet,
+            new Vector3(BathFaceE - BathStand, SlabTop, -8.6f), west, atlas, spriteMat);
+        Fix(fit.transform, "TowelRack", BathroomFixture.Piece.TowelRack,
+            new Vector3(BathFaceE - BathStand, SlabTop + 1.7f, -6.2f), west, atlas, spriteMat);
+        Fix(fit.transform, "PlankShelf", BathroomFixture.Piece.PlankShelf,
+            new Vector3(-8.6f, SlabTop + 1.6f, BathFaceN - BathStand), south, atlas, spriteMat);
+        Fix(fit.transform, "DrainGrate", BathroomFixture.Piece.DrainGrate,
+            new Vector3(-6.8f, SlabTop + 0.024f, -7.6f), flat, atlas, spriteMat, mid);
+
+        // ---------------------------------------------------------------- the door, and what it blocks
+        var doorGo = Sub(bath.transform, "BathroomDoor");
+        doorGo.transform.position = new Vector3((BathDoorW + BathDoorE) * 0.5f, SlabTop + 1.2f, BathN);
+        // The leaf is a depth-writing quad for the same reason the stall's concrete is: a door that
+        // does not occlude is not a door. As a sprite it hid nothing, and the shower curtain hung
+        // there in the middle of it whenever the bathroom was shut.
+        var leaf = MakeBathQuad(doorGo.transform, "DoorLeaf",
+                                new Vector3((BathDoorW + BathDoorE) * 0.5f, (SlabTop + BathDoorHead) * 0.5f, BathN),
+                                north, BathDoorE - BathDoorW, BathDoorHead - SlabTop, BathUV("door"), opaque);
+        var blockGo = Sub(doorGo.transform, "DoorBlocker");
+        var block = blockGo.AddComponent<BoxCollider>();
+        blockGo.transform.position = new Vector3((BathDoorW + BathDoorE) * 0.5f, (SlabTop + BathDoorHead) * 0.5f, BathN);
+        block.size = new Vector3(BathDoorE - BathDoorW, BathDoorHead - SlabTop, BathT);
+        var door = doorGo.AddComponent<BathroomDoor>();
+        door.leaf = leaf.GetComponent<MeshRenderer>();
+        door.leafMesh = leaf.GetComponent<MeshFilter>();
+        door.frameUV = new[] { BathUV("door"), BathUV("door", 1), BathUV("door", 2), BathUV("door", 3) };
+        door.blocker = block;
+
+        // ---------------------------------------------------------------- light
+        // One cool shaft through the window is the whole room: the art already bakes a moon sheen onto
+        // the tile, the rail and the curtain crests, so the in-engine light stays dim and lets it carry.
+        var moon = MakeRoomLight(lights.transform, "BathMoonShaft", LightType.Spot,
+                                 new Vector3(-5.2f, 6.6f, -11.6f), new Vector3(-6.2f, SlabTop + 0.4f, -7.6f),
+                                 new Color(0.59f, 0.70f, 0.88f), 3.6f, 15f, 56f);
+        MakeRoomLight(lights.transform, "BathFill", LightType.Point,
+                      new Vector3(-7f, 5.6f, -7.2f), Vector3.zero, new Color(0.42f, 0.5f, 0.68f), 0.7f, 12f, 0f);
+        // the additive bloom behind the steam — on with the water, off the moment the valve closes
+        var glow = MakeRoomLight(lights.transform, "StallGlow", LightType.Point,
+                                 new Vector3(-9.1f, SlabTop + 1.6f, (StallZ0 + StallZ1) * 0.5f), Vector3.zero,
+                                 new Color(0.72f, 0.82f, 0.95f), 1.1f, 5f, 0f);
+        glow.enabled = false;
+        room.moonLights = (room.moonLights ?? new Light[0]).Append(moon).ToArray();   // bleeds red with the rest
+
+        // ---------------------------------------------------------------- wiring
+        var playerGo = GameObject.Find("Player");
+        var cam = Camera.main;
+
+        stall.player = playerGo != null ? playerGo.transform : null;
+        stall.curtain = curtain; stall.showerHead = head; stall.valveHandle = valve;
+        stall.waterStream = water; stall.steamEmitters = steam; stall.wetFloorTiles = wet;
+        stall.puddle = puddle; stall.mirror = mirror; stall.steamGlow = glow;
+        door.player = playerGo != null ? playerGo.transform : null;
+
+        // The watcher is BUILT — sheet sliced, window wired, camera hooked — but ShowerStall.watcher is
+        // deliberately left EMPTY, so the eyes never come. Assigning it is the whole of that hookup.
+        var watcher = window.gameObject.AddComponent<WindowWatcher>();
+        watcher.window = window;
+        watcher.watchSheet = watch;
+        watcher.pivot = new Vector2(0.5f, 0f);
+        watcher.playerCamera = cam != null ? cam.transform : null;
+
+        if (playerGo == null) Debug.LogWarning("[HorrorGame] no Player in the scene — the shower and the " +
+                                              "bathroom door have no one to prompt.");
+    }
+
+    static GameObject Sub(Transform parent, string name)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        return go;
+    }
+
+    // One piece off the bathroom atlas. Flat by default — the fittings in here are plumbed into a
+    // wall or laid on the floor, and a vanity that swings round to face you reads as a cutout rather
+    // than a cabinet. The sprite itself is sliced at runtime (BathroomFixture.Awake), which is why
+    // these sit blank in the Scene view and only dress themselves in play mode.
+    static BathroomFixture Fix(Transform parent, string name, BathroomFixture.Piece piece,
+                               Vector3 pos, Quaternion rot, Texture2D atlas, Material mat,
+                               Vector2? pivot = null, Vector3? scale = null)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = pos;
+        go.transform.rotation = rot;
+        if (scale.HasValue) go.transform.localScale = scale.Value;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sharedMaterial = mat;
+        var f = go.AddComponent<BathroomFixture>();
+        f.piece = piece;
+        f.dayAtlas = atlas;
+        f.pixelsPerUnit = 16f;
+        f.pivot = pivot ?? new Vector2(0.5f, 0f);        // bottom-centre plants it on the floor line
+        return f;
+    }
+
+    // The bathroom atlas as OPAQUE, alpha-clipped, depth-writing geometry, for the pieces of it that
+    // are structure rather than decor: the shower's concrete and the door leaf. Same URP/Unlit setup
+    // the cabin's front door and windows already use (see CabinAtlasMaterial).
+    static Material BathroomOpaqueMaterial()
+    {
+        var tex = EnsureFurnitureAtlas(BathAtlasPng);
+        EnsureFolder(MatDir);
+        string matPath = MatDir + "/BathroomOpaque.mat";
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        var sh = Shader.Find("Universal Render Pipeline/Unlit");
+        if (mat == null) { mat = new Material(sh); AssetDatabase.CreateAsset(mat, matPath); }
+        else mat.shader = sh;
+        mat.mainTexture = tex;
+        if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", tex);
+        if (mat.HasProperty("_AlphaClip")) mat.SetFloat("_AlphaClip", 1f);
+        if (mat.HasProperty("_Cutoff")) mat.SetFloat("_Cutoff", 0.5f);
+        if (mat.HasProperty("_Cull")) mat.SetFloat("_Cull", 0f);
+        mat.EnableKeyword("_ALPHATEST_ON");
+        EditorUtility.SetDirty(mat);
+        return mat;
+    }
+
+    /// <summary>One cell of the bathroom atlas in Unity UV space, optionally a horizontal slice of it
+    /// (so a 2m panel can supply a 1m or 1.3m one at its drawn scale instead of being squeezed).</summary>
+    static Rect BathUV(string key, int frame = 0, float uFrom = 0f, float uTo = 1f)
+    {
+        var it = BathroomAtlas.Items[key];
+        float x0 = (it.x + frame * it.w + uFrom * it.w) / BathroomAtlas.SHEET_W;
+        float x1 = (it.x + frame * it.w + uTo   * it.w) / BathroomAtlas.SHEET_W;
+        float y0 = 1f - (it.y + it.h) / (float)BathroomAtlas.SHEET_H;      // the atlas is top-left origin
+        float y1 = 1f - it.y / (float)BathroomAtlas.SHEET_H;
+        return Rect.MinMaxRect(x0, y0, x1, y1);
+    }
+
+    // A flat quad carrying one atlas cell — built about its CENTRE, facing +Z before rotation.
+    static GameObject MakeBathQuad(Transform parent, string name, Vector3 centre, Quaternion rot,
+                                   float w, float h, Rect uv, Material mat, bool solid = false)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        go.transform.position = centre;
+        go.transform.rotation = rot;
+        float hw = w * 0.5f, hh = h * 0.5f;
+        var m = new Mesh { name = name };
+        m.SetVertices(new List<Vector3> {
+            new Vector3(-hw, -hh, 0f), new Vector3(hw, -hh, 0f), new Vector3(hw, hh, 0f), new Vector3(-hw, hh, 0f) });
+        m.SetUVs(0, new List<Vector2> {
+            new Vector2(uv.xMin, uv.yMin), new Vector2(uv.xMax, uv.yMin),
+            new Vector2(uv.xMax, uv.yMax), new Vector2(uv.xMin, uv.yMax) });
+        m.SetTriangles(new int[] { 0, 1, 2, 0, 2, 3 }, 0);
+        m.RecalculateNormals(); m.RecalculateBounds();
+        go.AddComponent<MeshFilter>().sharedMesh = m;
+        go.AddComponent<MeshRenderer>().sharedMaterial = mat;
+        if (solid)
+        {
+            // Given some thickness, because a zero-depth box is no use to the camera's spherecast —
+            // and the camera arm is the main thing these stop. Without them, backing up inside the
+            // stall walks the lens straight out through its own concrete.
+            var col = go.AddComponent<BoxCollider>();
+            col.size = new Vector3(w, h, 0.2f);
+        }
+        return go;
+    }
+
+    static string BathTilePath(string key) => BathTileDir + "/bathroom_" + key + ".png";
+
+    // Cut one tileable cell out of the atlas into its own repeat-wrapped texture, so the shell can be
+    // real geometry with a tiled material instead of a carpet of 16px sprites. Upscaled x4 by nearest
+    // neighbour — not a pixel changes — purely so the mip chain has something to work with: a 16px
+    // tile repeated across five metres shimmers badly without one.
+    static Texture2D ExtractBathTile(Texture2D atlas, string key)
+    {
+        if (atlas == null || !BathroomAtlas.Items.TryGetValue(key, out var it)) return null;
+        EnsureFolder(BathTileDir);
+        string path = BathTilePath(key);
+
+        var src = atlas.GetPixels(it.x, atlas.height - (it.y + it.h), it.w, it.h);
+        const int Up = 4;
+        int w = it.w * Up, h = it.h * Up;
+        var dst = new Color[w * h];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+                dst[y * w + x] = src[(y / Up) * it.w + (x / Up)];
+
+        var tex = new Texture2D(w, h, TextureFormat.RGBA32, false);
+        tex.SetPixels(dst);
+        tex.Apply();
+        File.WriteAllBytes(path, tex.EncodeToPNG());
+        Object.DestroyImmediate(tex);
+
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        EnsureTileTexture(path);
+        return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+    }
 
     static Sprite LoadSpriteAt(string path) =>
         AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault();
