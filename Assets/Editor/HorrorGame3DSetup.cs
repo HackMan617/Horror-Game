@@ -98,9 +98,10 @@ public static class HorrorGame3DSetup
     const int DrivingSetupVersion = 13;  // bump to re-install the in-world driving setup (truck + road + OutOfTown)
     const int ForestSetupVersion  = 2;   // bump to re-grow the Exterior woods in place (never wipes the scene)
     const int InventorySetupVersion = 1; // bump to re-install the inventory modal in place (never wipes a scene)
-    const int InteriorSetupVersion  = 3; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
+    const int InteriorSetupVersion  = 5; // bump to re-build the two-storey cabin interior in place (never wipes a scene)
     const int PartnerSetupVersion   = 1; // bump to re-install the partner's walk/action animation in place
-    const int BathroomSetupVersion  = 9; // bump to re-install the upstairs bathroom in place (never wipes a scene)
+    const int BathroomSetupVersion  = 9;
+    const int ClockSetupVersion     = 1; // bump to re-install the shared day/night clock in place // bump to re-install the upstairs bathroom in place (never wipes a scene)
 
     static int _renderer3DIndex = 1;
 
@@ -179,6 +180,15 @@ public static class HorrorGame3DSetup
                 EditorPrefs.SetInt("HG3D_BathroomSetup", BathroomSetupVersion);
                 try { InstallCabinBathroom(); }
                 catch (System.Exception e) { Debug.LogError("[HorrorGame] Bathroom setup failed: " + e); }
+            }
+
+            // The shared clock goes in last, because it touches both scenes and wants whatever the
+            // Exterior's SkyController is currently tuned to. Adds one object per scene and nothing else.
+            if (EditorPrefs.GetInt("HG3D_ClockSetup", 0) < ClockSetupVersion)
+            {
+                EditorPrefs.SetInt("HG3D_ClockSetup", ClockSetupVersion);
+                try { InstallDayNightClock(); }
+                catch (System.Exception e) { Debug.LogError("[HorrorGame] Clock setup failed: " + e); }
             }
         };
     }
@@ -4059,6 +4069,11 @@ public static class HorrorGame3DSetup
     const string CdFloorNM  = HandoffDir + "interior_colddusk_nightmare_floor.png";
     const string CdCeilNM   = HandoffDir + "interior_colddusk_nightmare_ceiling.png";
     const string CdWindowNM = HandoffDir + "interior_colddusk_nightmare_window.png";
+    // The 16-frame day/night sheet for the glass (dawn 0 -> night 15). It ships in its own handoff
+    // folder alongside the generator that bakes it; the cells are the same 48x40 geometry as the
+    // single cold-dusk window above, so it drops straight onto that renderer.
+    const string CdWindowCycle = "Assets/Animation/cabin_interior_handoff/interior_window_cycle.png";
+    const int WindowCycleFrames = 16;
     const string StructureDusk      = "Assets/Animation/interior_structure_dusk.png";
     const string StructureNightmare = "Assets/Animation/interior_structure_nightmare.png";
 
@@ -4100,6 +4115,7 @@ public static class HorrorGame3DSetup
         var furnNight   = EnsureFurnitureAtlas(FurnitureNightmare);
         var windowDay   = EnsureInteriorSprite(CdWindow);
         var windowNight = EnsureInteriorSprite(CdWindowNM);
+        var windowCycle = EnsureWindowCycle();
         var spriteMat = SpriteMaterial();
 
         Texture2D Tex(string p) => AssetDatabase.LoadAssetAtPath<Texture2D>(p);
@@ -4191,9 +4207,21 @@ public static class HorrorGame3DSetup
         // ---- the staircase ----
         BuildStaircase(stairs.transform, room, floorMat, wallMat);
 
+        // ---- the ground floor's two windows ----
+        // Both on the entry-hall half of the room, which is the only stretch of outside wall down here
+        // that is not already carrying something: the north wall is the whole hearth group (fireplace,
+        // sconces, deer head, TV, bookshelf), and the west wall's south end has the clock and the
+        // calendar on it. So one beside the front door and one in the gap north of the clock.
+        var ground = new GameObject("GroundFloorWindows");
+        ground.transform.SetParent(room.transform, false);
+        MakeInteriorWindow(ground.transform, "Window_Entry", new Vector3(-6f, 1.8f, -Inner + 0.05f),
+                           Quaternion.identity, windowDay, windowNight, windowCycle, spriteMat);
+        MakeInteriorWindow(ground.transform, "Window_Hall", new Vector3(-Inner + 0.05f, 1.8f, 1f),
+                           Quaternion.Euler(0f, 90f, 0f), windowDay, windowNight, windowCycle, spriteMat);
+
         // ---- the bedroom + the landing ----
         var bed = DressBedroom(room, furnDay, furnNight, structDay, structNight,
-                               windowDay, windowNight, spriteMat, decor.transform);
+                               windowDay, windowNight, windowCycle, spriteMat, decor.transform);
         DressLanding(structDay, structNight, spriteMat, decor.transform);
         DressGroundFloor(structDay, structNight, spriteMat, decor.transform);
         AuditWallDecor(decor.transform);      // nothing hung may hang on nothing
@@ -4202,18 +4230,28 @@ public static class HorrorGame3DSetup
         var moonA = MakeRoomLight(lights.transform, "MoonShaft_N", LightType.Spot,
                                   new Vector3(-8f, 6.8f, 11.4f), new Vector3(-7f, SlabTop, 6.4f),
                                   new Color(0.59f, 0.70f, 0.88f), 4.2f, 17f, 58f);
-        var moonB = MakeRoomLight(lights.transform, "MoonShaft_W", LightType.Spot,
-                                  new Vector3(-11.4f, 6.8f, 5.5f), new Vector3(-6.4f, SlabTop, 5.5f),
-                                  new Color(0.59f, 0.70f, 0.88f), 3.4f, 16f, 55f);
+        // the two downstairs shafts, angled in from outside the wall each window sits in
+        var moonEntry = MakeRoomLight(lights.transform, "MoonShaft_Entry", LightType.Spot,
+                                      new Vector3(-6f, 3.4f, -11.6f), new Vector3(-5.4f, 0.4f, -6.6f),
+                                      new Color(0.59f, 0.70f, 0.88f), 3.2f, 14f, 55f);
+        var moonHall = MakeRoomLight(lights.transform, "MoonShaft_Hall", LightType.Spot,
+                                     new Vector3(-11.6f, 3.4f, 1f), new Vector3(-6.6f, 0.4f, 1.6f),
+                                     new Color(0.59f, 0.70f, 0.88f), 3.0f, 14f, 55f);
         var lamp = MakeRoomLight(lights.transform, "BedsideLamp", LightType.Point,
                                  new Vector3(-1.9f, SlabTop + 1.25f, 8.9f), Vector3.zero,
                                  new Color(1f, 0.69f, 0.34f), 2.2f, 8f, 0f);
         var hearth = MakeRoomLight(lights.transform, "HearthGlow", LightType.Point,
                                    new Vector3(0f, 1.15f, 8.9f), Vector3.zero,
                                    new Color(1f, 0.62f, 0.28f), 2.6f, 10f, 0f);
+        // Nudged up from 0.8: the bedroom used to have two moon shafts and now has one, and the west
+        // side of it went to pieces in the dark without a little more ambient behind the fill.
         MakeRoomLight(lights.transform, "UpstairsFill", LightType.Point,
-                      new Vector3(-4f, 5.8f, 6f), Vector3.zero, new Color(0.42f, 0.5f, 0.68f), 0.8f, 18f, 0f);
-        room.moonLights = new[] { moonA, moonB };
+                      new Vector3(-4f, 5.8f, 6f), Vector3.zero, new Color(0.42f, 0.5f, 0.68f), 1.15f, 18f, 0f);
+        room.moonLights = new[] { moonA, moonEntry, moonHall };
+        // ...and the glass drives them, so a noon window no longer lights the room like midnight
+        PairWindowLight(room, "Window_N", moonA);
+        PairWindowLight(room, "Window_Entry", moonEntry);
+        PairWindowLight(room, "Window_Hall", moonHall);
         room.warmLights = new[] { lamp, hearth };
 
         // dust drifting in the moonlight, and the rot that only exists on the other side
@@ -4454,7 +4492,8 @@ public static class HorrorGame3DSetup
     // the rug, two windows onto the night, and the mirror.
     static GameObject DressBedroom(CabinInterior room, Texture2D furnDay, Texture2D furnNight,
                                    Texture2D structDay, Texture2D structNight,
-                                   Sprite windowDay, Sprite windowNight, Material spriteMat, Transform decor)
+                                   Sprite windowDay, Sprite windowNight, Sprite[] windowCycle,
+                                   Material spriteMat, Transform decor)
     {
         var set = new GameObject("Bedroom");
         set.transform.SetParent(room.transform, false);
@@ -4486,11 +4525,11 @@ public static class HorrorGame3DSetup
         MakeFurniture(set.transform, "DeskChair", InteriorObject.Piece.Armchair,
                       chair, desk, furnDay, furnNight, spriteMat);
 
-        // two windows onto the night — the moonlight shafts outside them are what light the room
+        // ONE window onto the night, over the head of the bed. The room used to carry a second on the
+        // west wall; the cabin reads better with a single upstairs pane and the pair downstairs, so
+        // the west one and the shaft that fell through it are both gone.
         MakeInteriorWindow(set.transform, "Window_N", new Vector3(-8f, 5f, Inner - 0.05f),
-                           Quaternion.Euler(0f, 180f, 0f), windowDay, windowNight, spriteMat);
-        MakeInteriorWindow(set.transform, "Window_W", new Vector3(-Inner + 0.05f, 5f, 5.5f),
-                           Quaternion.Euler(0f, 90f, 0f), windowDay, windowNight, spriteMat);
+                           Quaternion.Euler(0f, 180f, 0f), windowDay, windowNight, windowCycle, spriteMat);
 
         // decor: the portrait whose eyes follow you, sconces flanking the bed, the mirror by the dresser
         var wall = Quaternion.Euler(0f, 180f, 0f);
@@ -4637,12 +4676,17 @@ public static class HorrorGame3DSetup
         return go;
     }
 
-    // A window onto the night, flat on the wall. Its nightmare twin rides along as a second renderer
-    // that the realm swap reveals, so the glass turns with the rest of the house.
-    static void MakeInteriorWindow(Transform parent, string name, Vector3 pos, Quaternion rot,
-                                   Sprite day, Sprite night, Material mat)
+    // A window onto whatever hour it currently is, flat on the wall. Three renderers stacked on one
+    // object: the glass itself running the 16-frame day/night sheet off the shared DayNightClock, a
+    // crossfade layer holding the NEXT frame at partial alpha so the sky slides rather than steps,
+    // and the nightmare twin on top, which the realm swap reveals.
+    //
+    // Orders matter here and go 0/1/2. The twin used to be 1; leaving it there would tie it with the
+    // crossfade layer and let the two swap places frame to frame.
+    static WindowDayNightCycle MakeInteriorWindow(Transform parent, string name, Vector3 pos, Quaternion rot,
+                                                  Sprite day, Sprite night, Sprite[] cycle, Material mat)
     {
-        if (day == null) return;
+        if (day == null) return null;
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);
         go.transform.position = pos;
@@ -4650,6 +4694,25 @@ public static class HorrorGame3DSetup
         var sr = go.AddComponent<SpriteRenderer>();
         sr.sprite = day;
         sr.sharedMaterial = mat;
+
+        WindowDayNightCycle cyc = null;
+        if (cycle != null && cycle.Length > 1 && cycle[0] != null)
+        {
+            var blendGo = new GameObject(name + "_Blend");
+            blendGo.transform.SetParent(go.transform, false);
+            var bsr = blendGo.AddComponent<SpriteRenderer>();
+            bsr.sprite = cycle[cycle.Length - 1];
+            bsr.sharedMaterial = mat;
+            bsr.sortingOrder = 1;
+
+            cyc = go.AddComponent<WindowDayNightCycle>();
+            cyc.frames = cycle;
+            cyc.windowRenderer = sr;
+            cyc.blendRenderer = bsr;
+            cyc.mode = WindowDayNightCycle.Mode.Crossfade;
+            cyc.timeOfDay = 1f;            // the hour the room used to be frozen at, until the clock speaks
+        }
+
         if (night != null)
         {
             var twin = new GameObject(name + "_Nightmare");
@@ -4657,8 +4720,50 @@ public static class HorrorGame3DSetup
             var tsr = twin.AddComponent<SpriteRenderer>();
             tsr.sprite = night;
             tsr.sharedMaterial = mat;
-            tsr.sortingOrder = 1;
+            tsr.sortingOrder = 2;
             twin.AddComponent<NightmareWindow>();          // fades itself in with the dread flag
+        }
+        return cyc;
+    }
+
+    // Slice the day/night sheet into its 16 frames. PPU 24 like the single window it replaces, so a
+    // 48x40 cell still reads as the same 2m x 1.7m sash and nothing moves when the cycle installs.
+    static Sprite[] EnsureWindowCycle()
+    {
+        if (!File.Exists(CdWindowCycle))
+        {
+            Debug.LogWarning("[HorrorGame] no window cycle sheet at " + CdWindowCycle +
+                             " — the interior windows stay on their single night sprite.");
+            return null;
+        }
+        SliceStrip(CdWindowCycle, "win", WindowCycleFrames, 48, 40, 24f, 0.5f);
+
+        var frames = new Sprite[WindowCycleFrames];
+        foreach (var sp in AssetDatabase.LoadAllAssetsAtPath(CdWindowCycle).OfType<Sprite>())
+        {
+            if (!sp.name.StartsWith("win")) continue;
+            if (int.TryParse(sp.name.Substring(3), out int i) && i >= 0 && i < frames.Length) frames[i] = sp;
+        }
+        for (int i = 0; i < frames.Length; i++)
+            if (frames[i] == null) { Debug.LogWarning("[HorrorGame] window cycle frame " + i + " missing"); return null; }
+        return frames;
+    }
+
+    // Give each window the shaft that falls through it, so the room's light follows the same hour the
+    // glass is showing. The cycle keeps its hands off while the room is in its nightmare, which drives
+    // these same lights red.
+    static void PairWindowLight(CabinInterior room, string windowName, Light shaft)
+    {
+        foreach (var w in room.GetComponentsInChildren<WindowDayNightCycle>(true))
+        {
+            if (w.gameObject.name != windowName) continue;
+            w.roomLight = shaft;
+            w.room = room;
+            // Keep the night the room was tuned for (the two shafts are set to different levels) and
+            // let noon flood the same light rather than picking a new absolute brightness here.
+            w.nightIntensity = shaft.intensity;
+            w.sunIntensity = shaft.intensity * 1.8f;
+            return;
         }
     }
 
@@ -4844,6 +4949,38 @@ public static class HorrorGame3DSetup
     // the walk-in shower, against the west wall: a 3m opening, 1.3m deep, 3m tall
     const float StallZ0 = -9.7f, StallZ1 = -6.7f;
     const float StallFrontX = -8.45f, StallTop = 6.2f;
+
+    // The hour has to survive the cabin door, so it lives on a DontDestroyOnLoad singleton rather
+    // than on the SkyController (which only exists outdoors). Both scenes get one; whichever loads
+    // first wins and the other self-destructs, exactly like DreadDirector.
+    [MenuItem("Tools/Horror Game/Install Day-Night Clock")]
+    public static void InstallDayNightClock()
+    {
+        int made = 0;
+        foreach (var path in new[] { ExteriorSceneOut, SceneOut })   // Sandbox last, so it stays open
+        {
+            if (!File.Exists(path)) continue;
+            var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+            if (Object.FindAnyObjectByType<DayNightClock>() == null)
+            {
+                var clock = new GameObject("DayNightClock").AddComponent<DayNightClock>();
+                // Seed it from the scene's own sky when there is one, so the exterior's pacing stays
+                // the tuning surface and nothing about the existing day/night feel changes.
+                var sky = Object.FindAnyObjectByType<SkyController>();
+                if (sky != null)
+                {
+                    clock.AdoptPacing(sky.splitDayNight, sky.nightStartT, sky.dayLengthSeconds,
+                                      sky.dayDurationSeconds, sky.nightDurationSeconds, sky.loop);
+                    clock.timeOfDay = sky.timeOfDay;
+                    clock.advance = sky.autoPlay;
+                }
+                made++;
+            }
+            EditorSceneManager.SaveScene(scene, path);
+        }
+        Debug.Log("[HorrorGame] Day-night clock installed in " + made + " scene(s). The hour now carries " +
+                  "through the cabin door, and the interior windows run their 16-frame sheet off it.");
+    }
 
     [MenuItem("Tools/Horror Game/Install Cabin Bathroom")]
     public static void InstallCabinBathroom()

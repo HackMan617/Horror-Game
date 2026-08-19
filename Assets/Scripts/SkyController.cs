@@ -115,25 +115,48 @@ public class SkyController : MonoBehaviour
 
     void Update()
     {
-        if (autoPlay && Application.isPlaying)
+        if (Application.isPlaying)
         {
-            if (splitDayNight)
+            // The hour lives on DayNightClock when there is one, because the sky is not the only
+            // thing that needs it and it is the only thing that exists in just one scene — the
+            // interior windows have to show the same evening the yard did. The sky hands the clock
+            // its pacing (all the knobs above stay the tuning surface) and then reads the hour back.
+            var clock = DayNightClock.Instance;
+            if (clock != null)
             {
-                // Advance faster through the day span and slower through the night span, so each
-                // consumes its own real-time budget (night can be much longer than day).
-                float ns = Mathf.Clamp01(nightStartT);
-                float rate = (timeOfDay < ns)
-                    ? ns / Mathf.Max(1f, dayDurationSeconds)
-                    : (1f - ns) / Mathf.Max(1f, nightDurationSeconds);
-                timeOfDay += Time.deltaTime * rate;
+                if (!_pacingHandedOver)
+                {
+                    clock.AdoptPacing(splitDayNight, nightStartT, dayLengthSeconds,
+                                      dayDurationSeconds, nightDurationSeconds, loop);
+                    clock.advance = autoPlay;
+                    _pacingHandedOver = true;
+                }
+                timeOfDay = clock.timeOfDay;
             }
-            else
+            else if (autoPlay)
             {
-                timeOfDay += Time.deltaTime / Mathf.Max(1f, dayLengthSeconds);
+                // No clock in the scene — keep the original self-contained behaviour.
+                timeOfDay = Advance(timeOfDay, Time.deltaTime);
             }
-            if (timeOfDay > 1f) timeOfDay = loop ? timeOfDay - 1f : 1f;
         }
         Apply(timeOfDay);
+    }
+
+    bool _pacingHandedOver;
+
+    // The same pacing maths DayNightClock runs, kept here for the no-clock case.
+    float Advance(float t, float dt)
+    {
+        if (splitDayNight)
+        {
+            float ns = Mathf.Clamp01(nightStartT);
+            float rate = (t < ns) ? ns / Mathf.Max(1f, dayDurationSeconds)
+                                  : (1f - ns) / Mathf.Max(1f, nightDurationSeconds);
+            t += dt * rate;
+        }
+        else t += dt / Mathf.Max(1f, dayLengthSeconds);
+        if (t > 1f) t = loop ? t - 1f : 1f;
+        return t;
     }
 
     // ------------------------------------------------------------------- build
